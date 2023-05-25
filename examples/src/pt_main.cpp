@@ -38,7 +38,7 @@ int main( int argc , char* argv[] )
   
   PtAmiBase::ft_terms ftout2;
   
-  PT.construct(0, R02, ftout2);
+  PT.construct(4, R02, ftout2);
   AmiBase::ami_parms parms2(0, 0);
   
   auto t2=std::chrono::high_resolution_clock::now();

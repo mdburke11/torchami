@@ -6,13 +6,19 @@ add_executable(${PROJECT_NAME}
 ./src/examples.hpp
 )
 
+find_package(Boost REQUIRED)
 
-# target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../../libami/install/lib/libami.so m)
+
 link_directories(${Boost_LIBRARY_DIRS})
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/lib)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/include)
+include_directories(${Boost_INCLUDE_DIRS})
+#target_link_libraries(${PROJECT_NAME} m quadmath  )
 
-# Changed to compile with c++14 compiler - Maybe can stay as c++11 since these are compiled separately
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../torchami/install/lib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../torchami/install/include)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../libami/install/lib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../libami/install/include)
+
+
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++17 -DUSE_MPI -stdlib=libc++")
@@ -20,6 +26,14 @@ else()
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++17 -DUSE_MPI -lstdc++fs ") 
 endif()
 
-
-target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/lib/libami.dylib
- m  )
+if (MACOSX)
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../torchami/install/lib/libtorchami.dylib
+    m  )
+    target_link_libraries(${PROJECT_NAME}  ${CMAKE_CURRENT_SOURCE_DIR}/../../libami/install/lib/libami.dylib
+    m )
+else()
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../torchami/install/lib/libtorchami.so
+    m  )
+    target_link_libraries(${PROJECT_NAME}  ${CMAKE_CURRENT_SOURCE_DIR}/../../libami/install/lib/libami.so
+    m  )
+endif()
