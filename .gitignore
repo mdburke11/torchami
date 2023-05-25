@@ -6,3 +6,4 @@ testing
 build
 install
 compile.sh
+compile_torch.sh
