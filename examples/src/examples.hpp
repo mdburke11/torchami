@@ -25,3 +25,6 @@
  TamiBase::ami_vars construct_ext_example_Y();
  TamiBase::g_prod_t construct_example_J();
  TamiBase::ami_vars construct_ext_example_J();
+
+ void default_example();
+ void example_1();

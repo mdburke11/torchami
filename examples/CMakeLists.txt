@@ -4,6 +4,7 @@ project(example CXX)
 add_executable(${PROJECT_NAME}
 ./src/pt_main.cpp
 ./src/examples.hpp
+./src/examples.cpp
 )
 
 find_package(Boost REQUIRED)
@@ -11,13 +12,9 @@ find_package(Boost REQUIRED)
 
 link_directories(${Boost_LIBRARY_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
-#target_link_libraries(${PROJECT_NAME} m quadmath  )
 
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../torchami/install/lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../torchami/install/include)
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../libami/install/lib)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../libami/install/include)
-
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
@@ -29,11 +26,7 @@ endif()
 if (MACOSX)
     target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../torchami/install/lib/libtorchami.dylib
     m  )
-    target_link_libraries(${PROJECT_NAME}  ${CMAKE_CURRENT_SOURCE_DIR}/../../libami/install/lib/libami.dylib
-    m )
 else()
     target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../torchami/install/lib/libtorchami.so
-    m  )
-    target_link_libraries(${PROJECT_NAME}  ${CMAKE_CURRENT_SOURCE_DIR}/../../libami/install/lib/libami.so
     m  )
 endif()

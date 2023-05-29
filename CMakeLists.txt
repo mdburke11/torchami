@@ -7,11 +7,7 @@ if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
-
-# target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../../libami/install/lib/libami.so m)
 link_directories(${Boost_LIBRARY_DIRS})
-#link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/lib)
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/include)
 
 # Changed to compile with c++14 compiler - Maybe can stay as c++11 since these are compiled separately
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -31,12 +27,6 @@ set(LIB_FILES
 )
 
 ADD_LIBRARY(torchami SHARED ${LIB_FILES})
-
-
-#target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/lib/libami.dylib
-# m  )
-
-
 
 INSTALL (TARGETS torchami 
 ARCHIVE DESTINATION "lib/"
