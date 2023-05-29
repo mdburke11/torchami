@@ -2,12 +2,12 @@
 #include "tami_base.hpp"
 
 // Empty constructor
-FermiTree::FermiTree(){
+TamiBase::FermiTree::FermiTree(){
   
 }
 
 
-void FermiTree::number_vertices(fermi_tree_t &g){
+void TamiBase::FermiTree::number_vertices(fermi_tree_t &g){
 	
 boost::graph_traits<fermi_tree_t>::vertex_iterator vi, v_end;
 int i=0;
@@ -19,7 +19,7 @@ i++;
 	
 }
 
-void FermiTree::initialize_ft( fermi_tree_t &ft, operation op){
+void TamiBase::FermiTree::initialize_ft( fermi_tree_t &ft, operation op){
   
   if(num_vertices(ft) >0){ throw std::runtime_error("Attempted to initialize a non-empty fermi tree");}
 
@@ -29,7 +29,7 @@ number_vertices(ft);
   
 }
 
-bool FermiTree::is_empty_ft(fermi_tree_t &ft){
+bool TamiBase::FermiTree::is_empty_ft(fermi_tree_t &ft){
   
   if(num_vertices(ft)==1){
     vertex_t r=get_root(ft);
@@ -43,7 +43,7 @@ bool FermiTree::is_empty_ft(fermi_tree_t &ft){
 }
 
 
-void FermiTree::initialize_ft( fermi_tree_t &ft){
+void TamiBase::FermiTree::initialize_ft( fermi_tree_t &ft){
   
 if(num_vertices(ft) >0){ throw std::runtime_error("Attempted to initialize a non-empty fermi tree");}
 
@@ -52,7 +52,7 @@ number_vertices(ft);
 }
 
 
-void FermiTree::initialize_ft( fermi_tree_t &ft, TamiBase::pole_struct &pole){
+void TamiBase::FermiTree::initialize_ft( fermi_tree_t &ft, TamiBase::pole_struct &pole){
   
 if(num_vertices(ft) >0){ throw std::runtime_error("Attempted to initialize a non-empty fermi tree");}
 
@@ -60,7 +60,7 @@ vertex_t seed=add_vertex(vertex_info(pole,end),ft);
 number_vertices(ft);
 }
 
-void FermiTree::initialize_ft( fermi_tree_t &ft, TamiBase::pole_struct &pole, double &prefactor){
+void TamiBase::FermiTree::initialize_ft( fermi_tree_t &ft, TamiBase::pole_struct &pole, double &prefactor){
   
 if(num_vertices(ft) >0){ throw std::runtime_error("Attempted to initialize a non-empty fermi tree");}
 
@@ -70,7 +70,7 @@ number_vertices(ft);
 
 
 
-FermiTree::vertex_t FermiTree::get_root(fermi_tree_t  &ft){
+TamiBase::FermiTree::vertex_t TamiBase::FermiTree::get_root(fermi_tree_t  &ft){
 
 
 boost::graph_traits<fermi_tree_t>::vertex_iterator vi,vie;
@@ -95,7 +95,7 @@ vout=*vi;
 }
 
 
-void FermiTree::get_roots(fermi_tree_t  &ft, std::vector<vertex_t> &vv){
+void TamiBase::FermiTree::get_roots(fermi_tree_t  &ft, std::vector<vertex_t> &vv){
 
 vv.clear();
 boost::graph_traits<fermi_tree_t>::vertex_iterator vi,vie;
@@ -119,15 +119,15 @@ vv.push_back(vout);
   
 }
 
-void FermiTree::plist_to_ft(TamiBase::pole_array_t &plist, FermiTree::fermi_tree_t &ft){
-  FermiTree::fermi_tree_t newft;
+void TamiBase::FermiTree::plist_to_ft(TamiBase::pole_array_t &plist, TamiBase::FermiTree::fermi_tree_t &ft){
+  TamiBase::FermiTree::fermi_tree_t newft;
   
   if(plist.size()!=0){
   initialize_ft(newft,plist[0]);
   }
   for(int i=1; i<plist.size(); i++){
     
-    FermiTree::fermi_tree_t thisft;
+    TamiBase::FermiTree::fermi_tree_t thisft;
     initialize_ft(thisft,plist[i]);
     newft=mult_ft(newft,thisft);   
   }
@@ -138,15 +138,15 @@ void FermiTree::plist_to_ft(TamiBase::pole_array_t &plist, FermiTree::fermi_tree
   
 }
 
-void FermiTree::plist_to_ft(TamiBase::pole_array_t &plist,double sign, FermiTree::fermi_tree_t &ft){
-  FermiTree::fermi_tree_t newft;
+void TamiBase::FermiTree::plist_to_ft(TamiBase::pole_array_t &plist,double sign, TamiBase::FermiTree::fermi_tree_t &ft){
+  TamiBase::FermiTree::fermi_tree_t newft;
   
   if(plist.size()!=0){
   initialize_ft(newft,plist[0],sign);
   }
   for(int i=1; i<plist.size(); i++){
     
-    FermiTree::fermi_tree_t thisft;
+    TamiBase::FermiTree::fermi_tree_t thisft;
     initialize_ft(thisft,plist[i],sign);
     newft=mult_ft(newft,thisft);   
   }
@@ -158,7 +158,7 @@ void FermiTree::plist_to_ft(TamiBase::pole_array_t &plist,double sign, FermiTree
 }
 
 
-void FermiTree::get_next_level( fermi_tree_t &ft1, vertex_t &root1, std::vector<vertex_t > &next_level){
+void TamiBase::FermiTree::get_next_level( fermi_tree_t &ft1, vertex_t &root1, std::vector<vertex_t > &next_level){
   next_level.clear();
   
   boost::graph_traits<fermi_tree_t>::edge_iterator ei,eie;
@@ -180,7 +180,7 @@ void FermiTree::get_next_level( fermi_tree_t &ft1, vertex_t &root1, std::vector<
 }
 
 
-void FermiTree::print_graph(fermi_tree_t &ft){
+void TamiBase::FermiTree::print_graph(fermi_tree_t &ft){
   
     if(num_edges(ft)==0){
       if(num_vertices(ft)!=1){ throw std::runtime_error("multiple disconnected vertices");}
@@ -211,7 +211,7 @@ void FermiTree::print_graph(fermi_tree_t &ft){
 }
 
 
-void FermiTree::copy_vertex(vertex_t &root1, vertex_t &root2, fermi_tree_t &ft1, fermi_tree_t &ft2, std::pair<vertex_t, vertex_t> &map){
+void TamiBase::FermiTree::copy_vertex(vertex_t &root1, vertex_t &root2, fermi_tree_t &ft1, fermi_tree_t &ft2, std::pair<vertex_t, vertex_t> &map){
   
   vertex_t newv=add_vertex(vertex_info(ft1[root1].pole_,ft1[root1].value_,ft1[root1].operation_,ft1[root1].depth_,ft1[root1].prefactor_),ft2);
   add_edge(root2, newv, edge_info(),ft2);
@@ -221,7 +221,7 @@ void FermiTree::copy_vertex(vertex_t &root1, vertex_t &root2, fermi_tree_t &ft1,
 }
 
 
-void FermiTree::copy_level(vertex_t &root1, vertex_t &root2 ,fermi_tree_t &ft1, fermi_tree_t &ft2,std::vector<std::pair<vertex_t, vertex_t>> &map_vec){
+void TamiBase::FermiTree::copy_level(vertex_t &root1, vertex_t &root2 ,fermi_tree_t &ft1, fermi_tree_t &ft2,std::vector<std::pair<vertex_t, vertex_t>> &map_vec){
   map_vec.clear();
   std::vector<vertex_t> level;
   
@@ -239,7 +239,7 @@ void FermiTree::copy_level(vertex_t &root1, vertex_t &root2 ,fermi_tree_t &ft1, 
   
 }
 
-void FermiTree::copy_tree(fermi_tree_t &ft1, fermi_tree_t &ft2,vertex_t &root1, vertex_t &root2){
+void TamiBase::FermiTree::copy_tree(fermi_tree_t &ft1, fermi_tree_t &ft2,vertex_t &root1, vertex_t &root2){
   
  std::pair<vertex_t, vertex_t> initial_map;
  
@@ -278,7 +278,7 @@ map_vec=next_map_vec;
 
 //// Operations
 
-FermiTree::fermi_tree_t FermiTree::add_ft(fermi_tree_t ft1, fermi_tree_t ft2){
+TamiBase::FermiTree::fermi_tree_t TamiBase::FermiTree::add_ft(fermi_tree_t ft1, fermi_tree_t ft2){
   
 // std::cout<<"Attempting to add ft's"<<std::endl;
 
@@ -335,7 +335,7 @@ copy_tree(ft2,output,root2,nr);
 return output;  
 }
 
-FermiTree::fermi_tree_t FermiTree::mult_ft(fermi_tree_t ft1, fermi_tree_t ft2){
+TamiBase::FermiTree::fermi_tree_t TamiBase::FermiTree::mult_ft(fermi_tree_t ft1, fermi_tree_t ft2){
   
   // std::cout<<"Entering mult"<<std::endl;
   
@@ -356,7 +356,7 @@ return output;
 }
 
 
-std::complex<double> FermiTree::eval_ft(fermi_tree_t &ft1, vertex_t &v){
+std::complex<double> TamiBase::FermiTree::eval_ft(fermi_tree_t &ft1, vertex_t &v){
   
  
   std::vector<vertex_t> level;
@@ -402,7 +402,7 @@ std::complex<double> FermiTree::eval_ft(fermi_tree_t &ft1, vertex_t &v){
 return output;  
 }
 
-void FermiTree::update_prefactors(fermi_tree_t &ft, double sign){
+void TamiBase::FermiTree::update_prefactors(fermi_tree_t &ft, double sign){
   
   
 boost::graph_traits<fermi_tree_t>::vertex_iterator vi,vie;
@@ -422,7 +422,7 @@ for( boost::tie(vi,vie)=vertices(ft); vi !=vie; ++vi){
   
 }
 
-void FermiTree::mult_prefactor(fermi_tree_t &ft, double sign){
+void TamiBase::FermiTree::mult_prefactor(fermi_tree_t &ft, double sign){
   
 vertex_t root=get_root(ft);
 // std::cout<<"In mult we have root with prefactor "<<ft[root].prefactor_<<std::endl;
@@ -445,7 +445,7 @@ if(ft[root].operation_==0){
   
 }
 
-std::string FermiTree::pretty_print(fermi_tree_t &ft){
+std::string TamiBase::FermiTree::pretty_print(fermi_tree_t &ft){
   
   vertex_t root=get_root(ft);
   
@@ -460,7 +460,7 @@ std::string FermiTree::pretty_print(fermi_tree_t &ft){
   
 }
 
-std::string FermiTree::pretty_print(fermi_tree_t &ft, vertex_t &v){
+std::string TamiBase::FermiTree::pretty_print(fermi_tree_t &ft, vertex_t &v){
   
   std::stringstream ss;
   std::vector<vertex_t> level;
@@ -495,7 +495,7 @@ std::string FermiTree::pretty_print(fermi_tree_t &ft, vertex_t &v){
   return ss.str();
   
 }
-std::string FermiTree::pretty_print_level(fermi_tree_t &ft, std::vector<vertex_t> &vv, int source_op){
+std::string TamiBase::FermiTree::pretty_print_level(fermi_tree_t &ft, std::vector<vertex_t> &vv, int source_op){
   
   std::stringstream ss;
   
@@ -539,7 +539,7 @@ std::string FermiTree::pretty_print_level(fermi_tree_t &ft, std::vector<vertex_t
   return ss.str();
 }
 
-std::string FermiTree::pretty_print(fermi_tree_t &ft, std::vector<vertex_t> &vv, int op){
+std::string TamiBase::FermiTree::pretty_print(fermi_tree_t &ft, std::vector<vertex_t> &vv, int op){
   
   std::stringstream ss;
   
@@ -581,7 +581,7 @@ std::string FermiTree::pretty_print(fermi_tree_t &ft, std::vector<vertex_t> &vv,
 }
 
 
-std::string FermiTree::pretty_print_ft(fermi_tree_t &ft1, vertex_t &v){
+std::string TamiBase::FermiTree::pretty_print_ft(fermi_tree_t &ft1, vertex_t &v){
   
   
  
@@ -660,7 +660,7 @@ std::string FermiTree::pretty_print_ft(fermi_tree_t &ft1, vertex_t &v){
 return ss.str();  
 }
 
-std::string FermiTree::pretty_print_pole(TamiBase::pole_struct &pole){
+std::string TamiBase::FermiTree::pretty_print_pole(TamiBase::pole_struct &pole){
   
   std::stringstream ss;
   
@@ -704,7 +704,7 @@ std::string FermiTree::pretty_print_pole(TamiBase::pole_struct &pole){
 }
 
 
-void FermiTree::print_vertex(vertex_t &v, fermi_tree_t &ft){
+void TamiBase::FermiTree::print_vertex(vertex_t &v, fermi_tree_t &ft){
   
 std::cout<<" | "<<  ft[v].index_;
 if( ft[v].operation_==0){ std::cout<<" + ";}

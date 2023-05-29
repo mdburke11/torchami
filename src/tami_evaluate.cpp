@@ -28,7 +28,7 @@ std::complex<double> TamiBase::evaluate_term(TamiBase::ami_parms &parms, ft_term
 std::complex<double> gprod,fprod;
 
   gprod = eval_gprod(parms, ft_term.g_prod_, external);
-  FermiTree::vertex_t r=FT.get_root(ft_term.ft_);
+  TamiBase::FermiTree::vertex_t r=FT.get_root(ft_term.ft_);
   fprod = eval_ft(parms, ft_term.ft_,r, external);
   
   std::complex<double> output(0, 0);
@@ -45,10 +45,10 @@ return output;
 // std::complex<double> TamiBase::eval_fprod(ami_parms &parms, pole_array_t &p_list,
                                          // ami_vars &external)
 
-std::complex<double> TamiBase::eval_ft(TamiBase::ami_parms &parms, FermiTree::fermi_tree_t &ft1,  FermiTree::vertex_t &v, TamiBase::ami_vars &external){
+std::complex<double> TamiBase::eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fermi_tree_t &ft1,  TamiBase::FermiTree::vertex_t &v, TamiBase::ami_vars &external){
   
  
-  std::vector<FermiTree::vertex_t> level;
+  std::vector<TamiBase::FermiTree::vertex_t> level;
   
   FT.get_next_level( ft1, v, level);
 

@@ -1,15 +1,16 @@
-#include "ft.hpp"
-#include "pt_ami.hpp"
+#include "tami_ft.hpp"
+#include "tami_base.hpp"
+#include "examples.hpp"
 
 
 int main( int argc , char* argv[] )
 {
   
   
-  AmiBase::g_prod_t R0=construct_example2();
+  TamiBase::g_prod_t R0=construct_example2();
   
-  PtAmiBase PT;
-  PtAmiBase::ft_terms ftout;
+  TamiBase PT;
+  TamiBase::ft_terms ftout;
   
   /* PT.construct(2, R0, ftout);
   
@@ -20,26 +21,26 @@ int main( int argc , char* argv[] )
   PT.FT.print_graph(ftout[0].ft_);
   
   std::cout<<PT.pretty_print_ft_terms(ftout)<<std::endl;
-  AmiBase::ami_vars ext=construct_ext_example2();
+  TamiBase::ami_vars ext=construct_ext_example2();
   
   double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
   int N_INT=2;  // Number of Matsubara sums to perform
-  AmiBase::ami_parms parms(N_INT, E_REG);
+  TamiBase::ami_parms parms(N_INT, E_REG);
   
   std::complex<double> result=PT.evaluate(parms,ftout,ext);
   
   std::cout<<"Result is "<<result<<std::endl; */
   
-  AmiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
-  AmiBase::ami_vars avars2=construct_4ord_ext_multipole_example();//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
+  TamiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
+  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example();//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
   
   // construct_4ord_ext_multipole_example();
- // AmiBase::g_prod_t construct_multipole_example();
+ // TamiBase::g_prod_t construct_multipole_example();
   
-  PtAmiBase::ft_terms ftout2;
+  TamiBase::ft_terms ftout2;
   
   PT.construct(4, R02, ftout2);
-  AmiBase::ami_parms parms2(0, 0);
+  TamiBase::ami_parms parms2(0, 0);
   
   auto t2=std::chrono::high_resolution_clock::now();
   std::complex<double> result2=PT.evaluate(parms2,ftout2,avars2);
@@ -62,7 +63,7 @@ int main( int argc , char* argv[] )
   std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
   std::cout<<"Evaluation took "<< d2.count()<<" microseconds"<<std::endl;	
 
-  // PtAmiBase::ft_terms ftout3;
+  // PtTamiBase::ft_terms ftout3;
   // ftout3.push_back(ftout2[1]);
   // ftout3.push_back(ftout2[6]);
   
@@ -83,7 +84,7 @@ int main( int argc , char* argv[] )
 
   // std::cout<<"Factorize!----------"<<std::endl;
   
-  // PtAmiBase::ft_terms factorized;
+  // PtTamiBase::ft_terms factorized;
   // PT.factorize(ftout3,factorized);
   // std::cout<<PT.pretty_print_ft_terms(factorized)<<std::endl;
   // std::complex<double> result4=PT.evaluate(parms2,factorized,avars2);
@@ -100,10 +101,10 @@ int main( int argc , char* argv[] )
   // PT.FT.number_vertices(ftout2[0].ft_);
   // PT.FT.print_graph(ftout2[0].ft_);
   
-  // AmiBase::epsilon_t eps={0,1};
-  // AmiBase::alpha_t alpha={1,0};
+  // TamiBase::epsilon_t eps={0,1};
+  // TamiBase::alpha_t alpha={1,0};
   
-  // AmiBase::pole_struct p(eps,alpha);
+  // TamiBase::pole_struct p(eps,alpha);
   
   // FermiTree FT;
   
