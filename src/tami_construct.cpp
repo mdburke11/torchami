@@ -1,4 +1,3 @@
-#include "tami_ft.hpp"
 #include "tami_base.hpp"
 /**
  * This is the primary AMI symbolic integration function.  It takes a starting

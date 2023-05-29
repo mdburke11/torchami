@@ -36,9 +36,6 @@
 #include "boost/graph/graphviz.hpp"
 #include <boost/graph/random.hpp>
 
-
-
-
 class TamiBase{
 
     public:
@@ -351,6 +348,7 @@ class TamiBase{
         typedef std::vector<ref_v_t> R_ref_t;
         typedef R_ref_t ref_eval_t;
 
+        // START OF THE POLE TREE STUFF
 
         class FermiTree {
             public:
@@ -563,10 +561,6 @@ class TamiBase{
             private:
         };
 
-
-
-
-        // START OF THE POLE TREE STUFF
         struct ft_term {
             ft_term() {}
 

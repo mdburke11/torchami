@@ -1,6 +1,6 @@
-// Catchall file for terms helper functions in the torchami development
+// Catchall source file for terms helper functions in the torchami development - contains 
+// functions from libami's ami_base_terms.cpp, ami_base_optimize.cpp, ami_base_terms_optimize.cpp
 
-#include "tami_ft.hpp"
 #include "tami_base.hpp"
 
 
