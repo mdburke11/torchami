@@ -1,6 +1,5 @@
-#pragma once
-
 #include "tami_ft.hpp"
+#include "tami_base.hpp"
 
 // Empty constructor
 FermiTree::FermiTree(){

@@ -140,3 +140,234 @@ std::complex<double> TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
   return output;
 }
 
+/// Evaluation of a single pole in Fermi/Bose functions for a given `ami_vars`.
+std::complex<double> TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
+                                         ami_vars external) {
+  if (verbose) {
+    std::cout << "Working on pole" << std::endl;
+    print_pole_struct_info(pole);
+  }
+
+  std::complex<double> output, term;
+  int eta = 0;
+
+  double beta = external.BETA_;
+  double E_REG = parms.E_REG_;
+
+  // Spectral evaluation only
+  std::complex<double> freq_shift(0, 0);
+  if (pole.x_alpha_.size() != 0) {
+    for (int i = 0; i < pole.x_alpha_.size(); i++) {
+      freq_shift = external.frequency_[i] * (double)pole.x_alpha_[i];
+    }
+  }
+
+  // Future Development: 
+  // In order to generalize to have fermi and bose lines, from here to 'sigma' needs
+  // to be considered.
+
+  // example fixed
+  //
+  // 1) create a stat map for the frequencies std::vector<int> stat_map:
+  // populate 1 for fermi and 0 for bose. length is equal to alpha.size() 2)
+  // simply replace eta=eta + 1*stat_map[i]
+  //
+
+  // alternate fix.  parms.TYPE_ is 0 for sigma, 1 for Pi etc.  So if
+  // parms.TYPE_==1 and pole.alpha_.back()==1 (or -1), don't add one. else add
+  // one to eta.
+
+
+  for (int i = 0; i < pole.alpha_.size() - 1; i++) {
+   
+    if (pole.alpha_[i] != 0) {
+      eta++;
+    }
+  }
+
+  // handle external based on graph type
+  if (pole.alpha_.back() != 0 && parms.TYPE_ != TamiBase::Pi_phuu &&
+      parms.TYPE_ != TamiBase::Pi_phud && parms.TYPE_ != TamiBase::doubleocc &&
+      parms.TYPE_ != TamiBase::Pi_ppuu && parms.TYPE_ != TamiBase::Pi_ppud &&
+      parms.TYPE_ != TamiBase::FORCE) {
+    eta++;
+   
+  }
+
+  // if this is a double occupancy graph then the external line is bosonic. so
+  // it is a bosonic matsubara integral. so eta needs to be incremented IF the
+  // pole is for the last integration index
+  double docc_sign=1;
+  if (parms.TYPE_ == TamiBase::doubleocc || bosonic_external) {
+    if (pole.index_ == pole.alpha_.size() - 1) {
+      eta++;
+      docc_sign=-1;
+    
+    }
+  }
+
+  // END TODO
+
+  // could put infor into ami_vars external as to what the state type of the
+  // external variables is.
+  std::complex<double> E = get_energy_from_pole(pole, external);
+
+  // In the case of spectral poles the freq_shift might not be zero
+  E = E + freq_shift;
+
+
+  double sigma = pow(-1.0, double(eta));
+
+  std::complex<double> zero(0, 0);
+  std::complex<double> im(0, 1);
+
+  // If energy denominator would be zero attempts to regulate if bosonic
+  // function
+  if (E == zero && sigma == -1) { // && pole.der_==0    Not sure if pole
+    // derivative plays any role
+
+    if (drop_bosonic_diverge) {
+
+      return zero; // This is a dangerous approximation. 
+    }
+    E += E_REG;
+  } else {
+    if (sgn(E.real()) != 0) {
+      E += E_REG * sgn(E.real());
+    } else {
+      E += E_REG;
+    }
+  }
+
+  if (drop_der && pole.der_ != 0) {
+    return zero;
+  }
+
+  int m = pole.der_;
+
+  // compute m'th derivative
+  output = fermi_bose(m, sigma, beta, E);
+
+  if (verbose) {
+    std::cout << "Fermi Pole Term evaluated to " << output << " at energy " << E
+              << " with sigma " << sigma << " betaE is " << beta * E
+              << " in exponent " << std::exp(beta * (E)) << std::endl;
+			  
+	std::cout<<"Energy list is :(";
+		for(int ii=0; ii< external.energy_.size(); ii++){
+			std::cout<<std::setprecision(20)<<" "<<external.energy_[ii]<<" ,";
+		}
+		std::cout<<")"<<std::endl;
+  }
+
+// TODO: Unclear if this is correct 
+  if (parms.TYPE_ == TamiBase::doubleocc || bosonic_external) {
+    output = docc_sign * output;
+  }
+
+  return output;
+}
+
+/// This computes the mth order derivative of the Fermi function or the
+/// negative of the Bose distribution functions given by \f$\frac{1}{\sigma
+/// \exp^{\beta E}+1} \f$ at \f$ \beta\f$, for energy \f$ E\f$. \f$
+/// \sigma=1.0\f$ for Fermi and -1.0 for Bose.
+std::complex<double> TamiBase::fermi_bose(int m, double sigma, double beta,
+                                         std::complex<double> E) {
+  std::complex<double> output, term;
+  output = 0.0;
+
+  if (m == 0) {
+              // Note: Disabled on 09/09/2022 for overflow testing 
+              // double arg = std::real(beta * E);
+              // double arg_amp = std::abs(arg);
+
+              // if (arg > exp_max_arg) {
+                // double arg_sign = (double)sgn(arg);
+                // if (arg_sign > 0) {
+                  // output = 0;
+                // } else {
+                  // output = 1;
+                // }
+              // } else {
+      output = 1.0 / (sigma * std::exp(beta * (E)) + 1.0);
+                // }
+    // return output;
+  } else { // compute m'th derivative
+
+    for (int k = 0; k < m + 1; k++) {
+      // depricated: Original format
+      // term = frk(m, k) * std::exp(k * beta * (E)) * std::pow(sigma, k) *
+             // std::pow(-1.0, k + 1) /
+             // std::pow(sigma * std::exp(beta * (E)) + 1.0, k + 1);
+	// Reformatted with fewer exponentials
+      term= frk(m,k)*std::pow(sigma,k) *std::pow(-1.0,
+      k+1)*(1.0/(sigma*std::exp(beta*(E))+1.0)/std::pow(sigma
+      +std::exp(-beta*(E)), k)) ;
+      output += term;
+
+      if (verbose) {
+        std::cout << "On k'th derivative " << k << std::endl;
+
+        std::cout << "Fermi-bose Term evaluated to " << term << " at energy "
+                  << E << " with sigma " << sigma << " betaE is " << beta * E
+                  << " in exponent " << std::exp(beta * (E)) << std::endl;
+      }
+    }
+
+    output = output * std::pow(beta, m) * (-1.0);
+
+    if ((std::abs(std::real(output)) > precision_cutoff)|| (std::abs(std::imag(output)) > precision_cutoff)) {
+    
+      overflow_detected = true;
+    }
+  }
+
+  return output;
+}
+
+std::complex<double> TamiBase::get_energy_from_pole(pole_struct pole,
+                                                   ami_vars external) {
+  std::complex<double> output(0, 0);
+
+  // Evaluating energies for pole
+  for (int i = 0; i < pole.eps_.size(); i++) {
+    output += double(pole.eps_[i]) * external.energy_[i];
+  }
+
+  return output;
+}
+
+/// Using notation to match https://doi.org/10.1103/PhysRevB.99.035120.
+/// They produced coefficients to the fermi functions and put them in a table.
+/// We derive a general expression for those coefficients - we believe this to
+/// be general but have only checked up to 6th order.
+double TamiBase::frk(int r, int k) {
+  double output = 0.0;
+
+  for (int m = 0; m < k + 1; m++) {
+    output += binomialCoeff(k, m) * std::pow(m, r) * (std::pow(-1, k - m));
+  }
+
+  
+  return output;
+}
+
+
+/// Returns value of Binomial Coefficient C(n, k).
+int TamiBase::binomialCoeff(int n, int k) {
+  int res = 1;
+
+  // Since C(n, k) = C(n, n-k)
+  if (k > n - k)
+    k = n - k;
+
+  // Calculate value of
+  // [n * (n-1) *---* (n-k+1)] / [k * (k-1) *----* 1]
+  for (int i = 0; i < k; ++i) {
+    res *= (n - i);
+    res /= (i + 1);
+  }
+
+  return res;
+}

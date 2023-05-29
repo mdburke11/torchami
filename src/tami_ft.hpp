@@ -1,37 +1,4 @@
-#pragma once
-
-#include <filesystem>
-#include <tami_base.hpp>
-
-#include <fstream>
-#include <iostream>
-#include <complex>
-#include <vector>
-#include <math.h>
-#include <stdlib.h>
-#include <ctime>
-#include <unistd.h>
-#include <random>
-
-#include <chrono>
-#include <thread>
-
-#include <boost/config.hpp>
-#include <boost/graph/isomorphism.hpp>
-#include <boost/graph/graph_traits.hpp>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/dijkstra_shortest_paths.hpp>
-#include <boost/graph/breadth_first_search.hpp>
-#include <boost/graph/connected_components.hpp>
-#include <boost/graph/copy.hpp>
-#include <boost/graph/filtered_graph.hpp>
-#include <boost/graph/graph_utility.hpp>
-#include <boost/property_map/property_map.hpp>
-
-// #include <boost/program_options.hpp>
-#include "boost/graph/graphviz.hpp"
-#include <boost/graph/random.hpp>
-
+#include "tami_base.hpp"
 
 class FermiTree {
 public:
@@ -243,5 +210,6 @@ FermiTree();
 
 private:
 };
+
 
 

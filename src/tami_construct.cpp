@@ -1,6 +1,5 @@
-
-#include "ft.hpp"
-#include "pt_ami.hpp"
+#include "tami_ft.hpp"
+#include "tami_base.hpp"
 /**
  * This is the primary AMI symbolic integration function.  It takes a starting
  * integrand defined by `g_prod_t` R0 and `ami_parms` object, and returns the
@@ -13,7 +12,7 @@
  */
 
 
-void PtTamiBase::construct(int N_INT, TamiBase::g_prod_t R0, ft_terms &terms_out) {
+void TamiBase::construct(int N_INT, TamiBase::g_prod_t R0, ft_terms &terms_out) {
   terms_out.clear();
 
   FermiTree::fermi_tree_t ft;
@@ -44,7 +43,7 @@ void PtTamiBase::construct(int N_INT, TamiBase::g_prod_t R0, ft_terms &terms_out
 // 1. 
 
 
-void PtTamiBase::integrate_step(int index, ft_terms &in_terms, ft_terms &out_terms) {
+void TamiBase::integrate_step(int index, ft_terms &in_terms, ft_terms &out_terms) {
   
   out_terms.clear();
   ft_terms collect, this_terms;
@@ -64,7 +63,7 @@ void PtTamiBase::integrate_step(int index, ft_terms &in_terms, ft_terms &out_ter
   
 }
 
-void PtTamiBase::term_integrate_step(int index, ft_term &in_term, ft_terms &out_terms){
+void TamiBase::term_integrate_step(int index, ft_term &in_term, ft_terms &out_terms){
   
   // create a blank term that has just the g_prod from the ft_term 
   
@@ -80,7 +79,7 @@ void PtTamiBase::term_integrate_step(int index, ft_term &in_term, ft_terms &out_
   
   // amibase.print_terms(terms);
   
-  amibase.integrate_step(index, terms, newterms);
+  integrate_Mat_ind_step(index, terms, newterms);
   
   // std::cout<<"newterms has size "<< newterms.size()<<std::endl;
   // amibase.print_terms(newterms);
@@ -202,7 +201,7 @@ bool TamiBase::g_prod_equiv(TamiBase::g_prod_t &gp1, TamiBase::g_prod_t &gp2, in
       // skip any in gp2 that were already used 
       if(used2[j]==1){continue;}
         int junk=0;
-      if(amibase.g_struct_equiv(gp1[i],gp2[j],junk)){
+      if(g_struct_equiv(gp1[i],gp2[j],junk)){
         // std::cout<<"Equal"<<std::endl;
         sign=sign*junk;
         used2[j]=1;
@@ -334,14 +333,14 @@ void TamiBase::terms_to_ftterms(TamiBase::terms &in_terms, ft_terms &out_terms){
   
   TamiBase::Ri_t Ri;
 
-  amibase.convert_terms_to_ri(in_terms, Ri); // this should take the terms and pull out just the producs of G's. 
+  convert_terms_to_ri(in_terms, Ri); // this should take the terms and pull out just the producs of G's. 
 
   // std::cout<<"Ri size is"<< Ri.size()<<std::endl;
 
   TamiBase::g_prod_t unique_g;
   TamiBase::R_ref_t Rref;
   TamiBase::ref_eval_t Eval_list;
-  amibase.factorize_Rn(Ri, unique_g, Rref, Eval_list);
+  factorize_Rn(Ri, unique_g, Rref, Eval_list);
   
   for(int i=0; i< Eval_list.size(); i++){
     ft_term newft;
@@ -374,7 +373,222 @@ void TamiBase::terms_to_ftterms(TamiBase::terms &in_terms, ft_terms &out_terms){
        
     out_terms.push_back(newft);
   }
-  
+
+
+/**
+
+* Simple function to scan through `g_prod_t` and collect an std::vector of
+poles with respect to index.
+
+*/
+TamiBase::pole_array_t TamiBase::find_poles(int index, TamiBase::g_prod_t &R) {
+  pole_array_t pole_array;
+  pole_struct pole;
+
+  pole.alpha_.reserve(R[0].alpha_.size());
+  pole.eps_.reserve(R[0].eps_.size());
+
+  pole.index_ = index;
+
+  if (pole.index_ >= R[0].alpha_.size()) {
+    std::cerr << "WARNING: Pole index exceeds length of g_prod_t: This may "
+                 "result in errors.  Exiting find_poles for safety."
+              << std::endl;
+    return pole_array;
+  }
+
+  for (int i = 0; i < R.size(); i++) {
+    if (R[i].alpha_[index] != 0) {
+      pole.which_g_.push_back(i);
+
+      for (int j = 0; j < R[i].alpha_.size(); j++) {
+        if (j != index) {
+          pole.alpha_.push_back(-R[i].alpha_[index] * R[i].alpha_[j]);
+        } else {
+          pole.alpha_.push_back(0);
+        }
+      }
+
+      for (int j = 0; j < R[i].eps_.size(); j++) {
+        pole.eps_.push_back(-R[i].alpha_[index] * R[i].eps_[j]);
+      }
+
+      // Context:  So now you have a pole... need to check if it is already
+      // in the array, and then if it isn't add it.  if it is, modify the
+      // multiplicity of the pole in the array it is equal to. and add it's
+      // which_g_ index to the pole_array with multiplicity
+
+      bool duplicate = false;
+      for (int ploop = 0; ploop < pole_array.size(); ploop++) {
+        if (pole_equiv(
+                pole_array[ploop],
+                pole)) { // std::cerr<<"Duplicate pole detected!"<<std::endl;
+          duplicate = true;
+
+          pole_array[ploop].multiplicity_ += 1;
+          pole_array[ploop].which_g_.push_back(pole.which_g_[0]);
+
+          break;
+        }
+      }
+
+      
+      // Context: extra check if the pole is only a fermionic frequency
+
+      bool non_zero = false;
+      if (drop_matsubara_poles) {
+        // std::cout<<"In drop mat poles function"<<std::endl;
+        int zcount = std::count(pole.eps_.begin(), pole.eps_.end(), 0);
+        
+        if (zcount < pole.eps_.size()) {
+          non_zero = true;
+        }
+        
+        // At this point if the energy is all zeros then if the nucount is even, then it should be ok
+        if(!non_zero){
+          int nucount=0;
+          for(int i=0; i<pole.alpha_.size(); i++){
+            if(pole.alpha_[i]!=0){ nucount++;}
+          }
+          // int nucount = std::count(pole.alpha_.begin(), pole.alpha_.end(), 0);
+          if(nucount%2==0){ non_zero=true;}
+        }
+        
+      } else {
+        non_zero = true;
+      }
+
+      if (non_zero) {
+        // if (!duplicate && non_zero ){
+        if (!duplicate) {
+          pole_array.push_back(pole);
+        }
+      }
+
+      // }
+
+      pole.alpha_.clear();
+      pole.eps_.clear();
+      pole.which_g_.clear();
+    }
+  }
+
+  return pole_array;
+}
+
+
+/**
+ * Used in pole multiplicity == 1 - aka, simple pole.  Performs residue theorem
+ *on G_in and produces a new `g_prod_t` as output.
+ *
+ *@param[in] G_in: `g_prod_t` to evaluate residues with respect to pole.
+ *@param[in] pole: `pole_struct` defining the pole.
+ *
+ *@return is of type `g_prod_t`.
+ */
+TamiBase::g_prod_t TamiBase::simple_residue(TamiBase::g_prod_t G_in,
+                                          TamiBase::pole_struct pole) {
+  g_prod_t residue;
+
+  if (pole.multiplicity_ != 1) {
+    std::cerr << "Simple residue called for pole with M!=1" << std::endl;
+  }
+
+  for (int i = 0; i < G_in.size(); i++) {
+    if (i != pole.which_g_[0]) {
+      residue.push_back(update_G_pole(G_in[i], pole));
+    }
+  }
+
+  return residue;
+}
+
+double TamiBase::get_simple_sign(int index, g_prod_t &R, pole_struct pole) {
+  double sign;
+
+  sign = R[pole.which_g_[0]].alpha_[index];
+
+  return sign;
+}
+
+/**
+ * Manipulates a Green's function to replace residue variable 'z' with complex
+ * pole.
+ *
+ */
+TamiBase::g_struct TamiBase::update_G_pole(TamiBase::g_struct g_in,
+                                         TamiBase::pole_struct pole) {
+  TamiBase::g_struct g_new;
+
+  for (int i = 0; i < g_in.alpha_.size(); i++) {
+    if (i != pole.index_) {
+      g_new.alpha_.push_back(g_in.alpha_[i] +
+                             g_in.alpha_[pole.index_] * pole.alpha_[i]);
+    } else {
+      g_new.alpha_.push_back(0);
+    }
+  }
+
+  for (int i = 0; i < g_in.eps_.size(); i++) {
+    g_new.eps_.push_back(g_in.eps_[i] +
+                         g_in.alpha_[pole.index_] * pole.eps_[i]);
+  }
+
+  if (g_new.alpha_.size() != g_in.alpha_.size()) {
+    std::cerr << "Error: Something may be wrong. Alphas of G and pole not the "
+                 "same size"
+              << std::endl;
+  }
+
+  return g_new;
+}
+
+/**
+ * Obtains the elements of `S_t` arrays, modified for poles with
+ * multiplicity!=1.
+ */
+double TamiBase::get_starting_sign(TamiBase::g_prod_t G_in,
+                                  TamiBase::pole_struct pole) {
+  double result = 1.0;
+
+  for (int i = 0; i < pole.which_g_.size(); i++) {
+    result = result * (double)G_in[pole.which_g_[i]].alpha_[pole.index_];
+  }
+
+  result = result / (double)factorial(pole.multiplicity_ - 1);
+
+  return result;
+}
+
+int TamiBase::factorial(int n) {
+  return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
+}
+
+/**
+ * Removes green's functions from `g_prod_t` to account for numerator of
+ * residue (z-z0)^m
+ */
+TamiBase::g_prod_t TamiBase::reduce_gprod(TamiBase::g_prod_t G_in,
+                                        TamiBase::pole_struct pole) {
+  g_prod_t reduced;
+
+  for (int i = 0; i < G_in.size(); i++) {
+    bool add = true;
+
+    for (int j = 0; j < pole.which_g_.size(); j++) {
+      if (pole.which_g_[j] == i) {
+        add = false;
+        break;
+      }
+    }
+
+    if (add) {
+      reduced.push_back(G_in[i]);
+    }
+  }
+
+  return reduced;
+}
   
   // std::cout<<"Out terms is size "<< out_terms.size()<<std::endl;
   
