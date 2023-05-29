@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-class AmiBase{
+class TamiBase{
 
     public:
         /// Returns the sign of a value - or zero if it is uniquely zero.
@@ -186,17 +186,17 @@ class AmiBase{
             N_INT_ = N_INT;
             E_REG_ = E_REG;
             N_EXT_ = 1;
-            TYPE_ = static_cast<AmiBase::graph_type>(0);   /// by default sigma.
-            int_type_ = static_cast<AmiBase::int_type>(0); /// by default is hubbard.
+            TYPE_ = static_cast<TamiBase::graph_type>(0);   /// by default sigma.
+            int_type_ = static_cast<TamiBase::int_type>(0); /// by default is hubbard.
             dispersion_ =
-                static_cast<AmiBase::disp_type>(0); /// by default is tight-binding.
+                static_cast<TamiBase::disp_type>(0); /// by default is tight-binding.
             }
 
             ami_parms(int N_INT, double E_REG, graph_type TYPE) {
             N_INT_ = N_INT;
             E_REG_ = E_REG;
             TYPE_ = TYPE;
-            int_type_ = static_cast<AmiBase::int_type>(0);
+            int_type_ = static_cast<TamiBase::int_type>(0);
             N_EXT_ = 1;
             }
 
@@ -206,8 +206,8 @@ class AmiBase{
             E_REG_ = E_REG;
             TYPE_ = TYPE;
             N_EXT_ = 1;
-            int_type_ = static_cast<AmiBase::int_type>(inter);
-            dispersion_ = static_cast<AmiBase::disp_type>(disp);
+            int_type_ = static_cast<TamiBase::int_type>(inter);
+            dispersion_ = static_cast<TamiBase::disp_type>(disp);
             }
 
             ami_parms() {}
@@ -329,7 +329,7 @@ class AmiBase{
         struct ft_term {
             ft_term() {}
 
-            ft_term(double s, FermiTree::fermi_tree_t ft, AmiBase::g_prod_t g) {
+            ft_term(double s, FermiTree::fermi_tree_t ft, TamiBase::g_prod_t g) {
             sign_ = s;
             ft_ = ft;
             g_prod_ = g;
@@ -340,29 +340,29 @@ class AmiBase{
             /// List of poles, \f$ \prod{f(p_i)}\f$.
             FermiTree::fermi_tree_t ft_;
             /// List of Green's functions, \f$ \prod{G_j}\f$.
-            AmiBase::g_prod_t g_prod_;
+            TamiBase::g_prod_t g_prod_;
         };
 
         typedef std::vector<ft_term> ft_terms;
         typedef std::vector<FermiTree::fermi_tree_t> ft_list;
         
-        void construct(int N_INT, AmiBase::g_prod_t R0, ft_terms &terms_out);
-        void construct(AmiBase::ami_parms &parms, AmiBase::g_prod_t R0, ft_terms &terms_out);
+        void construct(int N_INT, TamiBase::g_prod_t R0, ft_terms &terms_out);
+        void construct(TamiBase::ami_parms &parms, TamiBase::g_prod_t R0, ft_terms &terms_out);
         
         void factorize(ft_terms &in_terms, ft_terms &out_terms);
-        bool g_prod_equiv(AmiBase::g_prod_t &gp1, AmiBase::g_prod_t &gp2, int &sign);
+        bool g_prod_equiv(TamiBase::g_prod_t &gp1, TamiBase::g_prod_t &gp2, int &sign);
         // Need evaluate functions - worry about these later 
         
         /// Integrates a single Matsubara index.
         void integrate_step(int index, ft_terms &in_terms, ft_terms &out_terms);
         void term_integrate_step(int index, ft_term &in_term, ft_terms &out_terms);
-        void terms_general_residue(ft_term &this_term, AmiBase::pole_struct this_pole,ft_terms &out_terms);
+        void terms_general_residue(ft_term &this_term, TamiBase::pole_struct this_pole,ft_terms &out_terms);
         
-        void terms_to_ftterms(AmiBase::terms &in_terms, ft_terms &out_terms);
+        void terms_to_ftterms(TamiBase::terms &in_terms, ft_terms &out_terms);
         
-        void plist_to_ft(AmiBase::pole_array_t &plist, FermiTree::fermi_tree_t &ft);
+        void plist_to_ft(TamiBase::pole_array_t &plist, FermiTree::fermi_tree_t &ft);
                                     
-        void take_term_derivative(ft_term &in_term, AmiBase::pole_struct &pole, ft_terms &out_terms);
+        void take_term_derivative(ft_term &in_term, TamiBase::pole_struct &pole, ft_terms &out_terms);
         
         /// Screen IO for debugging.
         void print_terms(ft_terms &t);
@@ -370,16 +370,16 @@ class AmiBase{
         void print_term(ft_term &t);
         
         std::string pretty_print_ft_term(ft_term &ft);
-        std::string pretty_print_gprod(AmiBase::g_prod_t &gp);
-        std::string pretty_print_g(AmiBase::g_struct &g);
+        std::string pretty_print_gprod(TamiBase::g_prod_t &gp);
+        std::string pretty_print_g(TamiBase::g_struct &g);
         std::string pretty_print_ft_terms(ft_terms &fts);
         
         
-        std::complex<double> eval_ft(AmiBase::ami_parms &parms, FermiTree::fermi_tree_t &ft1,  FermiTree::vertex_t &v, AmiBase::ami_vars &external);
-        std::complex<double> evaluate_term(AmiBase::ami_parms &parms, ft_term &ft_term,
-                                                    AmiBase::ami_vars &external);
-        std::complex<double> evaluate(AmiBase::ami_parms &parms, ft_terms &ft_terms,
-                                                    AmiBase::ami_vars &external);
+        std::complex<double> eval_ft(TamiBase::ami_parms &parms, FermiTree::fermi_tree_t &ft1,  FermiTree::vertex_t &v, TamiBase::ami_vars &external);
+        std::complex<double> evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
+                                                    TamiBase::ami_vars &external);
+        std::complex<double> evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
+                                                    TamiBase::ami_vars &external);
 
         FermiTree FT;
 
@@ -396,7 +396,7 @@ class AmiBase{
 
         // Functions for amiBase::integrate_step -> integrate_Mat_ind_step
 
-        /// Integrates a single Matsubara index. --  renamed from the original function name (AmiBase::integrate_step())
+        /// Integrates a single Matsubara index. --  renamed from the original function name (TamiBase::integrate_step())
         void integrate_Mat_ind_step(int index, terms &in_terms, terms &out_terms);
 
         /*Given an array of Green's functions, finds all poles with respect to frequency

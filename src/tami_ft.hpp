@@ -1,7 +1,7 @@
 #pragma once
 
 #include <filesystem>
-#include <ami_base.hpp>
+#include <tami_base.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -81,21 +81,21 @@ vertex_info(int op, double depth){
   prefactor_=1;
 }
 
-vertex_info(AmiBase::pole_struct pole,  int op){
+vertex_info(TamiBase::pole_struct pole,  int op){
   operation_=op;
   pole_=pole;
   prefactor_=1;
 }
 
 
-vertex_info(AmiBase::pole_struct pole, double prefactor,  int op){
+vertex_info(TamiBase::pole_struct pole, double prefactor,  int op){
   operation_=op;
   pole_=pole;
   prefactor_=prefactor;
 }
 
 
-vertex_info(AmiBase::pole_struct pole, std::complex<double> value, int op, double depth){
+vertex_info(TamiBase::pole_struct pole, std::complex<double> value, int op, double depth){
   operation_=op;
   depth_=depth;
   pole_=pole;
@@ -103,7 +103,7 @@ vertex_info(AmiBase::pole_struct pole, std::complex<double> value, int op, doubl
   prefactor_=1;
 }
 
-vertex_info(AmiBase::pole_struct pole, std::complex<double> value, int op, double depth, double prefactor){
+vertex_info(TamiBase::pole_struct pole, std::complex<double> value, int op, double depth, double prefactor){
   operation_=op;
   depth_=depth;
   pole_=pole;
@@ -120,7 +120,7 @@ vertex_info(AmiBase::pole_struct pole, std::complex<double> value, int op, doubl
   int index_;
   int depth_;
   
-  AmiBase::pole_struct pole_;
+  TamiBase::pole_struct pole_;
   double prefactor_;
   
 };
@@ -174,11 +174,11 @@ void number_vertices(fermi_tree_t &g);
 // Initialize the tree to have one 
 void initialize_ft( fermi_tree_t &ft);
 void initialize_ft( fermi_tree_t &ft, operation op);
-void initialize_ft( fermi_tree_t &ft, AmiBase::pole_struct &pole);
-void initialize_ft( fermi_tree_t &ft, AmiBase::pole_struct &pole, double &prefactor);
+void initialize_ft( fermi_tree_t &ft, TamiBase::pole_struct &pole);
+void initialize_ft( fermi_tree_t &ft, TamiBase::pole_struct &pole, double &prefactor);
 
-void plist_to_ft(AmiBase::pole_array_t &plist, FermiTree::fermi_tree_t &ft);
-void plist_to_ft(AmiBase::pole_array_t &plist,double sign, FermiTree::fermi_tree_t &ft);
+void plist_to_ft(TamiBase::pole_array_t &plist, FermiTree::fermi_tree_t &ft);
+void plist_to_ft(TamiBase::pole_array_t &plist,double sign, FermiTree::fermi_tree_t &ft);
 
 // this changes every prefactor and is not in general the same as an overall prefactor. 
 void update_prefactors(fermi_tree_t &ft, double sign);
@@ -203,7 +203,7 @@ void print_vertex(vertex_t &v, fermi_tree_t &ft);
 void print_graph(fermi_tree_t &ft);
 
 std::string pretty_print_ft(fermi_tree_t &ft1, vertex_t &v);
-std::string pretty_print_pole(AmiBase::pole_struct &pole);
+std::string pretty_print_pole(TamiBase::pole_struct &pole);
 std::string pretty_print(fermi_tree_t &ft, vertex_t &v);
 std::string pretty_print(fermi_tree_t &ft);
 std::string pretty_print(fermi_tree_t &ft, std::vector<vertex_t> &vv, int op);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ft.hpp"
+#include "tami_ft.hpp"
 
 // Empty constructor
 FermiTree::FermiTree(){
@@ -53,7 +53,7 @@ number_vertices(ft);
 }
 
 
-void FermiTree::initialize_ft( fermi_tree_t &ft, AmiBase::pole_struct &pole){
+void FermiTree::initialize_ft( fermi_tree_t &ft, TamiBase::pole_struct &pole){
   
 if(num_vertices(ft) >0){ throw std::runtime_error("Attempted to initialize a non-empty fermi tree");}
 
@@ -61,7 +61,7 @@ vertex_t seed=add_vertex(vertex_info(pole,end),ft);
 number_vertices(ft);
 }
 
-void FermiTree::initialize_ft( fermi_tree_t &ft, AmiBase::pole_struct &pole, double &prefactor){
+void FermiTree::initialize_ft( fermi_tree_t &ft, TamiBase::pole_struct &pole, double &prefactor){
   
 if(num_vertices(ft) >0){ throw std::runtime_error("Attempted to initialize a non-empty fermi tree");}
 
@@ -120,7 +120,7 @@ vv.push_back(vout);
   
 }
 
-void FermiTree::plist_to_ft(AmiBase::pole_array_t &plist, FermiTree::fermi_tree_t &ft){
+void FermiTree::plist_to_ft(TamiBase::pole_array_t &plist, FermiTree::fermi_tree_t &ft){
   FermiTree::fermi_tree_t newft;
   
   if(plist.size()!=0){
@@ -139,7 +139,7 @@ void FermiTree::plist_to_ft(AmiBase::pole_array_t &plist, FermiTree::fermi_tree_
   
 }
 
-void FermiTree::plist_to_ft(AmiBase::pole_array_t &plist,double sign, FermiTree::fermi_tree_t &ft){
+void FermiTree::plist_to_ft(TamiBase::pole_array_t &plist,double sign, FermiTree::fermi_tree_t &ft){
   FermiTree::fermi_tree_t newft;
   
   if(plist.size()!=0){
@@ -661,7 +661,7 @@ std::string FermiTree::pretty_print_ft(fermi_tree_t &ft1, vertex_t &v){
 return ss.str();  
 }
 
-std::string FermiTree::pretty_print_pole(AmiBase::pole_struct &pole){
+std::string FermiTree::pretty_print_pole(TamiBase::pole_struct &pole){
   
   std::stringstream ss;
   
