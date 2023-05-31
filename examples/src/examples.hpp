@@ -28,3 +28,7 @@
 
  void default_example();
  void example_1();
+ void example2();
+ void example1_bose();
+ void example4();
+ void example9();

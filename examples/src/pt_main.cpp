@@ -9,7 +9,8 @@ int main( int argc , char *argv[] )
     std::istringstream ss(argv[1]);
 
     if (!(ss >> mode)){
-      std::cerr << "Something weird happened" << std::endl;
+      std::cerr << "Using default" << std::endl;
+      mode = 99;
     }
   }
 
@@ -19,6 +20,24 @@ int main( int argc , char *argv[] )
       break;
     case 1:
       example_1();
+      break;
+    case 2:
+      example2();
+      break;
+    case 3:
+      example1_bose();
+      break;
+    case 4:
+      example4();
+      break;
+    case 5:
+      example9();
+      break;
+    default:
+      example2();
+      example1_bose();
+      example4();
+      example9();
       break;
   }
 
@@ -201,3 +220,213 @@ void default_example(){
 
 
  }
+
+void example2(){
+std::cout<<std::endl<<"-_-_-_ Example - Second Order _-_-_-"<<std::endl<<std::endl;	
+	
+//START Example 
+// Same Problem, using ami_term storage type
+std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
+// class instance
+TamiBase ami;
+
+// Problem setup (see ami_example.cpp)
+TamiBase::g_prod_t R0=construct_example2(); // Sets initial integrand 
+TamiBase::ami_vars avars=construct_ext_example2(); // Sets 'external' parameter values 
+
+// Integration/Evaluation parameters
+double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
+int N_INT=2;  // Number of Matsubara sums to perform
+TamiBase::ami_parms test_amiparms(N_INT, E_REG);
+
+	//timing info
+	auto t1=std::chrono::high_resolution_clock::now();
+
+//simplified storage type 
+TamiBase::ft_terms amiterms;
+
+// Construct solution for problem defined in R0
+ami.construct(N_INT, R0, amiterms);
+
+	//timing info 
+	auto t2=std::chrono::high_resolution_clock::now();
+
+	std::chrono::duration<double> diff1=t2-t1;
+	std::chrono::microseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+
+std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+
+	//timing info 
+	auto t3=std::chrono::high_resolution_clock::now();
+
+//Evaluate term-by-term solution 
+std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. Note that the test_amiparms is the same as the first case 
+	
+	//timing info
+	auto t4=std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> diff2=t4-t3;
+	std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+
+std::cout<<"Term result was "<< term_val<<std::endl;
+std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
+	
+}
+
+ void example1_bose(){
+
+std::cout<<std::endl<<"-_-_-_ Example - First Order For Bosonic _-_-_-"<<std::endl<<std::endl;	
+	
+//START Example 
+// Same Problem, using ami_term storage type
+std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
+// class instance
+TamiBase ami;
+
+// Problem setup (see ami_example.cpp)
+TamiBase::g_prod_t R0=construct_example1_bose(); // Sets initial integrand 
+TamiBase::ami_vars avars=construct_ext_example1_bose(); // Sets 'external' parameter values 
+
+// Integration/Evaluation parameters
+double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
+int N_INT=1;  // Number of Matsubara sums to perform
+TamiBase::ami_parms test_amiparms(N_INT, E_REG);
+
+	//timing info
+	auto t1=std::chrono::high_resolution_clock::now();
+
+//simplified storage type 
+TamiBase::ft_terms amiterms;
+
+// Construct solution for problem defined in R0
+ami.construct(N_INT, R0, amiterms);
+
+	//timing info 
+	auto t2=std::chrono::high_resolution_clock::now();
+
+	std::chrono::duration<double> diff1=t2-t1;
+	std::chrono::microseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+
+std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+
+	//timing info 
+	auto t3=std::chrono::high_resolution_clock::now();
+
+//Evaluate term-by-term solution 
+std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. Note that the test_amiparms is the same as the first case 
+	
+	//timing info
+	auto t4=std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> diff2=t4-t3;
+	std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+
+std::cout<<"Term result was "<< term_val<<std::endl;
+std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
+
+
+ }
+
+
+ void example4(){
+
+std::cout<<std::endl<<"-_-_-_ Example - Fourth Order _-_-_-"<<std::endl<<std::endl;	
+	
+//START Example 
+// Same Problem, using ami_term storage type
+std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
+// class instance
+TamiBase ami;
+
+// Problem setup (see ami_example.cpp)
+TamiBase::g_prod_t R0=construct_multipole_example(); // Sets initial integrand 
+TamiBase::ami_vars avars=construct_4ord_ext_multipole_example(); // Sets 'external' parameter values 
+
+// Integration/Evaluation parameters
+double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
+int N_INT=4;  // Number of Matsubara sums to perform
+TamiBase::ami_parms test_amiparms(N_INT, E_REG);
+
+	//timing info
+	auto t1=std::chrono::high_resolution_clock::now();
+
+//simplified storage type 
+TamiBase::ft_terms amiterms;
+
+// Construct solution for problem defined in R0
+ami.construct(N_INT, R0, amiterms);
+
+	//timing info 
+	auto t2=std::chrono::high_resolution_clock::now();
+
+	std::chrono::duration<double> diff1=t2-t1;
+	std::chrono::microseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+
+std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+
+	//timing info 
+	auto t3=std::chrono::high_resolution_clock::now();
+
+//Evaluate term-by-term solution 
+std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'.
+	
+	//timing info
+	auto t4=std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> diff2=t4-t3;
+	std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+
+std::cout<<"Term result was "<< term_val<<std::endl;
+std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
+
+ }
+
+
+ void example9(){
+
+std::cout<<std::endl<<"-_-_-_ Example - Ninth Order _-_-_-"<<std::endl<<std::endl;	
+	
+//START Example 
+// Same Problem, using ami_term storage type
+std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
+// class instance
+TamiBase ami;
+
+// Problem setup (see ami_example.cpp)
+TamiBase::g_prod_t R0=construct_example_J(); // Sets initial integrand 
+TamiBase::ami_vars avars=construct_ext_example_J(); // Sets 'external' parameter values 
+
+// Integration/Evaluation parameters
+double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
+int N_INT=9;  // Number of Matsubara sums to perform
+TamiBase::ami_parms test_amiparms(N_INT, E_REG);
+
+	//timing info
+	auto t1=std::chrono::high_resolution_clock::now();
+
+//simplified storage type 
+TamiBase::ft_terms amiterms;
+
+// Construct solution for problem defined in R0
+ami.construct(N_INT, R0, amiterms);
+
+	//timing info 
+	auto t2=std::chrono::high_resolution_clock::now();
+
+	std::chrono::duration<double> diff1=t2-t1;
+	std::chrono::microseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+
+std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+
+	//timing info 
+	auto t3=std::chrono::high_resolution_clock::now();
+
+//Evaluate term-by-term solution 
+std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. 
+	
+	//timing info
+	auto t4=std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> diff2=t4-t3;
+	std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+
+std::cout<<"Term result was "<< term_val<<std::endl;
+std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
+
+}

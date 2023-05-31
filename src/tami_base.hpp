@@ -32,7 +32,7 @@
 #include <boost/graph/graph_utility.hpp>
 #include <boost/property_map/property_map.hpp>
 
-// #include <boost/program_options.hpp>
+#include <boost/program_options.hpp>
 #include "boost/graph/graphviz.hpp"
 #include <boost/graph/random.hpp>
 
