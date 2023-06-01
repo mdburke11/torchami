@@ -26,9 +26,13 @@
  TamiBase::g_prod_t construct_example_J();
  TamiBase::ami_vars construct_ext_example_J();
 
+ TamiBase::g_prod_t construct_example6();
+ TamiBase::ami_vars construct_ext_example6();
+
  void default_example();
  void example_1();
  void example2();
  void example1_bose();
  void example4();
+ void example6();
  void example9();

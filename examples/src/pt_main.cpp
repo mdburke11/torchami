@@ -37,6 +37,7 @@ int main( int argc , char *argv[] )
       example2();
       example1_bose();
       example4();
+      example6();
       example9();
       break;
   }
@@ -92,7 +93,7 @@ void default_example(){
 
   std::chrono::duration<double> diff2=t_end-t2;
 
-  // std::chrono::microseconds d=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+  // std::chrono::nanoseconds d=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
 
 
 
@@ -103,8 +104,8 @@ void default_example(){
 
   std::cout<<PT.pretty_print_ft_terms(ftout2)<<std::endl;
   std::cout<<"Result 4th order MP "<<result2<<std::endl;
-  std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
-  std::cout<<"Evaluation took "<< d2.count()<<" microseconds"<<std::endl;	
+  std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
+  std::cout<<"Evaluation took "<< d2.count()<<" nanoseconds"<<std::endl;	
 
   // PtTamiBase::ft_terms ftout3;
   // ftout3.push_back(ftout2[1]);
@@ -252,9 +253,9 @@ ami.construct(N_INT, R0, amiterms);
 	auto t2=std::chrono::high_resolution_clock::now();
 
 	std::chrono::duration<double> diff1=t2-t1;
-	std::chrono::microseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+	std::chrono::nanoseconds d1=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
 
-std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
 
 	//timing info 
 	auto t3=std::chrono::high_resolution_clock::now();
@@ -265,10 +266,11 @@ std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // E
 	//timing info
 	auto t4=std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff2=t4-t3;
-	std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
 std::cout<<"Term result was "<< term_val<<std::endl;
-std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
+std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
+std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 	
 }
 
@@ -289,7 +291,8 @@ TamiBase::ami_vars avars=construct_ext_example1_bose(); // Sets 'external' param
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
 int N_INT=1;  // Number of Matsubara sums to perform
-TamiBase::ami_parms test_amiparms(N_INT, E_REG);
+TamiBase::graph_type bose=TamiBase::Pi_phuu;
+TamiBase::ami_parms test_amiparms(N_INT, E_REG, bose);
 
 	//timing info
 	auto t1=std::chrono::high_resolution_clock::now();
@@ -304,9 +307,9 @@ ami.construct(N_INT, R0, amiterms);
 	auto t2=std::chrono::high_resolution_clock::now();
 
 	std::chrono::duration<double> diff1=t2-t1;
-	std::chrono::microseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+	std::chrono::nanoseconds d1=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
 
-std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
 
 	//timing info 
 	auto t3=std::chrono::high_resolution_clock::now();
@@ -317,11 +320,11 @@ std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // E
 	//timing info
 	auto t4=std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff2=t4-t3;
-	std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
 std::cout<<"Term result was "<< term_val<<std::endl;
-std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
-
+std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
+std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 
  }
 
@@ -358,9 +361,9 @@ ami.construct(N_INT, R0, amiterms);
 	auto t2=std::chrono::high_resolution_clock::now();
 
 	std::chrono::duration<double> diff1=t2-t1;
-	std::chrono::microseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+	std::chrono::nanoseconds d1=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
 
-std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
 
 	//timing info 
 	auto t3=std::chrono::high_resolution_clock::now();
@@ -371,12 +374,65 @@ std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // E
 	//timing info
 	auto t4=std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff2=t4-t3;
-	std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
 std::cout<<"Term result was "<< term_val<<std::endl;
-std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
-
+std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
+std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
  }
+
+
+  void example6(){
+    std::cout<<std::endl<<"-_-_-_ Example - Sixth Order _-_-_-"<<std::endl<<std::endl;	
+	
+  //START Example 
+  // Same Problem, using ami_term storage type
+  std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
+  // class instance
+  TamiBase ami;
+
+  // Problem setup (see ami_example.cpp)
+  TamiBase::g_prod_t R0=construct_example6(); // Sets initial integrand 
+  TamiBase::ami_vars avars=construct_ext_example6(); // Sets 'external' parameter values 
+
+  // Integration/Evaluation parameters
+  double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
+  int N_INT=6;  // Number of Matsubara sums to perform
+  TamiBase::ami_parms test_amiparms(N_INT, E_REG);
+
+    //timing info
+    auto t1=std::chrono::high_resolution_clock::now();
+
+  //simplified storage type 
+  TamiBase::ft_terms amiterms;
+
+  // Construct solution for problem defined in R0
+  ami.construct(N_INT, R0, amiterms);
+
+    //timing info 
+    auto t2=std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> diff1=t2-t1;
+    std::chrono::nanoseconds d1=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
+
+  std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
+
+    //timing info 
+    auto t3=std::chrono::high_resolution_clock::now();
+
+  //Evaluate term-by-term solution 
+  std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. 
+    
+    //timing info
+    auto t4=std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff2=t4-t3;
+    std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
+
+  std::cout<<"Term result was "<< term_val<<std::endl;
+  std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
+  std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
+
+  }
 
 
  void example9(){
@@ -411,9 +467,9 @@ ami.construct(N_INT, R0, amiterms);
 	auto t2=std::chrono::high_resolution_clock::now();
 
 	std::chrono::duration<double> diff1=t2-t1;
-	std::chrono::microseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+	std::chrono::nanoseconds d1=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
 
-std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
 
 	//timing info 
 	auto t3=std::chrono::high_resolution_clock::now();
@@ -424,9 +480,9 @@ std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // E
 	//timing info
 	auto t4=std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff2=t4-t3;
-	std::chrono::microseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
 std::cout<<"Term result was "<< term_val<<std::endl;
-std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
-
+std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
+std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 }
