@@ -1,1 +1,1 @@
-CC=$(which mpicc) CXX=$(which mpicxx) cmake -DCMAKE_INSTALL_PREFIX=/where/to/install/torchami/install ..
+cmake -DCMAKE_INSTALL_PREFIX=/Users/michael/Desktop/Research/torchami/install -DPYTHON_EXECUTABLE=`which python` -DCMAKE_PREFIX_PATH=`python -c "import torch; print(torch.utils.cmake_prefix_path)"` ..

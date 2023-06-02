@@ -2,40 +2,36 @@
 
 
 
-std::complex<double> TamiBase::evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
+at::Tensor TamiBase::evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
                                             TamiBase::ami_vars &external){
 
-  std::complex<double> term;
-  std::complex<double> output(0,0);
+  int batch_size = external.energy_.size(0);                           
+
+  at::Tensor term;
+  at::Tensor output = at::zeros(batch_size, at::kComplexDouble).to(device);
 
 
-for (int i = 0; i < ft_terms.size(); i++) {
-  // std::cout<<"Term "<<i<<std::endl;
-    term=evaluate_term(parms,ft_terms[i],external);
-    output+=term;
+  for (int i = 0; i < ft_terms.size(); i++) {
+    // std::cout<<"Term "<<i<<std::endl;
+      term=evaluate_term(parms,ft_terms[i],external).to(device);
+      output+=term;
   
 }
-
 
 return output;
 
 }
  
-std::complex<double> TamiBase::evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
+at::Tensor TamiBase::evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
                                             TamiBase::ami_vars &external){
 
-std::complex<double> gprod,fprod;
+  at::Tensor gprod,fprod;
 
-  gprod = eval_gprod(parms, ft_term.g_prod_, external);
+  gprod = eval_gprod(parms, ft_term.g_prod_, external).to(device);
   TamiBase::FermiTree::vertex_t r=FT.get_root(ft_term.ft_);
-  fprod = eval_ft(parms, ft_term.ft_,r, external);
+  fprod = eval_ft(parms, ft_term.ft_,r, external).to(device);
   
-  std::complex<double> output(0, 0);
-
-  output = ft_term.sign_ * gprod * fprod;
-
-
-
+  at::Tensor output = ft_term.sign_ * torch::multiply(gprod, fprod);
 
 return output;
 
@@ -44,16 +40,18 @@ return output;
 // std::complex<double> TamiBase::eval_fprod(ami_parms &parms, pole_array_t &p_list,
                                          // ami_vars &external)
 
-std::complex<double> TamiBase::eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fermi_tree_t &ft1,  TamiBase::FermiTree::vertex_t &v, TamiBase::ami_vars &external){
-  
- 
+at::Tensor TamiBase::eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fermi_tree_t &ft1,  TamiBase::FermiTree::vertex_t &v, TamiBase::ami_vars &external){
+
+// TODO: memory optimization here? do we copy or move (aoutput or moutput) into output? and is it still on the same device?
+
   std::vector<TamiBase::FermiTree::vertex_t> level;
   
   FT.get_next_level( ft1, v, level);
 
-  std::complex<double> output;
-  std::complex<double> aoutput(0,0);
-  std::complex<double> moutput(1,0);
+  int batch_size = external.energy_.size(0);
+  at::Tensor output = at::zeros(batch_size, at::kComplexDouble).to(device); // SEE TODO above maybe a better way to write this?
+  at::Tensor aoutput = at::zeros(batch_size, at::kComplexDouble).to(device);
+  at::Tensor moutput = at::ones(batch_size, at::kComplexDouble).to(device);
   
   // std::cout<<"In Evaluate the Prefactor is "<<ft1[v].prefactor_<<" on vertex "<< ft1[v].index_<< " with operation "<< ft1[v].operation_<<std::endl;
   
@@ -94,65 +92,64 @@ return output;
  *
  * Numerical evaluation of a product of Green's functions. Used both in `terms`
  * and `R_t` constructions.
- * @param[in] parms : `ami_parms` object, basic parameters for AMI.
+ * @param[in] parms : `ami_parms` object, basic parameters for TAMI.
  * @param[in] g_prod : `g_prod_t` a list of `g_struct` that is interpretted as
  * \f$ \prod{G_i} \f$.
  * @param[in] external : Input external variables in a `ami_vars` struct.
- * @return Single value for product of Green's functions.
+ * @return Value for product of Green's functions for all energies in external
  */
-std::complex<double> TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
+at::Tensor TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
                                          ami_vars external) {
-  std::complex<double> output(0, 0);
+  
+  int batch_size = external.energy_.size(0);
+  
+  at::Tensor output = at::zeros(batch_size, at::kComplexDouble).to(device); // get len(energies) answers
 
-  std::complex<double> denom_prod(1, 0);
+  at::Tensor denom_prod = at::ones(batch_size, at::kComplexDouble).to(device);
   double prefactor = external.prefactor;
 
-
   double E_REG = parms.E_REG_;
-
   bool verbose = false;
 
-
   for (int i = 0; i < g_prod.size(); i++) {
-    std::complex<double> alphadenom(0, 0);
-    std::complex<double> epsdenom(0, 0);
+    std::complex<double> alphadenom(0, 0); // TODO: should this be automatically c10::complex ? - needs frequency to change as well
+    at::Tensor epsdenom = at::zeros(batch_size, at::kComplexDouble).to(device);
 
     for (int a = 0; a < g_prod[i].alpha_.size(); a++) {
       alphadenom += double(g_prod[i].alpha_[a]) * external.frequency_[a];
     }
 
-    std::complex<double> zero(0, 0);
-    std::complex<double> im(0, 1);
-
     for (int a = 0; a < g_prod[i].eps_.size(); a++) {
-      epsdenom += double(g_prod[i].eps_[a]) * external.energy_[a];
-
+      epsdenom += double(g_prod[i].eps_[a]) * external.energy_.index({torch::indexing::Slice(),a});
     }
 
+    //TODO: What device is this scalar on ... or does it matter?
+    c10::Scalar alpha_denom = c10::complex<double>(alphadenom.real(), alphadenom.imag()); // cast to a tensor friendly complex value
   
-    denom_prod = denom_prod * (alphadenom + epsdenom);
+    denom_prod = torch::multiply(denom_prod, (alpha_denom + epsdenom)); // now c10::Scalar adds pairwisely to epsdenom
    
   }
 
-  output = 1.0 / denom_prod * prefactor;
+  output = 1.0 / denom_prod * prefactor; // scalar multiplication
 
   return output;
 }
 
 /// Evaluation of a single pole in Fermi/Bose functions for a given `ami_vars`.
-std::complex<double> TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
+at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
                                          ami_vars external) {
   if (verbose) {
     std::cout << "Working on pole" << std::endl;
     print_pole_struct_info(pole);
   }
 
-  std::complex<double> output, term;
+  at::Tensor output = at::zeros(external.energy_.size(0), at::kComplexDouble).to(device);
   int eta = 0;
 
   double beta = external.BETA_;
   double E_REG = parms.E_REG_;
 
+  // TODO: should we use at::scalars (c10::complex<double>) instead of std::complex<double>
   // Spectral evaluation only
   std::complex<double> freq_shift(0, 0);
   if (pole.x_alpha_.size() != 0) {
@@ -209,10 +206,12 @@ std::complex<double> TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 
   // could put infor into ami_vars external as to what the state type of the
   // external variables is.
-  std::complex<double> E = get_energy_from_pole(pole, external);
+  at::Tensor E = get_energy_from_pole(pole, external).to(device);
 
   // In the case of spectral poles the freq_shift might not be zero
-  E = E + freq_shift;
+  // TODO: Need to convert freqshift into a c10 complex or scalar to add pairwise or just always use them
+  c10::Scalar freqshift = c10::complex<double>(freq_shift.real(), freq_shift.imag()); // cast to a tensor friendly complex value
+  E = E + freqshift;
 
 
   double sigma = pow(-1.0, double(eta));
@@ -220,6 +219,9 @@ std::complex<double> TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
   std::complex<double> zero(0, 0);
   std::complex<double> im(0, 1);
 
+  // TODO: Figure out what to do about the regulation code here - for now we proceed commented (E_REG is usually 0 anyways)
+
+  /*
   // If energy denominator would be zero attempts to regulate if bosonic
   // function
   if (E == zero && sigma == -1) { // && pole.der_==0    Not sure if pole
@@ -241,23 +243,28 @@ std::complex<double> TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
   if (drop_der && pole.der_ != 0) {
     return zero;
   }
+  */
 
   int m = pole.der_;
 
   // compute m'th derivative
   output = fermi_bose(m, sigma, beta, E);
 
+/* 
+  // TODO: print max here as well ? commented until proper printint formating is implemented
   if (verbose) {
     std::cout << "Fermi Pole Term evaluated to " << output << " at energy " << E
               << " with sigma " << sigma << " betaE is " << beta * E
-              << " in exponent " << std::exp(beta * (E)) << std::endl;
+              << " in exponent " << at::exp(beta * (E)) << std::endl;
 			  
+  // TODO: No idea how to print this .. I guess its only a verbose output so its fine to print the whole batch
 	std::cout<<"Energy list is :(";
-		for(int ii=0; ii< external.energy_.size(); ii++){
-			std::cout<<std::setprecision(20)<<" "<<external.energy_[ii]<<" ,";
+		for(int ii=0; ii< external.energy_.size(1); ii++){
+			std::cout<<std::setprecision(20)<<" "<<external.energy_.index({torch::indexing::Slice(),a})<<" ,";
 		}
 		std::cout<<")"<<std::endl;
   }
+*/
 
 // TODO: Unclear if this is correct 
   if (parms.TYPE_ == TamiBase::doubleocc || bosonic_external) {
@@ -271,10 +278,12 @@ std::complex<double> TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 /// negative of the Bose distribution functions given by \f$\frac{1}{\sigma
 /// \exp^{\beta E}+1} \f$ at \f$ \beta\f$, for energy \f$ E\f$. \f$
 /// \sigma=1.0\f$ for Fermi and -1.0 for Bose.
-std::complex<double> TamiBase::fermi_bose(int m, double sigma, double beta,
-                                         std::complex<double> E) {
-  std::complex<double> output, term;
-  output = 0.0;
+at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
+                                         at::Tensor E) {
+
+  int batch_size = E.size(0);
+  at::Tensor output = at::zeros(batch_size, at::kComplexDouble).to(device);
+  at::Tensor term = at::zeros(batch_size, at::kComplexDouble).to(device);
 
   if (m == 0) {
               // Note: Disabled on 09/09/2022 for overflow testing 
@@ -289,7 +298,7 @@ std::complex<double> TamiBase::fermi_bose(int m, double sigma, double beta,
                   // output = 1;
                 // }
               // } else {
-      output = 1.0 / (sigma * std::exp(beta * (E)) + 1.0);
+      output = 1.0 / (sigma * at::exp(beta * (E)) + 1.0);
                 // }
     // return output;
   } else { // compute m'th derivative
@@ -301,37 +310,43 @@ std::complex<double> TamiBase::fermi_bose(int m, double sigma, double beta,
              // std::pow(sigma * std::exp(beta * (E)) + 1.0, k + 1);
 	// Reformatted with fewer exponentials
       term= frk(m,k)*std::pow(sigma,k) *std::pow(-1.0,
-      k+1)*(1.0/(sigma*std::exp(beta*(E))+1.0)/std::pow(sigma
-      +std::exp(-beta*(E)), k)) ;
+      k+1)*(1.0/(sigma*at::exp(beta*(E))+1.0)/at::pow(sigma
+      +at::exp(-beta*(E)), k)) ;
       output += term;
 
+      // TODO: fix the printing function then print the vector correctly
+      /*
       if (verbose) {
         std::cout << "On k'th derivative " << k << std::endl;
-
+        // TODO: Right now, this will print the whole tensor of numbers - not sure if imaginary part will print (usually shows an error)
         std::cout << "Fermi-bose Term evaluated to " << term << " at energy "
                   << E << " with sigma " << sigma << " betaE is " << beta * E
-                  << " in exponent " << std::exp(beta * (E)) << std::endl;
+                  << " in exponent " << at::exp(beta * (E)) << std::endl;
       }
+      */
     }
 
     output = output * std::pow(beta, m) * (-1.0);
 
+    // TODO: figure out what to do about this ... it kind of defeats the purpose of the tensor. I guess we just use max(tensor) ... come back to this
+    /*
     if ((std::abs(std::real(output)) > precision_cutoff)|| (std::abs(std::imag(output)) > precision_cutoff)) {
     
       overflow_detected = true;
     }
+    */
   }
 
   return output;
 }
 
-std::complex<double> TamiBase::get_energy_from_pole(pole_struct pole,
+at::Tensor TamiBase::get_energy_from_pole(pole_struct pole,
                                                    ami_vars external) {
-  std::complex<double> output(0, 0);
+  at::Tensor output = at::zeros(external.energy_.size(0), at::kComplexDouble).to(device);
 
   // Evaluating energies for pole
   for (int i = 0; i < pole.eps_.size(); i++) {
-    output += double(pole.eps_[i]) * external.energy_[i];
+    output += double(pole.eps_[i]) * external.energy_.index({torch::indexing::Slice(),i});
   }
 
   return output;

@@ -354,17 +354,19 @@ copy_tree(ft2,output,root2,nr);
 return output;  
 }
 
+// TODO: Probably we should remove this -- As far as I can tell, it is not used, right now it only appears commented out
 
-std::complex<double> TamiBase::FermiTree::eval_ft(fermi_tree_t &ft1, vertex_t &v){
+at::Tensor TamiBase::FermiTree::eval_ft(fermi_tree_t &ft1, vertex_t &v){
   
+  int batch_size = ft1[v].value_.size(0);
  
   std::vector<vertex_t> level;
   
   get_next_level( ft1, v, level);
 
-  std::complex<double> output;
-  std::complex<double> aoutput(0,0);
-  std::complex<double> moutput(1,0);
+  at::Tensor output = at::zeros(batch_size, at::kComplexDouble).to(ft_device);
+  at::Tensor aoutput = at::zeros(batch_size, at::kComplexDouble).to(ft_device);
+  at::Tensor moutput = at::ones(batch_size, at::kComplexDouble).to(ft_device);
   
   // std::cout<<"Prefactor is "<< ft1[v].prefactor_<<std::endl;
   

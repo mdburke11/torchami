@@ -36,9 +36,15 @@
 #include "boost/graph/graphviz.hpp"
 #include <boost/graph/random.hpp>
 
+#include <torch/torch.h>
+
 class TamiBase{
 
     public:
+
+        // Each instance will hold a torch device so that all internal calculartions are performed on this device
+        at::Device device = at::kCPU; // default behaviour is to run on cpu - see new c'tor
+
         /// Returns the sign of a value - or zero if it is uniquely zero.
         template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
 
@@ -82,7 +88,7 @@ class TamiBase{
         /// of these initial (pre integration) energies, \f$\epsilon_1, \epsilon_2\f$
         /// ..etc By convention, the energy_t contains the NEGATIVE of the energy of a
         /// given Green's function line, \f$ 1/(X+E) \f$ where \f$ E=-\epsilon \f$.
-        typedef std::vector<std::complex<double>> energy_t;
+        typedef at::Tensor energy_t;
 
         /// This is the list of internal and external frequencies values.  Typically
         /// only the last elements for external frequencies are non-zero - but one can
@@ -156,7 +162,7 @@ class TamiBase{
         /// of an overall prefactor. Also required is a value of \f$\beta=\frac{1}{k_B
         /// T}\f$ needed for evaluation of Fermi/Bose distributions.
         struct ami_vars {
-            /// Numerical values of energies.
+            /// Numerical values of energies. - at::Tensor = {e1_vector, e2_vector, ... } columns of length batch_size to be evaluated
             energy_t energy_;
             /// Numerical Values of frequencies.
             frequency_t frequency_;
@@ -353,7 +359,9 @@ class TamiBase{
         class FermiTree {
             public:
 
-
+            // each Fermitree object will also hold the device that it is working on -- TODO: maybe remove this redundancy (only needed for eval_ft)
+            // default behavior is to work on CPU
+            at::Device ft_device = at::kCPU;
 
             /*/* 
             typedef std::vector<int> epsilon_t;
@@ -412,7 +420,7 @@ class TamiBase{
             }
 
 
-            vertex_info(TamiBase::pole_struct pole, std::complex<double> value, int op, double depth){
+            vertex_info(TamiBase::pole_struct pole, at::Tensor value, int op, double depth){
             operation_=op;
             depth_=depth;
             pole_=pole;
@@ -420,7 +428,7 @@ class TamiBase{
             prefactor_=1;
             }
 
-            vertex_info(TamiBase::pole_struct pole, std::complex<double> value, int op, double depth, double prefactor){
+            vertex_info(TamiBase::pole_struct pole, at::Tensor value, int op, double depth, double prefactor){
             operation_=op;
             depth_=depth;
             pole_=pole;
@@ -429,7 +437,7 @@ class TamiBase{
             }
 
             
-            std::complex<double> value_;
+            at::Tensor value_;
             int operation_;
 
             int visited;
@@ -448,7 +456,7 @@ class TamiBase{
             
             int max_depth_=0;
             // double overall_prefactor=1.0;
-                
+
             };
 
             /////////////////////////
@@ -552,11 +560,15 @@ class TamiBase{
 
 
 
-            std::complex<double> eval_ft(fermi_tree_t &ft1, vertex_t &v);
+            at::Tensor eval_ft(fermi_tree_t &ft1, vertex_t &v);
 
 
 
             FermiTree();
+
+            FermiTree(at::Device dev){
+                ft_device = dev;
+            }
 
             private:
         };
@@ -610,18 +622,26 @@ class TamiBase{
         std::string pretty_print_ft_terms(ft_terms &fts);
         
         
-        std::complex<double> eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fermi_tree_t &ft1,  TamiBase::FermiTree::vertex_t &v, TamiBase::ami_vars &external);
-        std::complex<double> evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
+        at::Tensor eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fermi_tree_t &ft1,  TamiBase::FermiTree::vertex_t &v, TamiBase::ami_vars &external);
+        at::Tensor evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
                                                     TamiBase::ami_vars &external);
-        std::complex<double> evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
+        at::Tensor evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
                                                     TamiBase::ami_vars &external);
 
         FermiTree FT;
 
+        // C'tors 
+        /// Default Constructor.  Constructor is empty.  Currently no initialization
+        /// is required in most cases.
+        TamiBase();
+        // torch device c'tor otherwise it intializes to at::kCPU
+        TamiBase(at::Device dev){
+            device = dev;
+        }
         // FUNCTIONS THAT HAVE BEEN PULLED FROM LIBAMI
 
-        /// Evaluates a product of Green's functions.
-        std::complex<double> eval_gprod(ami_parms &parms, g_prod_t g_prod,
+        /// Evaluates a product of Green's functions for all energies provided
+        at::Tensor eval_gprod(ami_parms &parms, g_prod_t g_prod,
                                   ami_vars external);
 
         /// Convert terms to Ri structure for optimization.  This does not create a
@@ -671,20 +691,20 @@ class TamiBase{
         // challenging function for numerical evaluation.  It is the most likely
         // source of issue or errors and some thought should go into testing this
         // carefully
-        std::complex<double> fermi_pole(ami_parms &parms, pole_struct pole,
+        at::Tensor fermi_pole(ami_parms &parms, pole_struct pole,
                                         ami_vars external);
 
         void print_pole_struct_info(pole_struct g);
 
         /// Recursive construction of fermi_bose derivatives.
-        std::complex<double> fermi_bose(int m, double sigma, double beta,
-                                  std::complex<double> E);
+        at::Tensor fermi_bose(int m, double sigma, double beta,
+                                  at::Tensor E);
 
         void print_alpha_info(alpha_t alpha);
 
-        /// Given a set of external energies, beta, and frequencies, will evaluate the
-        /// energy of a pole_struct.
-        std::complex<double> get_energy_from_pole(pole_struct pole,
+        /// Given a set of tensor energies, beta, and frequencies, will evaluate the
+        /// energies of a pole_struct.
+        at::Tensor get_energy_from_pole(pole_struct pole,
                                                     ami_vars external);
 
         /*The frk function itself returns
