@@ -36,3 +36,8 @@
  void example4();
  void example6();
  void example9();
+ //void example_();
+
+// TODO: clean these up - maybe put together
+ std::string format_r1_tensor(const at::Tensor&);
+ std::string format_r2_tensor(const at::Tensor&);

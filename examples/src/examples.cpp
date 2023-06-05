@@ -39,14 +39,16 @@ return R0;
 
 TamiBase::ami_vars construct_ext_example2(){
 
+int batch_size = 10; // Right now we copy the vector of energies to make the batch of energies to ne
 
-TamiBase::energy_t energy={-4,0.1,-1};
+std::vector<TamiBase::complex_double> energy_vec = {-4,0.1,-1}; // template energy vector that will be copied batch_size times in the tensor
+TamiBase::energy_t energy = at::tensor(energy_vec).repeat({batch_size, 1}); // TODO: Probably a more efficient way of doing this
 
 TamiBase::frequency_t frequency;
 
-for(int i=0;i<2;i++){ frequency.push_back(std::complex<double>(0,0));}
+for(int i=0;i<2;i++){ frequency.push_back(TamiBase::complex_double(0,0));}
 
-frequency.push_back(std::complex<double>(0,M_PI));
+frequency.push_back(TamiBase::complex_double(0,M_PI));
 
 double BETA=1.0;
 TamiBase::ami_vars external(energy, frequency,BETA);
@@ -61,24 +63,26 @@ return external;
 
 TamiBase::ami_vars construct_ext_example_J(){
 
-TamiBase::energy_t energy={-4.64,1.02,1.04,1.05,1.06,1.07,1.08,1.09,1.11,1.23,-4.43,-4.52,1.5,1.6,1.7,1.8,1.9};
+int batch_size = 2;
+std::vector<TamiBase::complex_double> energy_vec = {-4.64,1.02,1.04,1.05,1.06,1.07,1.08,1.09,1.11,1.23,-4.43,-4.52,1.5,1.6,1.7,1.8,1.9};
+TamiBase::energy_t energy=at::tensor(energy_vec).repeat({batch_size, 1}); // TODO: Probably a more efficient way of doing this
 		//{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 //energy_t energy={-4,1,-1,1,1,-4,1,1,1,1,1,1,1,1,1,1,1};
 
-TamiBase::frequency_t frequency= {std::complex<double>(0,0),
-			std::complex<double>(0,0),
-			std::complex<double>(0,0),
-			std::complex<double>(0,0),
-			std::complex<double>(0,0),
-			std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,M_PI)};
+TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
+			TamiBase::complex_double(0,0),
+			TamiBase::complex_double(0,0),
+			TamiBase::complex_double(0,0),
+			TamiBase::complex_double(0,0),
+			TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,M_PI)};
 
-//for(int i=0;i<9;i++){ frequency.push_back(std::complex<double>(0,0));}//frequency.push_back(std::complex<double>(0,0));}
+//for(int i=0;i<9;i++){ frequency.push_back(TamiBase::complex_double(0,0));}//frequency.push_back(TamiBase::complex_double(0,0));}
 
-//frequency.push_back(std::complex<double>(0, M_PI));//(0,M_PI));
+//frequency.push_back(TamiBase::complex_double(0, M_PI));//(0,M_PI));
 
 double BETA=1.0;
 TamiBase::ami_vars external(energy, frequency,BETA);
@@ -240,15 +244,17 @@ return R0;
 
 TamiBase::ami_vars construct_4ord_ext_multipole_example(){
 
+int batch_size = 5;
 
+std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.31,1.4,0.01, 0.1}; //{1,1.1,1.2,1.3,1.4,0.01, 0.1};
 
-TamiBase::energy_t energy={1,1.1,1.2,1.31,1.4,0.01, 0.1}; //{1,1.1,1.2,1.3,1.4,0.01, 0.1};
+TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1});
 
-TamiBase::frequency_t frequency= {std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,M_PI)};
+TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,M_PI)};
 
 double BETA=1.0;
 TamiBase::ami_vars external(energy, frequency,BETA);
@@ -349,14 +355,17 @@ return R0;
 
 TamiBase::ami_vars construct_ext_example1_bose(){
 
+int batch_size = 2;
 
-TamiBase::energy_t energy={-4,0.1};
+std::vector<TamiBase::complex_double> energy_vec = {-4,0.1};
+
+TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1});
 
 TamiBase::frequency_t frequency;
 
-for(int i=0;i<1;i++){ frequency.push_back(std::complex<double>(0,0));}
+for(int i=0;i<1;i++){ frequency.push_back(TamiBase::complex_double(0,0));}
 
-frequency.push_back(std::complex<double>(0,M_PI));// This frequency is expected to be a bosonic matsubara or real frequency. There is no catch if this is untrue. 
+frequency.push_back(TamiBase::complex_double(0,M_PI));// This frequency is expected to be a bosonic matsubara or real frequency. There is no catch if this is untrue. 
 
 double BETA=1.0;
 TamiBase::ami_vars external(energy, frequency,BETA);
@@ -370,15 +379,17 @@ return external;
 
 TamiBase::ami_vars construct_ext_example_Y(){
 
+int batch_size = 2;
 
+std::vector<TamiBase::complex_double> energy_vec = {4,-1,-1,-1,-2,2,1};
 
-TamiBase::energy_t energy={4,-1,-1,-1,-2,2,1};
+TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1});
 
-TamiBase::frequency_t frequency= {std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,M_PI)};
+TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,M_PI)};
 
 double BETA=1.0;
 TamiBase::ami_vars external(energy, frequency,BETA);
@@ -444,16 +455,20 @@ return R0;
 TamiBase::ami_vars construct_ext_example6(){
 
 
+int batch_size = 2;
 
-TamiBase::energy_t energy={1,1.1,1.2,1.3,1.4,0, 0.1, 0.2, 0.3,0.4, 0.5};
+std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.3,1.4,0, 0.1, 0.2, 0.3,0.4, 0.5};
 
-TamiBase::frequency_t frequency= {std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,0),
-				std::complex<double>(0,0),
-                std::complex<double>(0,0),
-                std::complex<double>(0,0),
-				std::complex<double>(0,M_PI)};
+TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1});
+
+
+TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+                TamiBase::complex_double(0,0),
+                TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,M_PI)};
 
 double BETA=1.0;
 TamiBase::ami_vars external(energy, frequency,BETA);
@@ -529,3 +544,28 @@ R0.push_back(g11);
 return R0;
 
 }
+
+ std::string format_r1_tensor(const at::Tensor& tens){
+
+  std::ostringstream str;
+  for (int i=0; i < tens.size(0); ++i){
+		auto a = tens[i].item();
+		str << a << std::endl;
+	}
+	str << std::endl;
+	return str.str();
+ }
+
+ std::string format_r2_tensor(const at::Tensor& tens){
+  std::ostringstream str;
+  for (int i=0; i < tens.size(0); ++i){
+    for (int j=0; j < tens.size(1); ++j){
+      auto a = tens[i][j].item();
+      str << a << " ";
+    }
+  str << std::endl;
+  }
+  return str.str();
+
+
+ }

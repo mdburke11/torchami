@@ -37,7 +37,7 @@ return output;
 
 }
 
-// std::complex<double> TamiBase::eval_fprod(ami_parms &parms, pole_array_t &p_list,
+// TamiBase::complex_double TamiBase::eval_fprod(ami_parms &parms, pole_array_t &p_list,
                                          // ami_vars &external)
 
 at::Tensor TamiBase::eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fermi_tree_t &ft1,  TamiBase::FermiTree::vertex_t &v, TamiBase::ami_vars &external){
@@ -112,7 +112,7 @@ at::Tensor TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
   bool verbose = false;
 
   for (int i = 0; i < g_prod.size(); i++) {
-    std::complex<double> alphadenom(0, 0); // TODO: should this be automatically c10::complex ? - needs frequency to change as well
+    TamiBase::complex_double alphadenom(0, 0); 
     at::Tensor epsdenom = at::zeros(batch_size, at::kComplexDouble).to(device);
 
     for (int a = 0; a < g_prod[i].alpha_.size(); a++) {
@@ -123,10 +123,10 @@ at::Tensor TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
       epsdenom += double(g_prod[i].eps_[a]) * external.energy_.index({torch::indexing::Slice(),a});
     }
 
-    //TODO: What device is this scalar on ... or does it matter?
-    c10::Scalar alpha_denom = c10::complex<double>(alphadenom.real(), alphadenom.imag()); // cast to a tensor friendly complex value
+    //TODO: What device is this scalar on ... or does it matter? -- Hopefully this works
+    //c10::Scalar alpha_denom = c10::complex<double>(alphadenom.real(), alphadenom.imag()); // cast to a tensor friendly complex value
   
-    denom_prod = torch::multiply(denom_prod, (alpha_denom + epsdenom)); // now c10::Scalar adds pairwisely to epsdenom
+    denom_prod = torch::multiply(denom_prod, (alphadenom + epsdenom)); // now c10::Scalar adds pairwisely to epsdenom
    
   }
 
@@ -149,9 +149,9 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
   double beta = external.BETA_;
   double E_REG = parms.E_REG_;
 
-  // TODO: should we use at::scalars (c10::complex<double>) instead of std::complex<double>
+  // TODO: should we use at::scalars (c10::complex<double>) instead of std::complex<double> -- Hopefully this is fixed
   // Spectral evaluation only
-  std::complex<double> freq_shift(0, 0);
+  TamiBase::complex_double freq_shift(0, 0);
   if (pole.x_alpha_.size() != 0) {
     for (int i = 0; i < pole.x_alpha_.size(); i++) {
       freq_shift = external.frequency_[i] * (double)pole.x_alpha_[i];
@@ -216,8 +216,8 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 
   double sigma = pow(-1.0, double(eta));
 
-  std::complex<double> zero(0, 0);
-  std::complex<double> im(0, 1);
+  TamiBase::complex_double zero(0, 0);
+  TamiBase::complex_double im(0, 1);
 
   // TODO: Figure out what to do about the regulation code here - for now we proceed commented (E_REG is usually 0 anyways)
 

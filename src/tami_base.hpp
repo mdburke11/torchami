@@ -42,6 +42,11 @@ class TamiBase{
 
     public:
 
+        // Typedef for the type of complex numbers to be used throughout - c10 has torch's complex scalar class
+        // c10::complex<T> is the prefered complex datatype to build tensors with and therefore the better option
+        // to use throughout
+        typedef c10::complex<double> complex_double;
+
         // Each instance will hold a torch device so that all internal calculartions are performed on this device
         at::Device device = at::kCPU; // default behaviour is to run on cpu - see new c'tor
 
@@ -88,14 +93,14 @@ class TamiBase{
         /// of these initial (pre integration) energies, \f$\epsilon_1, \epsilon_2\f$
         /// ..etc By convention, the energy_t contains the NEGATIVE of the energy of a
         /// given Green's function line, \f$ 1/(X+E) \f$ where \f$ E=-\epsilon \f$.
-        typedef at::Tensor energy_t;
+        typedef at::Tensor energy_t; // TODO: is there a way to declare this so it contains strictly c10::complex<double> = complex_double
 
         /// This is the list of internal and external frequencies values.  Typically
         /// only the last elements for external frequencies are non-zero - but one can
         /// evaluate intermediate steps where multiple external frequencies are
         /// non-zero.
         ///
-        typedef std::vector<std::complex<double>> frequency_t;
+        typedef std::vector<complex_double> frequency_t;
 
         // Fundamental objects
 
@@ -633,7 +638,7 @@ class TamiBase{
         // C'tors 
         /// Default Constructor.  Constructor is empty.  Currently no initialization
         /// is required in most cases.
-        TamiBase();
+        TamiBase(){} 
         // torch device c'tor otherwise it intializes to at::kCPU
         TamiBase(at::Device dev){
             device = dev;

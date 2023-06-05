@@ -33,6 +33,9 @@ int main( int argc , char *argv[] )
     case 5:
       example9();
       break;
+   //case 6:
+   //   example_();
+   //   break;
     default:
       example2();
       example1_bose();
@@ -53,7 +56,8 @@ void default_example(){
 
   TamiBase::g_prod_t R0=construct_example2();
 
-  TamiBase PT;
+  at::Device myCPU = at::kCPU;
+  TamiBase PT(myCPU);
   TamiBase::ft_terms ftout;
 
   /* PT.construct(2, R0, ftout);
@@ -87,7 +91,7 @@ void default_example(){
   TamiBase::ami_parms parms2(0, 0);
 
   auto t2=std::chrono::high_resolution_clock::now();
-  std::complex<double> result2=PT.evaluate(parms2,ftout2,avars2);
+  at::Tensor result2=PT.evaluate(parms2,ftout2,avars2);
 
   auto t_end=std::chrono::high_resolution_clock::now();
 
@@ -103,7 +107,7 @@ void default_example(){
   // std::cout<<PT.FT.pretty_print(ftout2[0].ft_)<<std::endl;
 
   std::cout<<PT.pretty_print_ft_terms(ftout2)<<std::endl;
-  std::cout<<"Result 4th order MP "<<result2<<std::endl;
+  std::cout<<"Result 4th order MP "<<format_r1_tensor(result2)<<std::endl;
   std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
   std::cout<<"Evaluation took "<< d2.count()<<" nanoseconds"<<std::endl;	
 
@@ -261,14 +265,14 @@ std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
 	auto t3=std::chrono::high_resolution_clock::now();
 
 //Evaluate term-by-term solution 
-std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. Note that the test_amiparms is the same as the first case 
+at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. Note that the test_amiparms is the same as the first case 
 	
 	//timing info
 	auto t4=std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< term_val<<std::endl;
+std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 	
@@ -315,14 +319,14 @@ std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
 	auto t3=std::chrono::high_resolution_clock::now();
 
 //Evaluate term-by-term solution 
-std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. Note that the test_amiparms is the same as the first case 
+at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. Note that the test_amiparms is the same as the first case 
 	
 	//timing info
 	auto t4=std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< term_val<<std::endl;
+std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 
@@ -369,14 +373,14 @@ std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
 	auto t3=std::chrono::high_resolution_clock::now();
 
 //Evaluate term-by-term solution 
-std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'.
+at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'.
 	
 	//timing info
 	auto t4=std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< term_val<<std::endl;
+std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
  }
@@ -421,14 +425,14 @@ std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
     auto t3=std::chrono::high_resolution_clock::now();
 
   //Evaluate term-by-term solution 
-  std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. 
+  at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. 
     
     //timing info
     auto t4=std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff2=t4-t3;
     std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-  std::cout<<"Term result was "<< term_val<<std::endl;
+  std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
   std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
   std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 
@@ -475,14 +479,14 @@ std::cout<<"Construction took "<<d1.count()<<" nanoseconds"<<std::endl;
 	auto t3=std::chrono::high_resolution_clock::now();
 
 //Evaluate term-by-term solution 
-std::complex<double> term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. 
+at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. 
 	
 	//timing info
 	auto t4=std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< term_val<<std::endl;
+std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 }
