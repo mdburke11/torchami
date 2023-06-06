@@ -1,1 +1,1 @@
-cmake -DCMAKE_INSTALL_PREFIX=/Users/michael/Desktop/Research/torchami/install -DPYTHON_EXECUTABLE=`which python` -DCMAKE_PREFIX_PATH=`python -c "import torch; print(torch.utils.cmake_prefix_path)"` ..
+cmake -DCMAKE_INSTALL_PREFIX=/home/mdburke/software/torchami/install -DCMAKE_PREFIX_PATH=$VIRTUAL_ENV/lib/python3.10/site-packages -DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath=$VIRTUAL_ENV/lib/python3.10/site-packages/torch/lib -DCMAKE_SKIP_RPATH=ON ..

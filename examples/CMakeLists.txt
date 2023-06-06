@@ -37,7 +37,7 @@ target_link_libraries(${PROJECT_NAME}  ${LIBTORCHAMI_ROOT}/lib/libtorchami.dylib
  m )
  else()
 target_link_libraries(${PROJECT_NAME}  ${LIBAMI_ROOT}/lib/libtorchami.so
- m )
+ m )./else()
  ENDIF(MACOSX)
  
 else()
