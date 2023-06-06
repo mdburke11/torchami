@@ -7,7 +7,7 @@ if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
-find_package(torch REQUIRED)
+find_package(Torch REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
 link_directories(${Boost_LIBRARY_DIRS})
@@ -45,6 +45,4 @@ INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/."
         DESTINATION include
         FILES_MATCHING PATTERN "*.hpp"
 )
-
-#install(TARGETS dmft RUNTIME DESTINATION "bin/")
 
