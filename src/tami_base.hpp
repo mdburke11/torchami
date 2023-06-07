@@ -361,11 +361,7 @@ class TamiBase{
         // START OF THE POLE TREE STUFF
 
         class FermiTree {
-            public:
-
-            // each Fermitree object will also hold the device that it is working on -- TODO: maybe remove this redundancy (only needed for eval_ft)
-            // default behavior is to work on CPU
-            at::Device ft_device = at::kCPU;
+            public: 
 
             /*/* 
             typedef std::vector<int> epsilon_t;
@@ -552,27 +548,13 @@ class TamiBase{
             // either include root1 or don't.  which is it?
             void copy_tree(fermi_tree_t &ft1, fermi_tree_t &ft2,vertex_t &root1, vertex_t &root2);
 
-
-
-
             // could either place 
             fermi_tree_t add_ft(fermi_tree_t ft1, fermi_tree_t ft2);
 
 
-
             fermi_tree_t mult_ft(fermi_tree_t ft1, fermi_tree_t ft2);
 
-
-
-            at::Tensor eval_ft(fermi_tree_t &ft1, vertex_t &v);
-
-
-
             FermiTree();
-
-            FermiTree(at::Device dev){
-                ft_device = dev;
-            }
 
             private:
         };
