@@ -80,10 +80,14 @@ void default_example(){
   std::cout<<"Result is "<<result<<std::endl; */
 
   TamiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
-  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example();//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
+  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example(PT);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
 
   // construct_4ord_ext_multipole_example();
   // TamiBase::g_prod_t construct_multipole_example();
+
+
+  std::cout << "Starting energy tensor: " << std::endl;
+  std::cout << format_r2_tensor(avars2.energy_) << std::endl;
 
   TamiBase::ft_terms ftout2;
 
@@ -237,7 +241,7 @@ TamiBase ami;
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example2(); // Sets initial integrand 
-TamiBase::ami_vars avars=construct_ext_example2(); // Sets 'external' parameter values 
+TamiBase::ami_vars avars=construct_ext_example2(ami); // Sets 'external' parameter values 
 
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -290,7 +294,7 @@ TamiBase ami;
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example1_bose(); // Sets initial integrand 
-TamiBase::ami_vars avars=construct_ext_example1_bose(); // Sets 'external' parameter values 
+TamiBase::ami_vars avars=construct_ext_example1_bose(ami); // Sets 'external' parameter values 
 
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -345,7 +349,7 @@ TamiBase ami;
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_multipole_example(); // Sets initial integrand 
-TamiBase::ami_vars avars=construct_4ord_ext_multipole_example(); // Sets 'external' parameter values 
+TamiBase::ami_vars avars=construct_4ord_ext_multipole_example(ami); // Sets 'external' parameter values 
 
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -397,7 +401,7 @@ std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 
   // Problem setup (see ami_example.cpp)
   TamiBase::g_prod_t R0=construct_example6(); // Sets initial integrand 
-  TamiBase::ami_vars avars=construct_ext_example6(); // Sets 'external' parameter values 
+  TamiBase::ami_vars avars=construct_ext_example6(ami); // Sets 'external' parameter values 
 
   // Integration/Evaluation parameters
   double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -451,7 +455,7 @@ TamiBase ami;
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example_J(); // Sets initial integrand 
-TamiBase::ami_vars avars=construct_ext_example_J(); // Sets 'external' parameter values 
+TamiBase::ami_vars avars=construct_ext_example_J(ami); // Sets 'external' parameter values 
 
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
