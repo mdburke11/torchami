@@ -47,7 +47,10 @@ class TamiBase{
         typedef c10::complex<double> complex_double;
 
         // Each instance will hold a torch device so that all internal calculartions are performed on this device
-        at::Device device = at::kCPU; // default behaviour is to run on cpu - see new c'tor
+        //at::Device device = at::kCPU; // default behaviour is to run on cpu - see new c'tor
+
+        // hold the device options inside the base class
+        at::TensorOptions options = at::TensorOptions().dtype(at::kComplexDouble).device(at::kCPU);
 
         /// Returns the sign of a value - or zero if it is uniquely zero.
         template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
@@ -621,9 +624,10 @@ class TamiBase{
         /// is required in most cases.
         TamiBase(){} 
         // torch device c'tor otherwise it intializes to at::kCPU
-        TamiBase(at::Device dev){
-            device = dev;
+        TamiBase(at::Device& dev){
+            options = at::TensorOptions().dtype(at::kComplexDouble).device(dev);
         }
+
         // FUNCTIONS THAT HAVE BEEN PULLED FROM LIBAMI
 
         /// Evaluates a product of Green's functions for all energies provided

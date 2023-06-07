@@ -59,8 +59,9 @@ void default_example(){
 
   TamiBase::g_prod_t R0=construct_example2();
 
-  at::Device myCPU = at::kCPU;
-  TamiBase PT(myCPU);
+  at::Device myDev = at::kCPU;
+
+  TamiBase PT(myDev);
   TamiBase::ft_terms ftout;
 
   /* PT.construct(2, R0, ftout);
@@ -232,8 +233,9 @@ void default_example_gpu(){
 
   TamiBase::g_prod_t R0=construct_example2();
 
-  at::Device myCPU = at::kCUDA;//CPU;
-  TamiBase PT(myCPU);
+  at::Device myDev = at::kCPU;//kCUDA;//CPU;
+
+  TamiBase PT(myDev);
   TamiBase::ft_terms ftout;
 
   // int batch_size=5;
@@ -301,7 +303,8 @@ std::cout<<std::endl<<"-_-_-_ Example - Second Order _-_-_-"<<std::endl<<std::en
 // Same Problem, using ami_term storage type
 std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
 // class instance
-TamiBase ami;
+at::Device myDev = at::kCPU;
+TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example2(); // Sets initial integrand 
@@ -354,7 +357,8 @@ std::cout<<std::endl<<"-_-_-_ Example - First Order For Bosonic _-_-_-"<<std::en
 // Same Problem, using ami_term storage type
 std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
 // class instance
-TamiBase ami;
+at::Device myDev = at::kCPU;
+TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example1_bose(); // Sets initial integrand 
@@ -409,7 +413,8 @@ std::cout<<std::endl<<"-_-_-_ Example - Fourth Order _-_-_-"<<std::endl<<std::en
 // Same Problem, using ami_term storage type
 std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
 // class instance
-TamiBase ami;
+at::Device myDev = at::kCPU;
+TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_multipole_example(); // Sets initial integrand 
@@ -461,7 +466,8 @@ std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
   // Same Problem, using ami_term storage type
   std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
   // class instance
-  TamiBase ami;
+  at::Device myDev = at::kCPU;
+  TamiBase ami(myDev);
 
   // Problem setup (see ami_example.cpp)
   TamiBase::g_prod_t R0=construct_example6(); // Sets initial integrand 
@@ -515,7 +521,8 @@ std::cout<<std::endl<<"-_-_-_ Example - Ninth Order _-_-_-"<<std::endl<<std::end
 // Same Problem, using ami_term storage type
 std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
 // class instance
-TamiBase ami;
+at::Device myDev = at::kCPU;
+TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example_J(); // Sets initial integrand 

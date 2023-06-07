@@ -42,7 +42,7 @@ TamiBase::ami_vars construct_ext_example2(TamiBase& tami){
 int batch_size = 10; // Right now we copy the vector of energies to make the batch of energies to ne
 
 std::vector<TamiBase::complex_double> energy_vec = {-4,0.1,-1}; // template energy vector that will be copied batch_size times in the tensor
-TamiBase::energy_t energy = at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device); // TODO: Probably a more efficient way of doing this
+TamiBase::energy_t energy = at::tensor(energy_vec, tami.options).repeat({batch_size, 1}); // TODO: Probably a more efficient way of doing this
 
 TamiBase::frequency_t frequency;
 
@@ -64,8 +64,9 @@ return external;
 TamiBase::ami_vars construct_ext_example_J(TamiBase& tami){
 
 int batch_size = 2;
+
 std::vector<TamiBase::complex_double> energy_vec = {-4.64,1.02,1.04,1.05,1.06,1.07,1.08,1.09,1.11,1.23,-4.43,-4.52,1.5,1.6,1.7,1.8,1.9};
-TamiBase::energy_t energy=at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device); // TODO: Probably a more efficient way of doing this
+TamiBase::energy_t energy=at::tensor(energy_vec, tami.options).repeat({batch_size, 1}); // TODO: Probably a more efficient way of doing this
 		//{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 //energy_t energy={-4,1,-1,1,1,-4,1,1,1,1,1,1,1,1,1,1,1};
 
@@ -248,7 +249,7 @@ int batch_size = 5;
 
 std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.31,1.4,0.01, 0.1}; //{1,1.1,1.2,1.3,1.4,0.01, 0.1};
 
-TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device);
+TamiBase::energy_t energy= at::tensor(energy_vec, tami.options).repeat({batch_size, 1});
 
 TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
 				TamiBase::complex_double(0,0),
@@ -270,7 +271,8 @@ TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami, int batc
 std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.31,1.4,0.01, 0.1}; //{1,1.1,1.2,1.3,1.4,0.01, 0.1};
 
 // TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device);
-TamiBase::energy_t energy= 8.0*at::rand({batch_size,energy_vec.size()}).to(tami.device)-4.0;//.repeat({batch_size, 1}).to(tami.device);
+int energy_size = energy_vec.size();
+TamiBase::energy_t energy= 8.0*at::rand({batch_size,energy_size}, tami.options)-4.0;//.repeat({batch_size, 1}, options);
 
 TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
 				TamiBase::complex_double(0,0),
@@ -381,7 +383,7 @@ int batch_size = 2;
 
 std::vector<TamiBase::complex_double> energy_vec = {-4,0.1};
 
-TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device);
+TamiBase::energy_t energy= at::tensor(energy_vec, tami.options).repeat({batch_size, 1});
 
 TamiBase::frequency_t frequency;
 
@@ -405,7 +407,7 @@ int batch_size = 2;
 
 std::vector<TamiBase::complex_double> energy_vec = {4,-1,-1,-1,-2,2,1};
 
-TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device);
+TamiBase::energy_t energy= at::tensor(energy_vec, tami.options).repeat({batch_size, 1});
 
 TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
 				TamiBase::complex_double(0,0),
@@ -481,7 +483,7 @@ int batch_size = 2;
 
 std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.3,1.4,0, 0.1, 0.2, 0.3,0.4, 0.5};
 
-TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device);
+TamiBase::energy_t energy= at::tensor(energy_vec, tami.options).repeat({batch_size, 1});
 
 
 TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
