@@ -263,6 +263,28 @@ return external;
 
 }
 
+TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami, int batch_size){
+
+// int batch_size = 5;
+
+std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.31,1.4,0.01, 0.1}; //{1,1.1,1.2,1.3,1.4,0.01, 0.1};
+
+// TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device);
+TamiBase::energy_t energy= 8.0*at::rand({batch_size,energy_vec.size()}).to(tami.device)-4.0;//.repeat({batch_size, 1}).to(tami.device);
+
+TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,M_PI)};
+
+double BETA=1.0;
+TamiBase::ami_vars external(energy, frequency,BETA);
+
+return external;
+
+}
+
 
 TamiBase::g_prod_t construct_multipole_example(){
 

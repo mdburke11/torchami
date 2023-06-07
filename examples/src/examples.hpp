@@ -16,6 +16,8 @@
  TamiBase::ami_vars construct_ext_example2(TamiBase& tami);
 
  TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami);
+ TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami, int batch_size);
+ 
  TamiBase::g_prod_t construct_multipole_example();
  
  TamiBase::ami_vars construct_ext_example1_bose(TamiBase& tami);
@@ -31,6 +33,7 @@
  TamiBase::ami_vars construct_ext_example6(TamiBase& tami);
 
  void default_example();
+ void default_example_gpu();
  void example_1();
  void example2();
  void example1_bose();

@@ -33,6 +33,9 @@ int main( int argc , char *argv[] )
     case 5:
       example9();
       break;
+    case 6:
+      default_example_gpu();
+      break;
    //case 6:
    //   example_();
    //   break;
@@ -221,6 +224,67 @@ void default_example(){
   std::cout<<"Result="<<result<<std::endl;
 
   */
+}
+
+void default_example_gpu(){
+
+  // Terms example
+
+  TamiBase::g_prod_t R0=construct_example2();
+
+  at::Device myCPU = at::kCUDA;//CPU;
+  TamiBase PT(myCPU);
+  TamiBase::ft_terms ftout;
+
+  // int batch_size=5;
+
+  TamiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
+  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example(PT,5);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
+
+  // construct_4ord_ext_multipole_example();
+  // TamiBase::g_prod_t construct_multipole_example();
+
+
+  std::cout << "Starting energy tensor: " << std::endl;
+  std::cout << format_r2_tensor(avars2.energy_) << std::endl;
+
+  TamiBase::ft_terms ftout2;
+
+  PT.construct(4, R02, ftout2);
+  TamiBase::ami_parms parms2(0, 0);
+  
+  std::ofstream file;
+  file.open("scaling.dat", std::ofstream::out);
+  
+  for(int batch_size=100000; batch_size< 1000000; batch_size+=100){
+  avars2=construct_4ord_ext_multipole_example(PT,batch_size);
+  
+  // std::cout << format_r2_tensor(avars2.energy_) << std::endl;
+
+  auto t2=std::chrono::high_resolution_clock::now();
+  at::Tensor result2=PT.evaluate(parms2,ftout2,avars2);
+  auto t_end=std::chrono::high_resolution_clock::now();
+
+  std::chrono::duration<double> diff2=t_end-t2;
+  std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
+  file<<batch_size<<" "<< d2.count()<<std::endl;	
+  // std::chrono::nanoseconds d=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
+  }
+  
+  file.close();
+
+
+  std::cout<<"--------------------"<<std::endl;
+  // PT.FT.number_vertices(ftout2[0].ft_);
+  // PT.FT.print_graph(ftout2[0].ft_);
+  // std::cout<<PT.FT.pretty_print(ftout2[0].ft_)<<std::endl;
+
+  // std::cout<<PT.pretty_print_ft_terms(ftout2)<<std::endl;
+  // std::cout<<"Result 4th order MP "<<format_r1_tensor(result2)<<std::endl;
+  // std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
+  // std::cout<<"Evaluation took "<< d2.count()<<" nanoseconds"<<std::endl;	
+
+ 
 }
 
  void example_1(){
