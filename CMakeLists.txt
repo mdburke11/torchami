@@ -57,21 +57,18 @@ if(pybind11_FOUND)
   if(MAKE_PYTAMI)
     project(pytami)
 
-    find_package(Boost REQUIRED)
-    if(Boost_FOUND)
-      include_directories(${Boost_INCLUDE_DIRS})
-    endif()
-
-    find_package(Torch REQUIRED)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
-
-    link_directories(${Boost_LIBRARY_DIRS})
-
     set(CMAKE_CXX_RELEASE "-O3") # not sure if needed. It was in the example
     set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ version selection")
 
     include_directories("${CMAKE_SOURCE_DIR}/src")
     include_directories("${CMAKE_SOURCE_DIR}/pytami_src")
+
+    find_package(Boost REQUIRED)
+    include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIRS})
+
+    find_package(Torch REQUIRED)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
     file (GLOB SOURCE_FILES "src/*.cpp")
     file (GLOB HEADER_FILES "src/*.hpp")

@@ -4,7 +4,7 @@ namespace py = pybind11;
 
 void init_pytami_wrapper(py::module &);
 
-namespace pytami{
+namespace pta{
 
     PYBIND11_MODULE(pytami, m){
         // optional docstring

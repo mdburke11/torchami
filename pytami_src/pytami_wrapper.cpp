@@ -6,15 +6,15 @@
 PYBIND11_MAKE_OPAQUE(std::vector<int>); // alpha_t, epsilon_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::complex_double>); // frequency_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::g_struct>); // g_prod_t
-PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::ft_term>); // ft_terms
+//PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::ft_term>); // ft_terms
 
 
-namespace py=pybind11;
+namespace py = pybind11;
 
-void init_pyami_wrapper(py::module &m){
+void init_pytami_wrapper(py::module &m){
 
     py::bind_vector<std::vector<int>>(m, "VectorInt"); // alpha_t and epsilon_t
-    py::bind_vector<std::vector<TamiBase::complex_double>>(m, "g_prod_t");
+    py::bind_vector<std::vector<TamiBase::complex_double>>(m, "frequency_t");
     py::bind_vector<std::vector<TamiBase::g_struct>>(m, "g_prod_t");
 
     py::class_<TamiBase> TamiBase(m, "TamiBase");
@@ -22,6 +22,7 @@ void init_pyami_wrapper(py::module &m){
     TamiBase.def(py::init<at::Device &>()); // device c'tor //TODO: add a  batch_size c'tor
     // TODO:: make the torch 
 
+    
     py::class_<TamiBase::ami_vars> (TamiBase, "ami_vars")
         .def(py::init<>())
         .def(py::init<TamiBase::energy_t, TamiBase::frequency_t>())
