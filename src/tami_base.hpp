@@ -36,6 +36,7 @@
 #include <boost/graph/random.hpp>
 
 #include <torch/torch.h>
+#include <torch/extension.h>
 
 class TamiBase{
 
@@ -44,6 +45,7 @@ class TamiBase{
         // Typedef for the type of complex numbers to be used throughout - c10 has torch's complex scalar class
         // c10::complex<T> is the prefered complex datatype to build tensors with and therefore the better option
         // to use throughout
+        //typedef c10::complex<double> complex_double;
         typedef c10::complex<double> complex_double;
 
         // Each instance will hold a torch device so that all internal calculartions are performed on this device
