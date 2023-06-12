@@ -11,7 +11,7 @@
  */
 
 
-void TamiBase::construct(int N_INT, TamiBase::g_prod_t R0, ft_terms &terms_out) {
+void TamiBase::construct(int N_INT, TamiBase::g_prod_t &R0, ft_terms &terms_out) {
   terms_out.clear();
 
   TamiBase::FermiTree::fermi_tree_t ft;

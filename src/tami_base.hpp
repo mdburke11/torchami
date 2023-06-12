@@ -582,8 +582,7 @@ class TamiBase{
         typedef std::vector<ft_term> ft_terms;
         typedef std::vector<TamiBase::FermiTree::fermi_tree_t> ft_list;
         
-        void construct(int N_INT, TamiBase::g_prod_t R0, ft_terms &terms_out);
-        void construct(TamiBase::ami_parms &parms, TamiBase::g_prod_t R0, ft_terms &terms_out);
+        void construct(int N_INT, TamiBase::g_prod_t &R0, ft_terms &terms_out);
         
         void factorize(ft_terms &in_terms, ft_terms &out_terms);
         bool g_prod_equiv(TamiBase::g_prod_t &gp1, TamiBase::g_prod_t &gp2, int &sign);
