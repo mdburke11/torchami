@@ -37,6 +37,7 @@
 
 #include <torch/torch.h>
 #include <torch/extension.h>
+#include <torch/python.h>
 
 class TamiBase{
 
@@ -53,6 +54,10 @@ class TamiBase{
 
         // hold the device options inside the base class
         at::TensorOptions options = at::TensorOptions().dtype(at::kComplexDouble).device(at::kCPU);
+
+        at::Device getDevice(){
+            return options.device();
+        }
 
         /// Returns the sign of a value - or zero if it is uniquely zero.
         template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }

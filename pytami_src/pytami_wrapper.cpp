@@ -22,6 +22,7 @@ void init_pytami_wrapper(py::module &m){
     TamiBase.def(py::init<>());
     TamiBase.def(py::init<at::Device &>()); // device c'tor //TODO: add a  batch_size c'tor
     TamiBase.def_readwrite("options", &TamiBase::options);
+    TamiBase.def("getDevice", &TamiBase::getDevice, "Returns the device stored in the options object.");
 
     
     py::class_<TamiBase::ami_vars> (TamiBase, "ami_vars")

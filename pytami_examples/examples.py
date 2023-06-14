@@ -1,5 +1,6 @@
 import torch
 import pytami
+import numpy as np
 
 def construct_example2():
 
@@ -23,12 +24,12 @@ def construct_example2():
 
 def construct_ext_example2(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars: 
 
-    energy = torch.tensor([-4, 0.1, -1]).repeat([10, 1])
+    energy = torch.tensor([-4, 0.1, -1], device=tami.getDevice()).repeat([10, 1])
     frequency = pytami.frequency_t()
     for i in range(2):
         frequency.append(0+0j)
     
-    frequency.append(0+math.pi*1j)
+    frequency.append(0+np.pi*1j)
     beta = 1.0
     external = pytami.TamiBase.ami_vars(energy, frequency, beta)
 
@@ -77,7 +78,7 @@ def construct_ext_example4():
     for i in range(5):
         frequency.append(0+0j)
     
-    frequency.append(0+math.pi*1j)
+    frequency.append(0+np.pi*1j)
     beta = 1.0
     external = pytami.TamiBase.ami_vars(energy, frequency, beta)
 
@@ -91,7 +92,7 @@ def construct_ext_example6():
     for i in range(6):
         frequency.append(0+0j)
     
-    frequency.append(0+math.pi*1j)
+    frequency.append(0+np.pi*1j)
     beta = 1.0
     external = pytami.TamiBase.ami_vars(energy, frequency, beta)
 

@@ -20,7 +20,7 @@ def example_2():
     R0 = ex.construct_example2()
 
     # external variables
-    avars = ex.construct_ext_example2()
+    avars = ex.construct_ext_example2(ami)
 
     # timing info for setup
     t1 = time.time()
@@ -30,11 +30,11 @@ def example_2():
 
     # Integration/Evaluation parameters
     E_REG = 0 # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8 
-    N_INT = 2 # number of matsubara sums to perform 
-    test_amiparms = pytami.AmiBase.ami_parms(N_INT, E_REG) # SHOULD BE (0, 0) ?
+    N_INT = int(2) # number of matsubara sums to perform 
+    test_amiparms = pytami.TamiBase.ami_parms(N_INT, E_REG) # SHOULD BE (0, 0) ?
 
     # now construct!
-    ami.construct(test_amiparms, ftout, R0)
+    ami.construct(N_INT, R0, ftout)
 
     # time construct leg and start evaluate time
     t2 = time.time()
