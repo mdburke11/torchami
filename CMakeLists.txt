@@ -80,7 +80,7 @@ if(pybind11_FOUND)
       ${PYTHON_FILES}
     )
 
-    target_link_libraries(pytami PUBLIC)
+    #target_link_libraries(pytami PUBLIC)
     target_link_libraries(pytami PRIVATE ${TORCH_LIBRARIES})
 
 
