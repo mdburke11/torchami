@@ -24,7 +24,6 @@ void init_pytami_wrapper(py::module &m){
     TamiBase.def_readwrite("options", &TamiBase::options);
     TamiBase.def("getDevice", &TamiBase::getDevice, "Returns the device stored in the options object.");
 
-    
     py::class_<TamiBase::ami_vars> (TamiBase, "ami_vars")
         .def(py::init<>())
         .def(py::init<TamiBase::energy_t, TamiBase::frequency_t>())
@@ -49,7 +48,6 @@ void init_pytami_wrapper(py::module &m){
         .def_readwrite("int_type_", &TamiBase::ami_parms::int_type_)
         .def_readwrite("dispersion_", &TamiBase::ami_parms::dispersion_);
 
-
     py::class_<TamiBase::g_struct> (TamiBase, "g_struct")
         .def(py::init<TamiBase::epsilon_t, TamiBase::alpha_t, TamiBase::stat_type>())
         .def(py::init<TamiBase::epsilon_t, TamiBase::alpha_t>())
@@ -60,7 +58,6 @@ void init_pytami_wrapper(py::module &m){
         .def_readwrite("species_", &TamiBase::g_struct::species_)
         .def_readwrite("eff_stat_", &TamiBase::g_struct::eff_stat_)
         .def_readwrite("pp", &TamiBase::g_struct::pp);
-
 
     py::class_<TamiBase::ft_term> (TamiBase, "ft_terms")
         .def(py::init<>())
