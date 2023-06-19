@@ -572,6 +572,7 @@ return R0;
  std::string format_r1_tensor(const at::Tensor& tens){
 
   std::ostringstream str;
+  str << std::setprecision(10);
   for (int i=0; i < tens.size(0); ++i){
 		auto a = tens[i].item();
 		str << a << std::endl;

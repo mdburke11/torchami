@@ -26,7 +26,7 @@ def example_2():
     t1 = time.time()
 
     # make ft_terms object
-    ftout = pytami.TamiBase.ft_terms()
+    ftout = pytami.ft_terms()
 
     # Integration/Evaluation parameters
     E_REG = 0 # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -50,6 +50,7 @@ def example_2():
     diff2 = (t_end - t2) * 1000000
 
     # print results
+    torch.set_printoptions(precision=10)
     print(f"Result was {calc_result}")
     print(f"Construction took {diff1} microseconds")
     print(f"Evaluation took {diff2} microseconds")

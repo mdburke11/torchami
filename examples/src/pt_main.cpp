@@ -36,6 +36,9 @@ int main( int argc , char *argv[] )
     case 6:
       default_example_gpu();
       break;
+    case 7:
+      python_comparison();
+      break;
    //case 6:
    //   example_();
    //   break;
@@ -564,4 +567,58 @@ at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate th
 std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
+}
+
+void python_comparison(){
+
+  std::cout << "C++ Fermi-Tree evaluation of second order self energy diagram" << std::endl;
+
+  std::cout<<std::endl<<"-_-_-_ Example - Second Order _-_-_-"<<std::endl<<std::endl;	
+	
+  // class instance
+  at::Device myDev = at::kCPU;
+  TamiBase ami(myDev);
+
+  // Problem setup (see ami_example.cpp)
+  TamiBase::g_prod_t R0=construct_example2(); // Sets initial integrand 
+  TamiBase::ami_vars avars=construct_ext_example2(ami); // Sets 'external' parameter values 
+
+    //timing info
+    auto t1=std::chrono::high_resolution_clock::now();
+
+  // Integration/Evaluation parameters
+  double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
+  int N_INT=2;  // Number of Matsubara sums to perform
+  TamiBase::ami_parms test_amiparms(N_INT, E_REG);
+
+  //simplified storage type 
+  TamiBase::ft_terms amiterms;
+
+  // Construct solution for problem defined in R0
+  ami.construct(N_INT, R0, amiterms);
+
+    //timing info 
+    auto t2=std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> diff1=t2-t1;
+    std::chrono::nanoseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
+
+  std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
+
+    //timing info 
+    auto t3=std::chrono::high_resolution_clock::now();
+
+  //Evaluate term-by-term solution 
+  at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. Note that the test_amiparms is the same as the first case 
+    
+    //timing info
+    auto t4=std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff2=t4-t3;
+    std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
+
+  std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
+  std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
+  std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
+
+
 }
