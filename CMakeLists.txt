@@ -70,6 +70,9 @@ if(pybind11_FOUND)
     find_package(Torch REQUIRED)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
+    find_library(TORCH_PYTHON_LIBRARY torch_python PATHS "${TORCH_INSTALL_PREFIX}/lib")
+    message(STATUS "TORCH_PYTHON_LIBRARY: ${TORCH_PYTHON_LIBRARY}")
+
     file (GLOB SOURCE_FILES "src/*.cpp")
     file (GLOB HEADER_FILES "src/*.hpp")
     file (GLOB PYTHON_FILES "pytami_src/*.cpp" "pytami_src/*.hpp")
@@ -81,8 +84,7 @@ if(pybind11_FOUND)
     )
 
     #target_link_libraries(pytami PUBLIC)
-    target_link_libraries(pytami PRIVATE ${TORCH_LIBRARIES})
-
+    target_link_libraries(pytami PUBLIC "${TORCH_LIBRARIES}" ${TORCH_PYTHON_LIBRARY})
 
     install(TARGETS pytami
       COMPONENT python
