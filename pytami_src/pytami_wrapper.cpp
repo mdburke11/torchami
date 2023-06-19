@@ -59,7 +59,7 @@ void init_pytami_wrapper(py::module &m){
         .def_readwrite("eff_stat_", &TamiBase::g_struct::eff_stat_)
         .def_readwrite("pp", &TamiBase::g_struct::pp);
 
-    py::class_<TamiBase::ft_term> (TamiBase, "ft_terms")
+    py::class_<TamiBase::ft_term> (TamiBase, "ft_term")
         .def(py::init<>())
         .def(py::init<double, TamiBase::FermiTree::fermi_tree_t, TamiBase::g_prod_t>())
         .def_readwrite("sign_", &TamiBase::ft_term::sign_)
