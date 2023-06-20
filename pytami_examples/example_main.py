@@ -13,8 +13,11 @@ def example_2():
     # start example
     print("\n-----Constructing Fermi Tree format -----\n")
     
+    # torch device to perform calculations on
+    device = torch.device("cuda")
+
     # class instance
-    ami = pytami.TamiBase()
+    ami = pytami.TamiBase(device)
 
     # second order self energy setup
     R0 = ex.construct_example2()

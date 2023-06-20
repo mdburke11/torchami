@@ -21,8 +21,8 @@ def construct_4ord(tami, batch_size):
 
 def scaling():
 
-    device = torch.device("cpu")
-    ofname = "py_scaling.dat"
+    device = torch.device("cuda")
+    ofname = "scaling.dat"
 
     tami = pytami.TamiBase(device)
     R0 = ex.construct_example4()
@@ -38,20 +38,23 @@ def scaling():
 
     tami.construct(N_INT, R0, ftout)
 
-    data = []
+    with open(ofname, "a") as f:
 
-    for size in range(1, 10000, 1000):#range(100000, 1000000, 100):
-        avars = construct_4ord(tami, size)
+        for size in range(1000, 1000000, 1000):#range(1, 10000, 1000):#range(100000, 1000000, 100):
+            avars = construct_4ord(tami, size)
 
-        t1 = time.time()
-        result = tami.evaluate(amiparms, ftout, avars)
-        t2 = time.time()
+            t1 = time.time()
+            result = tami.evaluate(amiparms, ftout, avars)
+            t2 = time.time()
 
-        diff = (t2 - t1) * 1000000
-        
-        data.append((size, diff))
+            diff = (t2 - t1) * 1_000_000_000 # nanoseconds
+            print(f"{size} {diff}")
+            f.write(f"{size}, {diff}\n")   
 
-    np.savetxt(ofname, data)
+            if (size % 2500 == 0):
+                f.flush()     
+
+        f.close()
 
 def main():
     scaling()

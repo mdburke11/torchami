@@ -576,7 +576,7 @@ void python_comparison(){
   std::cout<<std::endl<<"-_-_-_ Example - Second Order _-_-_-"<<std::endl<<std::endl;	
 	
   // class instance
-  at::Device myDev = at::kCPU;
+  at::Device myDev = at::kCUDA;
   TamiBase ami(myDev);
 
   // Problem setup (see ami_example.cpp)
