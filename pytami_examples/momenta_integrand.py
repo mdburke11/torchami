@@ -54,7 +54,7 @@ class AMI_integrand:
         self.device = self.tami.getDevice()
         I = torch.eye(self.dim, device=self.device)
         self.alpha: torch.tensor = torch.tensor([self.R0[i].alpha_ for i in range(len(self.R0))], device=self.device)
-        self.full_alpha = torch.kron(self.alpha.T, eye) # tensor that will be multiplied when updating the energies
+        self.full_alpha = torch.kron(self.alpha.T, I) # tensor that will be multiplied when updating the energies
         self.order = self.parms.N_INT_ # number of integrals (order) and 2 * order - 1 = len(R0) (if not Renorm PT)
 
 
