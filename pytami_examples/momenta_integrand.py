@@ -5,6 +5,22 @@ import torch
 import pytami
 from typing import Callable
 
+class ext_vars:
+
+    def __init__(self, beta: float, mu: complex, k: list[float], reW: float, imW: float):
+        self.beta = beta
+        self.mu = mu
+        self.k = k
+        self.reW = reW
+        self.imW = imW
+
+    def get_ext_vars(self):
+        return [self.beta, self.mu, self.k, self.reW, self.imW]
+
+    
+def epsilon_2D(k: torch.tensor) -> torch.tensor: # must return column vector of energies (use .unsqueeze(1))
+    return -2 * (torch.cos(k[:,0]) + torch.cos(k[:,1])).unsqueeze(1)
+
     
 class AMI_integrand:
 
@@ -19,7 +35,7 @@ class AMI_integrand:
 
 
     def __init__(self, tami: pytami.TamiBase, R0: pytami.g_prod_t, avars: pytami.TamiBase.ami_vars, 
-                ft pytami.ft_terms, parms: pytami.TamiBase.ami_parms, eps: Callable[[torch.tensor], torch.tensor],
+                ft: pytami.ft_terms, parms: pytami.TamiBase.ami_parms, eps: Callable[[torch.tensor], torch.tensor],
                 RenormPT: bool, evalReal: bool, extern_vars: ext_vars) -> None:
         
         self.tami = tami
@@ -76,25 +92,3 @@ class AMI_integrand:
 
         return value.imag
 
-
-
-
-
-
-
-
-class ext_vars:
-
-    def __init__(self, beta:double, mu: complex, k: list[double], reW: double, imW:double):
-        self.beta = beta
-        self.mu = mu
-        self.k = k
-        self.reW = reW
-        self.imW = imW
-
-    def get_ext_vars(self):
-        return [self.beta, self.mu, self.k, self.reW, self.imW]
-
-    
-def epsilon_2D(k: torch.tensor) -> torch.tensor: # must return column vector of energies (use .unsqueeze(1))
-    return -2 * (torch.cos(k[:,0]) + torch.cos(k[:,1])).unsqueeze(1)
