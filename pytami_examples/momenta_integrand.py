@@ -54,7 +54,7 @@ class AMI_integrand:
         self.device = self.tami.getDevice()
         I = torch.eye(self.dim, device=self.device)
         self.alpha: torch.tensor = torch.tensor([self.R0[i].alpha_ for i in range(len(self.R0))], device=self.device)
-        self.full_alpha = torch.kron(self.alpha.T, I) # tensor that will be multiplied when updating the energies
+        self.full_alpha = torch.kron(self.alpha, I).T # tensor that will be multiplied when updating the energies
         self.order = self.parms.N_INT_ # number of integrals (order) and 2 * order - 1 = len(R0) (if not Renorm PT)
 
 
@@ -77,7 +77,7 @@ class AMI_integrand:
         combined = torch.matmul(K, self.full_alpha).to(torch.complex64) # convert to complex values here to combine with mu
 
         # get the energies into the correct tensor format [e1, e2, e3] where e_i are column vectors - note minus sign since Greens functions are missing one
-        self.avars.energy_ = self.mu - torch.hstack([self.eps(combined[:, range(i*self.dim, self.dim*(i+1))]) for i in range(2*order -1)])
+        self.avars.energy_ = self.external_vars.mu - torch.hstack([self.eps(combined[:, range(i*self.dim, self.dim*(i+1))]) for i in range(2*self.order -1)])
 
 
 
@@ -87,7 +87,7 @@ class AMI_integrand:
         self.update_integrand(x)
         value: torch.tensor = self.tami.evaluate(self.parms, self.ft, self.avars)
 
-        if evalReal:
+        if self.evalReal:
             return value.real
 
         return value.imag

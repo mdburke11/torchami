@@ -10,7 +10,7 @@ def main():
     # calculates a second order self energy diagram using torchquad
     
     # init device
-    device = torch.device("cuda")
+    device = torch.device("cpu")
     ami = pytami.TamiBase(device)
 
     # init diagram info
@@ -35,6 +35,9 @@ def main():
 
     integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
                                 False, False, evars)
+
+    k = torch.rand([100, 4])
+    print(integrand(k))
 
 
 
