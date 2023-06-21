@@ -71,10 +71,10 @@ def construct_example4():
 
     return R0
 
-def construct_ext_example4():
+def construct_ext_example4(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
 
-    energy = pytami.VectorComplex([1, 1.1, 1.2, 1.31, 1.4, 0.01, 0.1])
-    frequency = pytami.VectorComplex()
+    energy = torch.tensor([1, 1.1, 1.2, 1.31, 1.4, 0.01, 0.1], device=tami.getDevice()).repeat([10, 1])
+    frequency = pytami.frequency_t()
     for i in range(5):
         frequency.append(0+0j)
     
@@ -85,10 +85,10 @@ def construct_ext_example4():
     return external
 
 
-def construct_ext_example6():
+def construct_ext_example6(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
 
-    energy = pytami.VectorComplex([1,1.1,1.2,1.3,1.4,0, 0.1, 0.2, 0.3,0.4, 0.5])
-    frequency = pytami.VectorComplex()
+    energy = torch.tensor([1,1.1,1.2,1.3,1.4,0, 0.1, 0.2, 0.3,0.4, 0.5], device=tami.getDevice()).repeat([10, 1])
+    frequency = pytami.frequency_t()
     for i in range(6):
         frequency.append(0+0j)
     
