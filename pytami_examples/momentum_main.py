@@ -3,9 +3,67 @@ import pytami
 import examples as ex
 import momenta_integrand as mom
 import numpy as np
-from torchquad import MonteCarlo, Boole, set_up_backend
-
+#from torchquad import MonteCarlo, Boole, set_up_backend
+import flat_integ as flat
+    
 def main():
+
+    #torchquad_ex()
+    flat_dist_ex()
+
+
+def flat_dist_ex():
+
+    # calculates a second order self energy diagram using flat distribution sampling
+
+    # init device
+    device = torch.device("cpu")
+    ami = pytami.TamiBase(device)
+
+    # init diagram info
+    R0 = ex.construct_example2()
+    avars = ex.construct_ext_example2(ami)
+
+    # setup helpers
+    ftout = pytami.ft_terms()
+    E_REG = 0
+    N_INT = 2
+    parms = pytami.TamiBase.ami_parms(N_INT, E_REG)
+    ami.construct(N_INT, R0, ftout)
+
+    # Get external values
+    n: int = 1 # fermionic matsubara freq
+
+    beta: float = 8.33
+    mu: complex = 0.0
+    k: list[float] = [np.pi, 0.0]
+    reW: float = 0.0
+    imW: float = (2*n + 1) * np.pi / beta
+
+    evars = mom.ext_vars(beta, mu, k, reW, imW)
+
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
+                                False, False, evars)
+
+
+    flat_mc = flat.flat_mc_integrator(device)
+
+    integral_value = flat_mc.integrate(integrand, dim=4, N=1_999_999, 
+                                  integration_domain=[[0, 2*np.pi]] * 4)
+
+    print(f"Ans: {integral_value.ans}")
+    print(f"Err: {integral_value.error}")
+    #
+    #veg = Boole()
+
+    #integral_value = veg.integrate(integrand, dim=4, N=1_000_001, 
+    #                              integration_domain=[[0, 2*torch.pi]] * 4,
+    #                              backend="torch")
+
+    #print(integral_value)
+
+    
+def torchquad_ex():
 
     # calculates a second order self energy diagram using torchquad
     
@@ -28,9 +86,9 @@ def main():
     ami.construct(N_INT, R0, ftout)
 
     # Get external values
-    beta: float = 5.0
+    beta: float = 8.33
     mu: complex = 0.0
-    k: list[float] = [np.pi, np.pi]
+    k: list[float] = [np.pi, 0.0]
     reW: float = 0.0
     imW: float = 0.0
 
@@ -42,7 +100,7 @@ def main():
 
     mc = MonteCarlo()
 
-    integral_value = mc.integrate(integrand, dim=8, N=1_000_000, 
+    integral_value = mc.integrate(integrand, dim=8, N=1_999_999, 
                                   integration_domain=[[0, 2*np.pi]] * 8,
                                   backend="torch")
 
@@ -55,7 +113,6 @@ def main():
     #                              backend="torch")
 
     #print(integral_value)
-
 
 
 

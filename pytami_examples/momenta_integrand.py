@@ -49,7 +49,7 @@ class AMI_integrand:
         self.RenormPT = RenormPT # flag will modify the integrand to have renormalized PT correction on integrand TODO: implement this
         self.external_vars = extern_vars
 
-        # insert the parameters from extern_vars into the correct location
+        # insert the parameters from extern_vars into the correct internal location
         self.update_ext_vars(self.external_vars)
 
         # useful things to extract
@@ -64,7 +64,8 @@ class AMI_integrand:
 
     def update_ext_vars(self, extern_vars: ext_vars) -> None:
         self.external_vars = extern_vars
-        self.avars.frequency[-1] = extern_vars.reW + 1j * extern_vars.imW # needs to be internally updated
+        self.avars.frequency_[-1] = extern_vars.reW + 1j * extern_vars.imW # needs to be internally updated
+        self.BETA_ = extern_vars.beta # needs to be internally updated for fermi function evaluations
 
     def get_ext_vars(self) -> ext_vars:
         return self.external_vars.get_ext_vars()
@@ -93,6 +94,7 @@ class AMI_integrand:
         print(self.avars.energy_)
         print(self.avars.energy_.shape)
         value: torch.tensor = self.tami.evaluate(self.parms, self.ft, self.avars)
+        print(f"value: {value}")
 
         if self.evalReal:
             return value.real
