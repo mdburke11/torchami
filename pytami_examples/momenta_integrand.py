@@ -88,13 +88,8 @@ class AMI_integrand:
 
     def __call__(self, x: torch.tensor) -> torch.torch:
         # function which is called in integration: used as integrand = AMI_integrand(...); integrand(k: torch.tensor) # returns tensor of evaluated integrand
-        print(self.avars.energy_)
-        print(self.avars.energy_.shape)
         self.update_integrand(x)
-        print(self.avars.energy_)
-        print(self.avars.energy_.shape)
         value: torch.tensor = self.tami.evaluate(self.parms, self.ft, self.avars)
-        print(f"value: {value}")
 
         if self.evalReal:
             return value.real

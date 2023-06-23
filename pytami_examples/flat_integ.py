@@ -3,6 +3,7 @@
 
 import torch
 from typing import Callable
+import time
 
 class integration_result:
 
@@ -23,14 +24,8 @@ class flat_mc_integrator:
         self.Max_batch = Max_batch # cutoff to do multiple batch evaluations
 
     def prepInput(self, length:int, domain: list[list[float]]) -> torch.tensor:
-
-        x = torch.rand([length, len(domain)], device=self.device)
-
-        # correct for the specified domain
-        for i in range(len(domain)):
-            a, b = domain[i]
-            x[range(x.shape[0]), i] = (b - a) * x[range(x.shape[0]), i] + a
-
+    
+        x = torch.hstack([torch.empty([length, 1], device=self.device).uniform_(*r) for r in domain])
         return x
 
     def integrate(self, fn: Callable[[torch.tensor], torch.tensor], dim: int, N: int, 
@@ -43,18 +38,21 @@ class flat_mc_integrator:
 
         sum: torch.tensor = torch.tensor(0.0, device=self.device)
         sum2: torch.tensor = torch.tensor(0.0, device=self.device)
-        print(f"sum (init): {sum}")
 
         for i in range(iters): #while num_it - iter > 1:
             # while number of evals remaining exceeds max_batch size, chip 
             # away with max_batch size
 
             # get rand vals on the domain
+            t1 = time.time()
             x: torch.tensor = self.prepInput(self.Max_batch, integration_domain)
+            t2 = time.time()
             eval: torch.tensor = fn(x)
+            t3 = time.time()
             sum += eval.sum()
-            print(f"ans (inner): {sum/((i+1)*self.Max_batch)}")
             sum2 += (eval**2).sum()
+            print(f"PrepInput: {(t2 - t1) * 10**9} ns")
+            print(f"fn: {(t3 - t2) * 10**9} ns")
 
 
 
@@ -65,7 +63,6 @@ class flat_mc_integrator:
 
         eval: torch.tensor = fn(x)
         sum += eval.sum()
-        print(f"sum (last): {sum}")
         sum2 += (eval**2).sum()
 
         return integration_result(sum, sum2, N)
