@@ -12,7 +12,7 @@ class integration_result:
         self.sum2 = sum2
         self.N = N
 
-        self.ans: torch.tensor = sum / N # TODO need to divide out by 1/(2pi)**dim ?
+        self.ans: torch.tensor = sum / N
         self.avg_ans2: torch.tensor = sum2 / N
         self.error: torch.tensor = torch.sqrt((self.avg_ans2 - self.ans**2) / N)
 
@@ -49,7 +49,7 @@ class flat_mc_integrator:
             t2 = time.time()
             eval: torch.tensor = fn(x)
             t3 = time.time()
-            sum += eval.sum()
+            sum += eval.sum() # TODO use torch.nansum - drops nans from batch
             sum2 += (eval**2).sum()
             print(f"PrepInput: {(t2 - t1) * 10**9} ns")
             print(f"fn: {(t3 - t2) * 10**9} ns")
