@@ -27,6 +27,7 @@ set(LIB_FILES
   ./src/tami_construct.cpp
   ./src/tami_evaluate.cpp
   ./src/tami_terms.cpp
+  ./src/tami_python.cpp
 )
 
 ADD_LIBRARY(torchami SHARED ${LIB_FILES})

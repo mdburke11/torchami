@@ -732,9 +732,9 @@ class TamiBase{
         
         bool pole_equiv(pole_struct pole1, pole_struct pole2);
 
-
-
     private:
 
 
 };
+
+at::Tensor epsilon_2D(at::Tensor);

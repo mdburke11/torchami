@@ -70,7 +70,7 @@ void init_pytami_wrapper(py::module &m){
     TamiBase.def("evaluate", &TamiBase::evaluate, "Evaluate function for fermi-tree construction");
     TamiBase.def("pretty_print_ft_terms", &TamiBase::pretty_print_ft_terms, "Prints latex formula for the mathematical expression stored in the ft_terms object provided");
     
-
+    m.def("epsilon_2D_cpp", &epsilon_2D, "2D tight binding dispersion");
     
 
     }
