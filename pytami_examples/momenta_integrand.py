@@ -38,7 +38,7 @@ class AMI_integrand:
 
     def __init__(self, tami: pytami.TamiBase, R0: pytami.g_prod_t, avars: pytami.TamiBase.ami_vars, 
                 ft: pytami.ft_terms, parms: pytami.TamiBase.ami_parms, eps: Callable[[torch.tensor], torch.tensor],
-                RenormPT: bool, evalReal: bool, extern_vars: ext_vars) -> None:
+                evalReal: bool, extern_vars: ext_vars) -> None:
         
         self.tami = tami
         self.R0 = R0
@@ -48,7 +48,6 @@ class AMI_integrand:
 
         self.eps = eps # free particle dispersion
         self.evalReal = evalReal
-        self.RenormPT = RenormPT # flag will modify the integrand to have renormalized PT correction on integrand TODO: implement this
         self.external_vars = extern_vars
 
         # insert the parameters from extern_vars into the correct internal location

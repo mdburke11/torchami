@@ -45,7 +45,7 @@ class flat_mc_integrator:
             # get rand vals on the domain
             x: torch.tensor = self.prepInput(self.Max_batch, integration_domain)
             eval: torch.tensor = fn(x)
-            sum += eval.sum() # TODO use torch.nansum - drops nans from batch - BUG: still some nans in output
+            sum += eval.sum() # TODO use torch.nansum - drops nans from batch - But then N changes!
             sum2 += (eval**2).sum()
 
 
@@ -56,6 +56,6 @@ class flat_mc_integrator:
 
         eval: torch.tensor = fn(x)
         sum += eval.sum()
-        sum2 += (eval**2).sum()
+        sum2 += (eval**2).sum() # TODO use torch.nansum - drops nans from batch - But then N changes!
 
         return integration_result(sum, sum2, N)
