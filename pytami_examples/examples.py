@@ -91,6 +91,8 @@ def construct_ext_example6(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
     frequency = pytami.frequency_t()
     for i in range(6):
         frequency.append(0+0j)
+
+    print(energy)
     
     frequency.append(0+np.pi*1j)
     beta = 1.0
