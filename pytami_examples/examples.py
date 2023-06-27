@@ -75,7 +75,7 @@ def construct_ext_example4(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
 
     energy = torch.tensor([1, 1.1, 1.2, 1.31, 1.4, 0.01, 0.1], device=tami.getDevice()).repeat([10, 1])
     frequency = pytami.frequency_t()
-    for i in range(5):
+    for i in range(4):
         frequency.append(0+0j)
     
     frequency.append(0+np.pi*1j)
