@@ -3,7 +3,6 @@
 
 import torch
 from typing import Callable
-import time
 
 class integration_result:
 
@@ -44,16 +43,10 @@ class flat_mc_integrator:
             # away with max_batch size
 
             # get rand vals on the domain
-            t1 = time.time()
             x: torch.tensor = self.prepInput(self.Max_batch, integration_domain)
-            t2 = time.time()
             eval: torch.tensor = fn(x)
-            t3 = time.time()
-            sum += eval.sum() # TODO use torch.nansum - drops nans from batch
+            sum += eval.sum() # TODO use torch.nansum - drops nans from batch - BUG: still some nans in output
             sum2 += (eval**2).sum()
-            print(f"PrepInput: {(t2 - t1) * 10**9} ns")
-            print(f"fn: {(t3 - t2) * 10**9} ns")
-
 
 
         # now only 1 batch left, so we only have the remaining 

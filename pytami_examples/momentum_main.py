@@ -8,8 +8,11 @@ import flat_integ as flat
 import time
 
 def main():
-    #mat_freq_flat()
-    comp()
+    mat_freq_flat()
+    #print(sys.version)
+    #print(sys.version_info)
+
+    #comp()
 
 def comp():
     print("torchquad results: \n")
@@ -45,7 +48,7 @@ def mat_freq_flat():
     n: int = 1 # fermionic matsubara freq
 
     beta: float = 8.33
-    mu: complex = 0.0
+    mu: complex = 0.1
     k: list[float] = [np.pi, 0.0]
     reW: float = 0.0
     imW: float = (2*n + 1) * np.pi / beta
@@ -56,7 +59,7 @@ def mat_freq_flat():
                                 False, False, evars)
 
 
-    flat_mc = flat.flat_mc_integrator(device, Max_batch=10**6)
+    flat_mc = flat.flat_mc_integrator(device, Max_batch=int(1e5))
     
     with open("2ord.dat", "a") as f:
 
@@ -66,10 +69,8 @@ def mat_freq_flat():
             integrand.update_ext_vars(evars)
             print(integrand.get_ext_vars())
 
-            print("start")
             integral_value = flat_mc.integrate(integrand, dim=4, N=999_999, 
                                     integration_domain=[[0, 2*np.pi]] * 4)
-            print("stop")
 
             print(f"{n} {evars.imW} {integral_value.ans} {integral_value.error}")
             f.write(f"{n} {evars.imW} {integral_value.ans} {integral_value.error}\n")
@@ -106,13 +107,13 @@ def flat_dist_ex():
 
     evars = mom.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, pytami.epsilon_2D_cpp,
                                 False, False, evars)
 
 
     flat_mc = flat.flat_mc_integrator(device)
 
-    integral_value = flat_mc.integrate(integrand, dim=4, N=10_199_999, 
+    integral_value = flat_mc.integrate(integrand, dim=4, N=1_199_999, 
                                   integration_domain=[[0, 2*np.pi]] * 4)
 
     print(f"Ans: {integral_value.ans}")
@@ -159,7 +160,7 @@ def torchquad_ex():
 
     evars = mom.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, pytami.epsilon_2D_cpp,
                                 False, False, evars)
 
 

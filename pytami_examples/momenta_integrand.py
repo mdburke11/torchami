@@ -5,8 +5,6 @@ import torch
 import pytami
 from typing import Callable
 
-import time # TODO remove this and timing info
-
 class ext_vars:
 
     def __init__(self, beta: float, mu: complex, k: list[float], reW: float, imW: float):
@@ -35,7 +33,7 @@ class AMI_integrand:
     # the __call__ method is defined to evaluate the integrand for the current
     # external physical parameters with a provided n by m momentum torch tensor. 
     # Where n is the batch size of integrands to be simulateously evaluated and
-    # m is the number of independent momentum variables (dim * len(alpha))
+    # m is the number of independent momentum variables (dim * (2*order - 1))
 
 
     def __init__(self, tami: pytami.TamiBase, R0: pytami.g_prod_t, avars: pytami.TamiBase.ami_vars, 
@@ -60,8 +58,8 @@ class AMI_integrand:
         self.dim = len(self.external_vars.k) # 2D or 3D
         self.device = self.tami.getDevice()
         I = torch.eye(self.dim, device=self.device)
-        self.alpha: torch.tensor = torch.tensor([self.R0[i].alpha_ for i in range(len(self.R0))], device=self.device)
-        self.full_alpha = torch.kron(self.alpha, I).T # tensor that will be multiplied when updating the energies
+        alpha: torch.tensor = torch.tensor([self.R0[i].alpha_ for i in range(len(self.R0))], device=self.device)
+        self.full_alpha = torch.kron(alpha, I).T # tensor that will be multiplied when updating the energies
         self.order = self.parms.N_INT_ # number of integrals (order) and 2 * order - 1 = len(R0) (if not Renorm PT)
 
 
@@ -80,35 +78,19 @@ class AMI_integrand:
         # into the avars object to then evaluate thediagram
 
         # append on the external momentum to the momentum tensor
-        t1 = time.time()
         K: torch.tensor = torch.hstack([k] + [torch.full((len(k), 1), self.external_vars.k[i], device=self.device) for i in range(self.dim)])
-        #K: torch.tensor = torch.hstack([k]+ [torch.tensor([torch.full((len(k), 1), self.external_vars.k[i], device=self.device) for i in range(self.dim)])])
-        #K: torch.tensor = torch.cat((k, torch.tensor(self.external_vars.k, device=self.device).repeat(len(k), 1)), 1)
-        t2 = time.time()
-        # get linear combinations to get energies, now in form (k1_x, k1_y, k2x, k2y, ...)
-        combined = torch.matmul(K, self.full_alpha)#.to(torch.complex64) # convert to complex values here to combine with mu
-        t3 = time.time()
-        # get the energies into the correct tensor format [e1, e2, e3] where e_i are column vectors - note minus sign since Greens functions are missing one
-        self.avars.energy_ = self.external_vars.mu - torch.hstack([self.eps(combined[:, range(i*self.dim, self.dim*(i+1))]) for i in range(2*self.order -1)])
-        t4 = time.time()
 
-        print("\n\nupdate_integrand_interior:")
-        print(f"get K: {t2 - t1}")
-        print(f"product: {t3 - t2}")
-        print(f"eval eps: {t4 - t3}")
-        print()
+        # get linear combinations to get energies, now in form (k1_x, k1_y, k2x, k2y, ...)
+        combined = torch.matmul(K, self.full_alpha)
+
+        #apply dispersion to dim columns at a time and update AMI integrand
+        self.avars.energy_ = self.external_vars.mu - torch.hstack([self.eps(combined.split(self.dim, dim=1)[i]) for i in range(2*self.order-1)])
 
     def __call__(self, x: torch.tensor) -> torch.torch:
         # function which is called in integration: used as integrand = AMI_integrand(...); integrand(k: torch.tensor) # returns tensor of evaluated integrand
-        t1 = time.time()
         self.update_integrand(x)
-        t2 = time.time()
         value: torch.tensor = self.tami.evaluate(self.parms, self.ft, self.avars)
-        t3 = time.time()
-        print(f"update integrand: {t2 - t1}")
-        print(f"evaluate_val: {t3 - t2}")
         if self.evalReal:
             return value.real
-
         return value.imag
 
