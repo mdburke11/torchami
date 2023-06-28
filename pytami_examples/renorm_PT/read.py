@@ -20,11 +20,11 @@ def R0_from_graph(fname: str):
         count += 1
 
         if count%2 == 0:
-            R0.append(pytami.AmiBase.g_struct(g[0], g[1]))
+            R0.append(pytami.TamiBase.g_struct(g[0], g[1]))
 
     return pytami.g_prod_t(R0)
 
-def initialize_ext_vars(R0: pytami.g_prod_t, ext_freq=0.0+0.0j: complex, beta=5.00: float, device=torch.cpu: torch.device):
+def initialize_ext_vars(R0: pytami.g_prod_t, ext_freq: complex = 0.0+0.0j, beta: float = 5.00, device: torch.device = torch.cpu):
 
     print(len(R0)) # number of Greens functions
     order_diag: int = (len(R0) + 1) // 2# order of digram n has 2n-1 greens functions 
