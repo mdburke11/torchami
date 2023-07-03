@@ -9,7 +9,7 @@ if(pybind11_FOUND)
   
   if(MAKE_PYTAMI)
 
-    add_subdirectory(${CMAKE_SOURCE_DIR}/pytami_src/)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/src/pytami_src/)
 
   else()
     message("PYTAMI is available. But is not being compiled.  To Enable set MAKE_PYTAMI=ON and set PYTHON_LIBRARY_DIR path for installation.")

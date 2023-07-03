@@ -5,7 +5,7 @@ set(CMAKE_CXX_RELEASE "-O3") # not sure if needed. It was in the example
 set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ version selection")
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
-include_directories("${CMAKE_SOURCE_DIR}/pytami_src")
+#include_directories("${CMAKE_SOURCE_DIR}/pytami_src")
 
 find_package(Boost REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
@@ -19,7 +19,7 @@ message(STATUS "TORCH_PYTHON_LIBRARY: ${TORCH_PYTHON_LIBRARY}")
 
 file (GLOB SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/tami_base_src/*.cpp")
 file (GLOB HEADER_FILES "${CMAKE_SOURCE_DIR}/src/tami_base_src/*.hpp")
-file (GLOB PYTHON_FILES "${CMAKE_SOURCE_DIR}/pytami_src/*.cpp" "${CMAKE_SOURCE_DIR}/pytami_src/*.hpp")
+file (GLOB PYTHON_FILES "${CMAKE_SOURCE_DIR}/src/pytami_src/*.cpp" "${CMAKE_SOURCE_DIR}/src/pytami_src/*.hpp")
 
 pybind11_add_module(pytami
     ${SOURCE_FILES}
