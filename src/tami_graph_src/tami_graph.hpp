@@ -2,8 +2,8 @@
 #include <fstream>
 #include <string> 
 #include <sstream> 
-#include<Eigen/Dense>
-#include<Eigen/Core>
+//#include<Eigen/Dense>
+//#include<Eigen/Core>
 
 #include <complex>
 #include <math.h>
@@ -12,9 +12,9 @@
 #include <chrono>
 #include <vector>
 #include <algorithm>
-#include<experimental/filesystem>
+//#include<experimental/filesystem>
 
-#include "tami_base.hpp"
+#include "../tami_base_src/tami_base.hpp"
 
 // Boost headers 
 #include <boost/config.hpp>
@@ -44,4 +44,6 @@
 #include <boost/random/uniform_01.hpp>
 #include <boost/random/variate_generator.hpp>
 
-int add(int, int);
+namespace testing{
+    int add(int, int);
+}

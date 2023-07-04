@@ -13,13 +13,23 @@ if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
+find_package(Torch REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+
 link_directories(${Boost_LIBRARY_DIRS})
 
 set(LIB_BASE_FILES
   ${CMAKE_SOURCE_DIR}/src/tami_graph_src/main.cpp
 )
 
-INSTALL (TARGETS torchami 
+ADD_LIBRARY(tamigraph SHARED ${LIB_BASE_FILES})
+target_link_libraries(${PROJECT_NAME} m ${TORCH_LIBRARIES})
+
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} m ${PYTHON_LIBRARIES})
+
+INSTALL (TARGETS tamigraph
 ARCHIVE DESTINATION "lib/"
 LIBRARY DESTINATION "lib/"
 COMPONENT library)
