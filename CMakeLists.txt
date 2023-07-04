@@ -3,6 +3,8 @@ project( P )
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/tami_base_src/)
 
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/tami_graph_src/)
+
 # See if user has pybind11 installed
 find_package(pybind11)
 if(pybind11_FOUND)
