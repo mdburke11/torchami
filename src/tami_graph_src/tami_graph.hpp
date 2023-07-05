@@ -51,6 +51,23 @@ class TamiGraph{
 
     public:
 
+        TamiGraph();
+        TamiGraph(TamiBase::graph_type type, int seed);
+        TamiGraph(TamiBase::graph_type type, int dim, int seed);
+
+
+
+        TamiBase::ami_parms ami_parameters;
+        TamiBase::graph_type graph_type;
+        bool bose_alphas_in_R0=false;
+
+
+        // Create a random number generator using std::random
+        std::mt19937 rand_gen;
+        std::uniform_real_distribution<double> rand_dist;
+	    double random_real(double max);
+	    double random_real(double min, double max);
+
         // structs and typedefs
 
         enum spin_type{up,dn};
@@ -242,6 +259,9 @@ class TamiGraph{
         typedef std::vector< edge_t> edge_vector_t;
         typedef std::vector< vertex_t> vertex_vector_t;
 
+        typedef std::vector< edge_vector_t> edge_vector_list_t;
+        typedef std::vector< vertex_vector_t> vertex_vector_list_t;
+
         typedef std::vector<int> git_perm_t;
         typedef std::vector<git_perm_t> git_perm_set_t;
         typedef std::vector<git_perm_set_t> git_perm_list_t;
@@ -356,6 +376,7 @@ class TamiGraph{
 
         // ggm to r0
         void graph_to_R0(graph_t &g, TamiBase::g_prod_t &R0);
+            void reset_epsilons(TamiBase::g_prod_t &R0);
 
         // extract bose alphas for non-hubbard
         void extract_bose_alphas(graph_t g, std::vector<TamiBase::alpha_t> &bose);
@@ -370,7 +391,6 @@ class TamiGraph{
         // prefactor from fermi loops and ct insertions
         double get_prefactor(graph_t &g, int order);
             int fermi_connected_components(graph_t &g);
-                void find_external_vertices(graph_t &g, vertex_vector_t &v, edge_vector_t &edges);
     
 
 

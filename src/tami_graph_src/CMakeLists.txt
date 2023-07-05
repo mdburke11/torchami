@@ -19,7 +19,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 link_directories(${Boost_LIBRARY_DIRS})
 
 set(LIB_BASE_FILES
-  ${CMAKE_SOURCE_DIR}/src/tami_graph_src/main.cpp
+  ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_helpers.cpp
+  ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_labelling.cpp
+  ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_interface.cpp
 )
 
 ADD_LIBRARY(tamigraph SHARED ${LIB_BASE_FILES})
