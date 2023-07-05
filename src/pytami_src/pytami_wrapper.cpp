@@ -1,4 +1,5 @@
 #include "../src/tami_base_src/tami_base.hpp"
+#include "../src/tami_graph_src/tami_graph.hpp"
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 #include <pybind11/pybind11.h>
@@ -7,6 +8,9 @@ PYBIND11_MAKE_OPAQUE(std::vector<int>); // alpha_t, epsilon_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::complex_double>); // frequency_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::g_struct>); // g_prod_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::ft_term>); // ft_terms
+
+//PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::graph_group>); //gg_vec_t
+//PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::gg_vec_t>); //gg_matrix_t
 
 
 namespace py = pybind11;
@@ -18,10 +22,12 @@ void init_pytami_wrapper(py::module &m){
     py::bind_vector<std::vector<TamiBase::g_struct>>(m, "g_prod_t");
     py::bind_vector<std::vector<TamiBase::ft_term>>(m, "ft_terms");
 
+    //py::bind_vector<std::vector<TamiGraph::graph_group>>(m, "gg_vec_t");
+    //py::bind_vector<std::vector<TamiGraph::gg_vec_t>>(m, "gg_matrix_t");
+
     py::class_<TamiBase> TamiBase(m, "TamiBase");
     TamiBase.def(py::init<>());
     TamiBase.def(py::init<at::Device &>()); // device c'tor //TODO: add a  batch_size c'tor
-    TamiBase.def_readwrite("options", &TamiBase::options); // TODO: remove since a python analog DNE
     TamiBase.def("getDevice", &TamiBase::getDevice, "Returns the device stored in the options object.");
 
     py::class_<TamiBase::ami_vars> (TamiBase, "ami_vars")
@@ -70,7 +76,24 @@ void init_pytami_wrapper(py::module &m){
     TamiBase.def("evaluate", &TamiBase::evaluate, "Evaluate function for fermi-tree construction");
     TamiBase.def("pretty_print_ft_terms", &TamiBase::pretty_print_ft_terms, "Prints latex formula for the mathematical expression stored in the ft_terms object provided");
     
-    m.def("epsilon_2D_cpp", &epsilon_2D, "2D tight binding dispersion");
     
+    // Graph bindings 
+    // TODO: should this be a separate submodule?
 
-    }
+    py::class_<TamiGraph> TamiGraph(m, "TamiGraph");
+    TamiGraph.def(py::init<>());
+    TamiGraph.def(py::init<TamiBase::graph_type, int>());
+    TamiGraph.def(py::init<TamiBase::graph_type, int, int>());
+
+    //py::class_<TamiGraph::graph_group> (TamiGraph, "graph_group")
+    //    .def(py::init<>())
+    //    //.def(py::init<double, TamiBase::FermiTree::fermi_tree_t, TamiBase::g_prod_t>())
+    //    .def_readwrite("order_shift", &TamiGraph::graph_group::order_shift);
+
+    TamiGraph.def("read_ggmp", py::overload_cast<std::string, TamiGraph::gg_matrix_t &, int>(&TamiGraph::read_ggmp), "Reads graph files into ggm from directory provided upto max_ord order.");
+    TamiGraph.def("print_ggm", &TamiGraph::print_ggm, "Prints what is contained in the ggm object provided.");
+    TamiGraph.def("ggm_label", &TamiGraph::ggm_label, "labels all the graphs contained in the ggm object from order min and up.");
+    TamiGraph.def("graph_to_R0", &TamiGraph::graph_to_R0, "Converts provided graph_t into a TamiBase::g_prod_t object.");
+    TamiGraph.def("generate_sigma_ct", &TamiGraph::generate_sigma_ct, "generates all Counter term diagrams for the graph provided and store them in the vector provided upto max_number of insertions.");
+    TamiGraph.def("get_prefactor", &TamiGraph::get_prefactor, "returns the multiplicative factor of (-1)^fermionic loops.");
+}

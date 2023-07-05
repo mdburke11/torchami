@@ -138,6 +138,8 @@ void renorm_PT_graph_example(){
   
   for (auto x : temp_ct){
     g.graph_to_R0(x, R0);
+    double pf = g.get_prefactor(x, 2); // fermionic loop counter
+    std::cout<< "Prefactor: " << pf << std::endl;
     R0_ct.push_back(R0);
   }
 
