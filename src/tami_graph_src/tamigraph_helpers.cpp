@@ -68,6 +68,16 @@ if(ami_parameters.TYPE_==TamiBase::Sigma || ami_parameters.TYPE_==TamiBase::Gree
   // fermi_loops++;
 // }
 
+int sigma_ct=g[boost::graph_bundle].sigma_ct_count;
+
+// std::cout<<"Found fermi loops"<< fermi_loops<<std::endl;
+
+output=pow(-1, fermi_loops+order+sigma_ct);	
+	
+// std::cout<<"returning "<<output<<std::endl;
+	
+return output;	
+
 }
 
 void TamiGraph::print_ggm( gg_matrix_t &ggm){

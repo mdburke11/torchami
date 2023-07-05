@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <fstream>
 #include <string> 
@@ -51,20 +53,19 @@ class TamiGraph{
 
     public:
 
+        // C'tors
         TamiGraph();
         TamiGraph(TamiBase::graph_type type, int seed);
         TamiGraph(TamiBase::graph_type type, int dim, int seed);
-
-
 
         TamiBase::ami_parms ami_parameters;
         TamiBase::graph_type graph_type;
         bool bose_alphas_in_R0=false;
 
-
         // Create a random number generator using std::random
         std::mt19937 rand_gen;
         std::uniform_real_distribution<double> rand_dist;
+        boost::random::sobol engine;
 	    double random_real(double max);
 	    double random_real(double min, double max);
 
@@ -276,6 +277,11 @@ class TamiGraph{
             >
         cc_graph_t;
 
+        // used in intialization
+        graph_t current_graph;
+        graph_t f2,f3;
+        graph_t proposed_graph;
+
 
 
 
@@ -393,10 +399,21 @@ class TamiGraph{
             int fermi_connected_components(graph_t &g);
     
 
+        // constructor helpers
 
-                
+        void initialize(TamiBase::graph_type type);
+        void initialize(TamiBase::graph_type type, int dim);
+        void create_starter_graph(TamiGraph::graph_t &g);
 
 
+        void construct_starter_sigma(graph_t &g);
+        void construct_starter_phuu_bubble(graph_t &g);
+        void construct_starter_phud_bubble(graph_t &g);
+        void construct_starter_hartree(graph_t &g);
+        void construct_starter_bare(graph_t &g);
+        void construct_starter_ppuu_bubble(graph_t &g);
+        void construct_starter_ppud_bubble(graph_t &g);
+        void construct_starter_force(graph_t &g, graph_t &f2, graph_t &f3);
 
 
 

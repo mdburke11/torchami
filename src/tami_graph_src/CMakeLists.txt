@@ -22,6 +22,7 @@ set(LIB_BASE_FILES
   ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_helpers.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_labelling.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_interface.cpp
+  ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_constructs.cpp
 )
 
 ADD_LIBRARY(tamigraph SHARED ${LIB_BASE_FILES})

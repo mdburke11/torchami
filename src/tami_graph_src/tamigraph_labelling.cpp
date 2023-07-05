@@ -1037,6 +1037,7 @@ assign_cons_label( g, vin, labelled_edges[0], labelled_edges[1], unlabelled_edge
 
 }	
 
+return output;
 }
 
 // this function is redundant, since it needs the same operations as the next part of the step...

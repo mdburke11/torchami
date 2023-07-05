@@ -1,4 +1,3 @@
-#include "tami_base.hpp"
 #include "examples.hpp"
 
 
@@ -39,9 +38,12 @@ int main( int argc , char *argv[] )
     case 7:
       python_comparison();
       break;
-   //case 6:
-   //   example_();
-   //   break;
+    case 8:
+      graph_library_example();
+      break;
+    case 9:
+      renorm_PT_graph_example();
+      break;
     default:
       example2();
       example1_bose();
@@ -52,6 +54,111 @@ int main( int argc , char *argv[] )
   }
 
   return 0;
+}
+
+void graph_library_example(){
+
+  // this is an example of using the libtami_graph library to evaluate the graphs
+  // in the ggm_examples folder.
+
+  std::string foldername = "../ggm_examples"; // folder that holds all the graph files
+
+  TamiBase::graph_type g_type = TamiBase::Sigma; // Specify graph type: self energy diagram
+
+  int seed = 0;
+
+  TamiGraph g(g_type, seed); // initiate the TamiGraph object with intial seed
+
+  TamiGraph::gg_matrix_t ggm;
+  int max_ord = 6; // max order diagram in the graph folder if order 6 by default
+
+  g.read_ggmp(foldername, ggm, max_ord); 
+
+  g.print_ggm(ggm);
+
+  std::cout<<"Now lets label the graphs "<<std::endl;
+	g.ggm_label(ggm,0);
+	std::cout<<"All done! That was easy!"<<std::endl;
+
+  TamiBase::g_prod_t R0;
+
+  for (int i=2; i<7; i+=2){ // looping through the orders 2, 4, 6
+    g.graph_to_R0(ggm[i][0].graph_vec[0], R0); // converting each graph into R0
+    std::cout<< "\norder: " << i << std::endl;
+    std::cout<< "alpha: " << std::endl;
+
+    for (auto x : R0){ // Print the alphas
+      for (int j=0; j < x.alpha_.size(); ++j){
+        std::cout << x.alpha_[j] << " ";
+      }
+      std::cout << std::endl;
+    }
+
+    std::cout<< "epsilon: " << std::endl; // Print the epsilons
+    for (auto x : R0){
+      for (int j=0; j < x.eps_.size(); ++j){
+        std::cout << x.eps_[j] << " ";
+      }
+      std::cout << std::endl;
+    }
+  }
+}
+
+void renorm_PT_graph_example(){
+
+  // this is an example of using the libtami_graph library to evaluate the graphs
+  // in the ggm_examples folder.
+
+  std::string foldername = "../ggm_examples"; // folder that holds all the graph files
+
+  TamiBase::graph_type g_type = TamiBase::Sigma; // Specify graph type: self energy diagram
+
+  int seed = 0;
+
+  TamiGraph g(g_type, seed); // initiate the TamiGraph object with intial seed
+
+  TamiGraph::gg_matrix_t ggm;
+  int max_ord = 2; // Only do the second order diagram's Ct diagrams
+  int max_insertions = 2; // include all diagrams up to 2 insertions
+
+  g.read_ggmp(foldername, ggm, max_ord); 
+
+  g.print_ggm(ggm);
+
+  std::cout<<"Now lets label the graphs "<<std::endl;
+	g.ggm_label(ggm,0);
+	std::cout<<"All done! That was easy!"<<std::endl;
+
+  std::vector<TamiGraph::graph_t> temp_ct;
+  std::vector<TamiBase::g_prod_t> R0_ct; // catch all of the counter term R0's
+  TamiBase::g_prod_t R0;
+
+  TamiGraph::graph_t second_ord_Sigma = ggm[2][0].graph_vec[0];
+  g.generate_sigma_ct(second_ord_Sigma, temp_ct, max_insertions);
+  
+  for (auto x : temp_ct){
+    g.graph_to_R0(x, R0);
+    R0_ct.push_back(R0);
+  }
+
+  for (auto x : R0_ct){ // looping through all the CT R0's
+    std::cout<< "\nalpha: " << std::endl;
+
+    for (auto y : x){ // Print the alphas
+      for (int j=0; j < y.alpha_.size(); ++j){
+        std::cout << y.alpha_[j] << " ";
+      }
+      std::cout << std::endl;
+    }
+
+    std::cout<< "epsilon: " << std::endl; // Print the epsilons
+    for (auto y : x){
+      for (int j=0; j < y.eps_.size(); ++j){
+        std::cout << y.eps_[j] << " ";
+      }
+      std::cout << std::endl;
+    }
+  }
 }
 
 

@@ -5,7 +5,6 @@ add_executable(${PROJECT_NAME}
 ./src/pt_main.cpp
 ./src/examples.hpp
 ./src/examples.cpp
-./src/graph_test.cpp
 )
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

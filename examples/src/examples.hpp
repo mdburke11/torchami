@@ -1,4 +1,5 @@
 #include "tami_base.hpp"
+#include "tami_graph.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -41,7 +42,8 @@
  void example6();
  void example9();
  void python_comparison();
- //void example_();
+ void graph_library_example();
+ void renorm_PT_graph_example();
 
 // TODO: clean these up - maybe put together
  std::string format_r1_tensor(const at::Tensor&);
