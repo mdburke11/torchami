@@ -10,7 +10,8 @@ PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::g_struct>); // g_prod_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::ft_term>); // ft_terms
 
 //PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::graph_group>); //gg_vec_t
-//PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::gg_vec_t>); //gg_matrix_t
+PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::gg_vec_t>); //gg_matrix_t
+PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::graph_t>); //for TamiGraph::graph_group::graph_vec
 
 
 namespace py = pybind11;
@@ -23,7 +24,6 @@ void init_pytami_wrapper(py::module &m){
     py::bind_vector<std::vector<TamiBase::ft_term>>(m, "ft_terms");
 
     //py::bind_vector<std::vector<TamiGraph::graph_group>>(m, "gg_vec_t");
-    //py::bind_vector<std::vector<TamiGraph::gg_vec_t>>(m, "gg_matrix_t");
 
     py::class_<TamiBase> TamiBase(m, "TamiBase");
     TamiBase.def(py::init<>());
@@ -65,6 +65,23 @@ void init_pytami_wrapper(py::module &m){
         .def_readwrite("eff_stat_", &TamiBase::g_struct::eff_stat_)
         .def_readwrite("pp", &TamiBase::g_struct::pp);
 
+    py::enum_<TamiBase::graph_type>(TamiBase, "graph_type")
+        .value("Sigma", TamiBase::graph_type::Sigma)
+        .value("Pi_phuu", TamiBase::graph_type::Pi_phuu)
+        .value("Pi_phud", TamiBase::graph_type::Pi_phud)
+        .value("Hartree", TamiBase::graph_type::Hartree)
+        .value("Bare", TamiBase::graph_type::Bare)
+        .value("Greens", TamiBase::graph_type::Greens)
+        .value("density", TamiBase::graph_type::density)
+        .value("doubleocc", TamiBase::graph_type::doubleocc)
+        .value("Pi_ppuu", TamiBase::graph_type::Pi_ppuu)
+        .value("Pi_ppud", TamiBase::graph_type::Pi_ppud)
+        .value("DOS", TamiBase::graph_type::DOS)
+        .value("ENERGY", TamiBase::graph_type::ENERGY)
+        .value("FORCE", TamiBase::graph_type::FORCE)
+        .export_values();
+
+
     py::class_<TamiBase::ft_term> (TamiBase, "ft_term")
         .def(py::init<>())
         .def(py::init<double, TamiBase::FermiTree::fermi_tree_t, TamiBase::g_prod_t>())
@@ -85,10 +102,11 @@ void init_pytami_wrapper(py::module &m){
     TamiGraph.def(py::init<TamiBase::graph_type, int>());
     TamiGraph.def(py::init<TamiBase::graph_type, int, int>());
 
-    //py::class_<TamiGraph::graph_group> (TamiGraph, "graph_group")
-    //    .def(py::init<>())
-    //    //.def(py::init<double, TamiBase::FermiTree::fermi_tree_t, TamiBase::g_prod_t>())
-    //    .def_readwrite("order_shift", &TamiGraph::graph_group::order_shift);
+    py::class_<TamiGraph::graph_group> (TamiGraph, "graph_group")
+        .def(py::init<>())
+        //.def(py::init<double, TamiBase::FermiTree::fermi_tree_t, TamiBase::g_prod_t>())
+        .def_readwrite("order_shift", &TamiGraph::graph_group::order_shift)
+        .def_readwrite("graph_vec", &TamiGraph::graph_group::graph_vec);
 
     TamiGraph.def("read_ggmp", py::overload_cast<std::string, TamiGraph::gg_matrix_t &, int>(&TamiGraph::read_ggmp), "Reads graph files into ggm from directory provided upto max_ord order.");
     TamiGraph.def("print_ggm", &TamiGraph::print_ggm, "Prints what is contained in the ggm object provided.");
@@ -96,4 +114,7 @@ void init_pytami_wrapper(py::module &m){
     TamiGraph.def("graph_to_R0", &TamiGraph::graph_to_R0, "Converts provided graph_t into a TamiBase::g_prod_t object.");
     TamiGraph.def("generate_sigma_ct", &TamiGraph::generate_sigma_ct, "generates all Counter term diagrams for the graph provided and store them in the vector provided upto max_number of insertions.");
     TamiGraph.def("get_prefactor", &TamiGraph::get_prefactor, "returns the multiplicative factor of (-1)^fermionic loops.");
+
+    py::bind_vector<std::vector<TamiGraph::gg_vec_t>>(TamiGraph, "gg_matrix_t");
+    py::bind_vector<std::vector<TamiGraph::graph_t>>(TamiGraph, "graph_vector");
 }

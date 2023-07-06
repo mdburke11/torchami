@@ -423,3 +423,10 @@ class TamiGraph{
 
 
 };
+
+
+inline std::ostream& operator<< (std::ostream &os, const TamiGraph::graph_group& g){
+    os << "test pole_struct" << std::endl;
+    return os;
+}
+
