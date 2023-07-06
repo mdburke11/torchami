@@ -418,9 +418,18 @@ class TamiGraph{
 
 
         
+        struct trojan_graph{
 
+            trojan_graph(std::vector<TamiGraph::graph_t> vec, int index){
+                graph = vec[index];
+            }
 
+            graph_t graph;
+            int dummy_var;
+        };
 
+        void trojan_graph_to_R0(trojan_graph &tg, TamiBase::g_prod_t &R0);
+        double trojan_get_prefactor(trojan_graph &tg, int order);
 
 };
 

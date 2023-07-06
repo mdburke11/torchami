@@ -108,12 +108,20 @@ void init_pytami_wrapper(py::module &m){
         .def_readwrite("order_shift", &TamiGraph::graph_group::order_shift)
         .def_readwrite("graph_vec", &TamiGraph::graph_group::graph_vec);
 
+    py::class_<TamiGraph::trojan_graph>(TamiGraph, "trojan_graph")
+        //.def(py::init<>())
+        .def(py::init<std::vector<TamiGraph::graph_t>, int>())
+        .def_readwrite("dummy_var", &TamiGraph::trojan_graph::dummy_var);
+
     TamiGraph.def("read_ggmp", py::overload_cast<std::string, TamiGraph::gg_matrix_t &, int>(&TamiGraph::read_ggmp), "Reads graph files into ggm from directory provided upto max_ord order.");
     TamiGraph.def("print_ggm", &TamiGraph::print_ggm, "Prints what is contained in the ggm object provided.");
     TamiGraph.def("ggm_label", &TamiGraph::ggm_label, "labels all the graphs contained in the ggm object from order min and up.");
     TamiGraph.def("graph_to_R0", &TamiGraph::graph_to_R0, "Converts provided graph_t into a TamiBase::g_prod_t object.");
     TamiGraph.def("generate_sigma_ct", &TamiGraph::generate_sigma_ct, "generates all Counter term diagrams for the graph provided and store them in the vector provided upto max_number of insertions.");
     TamiGraph.def("get_prefactor", &TamiGraph::get_prefactor, "returns the multiplicative factor of (-1)^fermionic loops.");
+
+    TamiGraph.def("trojan_graph_to_R0", &TamiGraph::trojan_graph_to_R0, "Workaround to get R0 object from graph object inside trojan_graph onject provided.");
+    TamiGraph.def("trojan_get_prefactor", &TamiGraph::trojan_get_prefactor, "Workaround to get prefactor from graph object inside trojan_graph onject provided.");
 
     py::bind_vector<std::vector<TamiGraph::gg_vec_t>>(TamiGraph, "gg_matrix_t");
     py::bind_vector<std::vector<TamiGraph::graph_t>>(TamiGraph, "graph_vector");

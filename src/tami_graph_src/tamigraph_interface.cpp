@@ -731,3 +731,15 @@ ctg[boost::graph_bundle].sigma_ct_count+=length;
 
 // std::cout<<"Exiting insert chain function"<<std::endl;
 }
+
+
+
+void TamiGraph::trojan_graph_to_R0(trojan_graph &tg, TamiBase::g_prod_t &R0){
+	TamiGraph::graph_t g = tg.graph;
+	this->graph_to_R0(g, R0);
+}
+
+double TamiGraph::trojan_get_prefactor(trojan_graph &tg, int order){
+	TamiGraph::graph_t g = tg.graph;
+	return this->get_prefactor(g, order);
+}
