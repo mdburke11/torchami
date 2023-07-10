@@ -31,7 +31,7 @@ def example_2():
     t1 = time.time()
 
     # make ft_terms object
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
 
     # Integration/Evaluation parameters
     E_REG = 0 # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -85,7 +85,7 @@ def example_4():
     t1 = time.time()
 
     # make ft_terms object
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
 
     # Integration/Evaluation parameters
     E_REG = 0 # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -137,7 +137,7 @@ def example_6():
     t1 = time.time()
 
     # make ft_terms object
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
 
     # Integration/Evaluation parameters
     E_REG = 0 # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8 

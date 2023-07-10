@@ -36,8 +36,8 @@ class AMI_integrand:
     # m is the number of independent momentum variables (dim * (2*order - 1))
 
 
-    def __init__(self, tami: pytami.TamiBase, R0: pytami.g_prod_t, avars: pytami.TamiBase.ami_vars, 
-                ft: pytami.ft_terms, parms: pytami.TamiBase.ami_parms, eps: Callable[[torch.tensor], torch.tensor],
+    def __init__(self, tami: pytami.TamiBase, R0: pytami.TamiBase.g_prod_t, avars: pytami.TamiBase.ami_vars, 
+                ft: pytami.TamiBase.ft_terms, parms: pytami.TamiBase.ami_parms, eps: Callable[[torch.tensor], torch.tensor],
                 evalReal: bool, extern_vars: ext_vars) -> None:
         
         self.tami = tami

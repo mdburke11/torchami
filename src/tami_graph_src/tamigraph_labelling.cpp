@@ -1263,3 +1263,24 @@ vector.push_back(*ei);
 
 }
 
+
+void TamiGraph::ggm_remove_pairs(gg_matrix_t &ggm, int min){
+	
+for(int ord=min; ord< ggm.size(); ord++){
+	for(int group=0; group<ggm[ord].size(); group++){
+	  for(int pair=0; pair<ggm[ord][group].gp_vec.size(); pair++){
+
+		ggm[ord][group].graph_vec.push_back(ggm[ord][group].gp_vec[pair].g1_);
+		ggm[ord][group].graph_vec.push_back(ggm[ord][group].gp_vec[pair].g2_);
+		
+		  
+	  }
+	// after all pairs pushing into graph_vec. we delete the gp_vecs
+	ggm[ord][group].gp_vec.clear();
+
+	}
+}	
+	
+	
+	
+}

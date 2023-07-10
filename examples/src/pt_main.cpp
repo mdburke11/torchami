@@ -119,7 +119,7 @@ void renorm_PT_graph_example(){
 
   TamiGraph::gg_matrix_t ggm;
   int max_ord = 2; // Only do the second order diagram's Ct diagrams
-  int max_insertions = 2; // include all diagrams up to 2 insertions
+  int max_insertions = 1; // include all diagrams up to 2 insertions
 
   g.read_ggmp(foldername, ggm, max_ord); 
 

@@ -265,6 +265,119 @@ ggm.clear();
 	
 }
 
+void TamiGraph::read_ggmp(std::string folder, gg_matrix_t &ggm, int min_ord, int max_ord){
+
+ggm.clear();
+// oX_gX_nX.graph 
+    std::stringstream ss;
+	ss<<std::filesystem::current_path().string()<<"/"<<folder;
+	std::string path=ss.str();
+	
+	if(!std::filesystem::is_directory(path))
+	{
+	throw std::runtime_error("Could not open ggm directory");
+}
+	
+	for (const auto & entry : std::filesystem::directory_iterator(path)){
+		
+		
+    // std::cout << entry.path() << std::endl;
+	// std::cout << entry.path().extension() <<" "<<entry.path().extension().string()<<  std::endl;
+	
+			
+				if(entry.path().extension().string().compare(".graph")==0){
+				// std::cout<<"Was true group? "<<entry.path().extension().string().compare(".group")<<std::endl;
+
+			std::string stem=entry.path().stem().string();
+			
+			
+			std::size_t pos=stem.find("_");
+			std::string second=stem.substr(1, pos-std::size_t(1));
+			int ord=std::stoi(second);
+			stem=stem.substr(pos+std::size_t(1));
+			
+			pos=stem.find("_");
+			second=stem.substr(1,pos-std::size_t(1));
+			int group=std::stoi(second);
+			
+			second=stem.substr(pos+std::size_t(2));
+			int num=std::stoi(second);
+			
+			if(ord>max_ord){continue;}
+			
+
+		// std::cout<<stem <<" "<<second<<" "<<pos<<std::endl;
+
+			 // std::cout << entry.path().filename() << std::endl;
+			  // std::cout<<"Ord is "<<ord<<" group is "<< group<<" num is "<< num <<std::endl;
+			  
+			if(ggm.size()<ord+1){ ggm.resize(ord+1);}
+			if(ggm[ord].size()< group+1){ggm[ord].resize(group+1);}
+			if(ggm[ord][group].graph_vec.size()<num+1){ggm[ord][group].graph_vec.resize(num+1);}
+			
+			graph_t temp;
+			graph_read(entry.path().string(),temp);
+			
+			ggm[ord][group].graph_vec[num]=temp;
+
+			
+			  
+			}
+
+		// std::strcmp(entry.path().extension().string(),".group")
+	// if(entry.path().extension().string().compare("pair")==0){
+		// if(entry.path().extension().string()==".pair"){
+		if(entry.path().extension().string().compare(".pair")==0){
+		// std::cout<<"Was true pair? "<<entry.path().extension().string().compare(".group")<<std::endl;
+
+	std::string stem=entry.path().stem().string();
+	
+	
+	std::size_t pos=stem.find("_");
+	std::string second=stem.substr(1, pos-std::size_t(1));
+	int ord=std::stoi(second);
+	stem=stem.substr(pos+std::size_t(1));
+	
+	pos=stem.find("_");
+	second=stem.substr(1,pos-std::size_t(1));
+	int group=std::stoi(second);
+	
+	second=stem.substr(pos+std::size_t(2));
+	int num=std::stoi(second);
+	
+	if(ord>max_ord ){continue;}
+	if(ord< min_ord){continue;}
+
+// std::cout<<stem <<" "<<second<<" "<<pos<<std::endl;
+
+	 // std::cout << entry.path().filename() << std::endl;
+	  // std::cout<<"Ord is "<<ord<<" group is "<< group<<" num is "<< num <<std::endl;
+	  
+	if(ggm.size()<ord+1){ ggm.resize(ord+1);}
+	if(ggm[ord].size()< group+1){ggm[ord].resize(group+1);}
+	if(ggm[ord][group].gp_vec.size()<num+1){ggm[ord][group].gp_vec.resize(num+1);}
+	
+	git_pair temppair;
+	pair_read(entry.path().string(),temppair);
+	
+	ggm[ord][group].gp_vec[num]=temppair;
+
+	
+	  
+	}
+			
+			
+			
+	
+	}
+	
+	
+// for(int ord=2; ord< ggm.size(); ord++){
+	// for(int group=0; group< ggm[ord].size(); group++){
+		// for(int graph=0; graph< ggm[ord][group].graph_vec.size(); graph++)
+	
+}
+
 
 void TamiGraph::graph_read(std::string filename, graph_t &g){
 
@@ -742,4 +855,9 @@ void TamiGraph::trojan_graph_to_R0(trojan_graph &tg, TamiBase::g_prod_t &R0){
 double TamiGraph::trojan_get_prefactor(trojan_graph &tg, int order){
 	TamiGraph::graph_t g = tg.graph;
 	return this->get_prefactor(g, order);
+}
+
+void TamiGraph::trojan_generate_sigma_ct( trojan_graph &tg_in, std::vector<graph_t> &ct_vec, int maxdots){
+	TamiGraph::graph_t g_in = tg_in.graph;
+	this->generate_sigma_ct(g_in, ct_vec, maxdots);
 }

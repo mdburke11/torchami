@@ -376,6 +376,8 @@ class TamiGraph{
                     void find_path_between_vertices(graph_t &g, vertex_t &v1, vertex_t &v2, bool &success, edge_vector_t &final_ev, vertex_vector_t &final_vv);
                         void get_adjacent_vertex_stat(graph_t &g, vertex_t &vin, vertex_t &next, edge_t &eout,  TamiBase::stat_type stat);
                 void put_back_legs(graph_t &g, vertex_vector_t &in_vv, vertex_vector_t &out_vv);
+        void ggm_remove_pairs(gg_matrix_t &ggm, int min);
+
 
         // print ggm function
         void print_ggm( gg_matrix_t &ggm);
@@ -388,7 +390,7 @@ class TamiGraph{
         void extract_bose_alphas(graph_t g, std::vector<TamiBase::alpha_t> &bose);
 
         // Renorm PT CT diagrams
-        void generate_sigma_ct( graph_t &g_in, std::vector< graph_t> &ct_vec, int maxdots);
+        void generate_sigma_ct(graph_t &g_in, std::vector< graph_t> &ct_vec, int maxdots);
             void find_fermionic_edges(graph_t &g, edge_vector_t &vector);
             void combinations_repetition(int n, int r, std::vector< std::vector<int>> &list );
                 void combinations_repetition_util(std::vector<int> &chosen, std::vector< std::vector<int>> &list, int index, int r, int start, int end);// allows repeated values in combinations 
@@ -424,12 +426,17 @@ class TamiGraph{
                 graph = vec[index];
             }
 
+            trojan_graph(TamiGraph::graph_t g){
+                graph = g;
+            }
+
             graph_t graph;
             int dummy_var;
         };
 
         void trojan_graph_to_R0(trojan_graph &tg, TamiBase::g_prod_t &R0);
         double trojan_get_prefactor(trojan_graph &tg, int order);
+        void trojan_generate_sigma_ct(trojan_graph &tg_in, std::vector<graph_t> &ct_vec, int maxdots);
 
 };
 

@@ -9,7 +9,7 @@ def construct_4ord(tami, batch_size):
     energy_size = len(template_energy)
 
     energy = 8.0 * torch.rand([batch_size, energy_size], device=tami.getDevice()) - 4.0
-    frequency = pytami.frequency_t()
+    frequency = pytami.TamiBase.frequency_t()
     for i in range(5):
         frequency.append(0+0j)
     
@@ -34,7 +34,7 @@ def scaling():
     print("Starting energy tensor: ")
     print(avars.energy_)
 
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
 
     tami.construct(N_INT, R0, ftout)
 

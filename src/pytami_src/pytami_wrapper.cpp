@@ -9,26 +9,29 @@ PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::complex_double>); // frequency_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::g_struct>); // g_prod_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiBase::ft_term>); // ft_terms
 
-//PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::graph_group>); //gg_vec_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::gg_vec_t>); //gg_matrix_t
 PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::graph_t>); //for TamiGraph::graph_group::graph_vec
-
+PYBIND11_MAKE_OPAQUE(std::vector<TamiGraph::trojan_graph>); //for trojan_generate_sigma_ct
 
 namespace py = pybind11;
 
 void init_pytami_wrapper(py::module &m){
 
-    py::bind_vector<std::vector<int>>(m, "VectorInt"); // alpha_t and epsilon_t
-    py::bind_vector<std::vector<TamiBase::complex_double>>(m, "frequency_t");
-    py::bind_vector<std::vector<TamiBase::g_struct>>(m, "g_prod_t");
-    py::bind_vector<std::vector<TamiBase::ft_term>>(m, "ft_terms");
-
-    //py::bind_vector<std::vector<TamiGraph::graph_group>>(m, "gg_vec_t");
-
     py::class_<TamiBase> TamiBase(m, "TamiBase");
     TamiBase.def(py::init<>());
     TamiBase.def(py::init<at::Device &>()); // device c'tor //TODO: add a  batch_size c'tor
     TamiBase.def("getDevice", &TamiBase::getDevice, "Returns the device stored in the options object.");
+
+    py::bind_vector<std::vector<int>>(TamiBase, "VectorInt"); // alpha_t and epsilon_t
+    py::bind_vector<std::vector<TamiBase::complex_double>>(TamiBase, "frequency_t");
+    py::bind_vector<std::vector<TamiBase::g_struct>>(TamiBase, "g_prod_t")
+        // need copy.copy() to avoid mutability while extracting CT graphs
+        .def("__copy__", [](const std::vector<TamiBase::g_struct> &self){
+            std::vector<TamiBase::g_struct> copy;
+            for (TamiBase::g_struct g : self){copy.push_back(g);}
+            return copy;
+        });
+    py::bind_vector<std::vector<TamiBase::ft_term>>(TamiBase, "ft_terms");
 
     py::class_<TamiBase::ami_vars> (TamiBase, "ami_vars")
         .def(py::init<>())
@@ -102,6 +105,10 @@ void init_pytami_wrapper(py::module &m){
     TamiGraph.def(py::init<TamiBase::graph_type, int>());
     TamiGraph.def(py::init<TamiBase::graph_type, int, int>());
 
+    py::bind_vector<std::vector<TamiGraph::gg_vec_t>>(TamiGraph, "gg_matrix_t");
+    py::bind_vector<std::vector<TamiGraph::graph_t>>(TamiGraph, "graph_vector");
+    py::bind_vector<std::vector<TamiGraph::trojan_graph>>(TamiGraph, "trojan_graph_vector");
+
     py::class_<TamiGraph::graph_group> (TamiGraph, "graph_group")
         .def(py::init<>())
         //.def(py::init<double, TamiBase::FermiTree::fermi_tree_t, TamiBase::g_prod_t>())
@@ -114,15 +121,17 @@ void init_pytami_wrapper(py::module &m){
         .def_readwrite("dummy_var", &TamiGraph::trojan_graph::dummy_var);
 
     TamiGraph.def("read_ggmp", py::overload_cast<std::string, TamiGraph::gg_matrix_t &, int>(&TamiGraph::read_ggmp), "Reads graph files into ggm from directory provided upto max_ord order.");
+    TamiGraph.def("read_ggmp", py::overload_cast<std::string, TamiGraph::gg_matrix_t &, int, int>(&TamiGraph::read_ggmp), "Reads graph files into ggm from directory provided from min_ord upto max_ord order.");
     TamiGraph.def("print_ggm", &TamiGraph::print_ggm, "Prints what is contained in the ggm object provided.");
     TamiGraph.def("ggm_label", &TamiGraph::ggm_label, "labels all the graphs contained in the ggm object from order min and up.");
+    TamiGraph.def("ggm_remove_pairs", &TamiGraph::ggm_remove_pairs, "Removes cancelling pairs and puts them into a group.");
+
     TamiGraph.def("graph_to_R0", &TamiGraph::graph_to_R0, "Converts provided graph_t into a TamiBase::g_prod_t object.");
     TamiGraph.def("generate_sigma_ct", &TamiGraph::generate_sigma_ct, "generates all Counter term diagrams for the graph provided and store them in the vector provided upto max_number of insertions.");
     TamiGraph.def("get_prefactor", &TamiGraph::get_prefactor, "returns the multiplicative factor of (-1)^fermionic loops.");
 
     TamiGraph.def("trojan_graph_to_R0", &TamiGraph::trojan_graph_to_R0, "Workaround to get R0 object from graph object inside trojan_graph onject provided.");
     TamiGraph.def("trojan_get_prefactor", &TamiGraph::trojan_get_prefactor, "Workaround to get prefactor from graph object inside trojan_graph onject provided.");
+    TamiGraph.def("trojan_generate_sigma_ct", &TamiGraph::trojan_generate_sigma_ct, "Workaround to generate all Counter term diagrams for the graph provided and store them in the vector provided upto maxdots of insertions.");
 
-    py::bind_vector<std::vector<TamiGraph::gg_vec_t>>(TamiGraph, "gg_matrix_t");
-    py::bind_vector<std::vector<TamiGraph::graph_t>>(TamiGraph, "graph_vector");
 }

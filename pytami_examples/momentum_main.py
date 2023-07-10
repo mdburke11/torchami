@@ -50,7 +50,7 @@ def mat_freq_flat_2ord():
     avars = ex.construct_ext_example2(ami)
 
     # setup helpers
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
     E_REG = 0
     N_INT = 2
     parms = pytami.TamiBase.ami_parms(N_INT, E_REG)
@@ -99,7 +99,7 @@ def mat_freq_flat_4ord():
     avars = ex.construct_ext_example4(ami)
 
     # setup helpers
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
     E_REG = 0
     N_INT = 4
     parms = pytami.TamiBase.ami_parms(N_INT, E_REG)
@@ -148,7 +148,7 @@ def mat_freq_flat_6ord():
     avars = ex.construct_ext_example6(ami)
 
     # setup helpers
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
     E_REG = 0
     N_INT = 6
     parms = pytami.TamiBase.ami_parms(N_INT, E_REG)
@@ -200,7 +200,7 @@ def flat_dist_ex():
     avars = ex.construct_ext_example2(ami)
 
     # setup helpers
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
     E_REG = 0
     N_INT = 2
     parms = pytami.TamiBase.ami_parms(N_INT, E_REG)
@@ -217,7 +217,7 @@ def flat_dist_ex():
 
     evars = mom.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, pytami.epsilon_2D_cpp,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
                                 False, evars)
 
 
@@ -256,7 +256,7 @@ def torchquad_ex(mc):
     avars = ex.construct_ext_example2(ami)
 
     # setup helpers
-    ftout = pytami.ft_terms()
+    ftout = pytami.TamiBase.ft_terms()
     E_REG = 0
     N_INT = 2
     parms = pytami.TamiBase.ami_parms(N_INT, E_REG)
@@ -272,7 +272,7 @@ def torchquad_ex(mc):
 
     evars = mom.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, pytami.epsilon_2D_cpp,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
                                 False, evars)
 
     integral_value = mc.integrate(integrand, dim=4, N=1_199_999, 
