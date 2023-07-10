@@ -4,6 +4,7 @@
 import torch
 import pytami
 from typing import Callable
+from collections import Counter 
 
 class ext_vars:
 
@@ -47,7 +48,6 @@ class RPT_integrand:
         self.parms = parms
 
         self.eps = eps # free particle dispersion
-
         self.z = z # this is the momentum dep renormalized PT shift - this will be a callable function 
 
         self.evalReal = evalReal
@@ -63,11 +63,24 @@ class RPT_integrand:
         alpha: torch.Tensor = torch.tensor([self.R0[i].alpha_ for i in range(len(self.R0))], device=self.device)
         self.full_alpha = torch.kron(alpha, I).T # tensor that will be multiplied when updating the energies
         self.order = self.parms.N_INT_ # number of integrals (order) and 2 * order - 1 = len(R0) (if not Renorm PT)
+        self.num_prop = len(self.R0) # number of propagators, equal to 2*self.order-1 unless renorm PT problem
+
+        # Count the power to raise z to in each call. First count the number of occurances for all alpha vectors. Then
+        # fill a list with the powers - 1 (power to be raised) at the correct index of R0.
+
+        alps : list[tuple[int]] = [tuple(self.R0[i].alpha_) for i in range(len(R0))] # extract tuples to compare
+        indices : list[int] = [alps.index(i) for i in set(alps)] # indices of the unique g_prod_t in R0
+        count : dict[tuple[int], int] = Counter(alps) # get counts of each propagator
+        self.powers : list[int] = [0 for i in range(len(R0))]  
+        for i in indices:
+            self.powers[i] = count[alps[i]] - 1 # each power is the number of greens functions present - 1
+
+
 
     def eff_eps(self, k: torch.Tensor) -> torch.Tensor:
         # combines all the extra components to the particle dispersion together - chemical potential, renorm PT
 
-        return self.external_vars.mu - torch.hstack([self.eps(k.split(self.dim, dim=1)[i]) for i in range(2*self.order-1)])
+        return self.external_vars.mu - torch.hstack([self.eps(k.split(self.dim, dim=1)[i]) for i in range(self.num_prop)])
 
 
 
