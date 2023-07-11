@@ -2,6 +2,7 @@ import torch
 import pytami
 import examples as ex
 import momenta_integrand as mom
+import external as ext
 import numpy as np
 from torchquad import MonteCarlo, Boole, set_up_backend, VEGAS, Simpson, Trapezoid
 import flat_integ as flat
@@ -65,9 +66,9 @@ def mat_freq_flat_2ord():
     reW: float = 0.0
     imW: float = (2*n + 1) * np.pi / beta
 
-    evars = mom.ext_vars(beta, mu, k, reW, imW)
+    evars = ext.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, ext.epsilon_2D,
                                  False, evars)
 
 
@@ -114,9 +115,9 @@ def mat_freq_flat_4ord():
     reW: float = 0.0
     imW: float = (2*n + 1) * np.pi / beta
 
-    evars = mom.ext_vars(beta, mu, k, reW, imW)
+    evars = ext.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, ext.epsilon_2D,
                                 False, evars)
 
 
@@ -163,9 +164,9 @@ def mat_freq_flat_6ord():
     reW: float = 0.0
     imW: float = (2*n + 1) * np.pi / beta
 
-    evars = mom.ext_vars(beta, mu, k, reW, imW)
+    evars = ext.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, ext.epsilon_2D,
                                 False, evars)
 
 
@@ -215,9 +216,9 @@ def flat_dist_ex():
     reW: float = 0.0
     imW: float = (2*n + 1) * np.pi / beta
 
-    evars = mom.ext_vars(beta, mu, k, reW, imW)
+    evars = ext.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, ext.epsilon_2D,
                                 False, evars)
 
 
@@ -270,9 +271,9 @@ def torchquad_ex(mc):
     reW: float = 0.0
     imW: float = (2*n + 1) * np.pi / beta
 
-    evars = mom.ext_vars(beta, mu, k, reW, imW)
+    evars = ext.ext_vars(beta, mu, k, reW, imW)
 
-    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, mom.epsilon_2D,
+    integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, ext.epsilon_2D,
                                 False, evars)
 
     integral_value = mc.integrate(integrand, dim=4, N=1_199_999, 

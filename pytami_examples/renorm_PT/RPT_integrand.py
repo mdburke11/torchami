@@ -5,23 +5,11 @@ import torch
 import pytami
 from typing import Callable
 from collections import Counter 
+import external as ext
 
-class ext_vars:
-
-    def __init__(self, beta: float, mu: complex, k: list[float], reW: float, imW: float):
-        self.beta: float = beta
-        self.mu: complex = mu
-        self.k: list[float] = k
-        self.reW: float = reW
-        self.imW: float = imW
-
-    def get_ext_vars(self) -> list[float | complex | list[float] | float]:
-        return [self.beta, self.mu, self.k, self.reW, self.imW]
-
-    
-def epsilon_2D(k: torch.Tensor) -> torch.Tensor: # must return column vector of energies (use .unsqueeze(1))
-    #return -2 * (torch.cos(k[:,0]) + torch.cos(k[:,1])).unsqueeze(1)
-    return -2 * torch.cos(k).sum(dim=1, keepdim=True)
+def z_const(k : torch.Tensor):
+    const = 0.1 * 1j
+    return const
 
 
     
@@ -39,7 +27,7 @@ class RPT_integrand:
 
     def __init__(self, tami: pytami.TamiBase, R0: pytami.TamiBase.g_prod_t, avars: pytami.TamiBase.ami_vars, 
                 ft: pytami.TamiBase.ft_terms, parms: pytami.TamiBase.ami_parms, eps: Callable[[torch.Tensor], torch.Tensor],
-                z: Callable[[torch.Tensor], torch.Tensor], evalReal: bool, extern_vars: ext_vars) -> None:
+                z: Callable[[torch.Tensor], torch.Tensor], evalReal: bool, extern_vars: ext.ext_vars) -> None:
         
         self.tami = tami
         self.R0 = R0
@@ -84,7 +72,7 @@ class RPT_integrand:
 
 
 
-    def update_ext_vars(self, extern_vars: ext_vars) -> None:
+    def update_ext_vars(self, extern_vars: ext.ext_vars) -> None:
         self.external_vars = extern_vars
         self.avars.frequency_[-1] = extern_vars.reW + 1j * extern_vars.imW # needs to be internally updated
         self.avars.BETA_ = extern_vars.beta # needs to be internally updated for fermi function evaluations
