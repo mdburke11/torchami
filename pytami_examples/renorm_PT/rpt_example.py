@@ -55,7 +55,7 @@ def second_ord_c1_a() -> None:
         ami : pytami.TamiBase = pytami.TamiBase(device)
 
         # external vars
-        mat_freq : int = 10
+        mat_freq : int = 1
         beta : float = 8.33
         mu : complex = 0
         k : list[float] = [torch.pi, 0]
@@ -73,6 +73,8 @@ def second_ord_c1_a() -> None:
         ami.construct(N_INT, R0, ftout)
 
         integrand : rpt.RPT_integrand = rpt.RPT_integrand(ami, R0, prefactor, avars, ftout, parms, ext.epsilon_2D, rpt.dampt_eps, True, evars)
+        #integrand : rpt.RPT_integrand = rpt.RPT_integrand(ami, R0, prefactor, avars, ftout, parms, ext.epsilon_2D, lambda k: torch.zeros([len(k), 1], device=k.device), True, evars)
+
 
         # integrate
         flat_mc = flat.flat_mc_integrator(device)

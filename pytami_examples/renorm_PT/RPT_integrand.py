@@ -69,6 +69,7 @@ class RPT_integrand:
         self.powers : list[int] = [0 for i in range(len(R0))]  
         for i in indices:
             self.powers[i] = count[alps[i]] - 1 # each power is the number of greens functions present - 1
+        print(self.powers)
 
 
     def comb_eps(self, k: torch.Tensor) -> torch.Tensor:
@@ -109,19 +110,19 @@ class RPT_integrand:
 
         #apply dispersion to dim columns at a time and update AMI integrand and mutate z
         self.avars.energy_, z = self.eff_eps(combined)
-
+        
         return z
     
     def get_prefactor(self, z : torch.Tensor):
         # this function will return a torch tensor containing prefactor for each eval in the batch.
         # That is, the graph information and the renormalization shift for each propagator to the 
         # number of insertions on that propagator.
-
-        prefactors = torch.full([len(self.avars.energy_), 1], self.prefactor, device=self.device)  # first just make copies of the graph prefactor to multiply in
+        prefactors = torch.full([len(self.avars.energy_)], self.prefactor, device=self.device)  # first just make copies of the graph prefactor to multiply in
 
         for i, s in enumerate(self.powers):
-
-            prefactors *= z[:,i].unsqueeze(1)**s # keep the tensor vertical
+            if not(s): # if 0 prefactor *= 1 so skip
+                continue
+            prefactors *= z[:,i]**s
 
         return prefactors
 
