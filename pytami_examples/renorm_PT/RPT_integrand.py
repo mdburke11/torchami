@@ -6,10 +6,15 @@ import pytami
 from typing import Callable
 from collections import Counter 
 import external as ext
+import time
 
-def z_const(k : torch.Tensor):
+def z_const(k : torch.Tensor) -> torch.Tensor:
     const = 0.1 * 1j
     return const
+
+def dampt_eps(k : torch.Tensor) -> torch.Tensor:
+    return ext.epsilon_2D(k) * 0.01
+
 
 
     
@@ -25,12 +30,14 @@ class RPT_integrand:
     # m is the number of independent momentum variables (dim * (2*order - 1))
 
 
-    def __init__(self, tami: pytami.TamiBase, R0: pytami.TamiBase.g_prod_t, avars: pytami.TamiBase.ami_vars, 
-                ft: pytami.TamiBase.ft_terms, parms: pytami.TamiBase.ami_parms, eps: Callable[[torch.Tensor], torch.Tensor],
-                z: Callable[[torch.Tensor], torch.Tensor], evalReal: bool, extern_vars: ext.ext_vars) -> None:
+    def __init__(self, tami: pytami.TamiBase, R0: pytami.TamiBase.g_prod_t, prefactor: float,
+                avars: pytami.TamiBase.ami_vars, ft: pytami.TamiBase.ft_terms, parms: pytami.TamiBase.ami_parms,
+                eps: Callable[[torch.Tensor], torch.Tensor], z: Callable[[torch.Tensor], torch.Tensor], 
+                evalReal: bool, extern_vars: ext.ext_vars) -> None:
         
         self.tami = tami
         self.R0 = R0
+        self.prefactor = prefactor # graph prefactor (-1)**(n_fermiloops + ct_insertions + order)
         self.avars = avars
         self.ft = ft
         self.parms = parms
@@ -64,12 +71,21 @@ class RPT_integrand:
             self.powers[i] = count[alps[i]] - 1 # each power is the number of greens functions present - 1
 
 
+    def comb_eps(self, k: torch.Tensor) -> torch.Tensor:
+        return self.eps(k) + self.z(k)
 
-    def eff_eps(self, k: torch.Tensor) -> torch.Tensor:
+    def eff_eps(self, k: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         # combines all the extra components to the particle dispersion together - chemical potential, renorm PT
-
-        return self.external_vars.mu - torch.hstack([self.eps(k.split(self.dim, dim=1)[i]) for i in range(self.num_prop)])
-
+        t1 = time.time()
+        z = torch.hstack([self.z(x) for x in k.split(self.dim, dim=1)])
+        # this evaluation is a tiny bit faster on average than the ones commented below - I think its because
+        # theres less tensor subtractions, although the total number of pairwise subtractions is the same
+        return_val = self.external_vars.mu - torch.hstack([self.eps(x) for x in k.split(self.dim, dim=1)]) - z
+        #return_val = self.external_vars.mu - torch.hstack([self.eps(x) - self.z(x) for x in k.split(self.dim, dim=1)])
+        #return_val = self.external_vars.mu - torch.hstack([self.comb_eps(x) for x in k.split(self.dim, dim=1)])
+        t2 =time.time()
+        print(f"Time for eff_eps: \t\t\t\t\t{t2 - t1}")
+        return return_val, z
 
 
     def update_ext_vars(self, extern_vars: ext.ext_vars) -> None:
@@ -80,24 +96,41 @@ class RPT_integrand:
     def get_ext_vars(self) -> list[float | complex | list[float] | float]:
         return self.external_vars.get_ext_vars()
 
-    def update_integrand(self, k: torch.Tensor) -> None:
+    def update_integrand(self, k: torch.Tensor) -> torch.Tensor:
         # takes new set of internal momenta (eg. k = rand(0, 2pi)) with external and gets correct lin. comb.
         # then evaluates the dispersion for each propagator in the diagram and inserts it 
-        # into the avars object to then evaluate thediagram
+        # into the avars object to then evaluate thediagram. Also returns the renorm shift z calculated
 
         # append on the external momentum to the momentum tensor
-        K: torch.Tensor = torch.hstack([k] + [torch.full((len(k), 1), self.external_vars.k[i], device=self.device) for i in range(self.dim)])
+        K: torch.Tensor = torch.hstack([k] + [torch.full((len(k), 1), q, device=self.device) for q in self.external_vars.k])
 
         # get linear combinations to get energies, now in form (k1_x, k1_y, k2x, k2y, ...)
         combined = torch.matmul(K, self.full_alpha)
 
-        #apply dispersion to dim columns at a time and update AMI integrand
-        self.avars.energy_ = self.eff_eps(combined)
+        #apply dispersion to dim columns at a time and update AMI integrand and mutate z
+        self.avars.energy_, z = self.eff_eps(combined)
+
+        return z
+    
+    def get_prefactor(self, z : torch.Tensor):
+        # this function will return a torch tensor containing prefactor for each eval in the batch.
+        # That is, the graph information and the renormalization shift for each propagator to the 
+        # number of insertions on that propagator.
+
+        prefactors = torch.full([len(self.avars.energy_), 1], self.prefactor, device=self.device)  # first just make copies of the graph prefactor to multiply in
+
+        for i, s in enumerate(self.powers):
+
+            prefactors *= z[:,i].unsqueeze(1)**s # keep the tensor vertical
+
+        return prefactors
+
 
     def __call__(self, x: torch.Tensor) -> torch.Tensor:
         # function which is called in integration: used as integrand = AMI_integrand(...); integrand(k: torch.tensor) # returns tensor of evaluated integrand
-        self.update_integrand(x)
-        value: torch.Tensor = self.tami.evaluate(self.parms, self.ft, self.avars)
+        z : torch.Tensor = self.update_integrand(x)
+        prefactor : torch.Tensor = self.get_prefactor(z)
+        value: torch.Tensor = self.tami.evaluate(self.parms, self.ft, self.avars) * prefactor
         if self.evalReal:
             return value.real
         return value.imag
