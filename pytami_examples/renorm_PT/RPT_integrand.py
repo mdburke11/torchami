@@ -6,7 +6,6 @@ import pytami
 from typing import Callable
 from collections import Counter 
 import external as ext
-import time
 
 def z_const(k : torch.Tensor) -> torch.Tensor:
     const = 0.1 * 1j
@@ -69,7 +68,7 @@ class RPT_integrand:
         self.powers : list[int] = [0 for i in range(len(R0))]  
         for i in indices:
             self.powers[i] = count[alps[i]] - 1 # each power is the number of greens functions present - 1
-        print(self.powers)
+        #print(self.powers)
 
 
     def comb_eps(self, k: torch.Tensor) -> torch.Tensor:
@@ -77,16 +76,9 @@ class RPT_integrand:
 
     def eff_eps(self, k: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         # combines all the extra components to the particle dispersion together - chemical potential, renorm PT
-        t1 = time.time()
-        z = torch.hstack([self.z(x) for x in k.split(self.dim, dim=1)])
-        # this evaluation is a tiny bit faster on average than the ones commented below - I think its because
-        # theres less tensor subtractions, although the total number of pairwise subtractions is the same
-        return_val = self.external_vars.mu - torch.hstack([self.eps(x) for x in k.split(self.dim, dim=1)]) - z
-        #return_val = self.external_vars.mu - torch.hstack([self.eps(x) - self.z(x) for x in k.split(self.dim, dim=1)])
-        #return_val = self.external_vars.mu - torch.hstack([self.comb_eps(x) for x in k.split(self.dim, dim=1)])
-        t2 =time.time()
-        print(f"Time for eff_eps: \t\t\t\t\t{t2 - t1}")
-        return return_val, z
+        z = -1 * torch.hstack([self.z(x) for x in k.split(self.dim, dim=1)])
+        val = self.external_vars.mu - torch.hstack([self.eps(x) for x in k.split(self.dim, dim=1)]) - z
+        return val, z
 
 
     def update_ext_vars(self, extern_vars: ext.ext_vars) -> None:
@@ -113,11 +105,11 @@ class RPT_integrand:
         
         return z
     
-    def get_prefactor(self, z : torch.Tensor):
+    def get_prefactor(self, z : torch.Tensor) -> torch.Tensor:
         # this function will return a torch tensor containing prefactor for each eval in the batch.
         # That is, the graph information and the renormalization shift for each propagator to the 
         # number of insertions on that propagator.
-        prefactors = torch.full([len(self.avars.energy_)], self.prefactor, device=self.device)  # first just make copies of the graph prefactor to multiply in
+        prefactors = torch.full([len(self.avars.energy_)], self.prefactor, device=self.device, dtype=torch.complex64)  # first just make copies of the graph prefactor to multiply in
 
         for i, s in enumerate(self.powers):
             if not(s): # if 0 prefactor *= 1 so skip

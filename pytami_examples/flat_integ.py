@@ -33,29 +33,35 @@ class flat_mc_integrator:
         if dim != len(integration_domain):
             raise ValueError("Dimension and length of integration domain do not match!")
         
-        iters: int = N // self.Max_batch # number of extra batches to evaluate if N > batch_size
+        #iters: int = N // self.Max_batch # number of extra batches to evaluate if N > batch_size
 
         sum: torch.tensor = torch.tensor(0.0, device=self.device)
         sum2: torch.tensor = torch.tensor(0.0, device=self.device)
 
-        for i in range(iters): #while num_it - iter > 1:
+        remaining : int = N
+
+        while remaining > self.Max_batch: # take full batchs
+
             # while number of evals remaining exceeds max_batch size, chip 
             # away with max_batch size
 
             # get rand vals on the domain
             x: torch.tensor = self.prepInput(self.Max_batch, integration_domain)
             eval: torch.tensor = fn(x)
-            sum += eval.sum() # TODO use torch.nansum - drops nans from batch - But then N changes!
-            sum2 += (eval**2).sum()
+            numNans = int((eval != eval).sum()) # TODO: should this be left a tensor?
+            sum += eval.nansum() # TODO use torch.nansum - drops nans from batch - But then N changes!
+            sum2 += (eval**2).nansum()
 
+            remaining = remaining - self.Max_batch + numNans
+
+        # r
 
         # now only 1 batch left, so we only have the remaining 
         # N - num_it * Max_batch (< Max_batch) to evaluate
-        remaining: int = N - iters * self.Max_batch
         x = self.prepInput(remaining, integration_domain)
-
         eval: torch.tensor = fn(x)
-        sum += eval.sum()
-        sum2 += (eval**2).sum() # TODO use torch.nansum - drops nans from batch - But then N changes!
+        numNans : int = int((eval != eval).sum())
+        sum += eval.nansum()
+        sum2 += (eval**2).nansum() # TODO use torch.nansum - drops nans from batch - But then N changes!
 
-        return integration_result(sum, sum2, N)
+        return integration_result(sum, sum2, N - numNans)
