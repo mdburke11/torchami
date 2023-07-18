@@ -71,9 +71,6 @@ class RPT_integrand:
         #print(self.powers)
 
 
-    def comb_eps(self, k: torch.Tensor) -> torch.Tensor:
-        return self.eps(k) + self.z(k)
-
     def eff_eps(self, k: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         # combines all the extra components to the particle dispersion together - chemical potential, renorm PT
         z = -1 * torch.hstack([self.z(x) for x in k.split(self.dim, dim=1)])
