@@ -21,7 +21,13 @@ Python 3
 pip install torch 
 
 
+Working build from Ubuntu 22.04 LTS is just
 
+pip install torch
+sudo apt-get install python-is-python3
+sudo apt-get install nvidia-cuda-toolkit
+
+Then just make with the compile script
 	
 	
 .. _`Github wiki`: https://github.com/mdburke11/torchami
