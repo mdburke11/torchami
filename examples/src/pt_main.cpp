@@ -345,7 +345,7 @@ void default_example_gpu(){
 
   TamiBase::g_prod_t R0=construct_example2();
 
-  at::Device myDev = at::kCPU;//kCUDA;//CPU;
+  at::Device myDev = at::kCUDA;//CPU;
 
   TamiBase PT(myDev);
   TamiBase::ft_terms ftout;
