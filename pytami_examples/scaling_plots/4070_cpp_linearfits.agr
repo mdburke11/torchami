@@ -1,0 +1,6017 @@
+# Grace project file
+#
+@version 50125
+@page size 792, 612
+@page scroll 5%
+@page inout 5%
+@link page off
+@map font 8 to "Courier", "Courier"
+@map font 10 to "Courier-Bold", "Courier-Bold"
+@map font 11 to "Courier-BoldOblique", "Courier-BoldOblique"
+@map font 9 to "Courier-Oblique", "Courier-Oblique"
+@map font 4 to "Helvetica", "Helvetica"
+@map font 6 to "Helvetica-Bold", "Helvetica-Bold"
+@map font 7 to "Helvetica-BoldOblique", "Helvetica-BoldOblique"
+@map font 5 to "Helvetica-Oblique", "Helvetica-Oblique"
+@map font 18 to "NimbusMonoL-Bold", "NimbusMonoL-Bold"
+@map font 19 to "NimbusMonoL-BoldOblique", "NimbusMonoL-BoldOblique"
+@map font 20 to "NimbusMonoL-Regular", "NimbusMonoL-Regular"
+@map font 21 to "NimbusMonoL-RegularOblique", "NimbusMonoL-RegularOblique"
+@map font 22 to "NimbusMonoPS-Bold", "NimbusMonoPS-Bold"
+@map font 23 to "NimbusMonoPS-BoldItalic", "NimbusMonoPS-BoldItalic"
+@map font 24 to "NimbusMonoPS-Italic", "NimbusMonoPS-Italic"
+@map font 25 to "NimbusMonoPS-Regular", "NimbusMonoPS-Regular"
+@map font 26 to "NimbusRoman-Bold", "NimbusRoman-Bold"
+@map font 27 to "NimbusRoman-BoldItalic", "NimbusRoman-BoldItalic"
+@map font 28 to "NimbusRoman-Italic", "NimbusRoman-Italic"
+@map font 29 to "NimbusRoman-Regular", "NimbusRoman-Regular"
+@map font 30 to "NimbusRomanNo9L-Medium", "NimbusRomanNo9L-Medium"
+@map font 31 to "NimbusRomanNo9L-MediumItalic", "NimbusRomanNo9L-MediumItalic"
+@map font 32 to "NimbusRomanNo9L-Regular", "NimbusRomanNo9L-Regular"
+@map font 33 to "NimbusRomanNo9L-RegularItalic", "NimbusRomanNo9L-RegularItalic"
+@map font 34 to "NimbusSans-Bold", "NimbusSans-Bold"
+@map font 35 to "NimbusSans-BoldItalic", "NimbusSans-BoldItalic"
+@map font 36 to "NimbusSans-Italic", "NimbusSans-Italic"
+@map font 37 to "NimbusSans-Regular", "NimbusSans-Regular"
+@map font 38 to "NimbusSansL-Bold", "NimbusSansL-Bold"
+@map font 39 to "NimbusSansL-BoldCondensed", "NimbusSansL-BoldCondensed"
+@map font 40 to "NimbusSansL-BoldCondensedItalic", "NimbusSansL-BoldCondensedItalic"
+@map font 41 to "NimbusSansL-BoldItalic", "NimbusSansL-BoldItalic"
+@map font 42 to "NimbusSansL-Regular", "NimbusSansL-Regular"
+@map font 43 to "NimbusSansL-RegularCondensed", "NimbusSansL-RegularCondensed"
+@map font 44 to "NimbusSansL-RegularCondensedItalic", "NimbusSansL-RegularCondensedItalic"
+@map font 45 to "NimbusSansL-RegularItalic", "NimbusSansL-RegularItalic"
+@map font 46 to "NimbusSansNarrow-Bold", "NimbusSansNarrow-Bold"
+@map font 47 to "NimbusSansNarrow-BoldOblique", "NimbusSansNarrow-BoldOblique"
+@map font 48 to "NimbusSansNarrow-Oblique", "NimbusSansNarrow-Oblique"
+@map font 49 to "NimbusSansNarrow-Regular", "NimbusSansNarrow-Regular"
+@map font 50 to "P052-Bold", "P052-Bold"
+@map font 51 to "P052-BoldItalic", "P052-BoldItalic"
+@map font 52 to "P052-Italic", "P052-Italic"
+@map font 53 to "P052-Roman", "P052-Roman"
+@map font 54 to "StandardSymbolsL-Regular", "StandardSymbolsL-Regular"
+@map font 55 to "StandardSymbolsPS-Regular", "StandardSymbolsPS-Regular"
+@map font 12 to "Symbol", "Symbol"
+@map font 2 to "Times-Bold", "Times-Bold"
+@map font 3 to "Times-BoldItalic", "Times-BoldItalic"
+@map font 1 to "Times-Italic", "Times-Italic"
+@map font 0 to "Times-Roman", "Times-Roman"
+@map font 61 to "URWBookman-Demi", "URWBookman-Demi"
+@map font 62 to "URWBookman-DemiItalic", "URWBookman-DemiItalic"
+@map font 63 to "URWBookman-Light", "URWBookman-Light"
+@map font 64 to "URWBookman-LightItalic", "URWBookman-LightItalic"
+@map font 65 to "URWBookmanL-DemiBold", "URWBookmanL-DemiBold"
+@map font 66 to "URWBookmanL-DemiBoldItalic", "URWBookmanL-DemiBoldItalic"
+@map font 67 to "URWBookmanL-Light", "URWBookmanL-Light"
+@map font 68 to "URWBookmanL-LightItalic", "URWBookmanL-LightItalic"
+@map font 69 to "URWChanceryL-MediumItalic", "URWChanceryL-MediumItalic"
+@map font 70 to "URWGothic-Book", "URWGothic-Book"
+@map font 71 to "URWGothic-BookOblique", "URWGothic-BookOblique"
+@map font 72 to "URWGothic-Demi", "URWGothic-Demi"
+@map font 73 to "URWGothic-DemiOblique", "URWGothic-DemiOblique"
+@map font 74 to "URWGothicL-Book", "URWGothicL-Book"
+@map font 75 to "URWGothicL-BookOblique", "URWGothicL-BookOblique"
+@map font 76 to "URWGothicL-Demi", "URWGothicL-Demi"
+@map font 77 to "URWGothicL-DemiOblique", "URWGothicL-DemiOblique"
+@map font 78 to "URWPalladioL-Bold", "URWPalladioL-Bold"
+@map font 79 to "URWPalladioL-BoldItalic", "URWPalladioL-BoldItalic"
+@map font 80 to "URWPalladioL-Italic", "URWPalladioL-Italic"
+@map font 81 to "URWPalladioL-Roman", "URWPalladioL-Roman"
+@map font 82 to "Z003-MediumItalic", "Z003-MediumItalic"
+@map font 13 to "ZapfDingbats", "ZapfDingbats"
+@map color 0 to (255, 255, 255), "white"
+@map color 1 to (0, 0, 0), "black"
+@map color 2 to (255, 0, 0), "red"
+@map color 3 to (0, 255, 0), "green"
+@map color 4 to (0, 0, 255), "blue"
+@map color 5 to (255, 255, 0), "yellow"
+@map color 6 to (188, 143, 143), "brown"
+@map color 7 to (220, 220, 220), "grey"
+@map color 8 to (148, 0, 211), "violet"
+@map color 9 to (0, 255, 255), "cyan"
+@map color 10 to (255, 0, 255), "magenta"
+@map color 11 to (255, 165, 0), "orange"
+@map color 12 to (114, 33, 188), "indigo"
+@map color 13 to (103, 7, 72), "maroon"
+@map color 14 to (64, 224, 208), "turquoise"
+@map color 15 to (0, 139, 0), "green4"
+@reference date 0
+@date wrap off
+@date wrap year 1950
+@default linewidth 1.0
+@default linestyle 1
+@default color 1
+@default pattern 1
+@default font 0
+@default char size 1.000000
+@default symbol size 1.000000
+@default sformat "%.8g"
+@background color 0
+@page background fill on
+@timestamp off
+@timestamp 0.03, 0.03
+@timestamp color 1
+@timestamp rot 0
+@timestamp font 0
+@timestamp char size 1.000000
+@timestamp def "Thu Aug  3 10:49:18 2023"
+@r0 off
+@link r0 to g0
+@r0 type above
+@r0 linestyle 1
+@r0 linewidth 1.0
+@r0 color 1
+@r0 line 0, 0, 0, 0
+@r1 off
+@link r1 to g0
+@r1 type above
+@r1 linestyle 1
+@r1 linewidth 1.0
+@r1 color 1
+@r1 line 0, 0, 0, 0
+@r2 off
+@link r2 to g0
+@r2 type above
+@r2 linestyle 1
+@r2 linewidth 1.0
+@r2 color 1
+@r2 line 0, 0, 0, 0
+@r3 off
+@link r3 to g0
+@r3 type above
+@r3 linestyle 1
+@r3 linewidth 1.0
+@r3 color 1
+@r3 line 0, 0, 0, 0
+@r4 off
+@link r4 to g0
+@r4 type above
+@r4 linestyle 1
+@r4 linewidth 1.0
+@r4 color 1
+@r4 line 0, 0, 0, 0
+@g0 on
+@g0 hidden false
+@g0 type XY
+@g0 stacked false
+@g0 bar hgap 0.000000
+@g0 fixedpoint off
+@g0 fixedpoint type 0
+@g0 fixedpoint xy 0.000000, 0.000000
+@g0 fixedpoint format general general
+@g0 fixedpoint prec 6, 6
+@with g0
+@    world -19878.728894, 5774040.05842, 1019795.51915, 186368866.349
+@    stack world 0, 0, 0, 0
+@    znorm 1
+@    view 0.150000, 0.150000, 1.150000, 0.850000
+@    title ""
+@    title font 0
+@    title size 1.500000
+@    title color 1
+@    subtitle ""
+@    subtitle font 0
+@    subtitle size 1.000000
+@    subtitle color 1
+@    xaxes scale Normal
+@    yaxes scale Normal
+@    xaxes invert off
+@    yaxes invert off
+@    xaxis  on
+@    xaxis  type zero false
+@    xaxis  offset 0.000000 , 0.000000
+@    xaxis  bar on
+@    xaxis  bar color 1
+@    xaxis  bar linestyle 1
+@    xaxis  bar linewidth 1.0
+@    xaxis  label "Batch Size"
+@    xaxis  label layout para
+@    xaxis  label place auto
+@    xaxis  label char size 1.000000
+@    xaxis  label font 0
+@    xaxis  label color 1
+@    xaxis  label place normal
+@    xaxis  tick on
+@    xaxis  tick major 200000
+@    xaxis  tick minor ticks 1
+@    xaxis  tick default 6
+@    xaxis  tick place rounded true
+@    xaxis  tick in
+@    xaxis  tick major size 1.000000
+@    xaxis  tick major color 1
+@    xaxis  tick major linewidth 1.0
+@    xaxis  tick major linestyle 1
+@    xaxis  tick major grid off
+@    xaxis  tick minor color 1
+@    xaxis  tick minor linewidth 1.0
+@    xaxis  tick minor linestyle 1
+@    xaxis  tick minor grid off
+@    xaxis  tick minor size 0.500000
+@    xaxis  ticklabel on
+@    xaxis  ticklabel format general
+@    xaxis  ticklabel prec 5
+@    xaxis  ticklabel formula ""
+@    xaxis  ticklabel append ""
+@    xaxis  ticklabel prepend ""
+@    xaxis  ticklabel angle 0
+@    xaxis  ticklabel skip 0
+@    xaxis  ticklabel stagger 0
+@    xaxis  ticklabel place normal
+@    xaxis  ticklabel offset auto
+@    xaxis  ticklabel offset 0.000000 , 0.010000
+@    xaxis  ticklabel start type auto
+@    xaxis  ticklabel start 0.000000
+@    xaxis  ticklabel stop type auto
+@    xaxis  ticklabel stop 0.000000
+@    xaxis  ticklabel char size 1.000000
+@    xaxis  ticklabel font 0
+@    xaxis  ticklabel color 1
+@    xaxis  tick place both
+@    xaxis  tick spec type none
+@    yaxis  on
+@    yaxis  type zero false
+@    yaxis  offset 0.000000 , 0.000000
+@    yaxis  bar on
+@    yaxis  bar color 1
+@    yaxis  bar linestyle 1
+@    yaxis  bar linewidth 1.0
+@    yaxis  label "Time to Evaluate Batch (ns)"
+@    yaxis  label layout para
+@    yaxis  label place auto
+@    yaxis  label char size 1.000000
+@    yaxis  label font 0
+@    yaxis  label color 1
+@    yaxis  label place normal
+@    yaxis  tick on
+@    yaxis  tick major 50000000
+@    yaxis  tick minor ticks 9
+@    yaxis  tick default 6
+@    yaxis  tick place rounded true
+@    yaxis  tick in
+@    yaxis  tick major size 1.000000
+@    yaxis  tick major color 1
+@    yaxis  tick major linewidth 1.0
+@    yaxis  tick major linestyle 1
+@    yaxis  tick major grid off
+@    yaxis  tick minor color 1
+@    yaxis  tick minor linewidth 1.0
+@    yaxis  tick minor linestyle 1
+@    yaxis  tick minor grid off
+@    yaxis  tick minor size 0.500000
+@    yaxis  ticklabel on
+@    yaxis  ticklabel format general
+@    yaxis  ticklabel prec 5
+@    yaxis  ticklabel formula ""
+@    yaxis  ticklabel append ""
+@    yaxis  ticklabel prepend ""
+@    yaxis  ticklabel angle 0
+@    yaxis  ticklabel skip 0
+@    yaxis  ticklabel stagger 0
+@    yaxis  ticklabel place normal
+@    yaxis  ticklabel offset auto
+@    yaxis  ticklabel offset 0.000000 , 0.010000
+@    yaxis  ticklabel start type auto
+@    yaxis  ticklabel start 0.000000
+@    yaxis  ticklabel stop type auto
+@    yaxis  ticklabel stop 0.000000
+@    yaxis  ticklabel char size 1.000000
+@    yaxis  ticklabel font 0
+@    yaxis  ticklabel color 1
+@    yaxis  tick place both
+@    yaxis  tick spec type none
+@    altxaxis  off
+@    altyaxis  off
+@    legend on
+@    legend loctype view
+@    legend 0.85, 0.35
+@    legend box color 1
+@    legend box pattern 1
+@    legend box linewidth 1.0
+@    legend box linestyle 1
+@    legend box fill color 0
+@    legend box fill pattern 1
+@    legend font 0
+@    legend char size 1.000000
+@    legend color 1
+@    legend length 4
+@    legend vgap 1
+@    legend hgap 1
+@    legend invert false
+@    frame type 0
+@    frame linestyle 1
+@    frame linewidth 1.0
+@    frame color 1
+@    frame pattern 1
+@    frame background color 0
+@    frame background pattern 0
+@    s0 hidden true
+@    s0 type xy
+@    s0 symbol 0
+@    s0 symbol size 1.000000
+@    s0 symbol color 1
+@    s0 symbol pattern 1
+@    s0 symbol fill color 1
+@    s0 symbol fill pattern 0
+@    s0 symbol linewidth 1.0
+@    s0 symbol linestyle 1
+@    s0 symbol char 65
+@    s0 symbol char font 0
+@    s0 symbol skip 0
+@    s0 line type 1
+@    s0 line linestyle 1
+@    s0 line linewidth 1.0
+@    s0 line color 1
+@    s0 line pattern 1
+@    s0 baseline type 0
+@    s0 baseline off
+@    s0 dropline off
+@    s0 fill type 0
+@    s0 fill rule 0
+@    s0 fill color 1
+@    s0 fill pattern 1
+@    s0 avalue off
+@    s0 avalue type 2
+@    s0 avalue char size 1.000000
+@    s0 avalue font 0
+@    s0 avalue color 1
+@    s0 avalue rot 0
+@    s0 avalue format general
+@    s0 avalue prec 3
+@    s0 avalue prepend ""
+@    s0 avalue append ""
+@    s0 avalue offset 0.000000 , 0.000000
+@    s0 errorbar on
+@    s0 errorbar place both
+@    s0 errorbar color 1
+@    s0 errorbar pattern 1
+@    s0 errorbar size 1.000000
+@    s0 errorbar linewidth 1.0
+@    s0 errorbar linestyle 1
+@    s0 errorbar riser linewidth 1.0
+@    s0 errorbar riser linestyle 1
+@    s0 errorbar riser clip off
+@    s0 errorbar riser clip length 0.100000
+@    s0 comment "/home/mdburke/codes/torchami/pytami_examples/scaling_plots/4070_cpu_cpp.dat"
+@    s0 legend  "4070 TI CPU (C++)"
+@    s1 hidden false
+@    s1 type xy
+@    s1 symbol 1
+@    s1 symbol size 1.000000
+@    s1 symbol color 1
+@    s1 symbol pattern 1
+@    s1 symbol fill color 1
+@    s1 symbol fill pattern 5
+@    s1 symbol linewidth 2.0
+@    s1 symbol linestyle 1
+@    s1 symbol char 65
+@    s1 symbol char font 0
+@    s1 symbol skip 30
+@    s1 line type 0
+@    s1 line linestyle 1
+@    s1 line linewidth 1.0
+@    s1 line color 1
+@    s1 line pattern 1
+@    s1 baseline type 0
+@    s1 baseline off
+@    s1 dropline off
+@    s1 fill type 0
+@    s1 fill rule 0
+@    s1 fill color 1
+@    s1 fill pattern 1
+@    s1 avalue off
+@    s1 avalue type 2
+@    s1 avalue char size 1.000000
+@    s1 avalue font 0
+@    s1 avalue color 1
+@    s1 avalue rot 0
+@    s1 avalue format general
+@    s1 avalue prec 3
+@    s1 avalue prepend ""
+@    s1 avalue append ""
+@    s1 avalue offset 0.000000 , 0.000000
+@    s1 errorbar on
+@    s1 errorbar place both
+@    s1 errorbar color 1
+@    s1 errorbar pattern 1
+@    s1 errorbar size 1.000000
+@    s1 errorbar linewidth 1.0
+@    s1 errorbar linestyle 1
+@    s1 errorbar riser linewidth 1.0
+@    s1 errorbar riser linestyle 1
+@    s1 errorbar riser clip off
+@    s1 errorbar riser clip length 0.100000
+@    s1 comment "/home/mdburke/codes/torchami/pytami_examples/scaling_plots/4070_cpp.dat"
+@    s1 legend  "C++"
+@    s2 hidden true
+@    s2 type xy
+@    s2 symbol 2
+@    s2 symbol size 1.000000
+@    s2 symbol color 2
+@    s2 symbol pattern 1
+@    s2 symbol fill color 2
+@    s2 symbol fill pattern 5
+@    s2 symbol linewidth 2.0
+@    s2 symbol linestyle 1
+@    s2 symbol char 65
+@    s2 symbol char font 0
+@    s2 symbol skip 30
+@    s2 line type 0
+@    s2 line linestyle 1
+@    s2 line linewidth 1.0
+@    s2 line color 2
+@    s2 line pattern 1
+@    s2 baseline type 0
+@    s2 baseline off
+@    s2 dropline off
+@    s2 fill type 0
+@    s2 fill rule 0
+@    s2 fill color 1
+@    s2 fill pattern 1
+@    s2 avalue off
+@    s2 avalue type 2
+@    s2 avalue char size 1.000000
+@    s2 avalue font 0
+@    s2 avalue color 1
+@    s2 avalue rot 0
+@    s2 avalue format general
+@    s2 avalue prec 3
+@    s2 avalue prepend ""
+@    s2 avalue append ""
+@    s2 avalue offset 0.000000 , 0.000000
+@    s2 errorbar on
+@    s2 errorbar place both
+@    s2 errorbar color 2
+@    s2 errorbar pattern 1
+@    s2 errorbar size 1.000000
+@    s2 errorbar linewidth 1.0
+@    s2 errorbar linestyle 1
+@    s2 errorbar riser linewidth 1.0
+@    s2 errorbar riser linestyle 1
+@    s2 errorbar riser clip off
+@    s2 errorbar riser clip length 0.100000
+@    s2 comment "/home/mdburke/codes/torchami/pytami_examples/scaling_plots/4070_py.dat"
+@    s2 legend  "Python"
+@    s3 hidden true
+@    s3 type xy
+@    s3 symbol 1
+@    s3 symbol size 1.000000
+@    s3 symbol color 4
+@    s3 symbol pattern 1
+@    s3 symbol fill color 4
+@    s3 symbol fill pattern 5
+@    s3 symbol linewidth 2.0
+@    s3 symbol linestyle 1
+@    s3 symbol char 65
+@    s3 symbol char font 0
+@    s3 symbol skip 30
+@    s3 line type 1
+@    s3 line linestyle 1
+@    s3 line linewidth 1.0
+@    s3 line color 4
+@    s3 line pattern 1
+@    s3 baseline type 0
+@    s3 baseline off
+@    s3 dropline off
+@    s3 fill type 0
+@    s3 fill rule 0
+@    s3 fill color 1
+@    s3 fill pattern 1
+@    s3 avalue off
+@    s3 avalue type 2
+@    s3 avalue char size 1.000000
+@    s3 avalue font 0
+@    s3 avalue color 1
+@    s3 avalue rot 0
+@    s3 avalue format general
+@    s3 avalue prec 3
+@    s3 avalue prepend ""
+@    s3 avalue append ""
+@    s3 avalue offset 0.000000 , 0.000000
+@    s3 errorbar on
+@    s3 errorbar place both
+@    s3 errorbar color 4
+@    s3 errorbar pattern 1
+@    s3 errorbar size 1.000000
+@    s3 errorbar linewidth 1.0
+@    s3 errorbar linestyle 1
+@    s3 errorbar riser linewidth 1.0
+@    s3 errorbar riser linestyle 1
+@    s3 errorbar riser clip off
+@    s3 errorbar riser clip length 0.100000
+@    s3 comment "/home/mdburke/codes/torchami/pytami_examples/scaling_plots/960M_py.dat"
+@    s3 legend  "960M (C++)"
+@    s4 hidden true
+@    s4 type xy
+@    s4 symbol 2
+@    s4 symbol size 1.000000
+@    s4 symbol color 3
+@    s4 symbol pattern 1
+@    s4 symbol fill color 3
+@    s4 symbol fill pattern 5
+@    s4 symbol linewidth 2.0
+@    s4 symbol linestyle 1
+@    s4 symbol char 65
+@    s4 symbol char font 0
+@    s4 symbol skip 30
+@    s4 line type 1
+@    s4 line linestyle 1
+@    s4 line linewidth 1.0
+@    s4 line color 3
+@    s4 line pattern 1
+@    s4 baseline type 0
+@    s4 baseline off
+@    s4 dropline off
+@    s4 fill type 0
+@    s4 fill rule 0
+@    s4 fill color 1
+@    s4 fill pattern 1
+@    s4 avalue off
+@    s4 avalue type 2
+@    s4 avalue char size 1.000000
+@    s4 avalue font 0
+@    s4 avalue color 1
+@    s4 avalue rot 0
+@    s4 avalue format general
+@    s4 avalue prec 3
+@    s4 avalue prepend ""
+@    s4 avalue append ""
+@    s4 avalue offset 0.000000 , 0.000000
+@    s4 errorbar on
+@    s4 errorbar place both
+@    s4 errorbar color 3
+@    s4 errorbar pattern 1
+@    s4 errorbar size 1.000000
+@    s4 errorbar linewidth 1.0
+@    s4 errorbar linestyle 1
+@    s4 errorbar riser linewidth 1.0
+@    s4 errorbar riser linestyle 1
+@    s4 errorbar riser clip off
+@    s4 errorbar riser clip length 0.100000
+@    s4 comment "/home/mdburke/codes/torchami/pytami_examples/scaling_plots/960M_cpp.dat"
+@    s4 legend  "960M (Python)"
+@    s5 hidden false
+@    s5 type xy
+@    s5 symbol 0
+@    s5 symbol size 1.000000
+@    s5 symbol color 2
+@    s5 symbol pattern 1
+@    s5 symbol fill color 2
+@    s5 symbol fill pattern 0
+@    s5 symbol linewidth 1.0
+@    s5 symbol linestyle 1
+@    s5 symbol char 65
+@    s5 symbol char font 0
+@    s5 symbol skip 0
+@    s5 line type 1
+@    s5 line linestyle 1
+@    s5 line linewidth 2.0
+@    s5 line color 2
+@    s5 line pattern 1
+@    s5 baseline type 0
+@    s5 baseline off
+@    s5 dropline off
+@    s5 fill type 0
+@    s5 fill rule 0
+@    s5 fill color 1
+@    s5 fill pattern 1
+@    s5 avalue off
+@    s5 avalue type 2
+@    s5 avalue char size 1.000000
+@    s5 avalue font 0
+@    s5 avalue color 1
+@    s5 avalue rot 0
+@    s5 avalue format general
+@    s5 avalue prec 3
+@    s5 avalue prepend ""
+@    s5 avalue append ""
+@    s5 avalue offset 0.000000 , 0.000000
+@    s5 errorbar on
+@    s5 errorbar place both
+@    s5 errorbar color 2
+@    s5 errorbar pattern 1
+@    s5 errorbar size 1.000000
+@    s5 errorbar linewidth 1.0
+@    s5 errorbar linestyle 1
+@    s5 errorbar riser linewidth 1.0
+@    s5 errorbar riser linestyle 1
+@    s5 errorbar riser clip off
+@    s5 errorbar riser clip length 0.100000
+@    s5 comment "1 deg fit of set 1"
+@    s5 legend  "C++ fit \h{-0.75}\v{-0.65}\r{180}A\r{-180}\v{0.65}\h{0.75}b"
+@    s7 hidden false
+@    s7 type xy
+@    s7 symbol 0
+@    s7 symbol size 1.000000
+@    s7 symbol color 4
+@    s7 symbol pattern 1
+@    s7 symbol fill color 4
+@    s7 symbol fill pattern 0
+@    s7 symbol linewidth 1.0
+@    s7 symbol linestyle 1
+@    s7 symbol char 65
+@    s7 symbol char font 0
+@    s7 symbol skip 0
+@    s7 line type 1
+@    s7 line linestyle 1
+@    s7 line linewidth 2.0
+@    s7 line color 4
+@    s7 line pattern 1
+@    s7 baseline type 0
+@    s7 baseline off
+@    s7 dropline off
+@    s7 fill type 0
+@    s7 fill rule 0
+@    s7 fill color 1
+@    s7 fill pattern 1
+@    s7 avalue off
+@    s7 avalue type 2
+@    s7 avalue char size 1.000000
+@    s7 avalue font 0
+@    s7 avalue color 1
+@    s7 avalue rot 0
+@    s7 avalue format general
+@    s7 avalue prec 3
+@    s7 avalue prepend ""
+@    s7 avalue append ""
+@    s7 avalue offset 0.000000 , 0.000000
+@    s7 errorbar on
+@    s7 errorbar place both
+@    s7 errorbar color 4
+@    s7 errorbar pattern 1
+@    s7 errorbar size 1.000000
+@    s7 errorbar linewidth 1.0
+@    s7 errorbar linestyle 1
+@    s7 errorbar riser linewidth 1.0
+@    s7 errorbar riser linestyle 1
+@    s7 errorbar riser clip off
+@    s7 errorbar riser clip length 0.100000
+@    s7 comment "1 deg fit of set 6"
+@    s7 legend  "b < 3e+05"
+@    s9 hidden false
+@    s9 type xy
+@    s9 symbol 0
+@    s9 symbol size 1.000000
+@    s9 symbol color 3
+@    s9 symbol pattern 1
+@    s9 symbol fill color 3
+@    s9 symbol fill pattern 0
+@    s9 symbol linewidth 1.0
+@    s9 symbol linestyle 1
+@    s9 symbol char 65
+@    s9 symbol char font 0
+@    s9 symbol skip 0
+@    s9 line type 1
+@    s9 line linestyle 1
+@    s9 line linewidth 2.0
+@    s9 line color 3
+@    s9 line pattern 1
+@    s9 baseline type 0
+@    s9 baseline off
+@    s9 dropline off
+@    s9 fill type 0
+@    s9 fill rule 0
+@    s9 fill color 1
+@    s9 fill pattern 1
+@    s9 avalue off
+@    s9 avalue type 2
+@    s9 avalue char size 1.000000
+@    s9 avalue font 0
+@    s9 avalue color 1
+@    s9 avalue rot 0
+@    s9 avalue format general
+@    s9 avalue prec 3
+@    s9 avalue prepend ""
+@    s9 avalue append ""
+@    s9 avalue offset 0.000000 , 0.000000
+@    s9 errorbar on
+@    s9 errorbar place both
+@    s9 errorbar color 3
+@    s9 errorbar pattern 1
+@    s9 errorbar size 1.000000
+@    s9 errorbar linewidth 1.0
+@    s9 errorbar linestyle 1
+@    s9 errorbar riser linewidth 1.0
+@    s9 errorbar riser linestyle 1
+@    s9 errorbar riser clip off
+@    s9 errorbar riser clip length 0.100000
+@    s9 comment "1 deg fit of set 8"
+@    s9 legend  "b > 3e+05"
+@target G0.S0
+@type xy
+1000 6292096
+2000 8241104
+3000 11955174
+4000 11494144
+5000 12490856
+6000 13871471
+7000 16307367
+8000 18162680
+9000 18589005
+10000 20023071
+11000 21481614
+12000 23075373
+13000 23979137
+14000 25300070
+15000 26595465
+16000 27670725
+17000 29172510
+18000 32494588
+19000 33844297
+20000 34013114
+21000 35026848
+22000 36576334
+23000 39077935
+24000 39485112
+25000 41178188
+26000 43492506
+27000 43908280
+28000 46725419
+29000 47354965
+30000 49007245
+31000 51091930
+32000 53164922
+33000 35448786
+34000 36380394
+35000 37092868
+36000 38942959
+37000 40553108
+38000 39951143
+39000 40842275
+40000 41639198
+41000 44903839
+42000 46525691
+43000 46721181
+44000 47961842
+45000 49410857
+46000 50700630
+47000 51614184
+48000 51654009
+49000 54136716
+50000 54906057
+51000 55750602
+52000 57190138
+53000 58624465
+54000 60318913
+55000 62292348
+56000 59904071
+57000 61405264
+58000 63180654
+59000 65736086
+60000 72961103
+61000 77986257
+62000 72326065
+63000 70874446
+64000 74513143
+65000 73747378
+66000 69030664
+67000 64209886
+68000 63733698
+69000 66616898
+70000 67579006
+71000 68266603
+72000 67714830
+73000 68022611
+74000 72523988
+75000 76959468
+76000 71472423
+77000 73557689
+78000 75148932
+79000 80876151
+80000 83578902
+81000 81685078
+82000 81862692
+83000 86806775
+84000 85459852
+85000 86680424
+86000 89623460
+87000 89681138
+88000 91272242
+89000 94595745
+90000 94313061
+91000 95847166
+92000 98929562
+93000 97979088
+94000 1.0148273e+08
+95000 1.038292e+08
+96000 1.0760377e+08
+97000 1.0613903e+08
+98000 1.0888168e+08
+99000 1.0736813e+08
+100000 1.0851861e+08
+101000 1.0920168e+08
+102000 1.1206606e+08
+103000 1.0685572e+08
+104000 1.1134341e+08
+105000 1.1534096e+08
+106000 1.2085582e+08
+107000 1.1957271e+08
+108000 1.1893171e+08
+109000 1.2173817e+08
+110000 1.2756322e+08
+111000 1.2409265e+08
+112000 1.258056e+08
+113000 1.2682945e+08
+114000 1.2963461e+08
+115000 1.3329888e+08
+116000 1.3462328e+08
+117000 1.3841064e+08
+118000 1.3777451e+08
+119000 1.3986861e+08
+120000 1.4108989e+08
+121000 1.4362565e+08
+122000 1.4897602e+08
+123000 1.4774287e+08
+124000 1.4851857e+08
+125000 1.5396307e+08
+126000 1.5462653e+08
+127000 1.5772929e+08
+128000 1.5911266e+08
+129000 1.6091522e+08
+130000 1.6438493e+08
+131000 1.6492405e+08
+132000 1.6364908e+08
+133000 1.6159764e+08
+134000 1.640931e+08
+135000 1.6701699e+08
+136000 1.671945e+08
+137000 1.7396855e+08
+138000 1.7477136e+08
+139000 1.7656336e+08
+140000 1.7780866e+08
+141000 1.7888675e+08
+142000 1.8070602e+08
+143000 1.824236e+08
+144000 1.8353269e+08
+145000 1.8813504e+08
+146000 1.9419088e+08
+147000 1.9120493e+08
+148000 1.9600749e+08
+149000 2.0123153e+08
+150000 1.9799885e+08
+151000 2.0664309e+08
+152000 2.101181e+08
+153000 2.0110491e+08
+154000 2.0710294e+08
+155000 2.0892215e+08
+156000 2.0616807e+08
+157000 2.1043311e+08
+158000 2.1750529e+08
+159000 2.1387772e+08
+160000 2.1986467e+08
+161000 2.2293061e+08
+162000 2.1877382e+08
+163000 2.2595914e+08
+164000 2.2322648e+08
+165000 2.2106284e+08
+166000 2.2736636e+08
+167000 2.2797828e+08
+168000 2.2999591e+08
+169000 2.3160652e+08
+170000 2.3443814e+08
+171000 2.384082e+08
+172000 2.3612539e+08
+173000 2.3913956e+08
+174000 2.4315994e+08
+175000 2.4205919e+08
+176000 2.4485728e+08
+177000 2.4757414e+08
+178000 2.4856212e+08
+179000 2.528188e+08
+180000 2.5265199e+08
+181000 2.5206626e+08
+182000 2.5599117e+08
+183000 2.5857213e+08
+184000 2.6062854e+08
+185000 2.6603902e+08
+186000 2.6431609e+08
+187000 2.6913412e+08
+188000 2.7106781e+08
+189000 2.7288678e+08
+190000 2.786945e+08
+191000 2.7656959e+08
+192000 2.8033318e+08
+193000 2.7968628e+08
+194000 2.8573983e+08
+195000 2.8377357e+08
+196000 2.87513e+08
+197000 2.8735685e+08
+198000 2.8721216e+08
+199000 2.9019342e+08
+200000 2.9177432e+08
+201000 3.0141608e+08
+202000 2.9884316e+08
+203000 3.0381557e+08
+204000 3.0366667e+08
+205000 3.1082866e+08
+206000 3.0639839e+08
+207000 3.0972096e+08
+208000 3.1438602e+08
+209000 3.1891659e+08
+210000 3.1889401e+08
+211000 3.2722718e+08
+212000 3.2254989e+08
+213000 3.1807021e+08
+214000 3.3602177e+08
+215000 3.3663104e+08
+216000 3.250662e+08
+217000 3.4405809e+08
+218000 3.3175733e+08
+219000 3.458229e+08
+220000 3.4468921e+08
+221000 3.3439858e+08
+222000 3.6114729e+08
+223000 3.5918439e+08
+224000 3.5614091e+08
+225000 3.5391036e+08
+226000 3.5355222e+08
+227000 3.551439e+08
+228000 3.5777852e+08
+229000 3.6824845e+08
+230000 3.7725828e+08
+231000 3.7260094e+08
+232000 3.7204028e+08
+233000 3.7468855e+08
+234000 3.7160717e+08
+235000 3.7592284e+08
+236000 3.8055357e+08
+237000 3.8984054e+08
+238000 3.8911986e+08
+239000 3.9364532e+08
+240000 3.9250928e+08
+241000 3.9498581e+08
+242000 4.0261006e+08
+243000 4.0056229e+08
+244000 3.9970307e+08
+245000 4.1393401e+08
+246000 4.1829074e+08
+247000 4.0964719e+08
+248000 4.176554e+08
+249000 4.2315423e+08
+250000 4.3176248e+08
+251000 4.2133517e+08
+252000 4.3395359e+08
+253000 4.373139e+08
+254000 4.288042e+08
+255000 4.4489637e+08
+256000 4.4457769e+08
+257000 4.4281135e+08
+258000 4.5213739e+08
+259000 4.5103642e+08
+260000 4.5365268e+08
+261000 4.6315252e+08
+262000 4.6205181e+08
+263000 4.6199593e+08
+264000 4.6518178e+08
+265000 4.7027548e+08
+266000 4.8063182e+08
+267000 4.6978213e+08
+268000 4.8235127e+08
+269000 4.8878199e+08
+270000 4.9023804e+08
+271000 4.8769724e+08
+272000 4.9412136e+08
+273000 4.9678597e+08
+274000 4.888524e+08
+275000 5.0282229e+08
+276000 4.9415565e+08
+277000 5.1162898e+08
+278000 5.0607863e+08
+279000 5.1840023e+08
+280000 5.1057358e+08
+281000 5.1564348e+08
+282000 5.2394913e+08
+283000 5.2445709e+08
+284000 5.301425e+08
+285000 5.3029265e+08
+286000 5.3527825e+08
+287000 5.3948623e+08
+288000 5.4154958e+08
+289000 5.4402886e+08
+290000 5.5352811e+08
+291000 5.568097e+08
+292000 5.6207851e+08
+293000 5.5817103e+08
+294000 5.6239489e+08
+295000 5.6647386e+08
+296000 5.7026016e+08
+297000 5.8018585e+08
+298000 5.8097475e+08
+299000 5.7690407e+08
+300000 5.8072405e+08
+301000 5.8478082e+08
+302000 5.8504822e+08
+303000 5.9704842e+08
+304000 5.9346011e+08
+305000 5.9889596e+08
+306000 5.9519873e+08
+307000 6.0171999e+08
+308000 6.072438e+08
+309000 6.0719681e+08
+310000 6.0815815e+08
+311000 6.1437737e+08
+312000 6.1687141e+08
+313000 6.1890926e+08
+314000 6.2012797e+08
+315000 6.303439e+08
+316000 6.3219892e+08
+317000 6.303893e+08
+318000 6.4054718e+08
+319000 6.4069625e+08
+320000 6.494601e+08
+321000 6.475176e+08
+322000 6.4705755e+08
+323000 6.5274876e+08
+324000 6.548686e+08
+325000 6.7579868e+08
+326000 6.6068544e+08
+327000 6.6516403e+08
+328000 6.7076213e+08
+329000 6.7875248e+08
+330000 6.7715459e+08
+331000 6.8164703e+08
+332000 6.7912412e+08
+333000 6.8863765e+08
+334000 6.8953056e+08
+335000 6.928007e+08
+336000 6.8935539e+08
+337000 6.9803156e+08
+338000 7.0110887e+08
+339000 7.099234e+08
+340000 7.058653e+08
+341000 7.071143e+08
+342000 7.1784477e+08
+343000 7.1937788e+08
+344000 7.181059e+08
+345000 7.2475382e+08
+346000 7.2819838e+08
+347000 7.2790648e+08
+348000 7.3214032e+08
+349000 7.3453356e+08
+350000 7.4200723e+08
+351000 7.4010437e+08
+352000 7.4387304e+08
+353000 7.4834298e+08
+354000 7.5822575e+08
+355000 7.6086495e+08
+356000 7.6274307e+08
+357000 7.6910684e+08
+358000 7.6632133e+08
+359000 7.6605927e+08
+360000 7.6767553e+08
+361000 7.8146016e+08
+362000 7.771075e+08
+363000 7.8229868e+08
+364000 7.9040523e+08
+365000 7.8879062e+08
+366000 7.894063e+08
+367000 8.0429822e+08
+368000 7.9732571e+08
+369000 8.0556781e+08
+370000 8.0672385e+08
+371000 8.0674755e+08
+372000 8.1133157e+08
+373000 8.2440286e+08
+374000 8.15295e+08
+375000 8.3030303e+08
+376000 8.2083617e+08
+377000 8.359098e+08
+378000 8.3573146e+08
+379000 8.4058399e+08
+380000 8.4134373e+08
+381000 8.4657923e+08
+382000 8.4409495e+08
+383000 8.4963035e+08
+384000 8.5143451e+08
+385000 8.5850234e+08
+386000 8.5397559e+08
+387000 8.6361267e+08
+388000 8.7054945e+08
+389000 8.7268616e+08
+390000 8.812842e+08
+391000 8.7880397e+08
+392000 8.8067533e+08
+393000 8.9087374e+08
+394000 8.9285804e+08
+395000 8.9489141e+08
+396000 9.0606279e+08
+397000 9.0076361e+08
+398000 9.0127166e+08
+399000 9.0796463e+08
+400000 9.0878573e+08
+401000 9.1670768e+08
+402000 9.1772774e+08
+403000 9.2211522e+08
+404000 9.3216004e+08
+405000 9.3043346e+08
+406000 9.3768183e+08
+407000 9.436104e+08
+408000 9.4306397e+08
+409000 9.4439366e+08
+410000 9.4985864e+08
+411000 9.5834674e+08
+412000 9.4133923e+08
+413000 9.5855248e+08
+414000 9.6627231e+08
+415000 9.6056832e+08
+416000 9.6651482e+08
+417000 9.7329548e+08
+418000 9.6985567e+08
+419000 9.7040257e+08
+420000 9.8165284e+08
+421000 9.8179198e+08
+422000 9.8432953e+08
+423000 9.875323e+08
+424000 9.9763696e+08
+425000 1.0051998e+09
+426000 1.0007124e+09
+427000 1.0125732e+09
+428000 1.0101856e+09
+429000 1.0079578e+09
+430000 1.0191546e+09
+431000 1.0120505e+09
+432000 1.0277046e+09
+433000 1.0286496e+09
+434000 1.0288613e+09
+435000 1.0407099e+09
+436000 1.041781e+09
+437000 1.0423525e+09
+438000 1.0526732e+09
+439000 1.056692e+09
+440000 1.0523205e+09
+441000 1.0643101e+09
+442000 1.0617139e+09
+443000 1.06582e+09
+444000 1.0631358e+09
+445000 1.0678477e+09
+446000 1.0712529e+09
+447000 1.0705953e+09
+448000 1.0773215e+09
+449000 1.0825586e+09
+450000 1.1014133e+09
+451000 1.0921897e+09
+452000 1.0892165e+09
+453000 1.1065149e+09
+454000 1.0986093e+09
+455000 1.0962453e+09
+456000 1.1031874e+09
+457000 1.1114785e+09
+458000 1.1071866e+09
+459000 1.1157494e+09
+460000 1.1184015e+09
+461000 1.1332901e+09
+462000 1.1322208e+09
+463000 1.1352321e+09
+464000 1.1411068e+09
+465000 1.1420933e+09
+466000 1.1495133e+09
+467000 1.1496104e+09
+468000 1.1461824e+09
+469000 1.1589587e+09
+470000 1.1535465e+09
+471000 1.1645569e+09
+472000 1.1637925e+09
+473000 1.1636462e+09
+474000 1.1647357e+09
+475000 1.1731209e+09
+476000 1.1827429e+09
+477000 1.1753203e+09
+478000 1.1813695e+09
+479000 1.1903844e+09
+480000 1.196666e+09
+481000 1.1985015e+09
+482000 1.2040038e+09
+483000 1.2086953e+09
+484000 1.1999146e+09
+485000 1.2175223e+09
+486000 1.2206918e+09
+487000 1.2161443e+09
+488000 1.2197483e+09
+489000 1.2232635e+09
+490000 1.2356827e+09
+491000 1.2274462e+09
+492000 1.2307556e+09
+493000 1.2827043e+09
+494000 1.254205e+09
+495000 1.2892851e+09
+496000 1.2722695e+09
+497000 1.2690552e+09
+498000 1.2535132e+09
+499000 1.2670607e+09
+500000 1.2749782e+09
+501000 1.2695502e+09
+502000 1.2889523e+09
+503000 1.3038714e+09
+504000 1.2824293e+09
+505000 1.2781768e+09
+506000 1.2958704e+09
+507000 1.3016726e+09
+508000 1.322848e+09
+509000 1.3589979e+09
+510000 1.4339819e+09
+511000 1.3310334e+09
+512000 1.38784e+09
+513000 1.3488187e+09
+514000 1.4128503e+09
+515000 1.4216342e+09
+516000 1.4218453e+09
+517000 1.3764628e+09
+518000 1.370372e+09
+519000 1.4059915e+09
+520000 1.3801266e+09
+521000 1.3805625e+09
+522000 1.3752096e+09
+523000 1.4518527e+09
+524000 1.3629075e+09
+525000 1.3683366e+09
+526000 1.3637905e+09
+527000 1.374365e+09
+528000 1.4760364e+09
+529000 1.4292449e+09
+530000 1.3896272e+09
+531000 1.3874727e+09
+532000 1.4130198e+09
+533000 1.4013821e+09
+534000 1.4664871e+09
+535000 2.8476687e+09
+536000 1.4099992e+09
+537000 1.4069794e+09
+538000 1.4137879e+09
+539000 1.4225879e+09
+540000 1.4241046e+09
+541000 1.4204317e+09
+542000 1.4958209e+09
+543000 1.4548964e+09
+544000 1.450312e+09
+545000 1.446132e+09
+546000 1.4374689e+09
+547000 1.4686714e+09
+548000 1.470327e+09
+549000 1.4566262e+09
+550000 1.4495143e+09
+551000 1.475282e+09
+552000 1.4652605e+09
+553000 1.4612631e+09
+554000 1.4694839e+09
+555000 1.4741795e+09
+556000 1.475177e+09
+557000 1.4797942e+09
+558000 1.4863368e+09
+559000 1.4850368e+09
+560000 1.486549e+09
+561000 1.4954809e+09
+562000 1.493919e+09
+563000 1.4999939e+09
+564000 1.5028593e+09
+565000 1.5075205e+09
+566000 1.5070253e+09
+567000 1.5156198e+09
+568000 1.5296085e+09
+569000 1.5264182e+09
+570000 1.5365334e+09
+571000 1.5333733e+09
+572000 1.5424368e+09
+573000 1.5396746e+09
+574000 1.5469768e+09
+575000 1.5510194e+09
+576000 1.5477444e+09
+577000 1.5547639e+09
+578000 1.5554793e+09
+579000 1.5596951e+09
+580000 1.5544236e+09
+581000 1.572873e+09
+582000 1.5696892e+09
+583000 1.5818469e+09
+584000 1.5724574e+09
+585000 1.5907048e+09
+586000 1.5822851e+09
+587000 1.5939719e+09
+588000 1.5940648e+09
+589000 1.5978212e+09
+590000 1.6121481e+09
+591000 1.611382e+09
+592000 1.608545e+09
+593000 1.6186084e+09
+594000 1.6163874e+09
+595000 1.6187752e+09
+596000 1.6145402e+09
+597000 1.6297063e+09
+598000 1.6318376e+09
+599000 1.6380918e+09
+600000 1.6761732e+09
+601000 1.6841013e+09
+602000 1.64647e+09
+603000 1.6822178e+09
+604000 1.6794259e+09
+605000 1.6672563e+09
+606000 1.6793444e+09
+607000 1.689075e+09
+608000 1.6978804e+09
+609000 1.6756109e+09
+610000 1.6904556e+09
+611000 1.6727951e+09
+612000 1.6875919e+09
+613000 1.7215775e+09
+614000 1.6708122e+09
+615000 1.6681672e+09
+616000 1.7416395e+09
+617000 1.730626e+09
+618000 1.7646984e+09
+619000 1.7203347e+09
+620000 1.7228622e+09
+621000 1.7191384e+09
+622000 1.7325894e+09
+623000 1.7380049e+09
+624000 1.7288706e+09
+625000 1.7329967e+09
+626000 1.7591352e+09
+627000 1.767561e+09
+628000 1.7652075e+09
+629000 1.7565929e+09
+630000 1.7586984e+09
+631000 1.7468409e+09
+632000 1.7422101e+09
+633000 1.7492328e+09
+634000 1.7640634e+09
+635000 1.7622577e+09
+636000 1.7728027e+09
+637000 1.7646166e+09
+638000 1.7900468e+09
+639000 1.7837949e+09
+640000 1.7709895e+09
+641000 1.7781326e+09
+642000 1.7851652e+09
+643000 1.7987534e+09
+644000 1.8029232e+09
+645000 1.7948111e+09
+646000 1.8136631e+09
+647000 1.804008e+09
+648000 1.8190653e+09
+649000 1.8092755e+09
+650000 1.8174774e+09
+651000 1.8254991e+09
+652000 1.8213769e+09
+653000 1.8345287e+09
+654000 1.8363876e+09
+655000 1.8396344e+09
+656000 1.8395896e+09
+657000 1.8455761e+09
+658000 1.8499893e+09
+659000 1.8483003e+09
+660000 1.84543e+09
+661000 1.8596775e+09
+662000 1.8546795e+09
+663000 1.8837252e+09
+664000 1.8616449e+09
+665000 1.8720021e+09
+666000 1.873356e+09
+667000 1.8829752e+09
+668000 1.8915373e+09
+669000 1.8879832e+09
+670000 1.8786827e+09
+671000 1.8865018e+09
+672000 1.910197e+09
+673000 1.9045186e+09
+674000 1.9113703e+09
+675000 1.9154238e+09
+676000 1.9158253e+09
+677000 1.9248358e+09
+678000 1.9298935e+09
+679000 1.9271435e+09
+680000 1.9406879e+09
+681000 1.9351846e+09
+682000 1.9344128e+09
+683000 1.9349371e+09
+684000 1.9485558e+09
+685000 1.9522896e+09
+686000 1.9469681e+09
+687000 1.960958e+09
+688000 1.9625882e+09
+689000 1.9654024e+09
+690000 1.9820813e+09
+691000 1.978618e+09
+692000 1.9778244e+09
+693000 1.9734642e+09
+694000 1.9906296e+09
+695000 1.9796319e+09
+696000 1.9885976e+09
+697000 1.9910323e+09
+698000 1.9896605e+09
+699000 1.9980509e+09
+700000 2.0059369e+09
+701000 2.0168851e+09
+702000 2.0162568e+09
+703000 2.0116647e+09
+704000 2.0195334e+09
+705000 2.0222303e+09
+706000 2.0188592e+09
+707000 2.0393374e+09
+708000 2.0282097e+09
+709000 2.0425648e+09
+710000 2.0299876e+09
+711000 2.0392703e+09
+712000 2.0459293e+09
+713000 2.0593752e+09
+714000 2.056851e+09
+715000 2.0592681e+09
+716000 2.0594753e+09
+717000 2.0646188e+09
+718000 2.0693173e+09
+719000 2.0775716e+09
+720000 2.0696917e+09
+721000 2.0821051e+09
+722000 2.0800984e+09
+723000 2.0838462e+09
+724000 2.0864632e+09
+725000 2.0909061e+09
+726000 2.1024037e+09
+727000 2.0971342e+09
+728000 2.1130686e+09
+729000 2.1257784e+09
+730000 2.1143092e+09
+731000 2.1222375e+09
+732000 2.1081548e+09
+733000 2.133134e+09
+734000 2.1241839e+09
+735000 2.1451056e+09
+736000 2.1311933e+09
+737000 2.1323634e+09
+738000 2.142253e+09
+739000 2.1411177e+09
+740000 2.1501612e+09
+741000 2.1642288e+09
+742000 2.1623169e+09
+743000 2.1643061e+09
+744000 2.1697731e+09
+745000 2.1628832e+09
+746000 2.1688094e+09
+747000 2.1798956e+09
+748000 2.1908323e+09
+749000 2.1938295e+09
+750000 2.1964213e+09
+751000 2.2027272e+09
+752000 2.20494e+09
+753000 2.1983656e+09
+754000 2.2078203e+09
+755000 2.2177128e+09
+756000 2.2108051e+09
+757000 2.2358131e+09
+758000 2.2956888e+09
+759000 2.2703158e+09
+760000 2.237543e+09
+761000 2.2636133e+09
+762000 2.2417371e+09
+763000 2.2452066e+09
+764000 2.2469517e+09
+765000 2.2606281e+09
+766000 2.2771269e+09
+767000 2.2722678e+09
+768000 2.2738446e+09
+769000 2.2658776e+09
+770000 2.2613481e+09
+771000 2.2711698e+09
+772000 2.2761651e+09
+773000 2.2781855e+09
+774000 2.272314e+09
+775000 2.282006e+09
+776000 2.2915027e+09
+777000 2.3045451e+09
+778000 2.2990291e+09
+779000 2.2937573e+09
+780000 2.3334814e+09
+781000 2.3271173e+09
+782000 2.326894e+09
+783000 2.3862872e+09
+784000 2.3709039e+09
+785000 2.3108289e+09
+786000 2.3167458e+09
+787000 2.3220767e+09
+788000 2.3104878e+09
+789000 2.331216e+09
+790000 2.3146136e+09
+791000 2.3254623e+09
+792000 2.3369885e+09
+793000 2.3353292e+09
+794000 2.3287374e+09
+795000 2.3463837e+09
+796000 2.3450282e+09
+797000 2.3511371e+09
+798000 2.3554823e+09
+799000 2.3506739e+09
+800000 2.3531576e+09
+801000 2.3653074e+09
+802000 2.3727399e+09
+803000 2.373e+09
+804000 2.3734778e+09
+805000 2.3796561e+09
+806000 2.3888287e+09
+807000 2.3770854e+09
+808000 2.3788134e+09
+809000 2.3895672e+09
+810000 2.3905991e+09
+811000 2.3924101e+09
+812000 2.3944101e+09
+813000 2.4014887e+09
+814000 2.3966363e+09
+815000 2.4048498e+09
+816000 2.4157593e+09
+817000 2.4100675e+09
+818000 2.4113345e+09
+819000 2.4186637e+09
+820000 2.4322788e+09
+821000 2.4332475e+09
+822000 2.4336886e+09
+823000 2.438588e+09
+824000 2.4356465e+09
+825000 2.4435031e+09
+826000 2.4466864e+09
+827000 2.4505559e+09
+828000 2.4539452e+09
+829000 2.4618114e+09
+830000 2.4714418e+09
+831000 2.47234e+09
+832000 2.4675246e+09
+833000 2.4736607e+09
+834000 2.4750419e+09
+835000 2.478407e+09
+836000 2.4787497e+09
+837000 2.4981832e+09
+838000 2.4982177e+09
+839000 2.4968239e+09
+840000 2.4871141e+09
+841000 2.5176134e+09
+842000 2.5062379e+09
+843000 2.5156354e+09
+844000 2.5198164e+09
+845000 2.5268653e+09
+846000 2.713122e+09
+847000 2.634786e+09
+848000 2.7717355e+09
+849000 2.6681597e+09
+850000 2.8463625e+09
+851000 2.5391908e+09
+852000 2.5532845e+09
+853000 2.5558077e+09
+854000 2.5847558e+09
+855000 2.5719737e+09
+856000 2.5584893e+09
+857000 2.5596254e+09
+858000 2.5718371e+09
+859000 2.5832683e+09
+860000 2.5863689e+09
+861000 2.5820493e+09
+862000 2.5749152e+09
+863000 2.6226281e+09
+864000 2.6285671e+09
+865000 2.6217047e+09
+866000 2.6058633e+09
+867000 2.6059917e+09
+868000 2.6016893e+09
+869000 2.6094436e+09
+870000 2.6108204e+09
+871000 2.6170453e+09
+872000 2.6148949e+09
+873000 2.6235627e+09
+874000 2.6116261e+09
+875000 2.6398883e+09
+876000 2.6239648e+09
+877000 2.6379287e+09
+878000 2.6343414e+09
+879000 2.6471866e+09
+880000 2.6608113e+09
+881000 2.6404968e+09
+882000 2.6575955e+09
+883000 2.6535611e+09
+884000 2.6579016e+09
+885000 2.6707534e+09
+886000 2.6743006e+09
+887000 2.6721041e+09
+888000 2.6812184e+09
+889000 2.6795498e+09
+890000 2.6873781e+09
+891000 2.6816616e+09
+892000 2.6748983e+09
+893000 2.6933644e+09
+894000 2.7049467e+09
+895000 2.709293e+09
+896000 2.7089621e+09
+897000 2.6981024e+09
+898000 2.7224485e+09
+899000 2.7164944e+09
+900000 2.7202225e+09
+901000 2.7254162e+09
+902000 2.7207527e+09
+903000 2.7463836e+09
+904000 2.7371974e+09
+905000 2.735902e+09
+906000 2.7393516e+09
+907000 2.7466514e+09
+908000 2.7331486e+09
+909000 2.757383e+09
+910000 2.7530755e+09
+911000 2.7556643e+09
+912000 2.7680216e+09
+913000 2.779905e+09
+914000 2.7874885e+09
+915000 2.7767081e+09
+916000 2.7762319e+09
+917000 2.7743731e+09
+918000 2.7757214e+09
+919000 2.7826045e+09
+920000 2.8012284e+09
+921000 2.8004879e+09
+922000 2.7920328e+09
+923000 2.7870607e+09
+924000 2.8087352e+09
+925000 2.8180708e+09
+926000 2.8106682e+09
+927000 2.825269e+09
+928000 2.8252267e+09
+929000 2.8190108e+09
+930000 2.8203243e+09
+931000 2.8289755e+09
+932000 2.8298616e+09
+933000 2.8298162e+09
+934000 2.8436492e+09
+935000 2.8499444e+09
+936000 2.8624951e+09
+937000 2.8664814e+09
+938000 2.8473663e+09
+939000 2.8550095e+09
+940000 2.861029e+09
+941000 2.8637844e+09
+942000 2.8661557e+09
+943000 2.8811833e+09
+944000 2.8778725e+09
+945000 2.8796425e+09
+946000 2.8895104e+09
+947000 2.8843233e+09
+948000 2.8965245e+09
+949000 2.9015743e+09
+950000 2.9033417e+09
+951000 2.9020108e+09
+952000 2.9088966e+09
+953000 2.9219254e+09
+954000 2.9199256e+09
+955000 2.9248529e+09
+956000 2.9241943e+09
+957000 2.9408371e+09
+958000 2.940655e+09
+959000 2.933929e+09
+960000 2.9488046e+09
+961000 2.9439524e+09
+962000 2.96369e+09
+963000 2.9524018e+09
+964000 2.9483893e+09
+965000 2.9565664e+09
+966000 2.9747227e+09
+967000 2.9706883e+09
+968000 2.9830401e+09
+969000 2.9787176e+09
+970000 2.9831089e+09
+971000 2.9872032e+09
+972000 2.9801968e+09
+973000 2.9781559e+09
+974000 2.9922462e+09
+975000 3.0012517e+09
+976000 2.9988861e+09
+977000 3.0119097e+09
+978000 3.0063131e+09
+979000 3.0141166e+09
+980000 3.0211075e+09
+981000 3.0165206e+09
+982000 3.0170003e+09
+983000 3.0248202e+09
+984000 3.0242733e+09
+985000 3.039121e+09
+986000 3.0352757e+09
+987000 3.0333869e+09
+988000 3.0330707e+09
+989000 3.0582205e+09
+990000 3.1018853e+09
+991000 3.0643627e+09
+992000 3.0787847e+09
+993000 3.0556277e+09
+994000 3.0635534e+09
+995000 3.0710314e+09
+996000 3.0838029e+09
+997000 3.1126366e+09
+998000 3.1337277e+09
+999000 3.0989858e+09
+&
+@target G0.S1
+@type xy
+1000 11185984
+2000 9928584
+3000 9877747
+4000 9856077
+5000 9893217
+6000 9898797
+7000 9925608
+8000 10084228
+9000 9855676
+10000 9991110
+11000 9995410
+12000 9933864
+13000 10132329
+14000 9992756
+15000 9954864
+16000 9904729
+17000 10087394
+18000 10053981
+19000 10044664
+20000 9981663
+21000 10085161
+22000 10091603
+23000 9983899
+24000 10040326
+25000 9993707
+26000 9888899
+27000 10022963
+28000 10296951
+29000 9964100
+30000 9919897
+31000 10039123
+32000 9990060
+33000 10068729
+34000 10543478
+35000 10109927
+36000 9880462
+37000 10006712
+38000 9912133
+39000 10008725
+40000 9919075
+41000 9843633
+42000 9959121
+43000 9939355
+44000 10255623
+45000 10651242
+46000 10065483
+47000 10095330
+48000 10093296
+49000 9992924
+50000 10010599
+51000 9944324
+52000 10029365
+53000 9938693
+54000 9994809
+55000 9927813
+56000 9999247
+57000 9939385
+58000 10103233
+59000 9958259
+60000 9927812
+61000 10018324
+62000 9888297
+63000 9984460
+64000 9868269
+65000 9945476
+66000 9817844
+67000 9685414
+68000 9619176
+69000 9704941
+70000 9649366
+71000 9675896
+72000 9604410
+73000 9755165
+74000 9713778
+75000 9699030
+76000 9938803
+77000 10299035
+78000 10565959
+79000 10754467
+80000 10846592
+81000 10913468
+82000 10950238
+83000 10999792
+84000 11061719
+85000 10960136
+86000 11069794
+87000 11081305
+88000 11120420
+89000 11227783
+90000 11274641
+91000 11347761
+92000 11436197
+93000 11902480
+94000 12107097
+95000 12333724
+96000 12454315
+97000 12536290
+98000 12520190
+99000 12611012
+100000 12658311
+101000 12697796
+102000 12725006
+103000 12830687
+104000 12793748
+105000 12806572
+106000 12923844
+107000 12939091
+108000 12909035
+109000 13149441
+110000 13356483
+111000 13456713
+112000 13413830
+113000 13526875
+114000 13634619
+115000 13678843
+116000 13675707
+117000 13805381
+118000 13810132
+119000 13880314
+120000 13944055
+121000 14010841
+122000 14430374
+123000 14294930
+124000 14731586
+125000 15104492
+126000 15223136
+127000 15328363
+128000 15366307
+129000 15370475
+130000 15449424
+131000 15565813
+132000 15685922
+133000 15775422
+134000 15804196
+135000 15818902
+136000 15946645
+137000 16006980
+138000 16097341
+139000 16154099
+140000 16367079
+141000 16463845
+142000 16692427
+143000 16755056
+144000 16796422
+145000 16880894
+146000 16971946
+147000 17144974
+148000 17123542
+149000 17246606
+150000 17313603
+151000 17361243
+152000 17544619
+153000 17790496
+154000 18140047
+155000 18702281
+156000 18837357
+157000 19087200
+158000 19258325
+159000 19849973
+160000 19499180
+161000 19525239
+162000 21398203
+163000 22276307
+164000 19943812
+165000 20118050
+166000 20049171
+167000 20403432
+168000 20574493
+169000 20523650
+170000 20874882
+171000 21176075
+172000 21062619
+173000 21318241
+174000 23442715
+175000 23761636
+176000 21716137
+177000 21840771
+178000 21911577
+179000 22047724
+180000 22191004
+181000 22278531
+182000 22343622
+183000 22466247
+184000 24588833
+185000 23264488
+186000 24148680
+187000 24082626
+188000 23792027
+189000 23968749
+190000 24163920
+191000 24260121
+192000 27765367
+193000 24269879
+194000 24356194
+195000 24515353
+196000 24719422
+197000 24728788
+198000 24792329
+199000 24837553
+200000 24877080
+201000 24994010
+202000 25112346
+203000 25216181
+204000 25280614
+205000 25360504
+206000 25139206
+207000 25389488
+208000 25572176
+209000 25634933
+210000 25736617
+211000 25789615
+212000 25877582
+213000 25896109
+214000 25940721
+215000 26619879
+216000 26712102
+217000 27182352
+218000 27286761
+219000 27404493
+220000 27452043
+221000 27532827
+222000 27699561
+223000 27803187
+224000 27818258
+225000 27740418
+226000 27904098
+227000 28123476
+228000 28196832
+229000 28230186
+230000 28312663
+231000 28453919
+232000 28563626
+233000 28645654
+234000 29691201
+235000 32122694
+236000 28766592
+237000 28915814
+238000 28985035
+239000 29161340
+240000 29177117
+241000 29758649
+242000 32729282
+243000 29451860
+244000 29337172
+245000 29597123
+246000 29907030
+247000 30458653
+248000 30788538
+249000 31234322
+250000 34683491
+251000 31252698
+252000 31347145
+253000 31380970
+254000 31606306
+255000 31649558
+256000 31652013
+257000 31736693
+258000 31835862
+259000 33537483
+260000 34224542
+261000 32322733
+262000 35177286
+263000 32653277
+264000 32457487
+265000 32702541
+266000 32865109
+267000 32923299
+268000 33173303
+269000 36874499
+270000 33281356
+271000 33368843
+272000 33441390
+273000 33553192
+274000 33673830
+275000 33756867
+276000 33863579
+277000 34378624
+278000 34728907
+279000 34853633
+280000 35105951
+281000 35118273
+282000 35447527
+283000 35559719
+284000 35671080
+285000 35737246
+286000 36423725
+287000 36020802
+288000 36109408
+289000 36288319
+290000 36364693
+291000 36473269
+292000 36548240
+293000 36771604
+294000 36968685
+295000 37212017
+296000 37308881
+297000 37445800
+298000 37594010
+299000 37543182
+300000 37486307
+301000 37718035
+302000 38707546
+303000 42002776
+304000 38487881
+305000 38801936
+306000 38793811
+307000 39031009
+308000 39593255
+309000 39748737
+310000 39874617
+311000 40499629
+312000 43825916
+313000 40559692
+314000 40661697
+315000 40779308
+316000 44639417
+317000 41524458
+318000 41256403
+319000 41251252
+320000 41398662
+321000 41585764
+322000 41725942
+323000 41904357
+324000 42174539
+325000 43558771
+326000 42497691
+327000 42646843
+328000 42743748
+329000 42954696
+330000 43149565
+331000 46702951
+332000 43987360
+333000 43483068
+334000 43909182
+335000 43953236
+336000 44635718
+337000 47849902
+338000 48363534
+339000 45013644
+340000 45584073
+341000 45557795
+342000 49659919
+343000 45927853
+344000 46105651
+345000 46301521
+346000 46602180
+347000 46804313
+348000 46924340
+349000 47119329
+350000 47344896
+351000 50415757
+352000 48764844
+353000 47934482
+354000 48080729
+355000 48343226
+356000 48219681
+357000 52664604
+358000 48876656
+359000 49082746
+360000 53206490
+361000 49399977
+362000 53671080
+363000 49779042
+364000 49927725
+365000 50157290
+366000 50428914
+367000 54119098
+368000 51052363
+369000 51791943
+370000 55378992
+371000 52134813
+372000 52370147
+373000 52491787
+374000 52774002
+375000 52805371
+376000 53111100
+377000 53116450
+378000 53847733
+379000 57038354
+380000 53925070
+381000 53998529
+382000 57254693
+383000 55502736
+384000 54780871
+385000 54820084
+386000 55083743
+387000 55266049
+388000 55622102
+389000 55738222
+390000 56028712
+391000 57212283
+392000 56488072
+393000 60174159
+394000 56586508
+395000 56862621
+396000 61162909
+397000 57653287
+398000 60942583
+399000 57680859
+400000 58198830
+401000 58752267
+402000 1.2345418e+08
+403000 60733436
+404000 59260569
+405000 59362110
+406000 60370560
+407000 59656808
+408000 59794009
+409000 60976688
+410000 60241996
+411000 1.0102871e+08
+412000 60319963
+413000 60670278
+414000 61844278
+415000 61092948
+416000 61223273
+417000 62409821
+418000 61623460
+419000 61845862
+420000 62986200
+421000 62311383
+422000 62430087
+423000 63456531
+424000 62852477
+425000 77558633
+426000 63284686
+427000 63366751
+428000 63613337
+429000 65341568
+430000 63950916
+431000 40316903
+432000 64812337
+433000 65095101
+434000 66350496
+435000 65612601
+436000 65803742
+437000 67369677
+438000 66984769
+439000 66577517
+440000 66868538
+441000 67111418
+442000 67128611
+443000 67468053
+444000 67508089
+445000 68635241
+446000 67813898
+447000 1.0116226e+08
+448000 68251024
+449000 68186282
+450000 57009267
+451000 68662613
+452000 68973222
+453000 70240930
+454000 69323205
+455000 70175416
+456000 69763608
+457000 69995626
+458000 70070769
+459000 70334348
+460000 70429486
+461000 71990333
+462000 71331354
+463000 71660508
+464000 72462725
+465000 72193126
+466000 73189100
+467000 72559610
+468000 72578835
+469000 72322270
+470000 72642044
+471000 73984788
+472000 73877863
+473000 73495662
+474000 73518473
+475000 73824904
+476000 73920394
+477000 74148256
+478000 75205787
+479000 74415491
+480000 1.0588613e+08
+481000 74741017
+482000 74998976
+483000 76130857
+484000 75203283
+485000 75354139
+486000 75506898
+487000 75355300
+488000 76612560
+489000 75987336
+490000 77078843
+491000 76073729
+492000 76852464
+493000 77155425
+494000 77398467
+495000 78254195
+496000 77760413
+497000 79202951
+498000 78157034
+499000 78396105
+500000 78473421
+501000 78578551
+502000 78683388
+503000 79777629
+504000 79264247
+505000 80333211
+506000 79323008
+507000 71295504
+508000 79849586
+509000 81389200
+510000 1.3307818e+08
+511000 80543439
+512000 80493925
+513000 81645925
+514000 80869545
+515000 81055287
+516000 82186028
+517000 96852717
+518000 81579469
+519000 81663187
+520000 82890951
+521000 82214861
+522000 83105878
+523000 82843061
+524000 84166254
+525000 83061584
+526000 51350112
+527000 83824268
+528000 85250266
+529000 84073359
+530000 84214666
+531000 86131604
+532000 84656884
+533000 86021996
+534000 84942234
+535000 85180455
+536000 85311833
+537000 85552828
+538000 86138909
+539000 86752018
+540000 86047584
+541000 87162946
+542000 86365436
+543000 86405993
+544000 86497035
+545000 1.0870591e+08
+546000 86952577
+547000 87247766
+548000 88313183
+549000 87505705
+550000 88515375
+551000 87781757
+552000 88335844
+553000 88146848
+554000 88598503
+555000 88959265
+556000 89054785
+557000 89557548
+558000 90023980
+559000 89663548
+560000 90768008
+561000 90223036
+562000 63748988
+563000 90331131
+564000 91404673
+565000 91436513
+566000 90850133
+567000 90993515
+568000 91337595
+569000 91356081
+570000 91519270
+571000 91877497
+572000 1.1658367e+08
+573000 91840516
+574000 93311852
+575000 92239923
+576000 92566961
+577000 92678303
+578000 93354232
+579000 93116654
+580000 93273980
+581000 93173008
+582000 86796599
+583000 93617620
+584000 95770505
+585000 94491694
+586000 95901652
+587000 95176812
+588000 95309211
+589000 95417908
+590000 95565386
+591000 96160542
+592000 95746589
+593000 96133011
+594000 97394909
+595000 96500214
+596000 96613750
+597000 1.3127125e+08
+598000 1.2565504e+08
+599000 98152823
+600000 1.2167086e+08
+601000 97464580
+602000 98730805
+603000 97848316
+604000 97965277
+605000 98316452
+606000 1.0129071e+08
+607000 98628564
+608000 98616971
+609000 99035743
+610000 98933190
+611000 99330070
+612000 99916058
+613000 99601743
+614000 99710770
+615000 1.0034381e+08
+616000 1.0061956e+08
+617000 1.0085831e+08
+618000 1.3621554e+08
+619000 1.0090149e+08
+620000 1.0130327e+08
+621000 1.0154775e+08
+622000 1.0178746e+08
+623000 1.0193398e+08
+624000 1.0274106e+08
+625000 1.0241711e+08
+626000 1.0355428e+08
+627000 1.0282658e+08
+628000 1.0295236e+08
+629000 1.0331749e+08
+630000 1.0328971e+08
+631000 1.0351582e+08
+632000 1.0446766e+08
+633000 1.0381168e+08
+634000 1.0392182e+08
+635000 1.042177e+08
+636000 1.0449812e+08
+637000 1.0412856e+08
+638000 1.3196178e+08
+639000 1.0479301e+08
+640000 1.0495037e+08
+641000 1.0519982e+08
+642000 1.0544223e+08
+643000 1.0615782e+08
+644000 1.1546204e+09
+645000 1.0602541e+08
+646000 1.0654064e+08
+647000 1.0690056e+08
+648000 1.071168e+08
+649000 1.0725963e+08
+650000 1.708091e+08
+651000 1.5401576e+08
+652000 1.637416e+08
+653000 1.5696039e+08
+654000 1.1028416e+08
+655000 1.0931082e+08
+656000 1.0832663e+08
+657000 72625543
+658000 1.0902046e+08
+659000 1.1150886e+08
+660000 1.1011206e+08
+661000 1.1002648e+08
+662000 1.1060212e+08
+663000 1.3478763e+08
+664000 1.1147917e+08
+665000 1.1099551e+08
+666000 1.1029385e+08
+667000 1.1144971e+08
+668000 1.1064031e+08
+669000 1.1170615e+08
+670000 1.1109403e+08
+671000 1.1182084e+08
+672000 1.125965e+08
+673000 1.1150862e+08
+674000 1.1182987e+08
+675000 1.1093072e+08
+676000 1.133609e+08
+677000 1.1292208e+08
+678000 1.1416019e+08
+679000 1.2793384e+08
+680000 1.1370611e+08
+681000 1.1488682e+08
+682000 1.1399702e+08
+683000 1.1498408e+08
+684000 1.1459046e+08
+685000 1.1477947e+08
+686000 1.15468e+08
+687000 1.1479085e+08
+688000 1.1516857e+08
+689000 1.1513334e+08
+690000 1.1624535e+08
+691000 1.1656784e+08
+692000 1.1570161e+08
+693000 1.1649436e+08
+694000 73996045
+695000 1.1677411e+08
+696000 1.2041289e+08
+697000 1.1679095e+08
+698000 1.1682898e+08
+699000 1.1695933e+08
+700000 1.1732995e+08
+701000 1.17979e+08
+702000 1.1770163e+08
+703000 1.1775698e+08
+704000 1.1797564e+08
+705000 1.1808615e+08
+706000 1.56858e+08
+707000 1.1873687e+08
+708000 1.2185555e+08
+709000 1.1940506e+08
+710000 1.8286376e+08
+711000 1.220632e+08
+712000 80081281
+713000 1.2057152e+08
+714000 1.2570254e+08
+715000 1.231237e+08
+716000 1.2070264e+08
+717000 1.2116524e+08
+718000 1.2114559e+08
+719000 1.2129869e+08
+720000 1.2275238e+08
+721000 1.2413968e+08
+722000 1.2193855e+08
+723000 1.2443327e+08
+724000 1.2211744e+08
+725000 1.6644378e+08
+726000 1.2253954e+08
+727000 1.2273526e+08
+728000 1.2299263e+08
+729000 1.2315164e+08
+730000 1.3214925e+08
+731000 1.2334039e+08
+732000 1.2383747e+08
+733000 1.2405694e+08
+734000 1.2499287e+08
+735000 1.2441402e+08
+736000 1.2448268e+08
+737000 1.2468004e+08
+738000 1.2526092e+08
+739000 1.2658233e+08
+740000 1.2600761e+08
+741000 1.2611296e+08
+742000 1.2638995e+08
+743000 1.2641761e+08
+744000 1.8746488e+08
+745000 1.2680297e+08
+746000 1.2722774e+08
+747000 1.2727953e+08
+748000 1.4242489e+08
+749000 1.2751413e+08
+750000 1.0912443e+08
+751000 1.2819965e+08
+752000 1.2841325e+08
+753000 1.2926069e+08
+754000 1.2874487e+08
+755000 1.2906929e+08
+756000 1.2922638e+08
+757000 1.3016201e+08
+758000 1.297382e+08
+759000 1.2981454e+08
+760000 1.2994685e+08
+761000 1.3023582e+08
+762000 1.312337e+08
+763000 1.3059343e+08
+764000 1.308129e+08
+765000 1.3100668e+08
+766000 1.313048e+08
+767000 1.6980276e+08
+768000 1.3109626e+08
+769000 1.3184949e+08
+770000 1.324678e+08
+771000 1.3323631e+08
+772000 1.3313083e+08
+773000 1.3350773e+08
+774000 1.3352481e+08
+775000 1.3442867e+08
+776000 1.3390662e+08
+777000 1.338973e+08
+778000 1.3429746e+08
+779000 1.3443985e+08
+780000 1.3556486e+08
+781000 1.3498898e+08
+782000 1.3515679e+08
+783000 1.3545577e+08
+784000 1.8914833e+08
+785000 1.3567174e+08
+786000 1.3587755e+08
+787000 1.3514094e+08
+788000 1.4245719e+08
+789000 1.3629742e+08
+790000 1.3649149e+08
+791000 1.3738076e+08
+792000 1.3700362e+08
+793000 1.3780133e+08
+794000 1.3727132e+08
+795000 1.3763162e+08
+796000 1.3776797e+08
+797000 1.3863271e+08
+798000 1.3800843e+08
+799000 1.3867524e+08
+800000 1.3907343e+08
+801000 1.9892708e+08
+802000 1.3960101e+08
+803000 1.4259231e+08
+804000 1.3994009e+08
+805000 1.4034029e+08
+806000 1.4188992e+08
+807000 1.1624898e+08
+808000 1.4081425e+08
+809000 1.4091688e+08
+810000 1.416789e+08
+811000 1.4128827e+08
+812000 1.413532e+08
+813000 1.416392e+08
+814000 1.9932464e+08
+815000 1.4177262e+08
+816000 1.423309e+08
+817000 1.4242853e+08
+818000 1.5737125e+08
+819000 1.4288888e+08
+820000 1.4296652e+08
+821000 1.4338592e+08
+822000 1.441965e+08
+823000 1.4344637e+08
+824000 1.4372045e+08
+825000 1.4406154e+08
+826000 1.4505687e+08
+827000 1.4475815e+08
+828000 1.4477283e+08
+829000 1.4497589e+08
+830000 1.4626484e+08
+831000 1.4589006e+08
+832000 1.4593608e+08
+833000 1.461772e+08
+834000 1.8175026e+08
+835000 1.4673535e+08
+836000 1.4703545e+08
+837000 1.4721128e+08
+838000 1.4791088e+08
+839000 1.4765594e+08
+840000 1.4773433e+08
+841000 1.4806087e+08
+842000 1.489571e+08
+843000 1.4809456e+08
+844000 1.4829198e+08
+845000 1.4875026e+08
+846000 1.4992683e+08
+847000 1.4899257e+08
+848000 1.4942908e+08
+849000 1.4939308e+08
+850000 2.096401e+08
+851000 1.4986738e+08
+852000 1.4993444e+08
+853000 1.5025647e+08
+854000 1.7108372e+08
+855000 1.5064031e+08
+856000 1.5086162e+08
+857000 1.5094096e+08
+858000 1.5167403e+08
+859000 1.5161381e+08
+860000 1.5172603e+08
+861000 1.5242681e+08
+862000 1.5315801e+08
+863000 1.3408406e+08
+864000 1.5318848e+08
+865000 1.5347649e+08
+866000 1.5436372e+08
+867000 1.5408618e+08
+868000 1.5413492e+08
+869000 1.5423958e+08
+870000 1.97487e+08
+871000 1.5473841e+08
+872000 1.5512467e+08
+873000 1.5665366e+08
+874000 1.5532265e+08
+875000 1.5534596e+08
+876000 1.5566252e+08
+877000 1.5672643e+08
+878000 1.5620229e+08
+879000 1.5625847e+08
+880000 1.5676393e+08
+881000 1.5713615e+08
+882000 1.5306074e+08
+883000 1.5714084e+08
+884000 1.5717564e+08
+885000 1.5826086e+08
+886000 1.5785214e+08
+887000 1.5791198e+08
+888000 1.8707825e+08
+889000 1.5822946e+08
+890000 1.5835244e+08
+891000 1.5861097e+08
+892000 1.5988719e+08
+893000 1.5982645e+08
+894000 1.5991914e+08
+895000 1.6004571e+08
+896000 1.6086515e+08
+897000 1.6027286e+08
+898000 1.6038503e+08
+899000 1.6086614e+08
+900000 1.6174305e+08
+901000 1.6157364e+08
+902000 1.619273e+08
+903000 2.1054026e+08
+904000 1.6218232e+08
+905000 1.6218876e+08
+906000 1.6276846e+08
+907000 1.6918866e+08
+908000 1.6287838e+08
+909000 1.6326956e+08
+910000 1.63812e+08
+911000 1.6354926e+08
+912000 1.6375738e+08
+913000 1.6400476e+08
+914000 1.6504868e+08
+915000 1.644473e+08
+916000 1.6454688e+08
+917000 1.6457421e+08
+918000 1.6524786e+08
+919000 1.6495448e+08
+920000 1.6537354e+08
+921000 1.9992365e+08
+922000 1.6621371e+08
+923000 1.6655608e+08
+924000 1.6698529e+08
+925000 1.6751527e+08
+926000 1.6728454e+08
+927000 1.6740327e+08
+928000 1.6853635e+08
+929000 1.6799182e+08
+930000 1.6791206e+08
+931000 1.6835977e+08
+932000 1.6942954e+08
+933000 1.6887439e+08
+934000 1.6909323e+08
+935000 2.1772568e+08
+936000 1.6934425e+08
+937000 1.6940006e+08
+938000 1.6506648e+08
+939000 1.8089066e+08
+940000 1.7004364e+08
+941000 1.7058466e+08
+942000 1.713189e+08
+943000 1.7094603e+08
+944000 1.7110739e+08
+945000 1.713814e+08
+946000 1.720894e+08
+947000 1.7173164e+08
+948000 1.7188349e+08
+949000 1.7273969e+08
+950000 1.7237368e+08
+951000 1.7265619e+08
+952000 2.1558512e+08
+953000 1.733709e+08
+954000 1.7420263e+08
+955000 1.5607211e+08
+956000 1.4473822e+08
+957000 1.7456829e+08
+958000 1.7454315e+08
+959000 1.7568818e+08
+960000 1.7523088e+08
+961000 1.7746623e+08
+962000 1.7558576e+08
+963000 1.7938648e+08
+964000 1.7595222e+08
+965000 1.7632007e+08
+966000 1.8310095e+08
+967000 1.7670092e+08
+968000 1.7688569e+08
+969000 1.7718806e+08
+970000 1.7812388e+08
+971000 1.775149e+08
+972000 1.7781872e+08
+973000 1.7886503e+08
+974000 1.6100892e+08
+975000 1.0842845e+08
+976000 1.7784462e+08
+977000 1.6802481e+08
+978000 2.0550102e+08
+979000 1.7924961e+08
+980000 1.7933269e+08
+981000 1.7966866e+08
+982000 1.8055848e+08
+983000 1.8020259e+08
+984000 1.8062269e+08
+985000 1.8157702e+08
+986000 1.3263492e+08
+987000 1.8135192e+08
+988000 1.8238629e+08
+989000 1.8177809e+08
+990000 1.821725e+08
+991000 1.8231111e+08
+992000 2.4237095e+08
+993000 1.5886455e+08
+994000 1.5886482e+08
+995000 2.0032109e+08
+996000 1.8347395e+08
+997000 1.8371699e+08
+998000 1.847116e+08
+999000 1.8394346e+08
+&
+@target G0.S2
+@type xy
+1000 22605181
+2000 20286798
+3000 20053625
+4000 20416975
+5000 20308256
+6000 20455122
+7000 21173239
+8000 20374537
+9000 20867348
+10000 20753622
+11000 20366907
+12000 20447016
+13000 20260334
+14000 20446539
+15000 20179749
+16000 20405293
+17000 20305395
+18000 20534515
+19000 20231962
+20000 20342112
+21000 20391941
+22000 20589352
+23000 20399570
+24000 20415306
+25000 20264864
+26000 20305157
+27000 20412207
+28000 20627975
+29000 20371914
+30000 20051479
+31000 20227671
+32000 20016193
+33000 20300865
+34000 20781994
+35000 20534277
+36000 20296097
+37000 20267725
+38000 20313740
+39000 20355940
+40000 20220041
+41000 20165682
+42000 20326614
+43000 20195007
+44000 20919085
+45000 21192312
+46000 20745993
+47000 20445585
+48000 20454407
+49000 20139456
+50000 20315409
+51000 20215988
+52000 20352125
+53000 20235777
+54000 20309925
+55000 20180702
+56000 20376444
+57000 20268679
+58000 21841288
+59000 21854877
+60000 22078276
+61000 21901846
+62000 21851063
+63000 21823883
+64000 21975517
+65000 21962643
+66000 22060871
+67000 21683931
+68000 21717787
+69000 21310329
+70000 21591425
+71000 21476746
+72000 21658182
+73000 21384716
+74000 21760464
+75000 21647215
+76000 21449804
+77000 21725655
+78000 21723032
+79000 21723986
+80000 21808386
+81000 21648645
+82000 21514654
+83000 21460056
+84000 21501541
+85000 21644592
+86000 21682024
+87000 21344423
+88000 21355391
+89000 21927595
+90000 22091627
+91000 21960735
+92000 21282434
+93000 21858215
+94000 21397829
+95000 21358490
+96000 21310329
+97000 21872282
+98000 21328688
+99000 21306515
+100000 21292210
+101000 21774769
+102000 21728039
+103000 21606684
+104000 21413803
+105000 21352291
+106000 21363258
+107000 21764994
+108000 21521807
+109000 21305084
+110000 21211624
+111000 20870924
+112000 22214890
+113000 21975994
+114000 22924662
+115000 22910595
+116000 23000002
+117000 22019863
+118000 23099661
+119000 22850037
+120000 23441553
+121000 22723675
+122000 23380280
+123000 23520470
+124000 24919510
+125000 23745298
+126000 25472641
+127000 25748730
+128000 25259972
+129000 25259018
+130000 25372028
+131000 24938345
+132000 25752068
+133000 26033878
+134000 25065899
+135000 26451826
+136000 25704384
+137000 25543928
+138000 26107311
+139000 26341915
+140000 26539087
+141000 26440859
+142000 26690960
+143000 27435064
+144000 38640022
+145000 20713806
+146000 27594328
+147000 26807547
+148000 27298450
+149000 27433872
+150000 27110338
+151000 27559757
+152000 27648687
+153000 27267694
+154000 27416945
+155000 29896498
+156000 29069185
+157000 29515028
+158000 28988361
+159000 30204535
+160000 30052185
+161000 29706478
+162000 29594183
+163000 29951096
+164000 30402660
+165000 30048132
+166000 29968500
+167000 29753208
+168000 30663967
+169000 30858278
+170000 30423164
+171000 30970097
+172000 30547142
+173000 31021118
+174000 31355858
+175000 30709982
+176000 31421661
+177000 31846046
+178000 30663729
+179000 31325817
+180000 30729294
+181000 31688690
+182000 31393051
+183000 31198502
+184000 33143282
+185000 33827305
+186000 34506559
+187000 34837723
+188000 35356522
+189000 34620523
+190000 34969568
+191000 35063982
+192000 34964800
+193000 35296440
+194000 35289049
+195000 35808086
+196000 35545111
+197000 35684347
+198000 35506487
+199000 35490274
+200000 35717964
+201000 37026405
+202000 36168098
+203000 36470890
+204000 36083221
+205000 36492348
+206000 37299871
+207000 36870956
+208000 37163496
+209000 36618471
+210000 37704468
+211000 37185192
+212000 37614822
+213000 37051201
+214000 37713289
+215000 38559675
+216000 38702488
+217000 39230108
+218000 40711641
+219000 39866686
+220000 41187048
+221000 40556908
+222000 41778326
+223000 40902138
+224000 41966200
+225000 41087389
+226000 40967941
+227000 42007208
+228000 41576624
+229000 41759253
+230000 42238474
+231000 41472912
+232000 41790962
+233000 41067362
+234000 40346622
+235000 40646315
+236000 42084694
+237000 40761948
+238000 40692329
+239000 42164803
+240000 41117907
+241000 41135073
+242000 42324305
+243000 41196585
+244000 42508602
+245000 43691874
+246000 41819811
+247000 42415380
+248000 45749426
+249000 45116663
+250000 44431210
+251000 43051958
+252000 43224335
+253000 43957710
+254000 43704748
+255000 44355631
+256000 43254614
+257000 44222355
+258000 43684483
+259000 45914888
+260000 45258999
+261000 44094324
+262000 44246435
+263000 44411659
+264000 44432878
+265000 44683695
+266000 44775248
+267000 44861555
+268000 45185804
+269000 44926167
+270000 45134544
+271000 45300722
+272000 45347214
+273000 46198845
+274000 45677185
+275000 45799732
+276000 45793056
+277000 46627998
+278000 47043800
+279000 47081470
+280000 47416925
+281000 47577858
+282000 47702789
+283000 47744751
+284000 47824144
+285000 48349142
+286000 47993660
+287000 48103094
+288000 48208952
+289000 48388004
+290000 48432827
+291000 48519611
+292000 48587561
+293000 50221920
+294000 48907280
+295000 50525427
+296000 49222469
+297000 49335718
+298000 50921202
+299000 49324512
+300000 49311399
+301000 49535751
+302000 51352739
+303000 49864054
+304000 49932480
+305000 50175667
+306000 50231218
+307000 50154448
+308000 51113129
+309000 51573277
+310000 51885128
+311000 51980495
+312000 51997662
+313000 52757978
+314000 52173138
+315000 52278280
+316000 52384615
+317000 52487373
+318000 52825212
+319000 52699804
+320000 52629232
+321000 52639723
+322000 53337574
+323000 54722548
+324000 53489923
+325000 53240299
+326000 53529739
+327000 53641796
+328000 53787947
+329000 54452896
+330000 54042816
+331000 54383278
+332000 54235220
+333000 54150343
+334000 54520130
+335000 54314137
+336000 54632187
+337000 55209160
+338000 55060625
+339000 55806160
+340000 56036711
+341000 56154728
+342000 56361675
+343000 56203604
+344000 56406260
+345000 58796167
+346000 58655024
+347000 56948185
+348000 56994677
+349000 56972265
+350000 57138443
+351000 57164669
+352000 57351828
+353000 57255507
+354000 57532787
+355000 57557821
+356000 59197903
+357000 57768822
+358000 58022022
+359000 60240984
+360000 59474707
+361000 59004307
+362000 60003519
+363000 58022499
+364000 58141470
+365000 58376312
+366000 58628321
+367000 58881283
+368000 58768749
+369000 59570312
+370000 60086727
+371000 60378790
+372000 61395407
+373000 62685490
+374000 60735941
+375000 60900211
+376000 61000824
+377000 61357737
+378000 61238050
+379000 61811924
+380000 61664820
+381000 62091827
+382000 62136650
+383000 61615229
+384000 61756611
+385000 61702728
+386000 1.126864e+08
+387000 62531710
+388000 62597275
+389000 62650442
+390000 62836409
+391000 63259602
+392000 63043833
+393000 63069820
+394000 63814402
+395000 63104391
+396000 63207626
+397000 63374519
+398000 63407183
+399000 63752413
+400000 64901829
+401000 65212250
+402000 65531731
+403000 65224648
+404000 65969706
+405000 65454960
+406000 65538883
+407000 65657139
+408000 65849304
+409000 65934658
+410000 66168070
+411000 66188812
+412000 66130638
+413000 67241192
+414000 66341162
+415000 66567659
+416000 66527128
+417000 66605568
+418000 66854477
+419000 66847324
+420000 67131281
+421000 67336082
+422000 67821264
+423000 67360878
+424000 67335129
+425000 67549944
+426000 67500591
+427000 67448139
+428000 67644835
+429000 67681789
+430000 67917347
+431000 69405556
+432000 69391966
+433000 69440842
+434000 69606304
+435000 69660187
+436000 69860697
+437000 69934130
+438000 70137024
+439000 70800304
+440000 70333719
+441000 70465803
+442000 70290565
+443000 70320129
+444000 70522070
+445000 70488691
+446000 70758820
+447000 70445299
+448000 71299076
+449000 70778847
+450000 70893526
+451000 70885181
+452000 71304321
+453000 71359634
+454000 71403265
+455000 71327209
+456000 72409391
+457000 72047710
+458000 71982861
+459000 72046280
+460000 72383642
+461000 72892904
+462000 73416233
+463000 73519468
+464000 74323416
+465000 73777437
+466000 73829651
+467000 74098349
+468000 73998451
+469000 74020624
+470000 74232101
+471000 74309826
+472000 75365543
+473000 74663401
+474000 74731112
+475000 74900150
+476000 75047493
+477000 75016022
+478000 77039242
+479000 75466871
+480000 77329397
+481000 75734138
+482000 78015327
+483000 75874805
+484000 76029539
+485000 75943232
+486000 1.1501288e+08
+487000 75462341
+488000 75556517
+489000 75683832
+490000 75688601
+491000 75899363
+492000 76440334
+493000 77723980
+494000 77127457
+495000 77342272
+496000 77581644
+497000 77672482
+498000 77859879
+499000 77978373
+500000 78014374
+501000 80506802
+502000 78348637
+503000 78338623
+504000 80077648
+505000 1.303308e+08
+506000 78675508
+507000 78740358
+508000 78859568
+509000 78935385
+510000 78961372
+511000 79577684
+512000 79032898
+513000 79140663
+514000 79175234
+515000 79414606
+516000 79694748
+517000 79650640
+518000 79845428
+519000 80684423
+520000 79841852
+521000 80249071
+522000 80374718
+523000 83401918
+524000 81664562
+525000 81950188
+526000 1.4103293e+08
+527000 82103729
+528000 82113028
+529000 82118273
+530000 82226992
+531000 82359076
+532000 82203865
+533000 83074570
+534000 82486868
+535000 82534313
+536000 82752228
+537000 83069801
+538000 83012581
+539000 83241701
+540000 84206820
+541000 83343744
+542000 83477497
+543000 83551407
+544000 83817244
+545000 83969593
+546000 84161043
+547000 84949732
+548000 84294081
+549000 84200382
+550000 84583282
+551000 84424257
+552000 84427357
+553000 84842682
+554000 86479664
+555000 86010933
+556000 86102962
+557000 86005449
+558000 86510897
+559000 86650848
+560000 86729765
+561000 87712765
+562000 86938620
+563000 87339640
+564000 87206841
+565000 87139368
+566000 87722063
+567000 87638855
+568000 88348866
+569000 89345694
+570000 93196630
+571000 92392921
+572000 87968588
+573000 88048697
+574000 88265181
+575000 89277506
+576000 88311911
+577000 88540554
+578000 88860989
+579000 88771105
+580000 88860273
+581000 89525223
+582000 90205908
+583000 1.0190511e+08
+584000 99457026
+585000 96735239
+586000 97651243
+587000 97583055
+588000 96827269
+589000 97656488
+590000 97990036
+591000 97659588
+592000 97962618
+593000 97661734
+594000 96829176
+595000 98776102
+596000 98539352
+597000 98734140
+598000 95214605
+599000 92931509
+600000 93756914
+601000 94861269
+602000 95883608
+603000 95903158
+604000 97784042
+605000 98230600
+606000 98452330
+607000 98639250
+608000 99015713
+609000 99215984
+610000 99291325
+611000 99196672
+612000 99293709
+613000 95364094
+614000 98948956
+615000 1.0107493e+08
+616000 1.0200286e+08
+617000 1.0282755e+08
+618000 1.0152602e+08
+619000 1.0166883e+08
+620000 1.0255194e+08
+621000 1.0244393e+08
+622000 99641800
+623000 96794844
+624000 97156525
+625000 97705841
+626000 97137928
+627000 97438335
+628000 97301006
+629000 97763300
+630000 97546339
+631000 96730947
+632000 97859859
+633000 1.0621715e+08
+634000 1.0537457e+08
+635000 1.0292554e+08
+636000 1.0353327e+08
+637000 1.000638e+08
+638000 99230528
+639000 98353624
+640000 98371744
+641000 98695755
+642000 98782778
+643000 1.0033941e+08
+644000 99801540
+645000 99089622
+646000 1.0109973e+08
+647000 1.005702e+08
+648000 1.007843e+08
+649000 1.0363197e+08
+650000 1.0094619e+08
+651000 1.0112333e+08
+652000 1.0120726e+08
+653000 1.0455394e+08
+654000 1.0541439e+08
+655000 1.0151911e+08
+656000 1.0203457e+08
+657000 1.0232711e+08
+658000 1.0572982e+08
+659000 1.0698009e+08
+660000 1.0839105e+08
+661000 1.0765767e+08
+662000 1.0899639e+08
+663000 1.0783315e+08
+664000 1.0907722e+08
+665000 1.0685158e+08
+666000 1.1007261e+08
+667000 1.1005616e+08
+668000 1.1030555e+08
+669000 1.1090016e+08
+670000 1.1016345e+08
+671000 1.0990477e+08
+672000 1.1151004e+08
+673000 1.0834503e+08
+674000 1.0441828e+08
+675000 1.0911489e+08
+676000 1.1108875e+08
+677000 1.1138082e+08
+678000 1.1192322e+08
+679000 1.1271167e+08
+680000 1.12746e+08
+681000 1.1175561e+08
+682000 1.1093783e+08
+683000 1.066165e+08
+684000 1.0680819e+08
+685000 1.0692239e+08
+686000 1.0845447e+08
+687000 1.0764098e+08
+688000 1.0735512e+08
+689000 1.0727811e+08
+690000 1.0860562e+08
+691000 1.0789251e+08
+692000 1.0759568e+08
+693000 1.0770249e+08
+694000 1.0795712e+08
+695000 1.0916352e+08
+696000 1.0810471e+08
+697000 1.0808849e+08
+698000 1.1025119e+08
+699000 1.0845542e+08
+700000 1.0926747e+08
+701000 1.0880327e+08
+702000 1.08881e+08
+703000 1.0906792e+08
+704000 1.0974288e+08
+705000 1.0882735e+08
+706000 1.1405921e+08
+707000 1.1162567e+08
+708000 1.1064672e+08
+709000 1.111331e+08
+710000 1.1220884e+08
+711000 1.1112952e+08
+712000 1.1097336e+08
+713000 1.1197209e+08
+714000 1.110847e+08
+715000 1.1130571e+08
+716000 1.1172342e+08
+717000 1.1155128e+08
+718000 1.1283994e+08
+719000 1.1177921e+08
+720000 1.1170197e+08
+721000 1.1215734e+08
+722000 1.1340761e+08
+723000 1.1229849e+08
+724000 1.1306763e+08
+725000 1.1615086e+08
+726000 1.1718917e+08
+727000 1.1387181e+08
+728000 1.1790204e+08
+729000 1.1888885e+08
+730000 1.2018466e+08
+731000 1.1924314e+08
+732000 1.1929512e+08
+733000 1.1970329e+08
+734000 1.1990929e+08
+735000 1.1753035e+08
+736000 1.137929e+08
+737000 1.1377835e+08
+738000 1.1509275e+08
+739000 1.1706376e+08
+740000 1.1564851e+08
+741000 1.1827683e+08
+742000 1.1707854e+08
+743000 1.1696386e+08
+744000 1.1696196e+08
+745000 1.1638641e+08
+746000 1.2336087e+08
+747000 1.2377167e+08
+748000 1.2343836e+08
+749000 1.2139654e+08
+750000 1.1695242e+08
+751000 1.1665201e+08
+752000 1.1853933e+08
+753000 1.2306428e+08
+754000 1.1791015e+08
+755000 1.1825633e+08
+756000 1.1958814e+08
+757000 1.1765647e+08
+758000 1.1744809e+08
+759000 1.1750078e+08
+760000 1.1888647e+08
+761000 1.1769247e+08
+762000 1.1769772e+08
+763000 1.1803246e+08
+764000 1.1879992e+08
+765000 1.1916018e+08
+766000 1.1841369e+08
+767000 1.1860466e+08
+768000 1.1864543e+08
+769000 1.2634325e+08
+770000 1.257143e+08
+771000 1.2679601e+08
+772000 1.259768e+08
+773000 1.2769389e+08
+774000 1.2728834e+08
+775000 1.2715888e+08
+776000 1.2778664e+08
+777000 1.2321472e+08
+778000 1.2139368e+08
+779000 1.2080431e+08
+780000 1.2166452e+08
+781000 1.2252283e+08
+782000 1.2156487e+08
+783000 1.2397337e+08
+784000 1.2901926e+08
+785000 1.2941194e+08
+786000 1.3013005e+08
+787000 1.2779427e+08
+788000 1.3047099e+08
+789000 1.2646723e+08
+790000 1.2245178e+08
+791000 1.2245536e+08
+792000 1.2313628e+08
+793000 1.2350893e+08
+794000 1.2348056e+08
+795000 1.2315202e+08
+796000 1.2284851e+08
+797000 1.2979555e+08
+798000 1.3177204e+08
+799000 1.3108611e+08
+800000 1.2595963e+08
+801000 1.2458324e+08
+802000 1.263299e+08
+803000 1.2634373e+08
+804000 1.2604952e+08
+805000 1.2550664e+08
+806000 1.2549949e+08
+807000 1.2951517e+08
+808000 1.3200307e+08
+809000 1.3277984e+08
+810000 1.3259006e+08
+811000 1.3267636e+08
+812000 1.3272929e+08
+813000 1.3311839e+08
+814000 1.334126e+08
+815000 1.3248277e+08
+816000 1.2564397e+08
+817000 1.3276553e+08
+818000 1.263063e+08
+819000 1.3269043e+08
+820000 1.2847257e+08
+821000 1.259377e+08
+822000 1.2613106e+08
+823000 1.2619019e+08
+824000 1.2684679e+08
+825000 1.3182044e+08
+826000 1.305058e+08
+827000 1.2647343e+08
+828000 1.270318e+08
+829000 1.2665534e+08
+830000 1.2824535e+08
+831000 1.4167595e+08
+832000 1.3924813e+08
+833000 1.3508487e+08
+834000 1.3072181e+08
+835000 1.2862849e+08
+836000 1.2860608e+08
+837000 1.3025475e+08
+838000 1.2874079e+08
+839000 1.2952042e+08
+840000 1.3082576e+08
+841000 1.3111567e+08
+842000 1.2943268e+08
+843000 1.3074541e+08
+844000 1.3185e+08
+845000 1.3298917e+08
+846000 1.3233471e+08
+847000 1.3892865e+08
+848000 1.4067054e+08
+849000 1.4006138e+08
+850000 1.4101529e+08
+851000 1.4002275e+08
+852000 1.3974619e+08
+853000 1.3446903e+08
+854000 1.3630056e+08
+855000 1.3442492e+08
+856000 1.3586831e+08
+857000 1.3881755e+08
+858000 1.3941884e+08
+859000 1.3950777e+08
+860000 1.3956451e+08
+861000 1.4070511e+08
+862000 1.4047647e+08
+863000 1.3424897e+08
+864000 1.42694e+08
+865000 1.4421391e+08
+866000 1.4224076e+08
+867000 1.4417958e+08
+868000 1.4268374e+08
+869000 1.4190841e+08
+870000 1.3497281e+08
+871000 1.3646889e+08
+872000 1.3547873e+08
+873000 1.3621402e+08
+874000 1.4116168e+08
+875000 1.4405441e+08
+876000 1.4253402e+08
+877000 1.4374471e+08
+878000 1.4283347e+08
+879000 1.4327168e+08
+880000 1.4330912e+08
+881000 1.4151478e+08
+882000 1.4300442e+08
+883000 1.520052e+08
+884000 1.4912271e+08
+885000 1.4460421e+08
+886000 1.4659047e+08
+887000 1.4672661e+08
+888000 1.4040232e+08
+889000 1.4062643e+08
+890000 1.4801598e+08
+891000 1.4117289e+08
+892000 1.3862658e+08
+893000 1.4035487e+08
+894000 1.3918138e+08
+895000 1.3806629e+08
+896000 1.3954306e+08
+897000 1.3969207e+08
+898000 1.3951635e+08
+899000 1.4012098e+08
+900000 1.3963842e+08
+901000 1.4009094e+08
+902000 1.402173e+08
+903000 1.4093208e+08
+904000 1.4096642e+08
+905000 1.4054656e+08
+906000 1.4065647e+08
+907000 1.4325213e+08
+908000 1.5026546e+08
+909000 1.4159942e+08
+910000 1.4148211e+08
+911000 1.5464044e+08
+912000 1.5420508e+08
+913000 1.47717e+08
+914000 1.4419842e+08
+915000 1.4156818e+08
+916000 1.4177513e+08
+917000 1.4200807e+08
+918000 1.4340711e+08
+919000 1.4175773e+08
+920000 1.4222503e+08
+921000 1.4402938e+08
+922000 1.4742589e+08
+923000 1.4395881e+08
+924000 1.4432716e+08
+925000 1.4622378e+08
+926000 1.4480257e+08
+927000 1.4569664e+08
+928000 1.458602e+08
+929000 1.4579391e+08
+930000 1.4542508e+08
+931000 1.4528775e+08
+932000 1.4673138e+08
+933000 1.4595866e+08
+934000 1.4581847e+08
+935000 1.4749074e+08
+936000 1.4643478e+08
+937000 1.4660788e+08
+938000 1.4663053e+08
+939000 1.485126e+08
+940000 1.4835882e+08
+941000 1.4762688e+08
+942000 1.4893246e+08
+943000 1.4877653e+08
+944000 1.4735055e+08
+945000 1.4843059e+08
+946000 1.5057445e+08
+947000 1.4877224e+08
+948000 1.4848137e+08
+949000 1.5086341e+08
+950000 1.4919901e+08
+951000 1.4904881e+08
+952000 1.5123701e+08
+953000 1.5072441e+08
+954000 1.5021253e+08
+955000 1.5339375e+08
+956000 1.5057707e+08
+957000 1.5083957e+08
+958000 1.539011e+08
+959000 1.5398979e+08
+960000 1.5176415e+08
+961000 1.5338111e+08
+962000 1.5385699e+08
+963000 1.5154672e+08
+964000 1.5372801e+08
+965000 1.5412641e+08
+966000 1.609838e+08
+967000 1.5277505e+08
+968000 1.5502429e+08
+969000 1.6090369e+08
+970000 1.6335607e+08
+971000 1.6276741e+08
+972000 1.6174793e+08
+973000 1.6607523e+08
+974000 1.5374351e+08
+975000 1.5529108e+08
+976000 1.5390444e+08
+977000 1.5440583e+08
+978000 1.5638185e+08
+979000 1.5450931e+08
+980000 1.5486765e+08
+981000 1.5544605e+08
+982000 1.5651274e+08
+983000 1.5492201e+08
+984000 1.5881681e+08
+985000 1.5599132e+08
+986000 1.5803957e+08
+987000 1.6091728e+08
+988000 1.5711832e+08
+989000 1.5960407e+08
+990000 1.5798879e+08
+991000 1.6114473e+08
+992000 1.5902233e+08
+993000 1.6024494e+08
+994000 1.6096783e+08
+995000 1.6095448e+08
+996000 1.6148424e+08
+997000 1.6008902e+08
+998000 1.6114283e+08
+999000 1.5942287e+08
+&
+@target G0.S3
+@type xy
+1000 97366095
+2000 93128443
+3000 88340759
+4000 93798876
+5000 94242573
+6000 96221924
+7000 1.2945056e+08
+8000 1.5433693e+08
+9000 1.1011219e+08
+10000 1.1815429e+08
+11000 97981691
+12000 1.0041952e+08
+13000 1.1511254e+08
+14000 1.2573647e+08
+15000 1.1104488e+08
+16000 1.108427e+08
+17000 1.1036658e+08
+18000 1.009295e+08
+19000 1.127665e+08
+20000 95939398
+21000 95827341
+22000 1.0908222e+08
+23000 1.0232711e+08
+24000 1.0556936e+08
+25000 93292713
+26000 95921993
+27000 1.0403991e+08
+28000 1.0356045e+08
+29000 1.0894775e+08
+30000 97680569
+31000 1.0739589e+08
+32000 1.018188e+08
+33000 93513250
+34000 1.1550951e+08
+35000 1.0592675e+08
+36000 91856718
+37000 96869230
+38000 92598677
+39000 91280222
+40000 98825455
+41000 94468117
+42000 96643209
+43000 94321489
+44000 1.0906506e+08
+45000 1.2040925e+08
+46000 1.2386656e+08
+47000 97246647
+48000 1.2840676e+08
+49000 1.1266637e+08
+50000 92869997
+51000 96066236
+52000 1.0091639e+08
+53000 1.0741735e+08
+54000 1.3326311e+08
+55000 1.3088107e+08
+56000 1.3514853e+08
+57000 1.368289e+08
+58000 1.3858151e+08
+59000 1.3927436e+08
+60000 1.4362502e+08
+61000 1.4464831e+08
+62000 1.4886212e+08
+63000 1.4952397e+08
+64000 1.5536332e+08
+65000 1.5696311e+08
+66000 1.5811968e+08
+67000 1.5843105e+08
+68000 1.6546249e+08
+69000 1.5708494e+08
+70000 1.6559243e+08
+71000 1.6621041e+08
+72000 1.7054892e+08
+73000 1.7506313e+08
+74000 1.7990637e+08
+75000 1.815877e+08
+76000 1.8193102e+08
+77000 1.845777e+08
+78000 1.8409443e+08
+79000 1.9142175e+08
+80000 1.9400024e+08
+81000 1.944766e+08
+82000 1.9702816e+08
+83000 2.0016408e+08
+84000 2.0457649e+08
+85000 2.0662332e+08
+86000 2.0886803e+08
+87000 2.1368623e+08
+88000 2.1584034e+08
+89000 2.2019649e+08
+90000 2.2506452e+08
+91000 2.2556138e+08
+92000 2.2722244e+08
+93000 2.3236823e+08
+94000 2.3446417e+08
+95000 2.3785877e+08
+96000 2.3856592e+08
+97000 2.4304008e+08
+98000 2.4389362e+08
+99000 2.5255346e+08
+100000 2.5134301e+08
+101000 2.518115e+08
+102000 2.5650477e+08
+103000 2.6117158e+08
+104000 2.605629e+08
+105000 2.6083779e+08
+106000 2.6309943e+08
+107000 2.6691222e+08
+108000 2.689383e+08
+109000 2.7246642e+08
+110000 2.7346301e+08
+111000 2.7801204e+08
+112000 2.7913022e+08
+113000 2.7985501e+08
+114000 2.853334e+08
+115000 2.8712392e+08
+116000 2.8829408e+08
+117000 2.9228258e+08
+118000 2.9209542e+08
+119000 2.9565716e+08
+120000 2.9705405e+08
+121000 2.986114e+08
+122000 3.0173826e+08
+123000 3.0296659e+08
+124000 3.0581856e+08
+125000 3.1023598e+08
+126000 3.1984854e+08
+127000 3.0519152e+08
+128000 3.122859e+08
+129000 3.137393e+08
+130000 3.1943893e+08
+131000 3.1503296e+08
+132000 3.3568573e+08
+133000 3.1866837e+08
+134000 3.2639813e+08
+135000 3.3055544e+08
+136000 3.2799554e+08
+137000 3.3326888e+08
+138000 3.3687758e+08
+139000 3.3871126e+08
+140000 3.4073925e+08
+141000 3.4245729e+08
+142000 3.4379721e+08
+143000 3.4557462e+08
+144000 3.4883213e+08
+145000 3.4976077e+08
+146000 3.4992695e+08
+147000 3.566072e+08
+148000 3.5816574e+08
+149000 3.5991406e+08
+150000 3.6544394e+08
+151000 3.617394e+08
+152000 3.6745429e+08
+153000 3.6830449e+08
+154000 3.6966681e+08
+155000 3.7222886e+08
+156000 3.7489486e+08
+157000 3.8363075e+08
+158000 3.7005711e+08
+159000 3.8363123e+08
+160000 3.8682699e+08
+161000 3.8285136e+08
+162000 3.873682e+08
+163000 3.8964009e+08
+164000 3.9519501e+08
+165000 3.938725e+08
+166000 3.954618e+08
+167000 4.0037918e+08
+168000 3.9922905e+08
+169000 4.0797925e+08
+170000 4.0458488e+08
+171000 4.0627003e+08
+172000 4.0708852e+08
+173000 4.105823e+08
+174000 4.158411e+08
+175000 4.1632676e+08
+176000 4.1772962e+08
+177000 4.191916e+08
+178000 4.2424512e+08
+179000 4.235909e+08
+180000 4.2690206e+08
+181000 4.3196321e+08
+182000 4.2030883e+08
+183000 4.5227838e+08
+184000 4.1362572e+08
+185000 4.3776679e+08
+186000 4.4144011e+08
+187000 4.4022679e+08
+188000 4.4275427e+08
+189000 4.4574046e+08
+190000 4.4928408e+08
+191000 4.5024753e+08
+192000 4.5204973e+08
+193000 4.5590997e+08
+194000 4.5533228e+08
+195000 4.7595e+08
+196000 4.4989467e+08
+197000 4.5906615e+08
+198000 4.6656179e+08
+199000 4.6778417e+08
+200000 4.6860456e+08
+201000 4.7004294e+08
+202000 4.7918892e+08
+203000 4.8365951e+08
+204000 4.9136043e+08
+205000 4.6815562e+08
+206000 4.8539758e+08
+207000 4.8281193e+08
+208000 4.8485851e+08
+209000 4.8905873e+08
+210000 4.9092746e+08
+211000 4.9399042e+08
+212000 4.9269176e+08
+213000 4.9754262e+08
+214000 4.9730587e+08
+215000 5.0005007e+08
+216000 4.994576e+08
+217000 5.0267506e+08
+218000 5.0473595e+08
+219000 5.0792575e+08
+220000 5.1063323e+08
+221000 5.1102591e+08
+222000 5.1462507e+08
+223000 5.1896381e+08
+224000 5.1955891e+08
+225000 5.2138615e+08
+226000 5.2135444e+08
+227000 5.2710462e+08
+228000 5.2681112e+08
+229000 5.3002119e+08
+230000 5.3205729e+08
+231000 5.3578854e+08
+232000 5.3603101e+08
+233000 5.3779578e+08
+234000 5.3951573e+08
+235000 5.4066968e+08
+236000 5.4271364e+08
+237000 5.4434204e+08
+238000 5.499649e+08
+239000 5.5189252e+08
+240000 5.5388188e+08
+241000 5.5871034e+08
+242000 5.5214596e+08
+243000 5.5963564e+08
+244000 5.6120014e+08
+245000 5.6434679e+08
+246000 5.6897545e+08
+247000 5.6795311e+08
+248000 5.7281709e+08
+249000 5.7205939e+08
+250000 5.7604456e+08
+251000 5.7666659e+08
+252000 5.7942271e+08
+253000 5.7636476e+08
+254000 5.8417606e+08
+255000 5.8423162e+08
+256000 5.8354855e+08
+257000 5.9015036e+08
+258000 5.9733462e+08
+259000 5.9302211e+08
+260000 5.9926867e+08
+261000 5.990088e+08
+262000 6.0785842e+08
+263000 6.0127306e+08
+264000 5.9141064e+08
+265000 6.1851335e+08
+266000 6.0820365e+08
+267000 6.0996318e+08
+268000 6.1036062e+08
+269000 6.1481476e+08
+270000 6.1659288e+08
+271000 6.1818409e+08
+272000 6.2055945e+08
+273000 6.2432122e+08
+274000 6.2483406e+08
+275000 6.2969637e+08
+276000 6.3115168e+08
+277000 6.3198996e+08
+278000 6.3421249e+08
+279000 6.3922739e+08
+280000 6.3796163e+08
+281000 6.4060211e+08
+282000 6.4288712e+08
+283000 6.4690161e+08
+284000 6.4781857e+08
+285000 6.5118217e+08
+286000 6.5675187e+08
+287000 6.500895e+08
+288000 6.5405154e+08
+289000 6.6137981e+08
+290000 6.5602756e+08
+291000 6.6297054e+08
+292000 6.6216445e+08
+293000 6.6832495e+08
+294000 6.6474652e+08
+295000 6.6939235e+08
+296000 6.730783e+08
+297000 6.7570519e+08
+298000 6.7274094e+08
+299000 6.8235707e+08
+300000 6.7523098e+08
+301000 6.8095088e+08
+302000 6.840198e+08
+303000 6.86234e+08
+304000 6.9081807e+08
+305000 6.9061875e+08
+306000 6.9141769e+08
+307000 6.9690609e+08
+308000 6.9463921e+08
+309000 7.0015144e+08
+310000 7.0289874e+08
+311000 7.0264769e+08
+312000 7.036438e+08
+313000 7.0910239e+08
+314000 7.0891786e+08
+315000 7.1183252e+08
+316000 7.1421742e+08
+317000 7.1576905e+08
+318000 7.1854186e+08
+319000 7.2081327e+08
+320000 7.2091293e+08
+321000 7.2607565e+08
+322000 7.242415e+08
+323000 7.2785425e+08
+324000 7.3145342e+08
+325000 7.328105e+08
+326000 7.373817e+08
+327000 7.3534465e+08
+328000 7.4186301e+08
+329000 7.4253321e+08
+330000 7.4431539e+08
+331000 7.4653554e+08
+332000 7.4827766e+08
+333000 7.5343657e+08
+334000 7.5218964e+08
+335000 7.5407124e+08
+336000 7.5812674e+08
+337000 7.5859761e+08
+338000 7.6097465e+08
+339000 7.6190495e+08
+340000 7.6640201e+08
+341000 7.66716e+08
+342000 7.6821947e+08
+343000 7.5829148e+08
+344000 7.8632474e+08
+345000 7.7449179e+08
+346000 7.8002453e+08
+347000 7.7892685e+08
+348000 7.8161788e+08
+349000 7.8403997e+08
+350000 7.872088e+08
+351000 7.8707242e+08
+352000 7.8978157e+08
+353000 7.9259419e+08
+354000 7.9379153e+08
+355000 7.9864812e+08
+356000 7.9684854e+08
+357000 8.0540466e+08
+358000 8.0512881e+08
+359000 8.0737782e+08
+360000 8.1075501e+08
+361000 8.1072736e+08
+362000 8.1235051e+08
+363000 8.1446934e+08
+364000 8.1698632e+08
+365000 8.2059479e+08
+366000 8.2168818e+08
+367000 8.2376504e+08
+368000 8.2614136e+08
+369000 8.176477e+08
+370000 8.3824015e+08
+371000 8.3180857e+08
+372000 8.357091e+08
+373000 8.3536863e+08
+374000 8.4018254e+08
+375000 8.3936024e+08
+376000 8.4523535e+08
+377000 8.4613514e+08
+378000 8.4376597e+08
+379000 8.5125542e+08
+380000 8.4981441e+08
+381000 8.5238504e+08
+382000 8.5510302e+08
+383000 8.5821295e+08
+384000 8.5953474e+08
+385000 8.6201525e+08
+386000 8.6109924e+08
+387000 8.6635041e+08
+388000 8.6849523e+08
+389000 8.6880279e+08
+390000 8.7008071e+08
+391000 8.7369013e+08
+392000 8.7424421e+08
+393000 8.7952518e+08
+394000 8.7859178e+08
+395000 8.8270164e+08
+396000 8.81006e+08
+397000 8.8820696e+08
+398000 8.8903117e+08
+399000 8.9149404e+08
+400000 8.9207506e+08
+401000 8.9611387e+08
+402000 8.971808e+08
+403000 8.9847255e+08
+404000 9.0268421e+08
+405000 9.0193272e+08
+406000 9.0863395e+08
+407000 9.0823221e+08
+408000 9.0993738e+08
+409000 9.1384768e+08
+410000 9.134016e+08
+411000 9.1734338e+08
+412000 9.1632271e+08
+413000 9.2093492e+08
+414000 9.2243719e+08
+415000 9.2312169e+08
+416000 9.2482924e+08
+417000 9.3079853e+08
+418000 9.2933488e+08
+419000 9.3482828e+08
+420000 9.3425345e+08
+421000 9.3834066e+08
+422000 9.3773055e+08
+423000 9.4133592e+08
+424000 9.4582081e+08
+425000 9.4803262e+08
+426000 9.4761753e+08
+427000 9.5108438e+08
+428000 9.5085239e+08
+429000 9.5606637e+08
+430000 9.5811915e+08
+431000 9.5848942e+08
+432000 9.624033e+08
+433000 9.5980644e+08
+434000 9.6089268e+08
+435000 9.6737933e+08
+436000 9.6809721e+08
+437000 9.7409701e+08
+438000 9.7478247e+08
+439000 1.2526448e+09
+440000 3.0119562e+09
+441000 2.3155048e+09
+442000 3.1493118e+09
+443000 1.4168241e+09
+444000 2.7088759e+09
+445000 1.7746997e+09
+446000 2.9367452e+09
+447000 1.7220807e+09
+448000 2.2395654e+09
+449000 3.0944757e+09
+450000 2.267863e+09
+451000 2.736661e+09
+452000 2.3615906e+09
+453000 2.4812591e+09
+454000 2.4822049e+09
+455000 1.4372561e+09
+456000 3.6033187e+09
+457000 1.5259142e+09
+458000 3.5116804e+09
+459000 2.2367628e+09
+460000 2.6005082e+09
+461000 1.5210981e+09
+462000 2.3247027e+09
+463000 2.9007289e+09
+464000 2.9574273e+09
+465000 1.7793663e+09
+466000 2.0479302e+09
+467000 2.5044169e+09
+468000 1.7975347e+09
+469000 2.9132521e+09
+470000 2.0416791e+09
+471000 2.1116979e+09
+472000 2.0805926e+09
+473000 3.0371499e+09
+474000 1.7207572e+09
+475000 3.54127e+09
+476000 1.584275e+09
+477000 3.5395045e+09
+478000 2.2177212e+09
+479000 2.7804785e+09
+480000 2.6583636e+09
+481000 3.0167384e+09
+482000 2.3252864e+09
+483000 3.4252017e+09
+484000 1.8608072e+09
+485000 3.3997204e+09
+486000 2.3971267e+09
+487000 3.5724092e+09
+488000 1.9694607e+09
+489000 3.7853518e+09
+490000 2.5273452e+09
+491000 2.9567893e+09
+492000 3.5411587e+09
+493000 1.8521478e+09
+494000 3.6921756e+09
+495000 2.301877e+09
+496000 2.6946359e+09
+497000 3.0235343e+09
+498000 2.7506258e+09
+499000 2.3515851e+09
+500000 2.395524e+09
+501000 2.8400829e+09
+502000 2.5708256e+09
+503000 2.8470645e+09
+504000 3.2910144e+09
+505000 2.0546336e+09
+506000 3.6693749e+09
+507000 2.4772272e+09
+508000 3.4152033e+09
+509000 2.209059e+09
+510000 3.7694056e+09
+511000 2.6159322e+09
+512000 3.1648102e+09
+513000 2.34513e+09
+514000 3.2990146e+09
+515000 2.6149523e+09
+516000 2.3211162e+09
+517000 2.6731365e+09
+518000 3.5567045e+09
+519000 2.1038189e+09
+520000 4.3353744e+09
+521000 1.8221612e+09
+522000 3.1311634e+09
+523000 3.916873e+09
+524000 2.5675545e+09
+525000 2.2042298e+09
+526000 2.3225515e+09
+527000 4.2854996e+09
+528000 2.4108348e+09
+529000 3.3936892e+09
+530000 2.7525113e+09
+531000 2.4710054e+09
+532000 3.656949e+09
+533000 2.8223481e+09
+534000 3.3172443e+09
+535000 2.8620207e+09
+536000 3.0042477e+09
+537000 3.9069319e+09
+538000 2.4536715e+09
+539000 3.5410204e+09
+540000 2.3427796e+09
+541000 2.4124563e+09
+542000 4.2877212e+09
+543000 2.592185e+09
+544000 3.1943696e+09
+545000 3.3037734e+09
+546000 2.1142282e+09
+547000 2.6020575e+09
+548000 3.4474432e+09
+549000 2.851506e+09
+550000 3.0479307e+09
+551000 3.2068565e+09
+552000 2.656014e+09
+553000 3.3708031e+09
+554000 2.3539491e+09
+555000 3.5451219e+09
+556000 3.470638e+09
+557000 2.5599177e+09
+558000 3.6807709e+09
+559000 2.9474399e+09
+560000 2.3672795e+09
+561000 3.755935e+09
+562000 2.1761873e+09
+563000 3.8814287e+09
+564000 2.3209958e+09
+565000 3.3520525e+09
+566000 3.2062905e+09
+567000 4.888741e+09
+568000 1.7938251e+09
+569000 3.3788035e+09
+570000 3.8047743e+09
+571000 3.2297611e+09
+572000 3.4566553e+09
+573000 3.3514733e+09
+574000 3.0479465e+09
+575000 4.098664e+09
+576000 2.1298811e+09
+577000 3.2085602e+09
+578000 2.9510806e+09
+579000 2.3122976e+09
+580000 3.8702207e+09
+581000 2.2641759e+09
+582000 4.121922e+09
+583000 3.3084059e+09
+584000 4.1836445e+09
+585000 3.0457911e+09
+586000 3.4193585e+09
+587000 2.9020283e+09
+588000 3.7915463e+09
+589000 2.9523451e+09
+590000 2.7292366e+09
+591000 2.4245389e+09
+592000 4.1777771e+09
+593000 2.8469441e+09
+594000 2.976495e+09
+595000 2.9169273e+09
+596000 3.0166314e+09
+597000 4.4318039e+09
+598000 2.0428264e+09
+599000 3.9550874e+09
+600000 2.5525382e+09
+601000 3.6221426e+09
+602000 3.9308589e+09
+603000 2.2830858e+09
+604000 3.59565e+09
+605000 3.5843487e+09
+606000 3.628783e+09
+607000 2.2946887e+09
+608000 3.8081276e+09
+609000 2.0935235e+09
+610000 3.7209818e+09
+611000 3.5913153e+09
+612000 3.3806744e+09
+613000 3.625809e+09
+614000 4.419934e+09
+615000 1.7957015e+09
+616000 4.399987e+09
+617000 3.2128592e+09
+618000 2.3637006e+09
+619000 3.851037e+09
+620000 3.323405e+09
+621000 5.0695539e+09
+622000 2.6003036e+09
+623000 4.6176269e+09
+624000 2.5235548e+09
+625000 3.5538116e+09
+626000 3.5857992e+09
+627000 3.6037841e+09
+628000 2.7390842e+09
+629000 4.0775068e+09
+630000 3.5768628e+09
+631000 2.1366296e+09
+632000 4.167037e+09
+633000 3.567862e+09
+634000 3.8923986e+09
+635000 3.4598167e+09
+636000 3.3505557e+09
+637000 2.9840503e+09
+638000 3.1703293e+09
+639000 3.0546913e+09
+640000 3.8700242e+09
+641000 2.491271e+09
+642000 4.7915711e+09
+643000 2.3362489e+09
+644000 4.0667732e+09
+645000 3.7918668e+09
+646000 2.7601838e+09
+647000 3.7478123e+09
+648000 3.0275836e+09
+649000 4.3271446e+09
+650000 3.4343829e+09
+651000 3.0989361e+09
+652000 3.7862852e+09
+653000 4.0096443e+09
+654000 3.1053343e+09
+655000 2.5415151e+09
+656000 4.4565675e+09
+657000 1.3591231e+10
+658000 1.9518737e+10
+659000 1.939184e+10
+660000 1.8652292e+10
+661000 1.846197e+10
+662000 1.8398774e+10
+663000 1.9091032e+10
+664000 1.9039977e+10
+665000 1.9856953e+10
+666000 1.9860368e+10
+667000 1.9997901e+10
+668000 2.0024464e+10
+669000 1.9836962e+10
+670000 2.0022554e+10
+671000 1.9953187e+10
+672000 2.0018843e+10
+673000 2.0230046e+10
+674000 2.0018749e+10
+675000 2.0126419e+10
+676000 2.0042086e+10
+677000 2.0228005e+10
+678000 2.0969148e+10
+679000 2.0274985e+10
+680000 2.0347943e+10
+681000 2.0420298e+10
+682000 2.042632e+10
+683000 2.0445068e+10
+684000 1.9898659e+10
+685000 2.0833233e+10
+686000 2.0502935e+10
+687000 2.0442976e+10
+688000 2.0462479e+10
+689000 2.0640143e+10
+690000 2.0647866e+10
+691000 2.0563709e+10
+692000 2.0889965e+10
+693000 2.05289e+10
+694000 2.0628204e+10
+695000 2.0863894e+10
+696000 2.1132191e+10
+697000 2.0869183e+10
+698000 2.0818609e+10
+699000 2.0752014e+10
+700000 2.0876688e+10
+701000 2.0943156e+10
+702000 2.0926426e+10
+703000 2.0989994e+10
+704000 2.0800996e+10
+705000 2.1125214e+10
+706000 2.1038008e+10
+707000 2.1449725e+10
+708000 2.1237226e+10
+709000 2.1133431e+10
+710000 2.0913389e+10
+711000 2.1647958e+10
+712000 2.1303444e+10
+713000 2.1232723e+10
+714000 2.1165158e+10
+715000 2.1311998e+10
+716000 2.1531698e+10
+717000 2.1297216e+10
+718000 2.137876e+10
+719000 2.1445896e+10
+720000 2.1378659e+10
+721000 2.196213e+10
+722000 2.1611849e+10
+723000 2.1539945e+10
+724000 2.1697504e+10
+725000 2.1576691e+10
+726000 2.1672589e+10
+727000 2.1671243e+10
+728000 2.1658092e+10
+729000 2.1660624e+10
+730000 2.1892928e+10
+731000 2.1725377e+10
+732000 2.1782074e+10
+733000 2.1879887e+10
+734000 2.1776789e+10
+735000 2.1943871e+10
+736000 2.1805436e+10
+737000 2.2640462e+10
+738000 2.1948265e+10
+739000 2.2022675e+10
+740000 2.2086668e+10
+741000 2.2075914e+10
+742000 2.2110951e+10
+743000 2.2035059e+10
+744000 2.2164353e+10
+745000 2.2379327e+10
+746000 2.205233e+10
+747000 2.2194935e+10
+748000 2.2317335e+10
+749000 2.2519769e+10
+750000 2.521542e+10
+751000 2.5303204e+10
+752000 2.5301825e+10
+753000 2.5213168e+10
+754000 2.5220025e+10
+755000 2.5332478e+10
+756000 2.5398787e+10
+757000 2.5247543e+10
+758000 2.5531334e+10
+759000 2.5439054e+10
+760000 2.5652463e+10
+761000 2.6263876e+10
+762000 2.5074253e+10
+763000 2.5886504e+10
+764000 2.5729212e+10
+765000 2.5928521e+10
+766000 2.5600369e+10
+767000 2.5623424e+10
+768000 2.5602964e+10
+769000 2.5743021e+10
+770000 2.5809244e+10
+771000 2.5911803e+10
+772000 2.5806754e+10
+773000 2.5952348e+10
+774000 2.5964095e+10
+775000 2.5988109e+10
+776000 2.6055495e+10
+777000 2.6129076e+10
+778000 2.5939964e+10
+779000 2.6097058e+10
+780000 2.6163859e+10
+781000 2.6019899e+10
+782000 2.6181874e+10
+783000 2.6233784e+10
+784000 2.6448837e+10
+785000 2.6209248e+10
+786000 2.6444487e+10
+787000 2.6076045e+10
+788000 1.736102e+10
+789000 2.6801377e+10
+790000 2.5841374e+10
+791000 2.5444964e+10
+792000 2.5301484e+10
+793000 2.4824846e+10
+794000 2.4764018e+10
+795000 2.4715225e+10
+796000 2.4891938e+10
+797000 2.449787e+10
+798000 2.4441775e+10
+799000 2.4757781e+10
+800000 2.4384848e+10
+801000 2.4724441e+10
+802000 2.4654281e+10
+803000 2.4616679e+10
+804000 2.4821017e+10
+805000 2.4737626e+10
+806000 2.4651287e+10
+807000 2.4914292e+10
+808000 2.4479002e+10
+809000 2.4646211e+10
+810000 2.4920764e+10
+811000 2.4971048e+10
+812000 2.4834477e+10
+813000 2.5081619e+10
+814000 2.4547236e+10
+815000 2.5521685e+10
+816000 2.5104439e+10
+817000 2.5461107e+10
+818000 2.5060897e+10
+819000 2.5225052e+10
+820000 2.5214883e+10
+821000 2.5041988e+10
+822000 2.5236991e+10
+823000 2.5131024e+10
+824000 2.5637294e+10
+825000 2.5286915e+10
+826000 2.5299616e+10
+827000 2.5287546e+10
+828000 2.5338011e+10
+829000 2.5582193e+10
+830000 2.5278833e+10
+831000 2.5451269e+10
+832000 2.5961949e+10
+833000 2.56796e+10
+834000 2.5716579e+10
+835000 2.5742965e+10
+836000 2.5518164e+10
+837000 2.5687734e+10
+838000 2.5472569e+10
+839000 2.5642644e+10
+840000 2.5118282e+10
+841000 2.6322851e+10
+842000 2.5717587e+10
+843000 2.5970708e+10
+844000 2.6032288e+10
+845000 2.5886166e+10
+846000 2.6516388e+10
+847000 2.6134521e+10
+848000 2.6023503e+10
+849000 2.6015613e+10
+850000 2.6117398e+10
+851000 2.6023884e+10
+852000 2.6217448e+10
+853000 2.5992854e+10
+854000 2.6170789e+10
+855000 2.6372511e+10
+856000 2.6160183e+10
+857000 2.6299344e+10
+858000 2.6262793e+10
+859000 2.6382623e+10
+860000 2.6374698e+10
+861000 2.6339956e+10
+862000 2.6510172e+10
+863000 2.6681854e+10
+864000 2.6428634e+10
+865000 2.6532878e+10
+866000 2.5886871e+10
+867000 2.7716816e+10
+868000 2.6372539e+10
+869000 2.6659576e+10
+870000 2.6657821e+10
+871000 2.6921485e+10
+872000 2.6523696e+10
+873000 2.6858748e+10
+874000 2.6964718e+10
+875000 2.6747749e+10
+876000 2.6985618e+10
+877000 2.7018508e+10
+878000 2.7006194e+10
+879000 2.6902272e+10
+880000 2.7129567e+10
+881000 2.6920769e+10
+882000 2.7044125e+10
+883000 2.6906739e+10
+884000 2.6924325e+10
+885000 2.7032659e+10
+886000 2.7136101e+10
+887000 2.7108835e+10
+888000 2.7521072e+10
+889000 2.7382662e+10
+890000 2.7344415e+10
+891000 2.8044754e+10
+892000 2.6786658e+10
+893000 2.7997305e+10
+894000 2.7601197e+10
+895000 2.735129e+10
+896000 2.7515666e+10
+897000 2.753297e+10
+898000 2.7296538e+10
+899000 2.7558068e+10
+900000 2.7869371e+10
+901000 2.7660467e+10
+902000 2.7661508e+10
+903000 2.7767518e+10
+904000 2.7866057e+10
+905000 2.7612288e+10
+906000 2.7962245e+10
+907000 2.7822976e+10
+908000 2.7990776e+10
+909000 2.8068082e+10
+910000 2.785321e+10
+911000 2.7958509e+10
+912000 2.8031595e+10
+913000 2.7813284e+10
+914000 2.7963466e+10
+915000 2.8009991e+10
+916000 2.8069847e+10
+917000 2.7978623e+10
+918000 2.7330394e+10
+919000 1.8879813e+10
+920000 2.8526785e+10
+921000 2.9259012e+10
+922000 2.803622e+10
+923000 2.7884916e+10
+924000 2.8152908e+10
+925000 2.7948027e+10
+926000 2.7788466e+10
+927000 2.7788618e+10
+928000 2.7699137e+10
+929000 2.784373e+10
+930000 2.8244386e+10
+931000 2.8042825e+10
+932000 2.8448341e+10
+933000 2.8803507e+10
+934000 2.8581441e+10
+935000 2.8776653e+10
+936000 2.8537135e+10
+937000 2.8539948e+10
+938000 2.8685051e+10
+939000 2.8550807e+10
+940000 2.8587017e+10
+941000 2.8612118e+10
+942000 2.8383002e+10
+943000 2.8378097e+10
+944000 2.7939209e+10
+945000 2.9157846e+10
+946000 2.8473176e+10
+947000 2.8963672e+10
+948000 2.901655e+10
+949000 2.8967142e+10
+950000 2.9078544e+10
+951000 2.900017e+10
+952000 2.8736076e+10
+953000 2.871441e+10
+954000 2.9085063e+10
+955000 2.9080721e+10
+956000 2.9276124e+10
+957000 2.9308367e+10
+958000 2.8860391e+10
+959000 2.9064689e+10
+960000 2.8904521e+10
+961000 2.9253724e+10
+962000 2.9528992e+10
+963000 2.9322921e+10
+964000 2.9884062e+10
+965000 2.9544891e+10
+966000 2.9402144e+10
+967000 2.94244e+10
+968000 2.9085858e+10
+969000 2.9205812e+10
+970000 2.8793105e+10
+971000 2.970003e+10
+972000 2.948017e+10
+973000 2.9126919e+10
+974000 2.9453394e+10
+975000 2.9825517e+10
+976000 2.9852099e+10
+977000 3.009919e+10
+978000 3.0185833e+10
+979000 2.9833193e+10
+980000 3.0185123e+10
+981000 2.9970018e+10
+982000 2.9666234e+10
+983000 2.979713e+10
+984000 2.9803514e+10
+985000 2.9602605e+10
+986000 2.9807452e+10
+987000 2.9738475e+10
+988000 2.9447727e+10
+989000 2.9842865e+10
+990000 3.0085518e+10
+991000 2.9890757e+10
+992000 3.0504931e+10
+993000 3.0627625e+10
+994000 3.0688555e+10
+995000 3.1040084e+10
+996000 3.0140766e+10
+997000 3.0989555e+10
+998000 3.0182666e+10
+999000 3.009298e+10
+&
+@target G0.S4
+@type xy
+1000 46719240
+2000 30946998
+3000 34128526
+4000 27828068
+5000 38400429
+6000 39103213
+7000 33637637
+8000 42523235
+9000 37965138
+10000 39660499
+11000 83742499
+12000 63512258
+13000 46023555
+14000 40619178
+15000 31348688
+16000 41490359
+17000 41002170
+18000 38001738
+19000 30363811
+20000 63376961
+21000 32374464
+22000 29933820
+23000 36335075
+24000 48409901
+25000 39317008
+26000 47575420
+27000 34482817
+28000 43904404
+29000 51153639
+30000 53880777
+31000 58369575
+32000 59793542
+33000 63757704
+34000 63015907
+35000 64204207
+36000 66429108
+37000 66801708
+38000 68791908
+39000 69678308
+40000 70920908
+41000 73011509
+42000 74392608
+43000 75531909
+44000 78815709
+45000 77749909
+46000 80188110
+47000 81760209
+48000 84035310
+49000 84902210
+50000 87027010
+51000 87647310
+52000 91258311
+53000 90926210
+54000 96082511
+55000 96362211
+56000 95587311
+57000 98494811
+58000 98762411
+59000 1.0118691e+08
+60000 1.0290371e+08
+61000 1.0302001e+08
+62000 1.0506721e+08
+63000 1.0683541e+08
+64000 1.0889911e+08
+65000 1.1144091e+08
+66000 1.1416291e+08
+67000 1.1382291e+08
+68000 1.1695891e+08
+69000 1.1881031e+08
+70000 1.2038171e+08
+71000 1.2224091e+08
+72000 1.2460961e+08
+73000 1.2708362e+08
+74000 1.2780571e+08
+75000 1.2989641e+08
+76000 1.3140442e+08
+77000 1.3389932e+08
+78000 1.3584402e+08
+79000 1.3975382e+08
+80000 1.3800362e+08
+81000 1.4060132e+08
+82000 1.4258572e+08
+83000 1.4382772e+08
+84000 1.4598952e+08
+85000 1.4904432e+08
+86000 1.4933652e+08
+87000 1.5370042e+08
+88000 1.5493862e+08
+89000 1.5541812e+08
+90000 1.6300452e+08
+91000 1.6242949e+08
+92000 1.6240969e+08
+93000 1.664602e+08
+94000 1.6960102e+08
+95000 1.7045242e+08
+96000 1.6914152e+08
+97000 1.6994602e+08
+98000 1.7032762e+08
+99000 1.7481464e+08
+100000 1.7736025e+08
+101000 1.7815415e+08
+102000 1.8081526e+08
+103000 1.8186736e+08
+104000 1.8286546e+08
+105000 1.8441967e+08
+106000 1.8621598e+08
+107000 1.8764778e+08
+108000 1.8957619e+08
+109000 1.91552e+08
+110000 1.9476521e+08
+111000 1.9517081e+08
+112000 1.9610041e+08
+113000 1.9913272e+08
+114000 1.9920492e+08
+115000 2.0181453e+08
+116000 2.0303984e+08
+117000 2.0591015e+08
+118000 2.0860536e+08
+119000 2.0854936e+08
+120000 2.1219567e+08
+121000 2.1130247e+08
+122000 2.1136877e+08
+123000 2.1470428e+08
+124000 2.1822219e+08
+125000 2.1760503e+08
+126000 2.1960911e+08
+127000 2.1403012e+08
+128000 2.2797412e+08
+129000 2.2235362e+08
+130000 2.2579422e+08
+131000 2.2464102e+08
+132000 2.2906063e+08
+133000 2.3131527e+08
+134000 2.3184397e+08
+135000 2.3838808e+08
+136000 2.3643437e+08
+137000 2.1446426e+08
+138000 2.3731837e+08
+139000 2.3807747e+08
+140000 2.4077728e+08
+141000 2.4392858e+08
+142000 2.4420388e+08
+143000 2.4699788e+08
+144000 2.4875528e+08
+145000 2.4979348e+08
+146000 2.5102008e+08
+147000 2.5279098e+08
+148000 2.5385368e+08
+149000 2.5616419e+08
+150000 2.5833879e+08
+151000 2.6000929e+08
+152000 2.5740889e+08
+153000 2.6142419e+08
+154000 2.6373239e+08
+155000 2.6558469e+08
+156000 2.6536539e+08
+157000 2.681376e+08
+158000 2.702249e+08
+159000 2.707161e+08
+160000 2.737962e+08
+161000 2.752943e+08
+162000 2.759914e+08
+163000 2.7697163e+08
+164000 2.8071346e+08
+165000 2.8181746e+08
+166000 2.8232336e+08
+167000 2.8398536e+08
+168000 2.8497306e+08
+169000 2.8765907e+08
+170000 2.9041297e+08
+171000 2.9081497e+08
+172000 2.9291877e+08
+173000 2.9319957e+08
+174000 2.9576018e+08
+175000 2.9685568e+08
+176000 2.9889298e+08
+177000 2.9880898e+08
+178000 3.0176628e+08
+179000 3.0254208e+08
+180000 3.0616059e+08
+181000 3.0610539e+08
+182000 3.0850849e+08
+183000 3.0964969e+08
+184000 3.120497e+08
+185000 3.135704e+08
+186000 3.133277e+08
+187000 3.164054e+08
+188000 3.157895e+08
+189000 3.184736e+08
+190000 3.2110318e+08
+191000 3.2262876e+08
+192000 3.2336086e+08
+193000 3.2537926e+08
+194000 3.2729966e+08
+195000 3.2899196e+08
+196000 3.3118697e+08
+197000 3.3328877e+08
+198000 3.2604426e+08
+199000 3.4224018e+08
+200000 3.3730437e+08
+201000 3.3719067e+08
+202000 3.3980938e+08
+203000 3.4299478e+08
+204000 3.4410298e+08
+205000 3.4340948e+08
+206000 3.4519048e+08
+207000 3.4800668e+08
+208000 3.4957899e+08
+209000 3.5235269e+08
+210000 3.5233689e+08
+211000 3.5396669e+08
+212000 3.5604459e+08
+213000 3.564712e+08
+214000 3.5932794e+08
+215000 3.6160633e+08
+216000 3.6083483e+08
+217000 3.6397083e+08
+218000 3.6557433e+08
+219000 3.6706253e+08
+220000 3.6906444e+08
+221000 3.7166624e+08
+222000 3.7053024e+08
+223000 3.7199974e+08
+224000 3.7511304e+08
+225000 3.7562334e+08
+226000 3.7604694e+08
+227000 3.7891924e+08
+228000 3.8130554e+08
+229000 3.8306404e+08
+230000 3.8471275e+08
+231000 3.8519265e+08
+232000 3.8781805e+08
+233000 3.8922325e+08
+234000 3.9092485e+08
+235000 3.9176924e+08
+236000 3.9219641e+08
+237000 3.9547439e+08
+238000 3.9636558e+08
+239000 3.9931756e+08
+240000 4.0067854e+08
+241000 4.0231881e+08
+242000 4.0241401e+08
+243000 4.0317461e+08
+244000 4.0511581e+08
+245000 4.0603491e+08
+246000 4.0817131e+08
+247000 4.1197641e+08
+248000 4.1303061e+08
+249000 4.1345281e+08
+250000 4.1335771e+08
+251000 4.1822531e+08
+252000 4.1709351e+08
+253000 4.1983181e+08
+254000 4.2087581e+08
+255000 4.2361701e+08
+256000 4.2518691e+08
+257000 4.2743061e+08
+258000 4.2575261e+08
+259000 4.2962051e+08
+260000 4.3243572e+08
+261000 4.3474482e+08
+262000 4.3692052e+08
+263000 4.3331642e+08
+264000 4.3677482e+08
+265000 4.4010262e+08
+266000 4.4094242e+08
+267000 4.4152382e+08
+268000 4.4371892e+08
+269000 4.3280562e+08
+270000 4.6036522e+08
+271000 4.5016322e+08
+272000 4.4975022e+08
+273000 4.5200945e+08
+274000 4.5250602e+08
+275000 4.5580922e+08
+276000 4.5680482e+08
+277000 4.5836682e+08
+278000 4.6029662e+08
+279000 4.6259972e+08
+280000 4.6207352e+08
+281000 4.6288482e+08
+282000 4.6468612e+08
+283000 4.6899302e+08
+284000 4.6922242e+08
+285000 4.7017172e+08
+286000 4.7308522e+08
+287000 4.7182332e+08
+288000 4.7334292e+08
+289000 4.7985162e+08
+290000 4.7843616e+08
+291000 4.7741661e+08
+292000 4.7851681e+08
+293000 4.8464371e+08
+294000 4.8282551e+08
+295000 4.8905841e+08
+296000 4.8661521e+08
+297000 4.8818181e+08
+298000 4.9195901e+08
+299000 4.9248931e+08
+300000 4.9346631e+08
+301000 4.9334801e+08
+302000 4.9214591e+08
+303000 5.0651301e+08
+304000 5.0001081e+08
+305000 5.0320781e+08
+306000 5.0338863e+08
+307000 5.066549e+08
+308000 5.061304e+08
+309000 5.092848e+08
+310000 5.092136e+08
+311000 5.122252e+08
+312000 5.139156e+08
+313000 5.134622e+08
+314000 5.163584e+08
+315000 5.184997e+08
+316000 5.204964e+08
+317000 5.223866e+08
+318000 5.217275e+08
+319000 5.22241e+08
+320000 5.240061e+08
+321000 5.284831e+08
+322000 5.2894672e+08
+323000 5.3029522e+08
+324000 5.3237572e+08
+325000 5.3124722e+08
+326000 5.3294002e+08
+327000 5.3603962e+08
+328000 5.3873722e+08
+329000 5.4041172e+08
+330000 5.4209992e+08
+331000 5.4366202e+08
+332000 5.4307822e+08
+333000 5.4495342e+08
+334000 5.4561702e+08
+335000 5.4966482e+08
+336000 5.5205592e+08
+337000 5.5303137e+08
+338000 5.5108107e+08
+339000 5.5482977e+08
+340000 5.3711297e+08
+341000 5.7967588e+08
+342000 5.5920287e+08
+343000 5.6129327e+08
+344000 5.6443778e+08
+345000 5.6487728e+08
+346000 5.6733938e+08
+347000 5.6861408e+08
+348000 5.6986298e+08
+349000 5.7006188e+08
+350000 5.7396418e+08
+351000 5.7657843e+08
+352000 5.751019e+08
+353000 5.783676e+08
+354000 5.783934e+08
+355000 5.816993e+08
+356000 5.802853e+08
+357000 5.839308e+08
+358000 5.823452e+08
+359000 5.839145e+08
+360000 5.85016e+08
+361000 5.910445e+08
+362000 5.919328e+08
+363000 5.935077e+08
+364000 5.950349e+08
+365000 5.962353e+08
+366000 5.990819e+08
+367000 6.010031e+08
+368000 6.0141621e+08
+369000 6.041852e+08
+370000 6.040989e+08
+371000 6.063094e+08
+372000 6.081213e+08
+373000 5.99214e+08
+374000 6.2212141e+08
+375000 6.110904e+08
+376000 6.128682e+08
+377000 1.2381948e+09
+378000 1.6114457e+09
+379000 1.24974e+09
+380000 1.6744459e+09
+381000 1.2528906e+09
+382000 1.579579e+09
+383000 1.23419e+09
+384000 1.575402e+09
+385000 1.2365858e+09
+386000 1.5856681e+09
+387000 1.2343346e+09
+388000 1.608489e+09
+389000 1.3089901e+09
+390000 1.6511705e+09
+391000 1.3206677e+09
+392000 1.6251104e+09
+393000 1.3048926e+09
+394000 1.6156855e+09
+395000 1.3881713e+09
+396000 2.5501865e+09
+397000 2.4274937e+09
+398000 2.520997e+09
+399000 2.4799655e+09
+400000 2.4633825e+09
+401000 2.4442255e+09
+402000 2.4647814e+09
+403000 2.4779838e+09
+404000 2.5290757e+09
+405000 2.4901895e+09
+406000 2.5333595e+09
+407000 2.4222392e+09
+408000 2.4212612e+09
+409000 2.410434e+09
+410000 2.4199525e+09
+411000 2.4316054e+09
+412000 2.4080019e+09
+413000 2.4132315e+09
+414000 2.3918272e+09
+415000 2.5612587e+09
+416000 2.5890576e+09
+417000 2.4127437e+09
+418000 2.5441096e+09
+419000 2.6178786e+09
+420000 2.5341227e+09
+421000 2.4754031e+09
+422000 2.4756335e+09
+423000 2.5773214e+09
+424000 2.5317097e+09
+425000 2.470408e+09
+426000 2.6110443e+09
+427000 2.5753856e+09
+428000 2.6267733e+09
+429000 2.7663771e+09
+430000 2.5900504e+09
+431000 2.5373694e+09
+432000 2.5208866e+09
+433000 2.5518601e+09
+434000 2.5454689e+09
+435000 2.5904289e+09
+436000 2.5393294e+09
+437000 2.5659451e+09
+438000 2.6258945e+09
+439000 3.05664e+09
+440000 2.8214495e+09
+441000 2.7158275e+09
+442000 2.6563576e+09
+443000 2.786854e+09
+444000 2.713787e+09
+445000 3.0679819e+09
+446000 2.6255267e+09
+447000 2.6533697e+09
+448000 2.7235865e+09
+449000 2.6829901e+09
+450000 2.6263258e+09
+451000 2.6670345e+09
+452000 2.6297809e+09
+453000 2.6274121e+09
+454000 2.6393847e+09
+455000 2.664225e+09
+456000 2.6661587e+09
+457000 2.6767002e+09
+458000 2.673366e+09
+459000 2.6833606e+09
+460000 2.6947398e+09
+461000 2.6817083e+09
+462000 2.7222057e+09
+463000 2.7042629e+09
+464000 2.6714575e+09
+465000 2.7501146e+09
+466000 2.7150703e+09
+467000 2.7153671e+09
+468000 2.764131e+09
+469000 2.7228493e+09
+470000 2.7537628e+09
+471000 2.7481488e+09
+472000 2.7129066e+09
+473000 2.758927e+09
+474000 2.7220317e+09
+475000 2.7424751e+09
+476000 2.7247088e+09
+477000 2.6971137e+09
+478000 2.8051397e+09
+479000 2.7677951e+09
+480000 2.7330397e+09
+481000 2.7834537e+09
+482000 2.7457457e+09
+483000 2.7905924e+09
+484000 2.7556711e+09
+485000 2.81147e+09
+486000 2.7563894e+09
+487000 2.8105513e+09
+488000 2.7430578e+09
+489000 2.8003306e+09
+490000 2.889527e+09
+491000 2.8574182e+09
+492000 2.8389458e+09
+493000 2.8394561e+09
+494000 2.8384121e+09
+495000 2.863074e+09
+496000 2.8605456e+09
+497000 2.8720879e+09
+498000 2.8862515e+09
+499000 2.8660221e+09
+500000 2.8854338e+09
+501000 3.0767624e+09
+502000 2.9070828e+09
+503000 2.9152688e+09
+504000 2.869136e+09
+505000 2.921245e+09
+506000 2.9033072e+09
+507000 2.8865557e+09
+508000 2.9119751e+09
+509000 2.9091348e+09
+510000 2.942686e+09
+511000 2.9321295e+09
+512000 2.9221905e+09
+513000 2.9414655e+09
+514000 2.9398973e+09
+515000 2.9819347e+09
+516000 2.9424447e+09
+517000 2.9657552e+09
+518000 2.9766509e+09
+519000 2.9325003e+09
+520000 2.9854331e+09
+521000 2.9892417e+09
+522000 2.9619508e+09
+523000 2.9955458e+09
+524000 2.9896015e+09
+525000 2.9926533e+09
+526000 2.9973338e+09
+527000 3.065252e+09
+528000 3.0516094e+09
+529000 3.0314571e+09
+530000 3.083034e+09
+531000 3.0721919e+09
+532000 3.0700618e+09
+533000 3.082746e+09
+534000 3.3111928e+09
+535000 3.1069886e+09
+536000 3.0935293e+09
+537000 3.1180114e+09
+538000 3.1003074e+09
+539000 3.1222744e+09
+540000 3.1355016e+09
+541000 3.7169871e+09
+542000 3.2773326e+09
+543000 3.2015512e+09
+544000 3.1180766e+09
+545000 3.1348348e+09
+546000 3.1824994e+09
+547000 3.1745253e+09
+548000 3.1892416e+09
+549000 3.191114e+09
+550000 3.2081062e+09
+551000 3.2094772e+09
+552000 3.2180908e+09
+553000 3.2039114e+09
+554000 3.2440362e+09
+555000 3.236387e+09
+556000 3.2477707e+09
+557000 3.2480043e+09
+558000 3.2429732e+09
+559000 3.2689648e+09
+560000 3.2967908e+09
+561000 3.2517972e+09
+562000 3.2617879e+09
+563000 3.2973334e+09
+564000 3.2560077e+09
+565000 3.2986016e+09
+566000 3.3023702e+09
+567000 3.3290635e+09
+568000 3.4247817e+09
+569000 3.307763e+09
+570000 3.2772409e+09
+571000 3.3322912e+09
+572000 3.3350287e+09
+573000 3.3313607e+09
+574000 3.3409945e+09
+575000 3.3482959e+09
+576000 3.3427263e+09
+577000 3.3746614e+09
+578000 3.3745756e+09
+579000 3.3331718e+09
+580000 3.3393845e+09
+581000 3.2815496e+09
+582000 3.494706e+09
+583000 3.4109309e+09
+584000 3.360386e+09
+585000 3.3943502e+09
+586000 3.4260785e+09
+587000 3.4097001e+09
+588000 3.3777944e+09
+589000 3.4177591e+09
+590000 3.4296491e+09
+591000 3.4314525e+09
+592000 3.4127192e+09
+593000 3.4570042e+09
+594000 3.4647866e+09
+595000 3.4502362e+09
+596000 3.4759853e+09
+597000 3.5012155e+09
+598000 3.4414431e+09
+599000 3.4551723e+09
+600000 3.4657583e+09
+601000 3.509066e+09
+602000 3.4918546e+09
+603000 3.5424256e+09
+604000 3.5014907e+09
+605000 3.4984365e+09
+606000 3.516945e+09
+607000 3.521836e+09
+608000 3.4902916e+09
+609000 3.5256698e+09
+610000 3.5066458e+09
+611000 3.5272802e+09
+612000 3.5239548e+09
+613000 3.5363297e+09
+614000 3.6085678e+09
+615000 3.6062509e+09
+616000 3.5154263e+09
+617000 3.5226455e+09
+618000 3.5189485e+09
+619000 3.5649428e+09
+620000 3.7443744e+09
+621000 3.9632434e+09
+622000 3.6657254e+09
+623000 3.7016232e+09
+624000 3.6837923e+09
+625000 3.7225317e+09
+626000 3.6858549e+09
+627000 3.7228632e+09
+628000 3.7037046e+09
+629000 3.7048085e+09
+630000 3.6861979e+09
+631000 3.7418447e+09
+632000 3.7254452e+09
+633000 3.7095732e+09
+634000 3.7195775e+09
+635000 3.747093e+09
+636000 3.7080379e+09
+637000 3.7225887e+09
+638000 3.6252376e+09
+639000 3.6732444e+09
+640000 3.7016844e+09
+641000 3.6557398e+09
+642000 3.6929333e+09
+643000 3.7106245e+09
+644000 3.7247949e+09
+645000 3.7351026e+09
+646000 3.7229361e+09
+647000 3.6633244e+09
+648000 3.7717707e+09
+649000 3.721688e+09
+650000 3.7649513e+09
+651000 3.736072e+09
+652000 3.7413109e+09
+653000 3.7781151e+09
+654000 3.7795662e+09
+655000 3.7513651e+09
+656000 3.747786e+09
+657000 3.7323757e+09
+658000 3.7275238e+09
+659000 3.7711689e+09
+660000 3.7059406e+09
+661000 3.7502209e+09
+662000 3.6681794e+09
+663000 3.7307416e+09
+664000 3.6742066e+09
+665000 3.7334761e+09
+666000 3.6921222e+09
+667000 3.746451e+09
+668000 3.6990366e+09
+669000 3.7367187e+09
+670000 3.7173866e+09
+671000 3.7362375e+09
+672000 3.7058171e+09
+673000 3.7774528e+09
+674000 3.7316658e+09
+675000 3.7569626e+09
+676000 3.6335568e+09
+677000 3.6997516e+09
+678000 3.7130915e+09
+679000 3.6939118e+09
+680000 3.705293e+09
+681000 3.7565427e+09
+682000 3.7356858e+09
+683000 3.7456631e+09
+684000 3.7794692e+09
+685000 3.766061e+09
+686000 3.8102491e+09
+687000 3.7961653e+09
+688000 3.8721826e+09
+689000 3.8382244e+09
+690000 3.8321921e+09
+691000 3.8491428e+09
+692000 3.9141285e+09
+693000 3.8600315e+09
+694000 3.9800505e+09
+695000 3.995367e+09
+696000 4.001063e+09
+697000 4.004409e+09
+698000 4.0349762e+09
+699000 3.9890884e+09
+700000 4.0547131e+09
+701000 4.0206769e+09
+702000 4.0172869e+09
+703000 4.0586445e+09
+704000 4.0407204e+09
+705000 4.074549e+09
+706000 4.0466738e+09
+707000 4.0034136e+09
+708000 3.9912112e+09
+709000 3.9599315e+09
+710000 3.9891995e+09
+711000 4.1641234e+09
+712000 4.5143769e+09
+713000 3.9947549e+09
+714000 3.9917796e+09
+715000 3.95103e+09
+716000 4.0471153e+09
+717000 3.9885364e+09
+718000 4.013734e+09
+719000 4.0110665e+09
+720000 4.0293522e+09
+721000 4.0302171e+09
+722000 4.050014e+09
+723000 4.255501e+09
+724000 4.0632598e+09
+725000 4.0552904e+09
+726000 4.0928215e+09
+727000 4.1470283e+09
+728000 4.1091386e+09
+729000 4.3304011e+09
+730000 4.1362038e+09
+731000 4.1313718e+09
+732000 4.1534547e+09
+733000 4.1936155e+09
+734000 4.2247468e+09
+735000 4.2451262e+09
+736000 4.2712798e+09
+737000 4.2360918e+09
+738000 4.2484891e+09
+739000 4.2458408e+09
+740000 4.2769507e+09
+741000 4.26814e+09
+742000 4.2864752e+09
+743000 4.2475772e+09
+744000 4.3122172e+09
+745000 4.254862e+09
+746000 4.3932301e+09
+747000 4.3515991e+09
+748000 4.2609769e+09
+749000 4.4311329e+09
+750000 4.314688e+09
+751000 4.1146897e+09
+752000 4.4230371e+09
+753000 4.3072578e+09
+754000 4.2806187e+09
+755000 4.3046077e+09
+756000 4.2927237e+09
+757000 4.3258764e+09
+758000 4.2609188e+09
+759000 4.3247796e+09
+760000 4.2721891e+09
+761000 4.3150673e+09
+762000 4.3403461e+09
+763000 4.3620289e+09
+764000 4.3588444e+09
+765000 4.3650194e+09
+766000 4.3865145e+09
+767000 4.3634937e+09
+768000 4.3421904e+09
+769000 4.4044772e+09
+770000 4.356213e+09
+771000 4.3820203e+09
+772000 4.3609346e+09
+773000 4.4051721e+09
+774000 4.3861706e+09
+775000 4.412879e+09
+776000 4.3999503e+09
+777000 4.4198935e+09
+778000 4.4290698e+09
+779000 4.4036803e+09
+780000 4.5650643e+09
+781000 4.573961e+09
+782000 4.4702609e+09
+783000 4.4849813e+09
+784000 4.3684501e+09
+785000 4.6051339e+09
+786000 4.4889083e+09
+787000 4.4393528e+09
+788000 4.540818e+09
+789000 4.588151e+09
+790000 4.7656696e+09
+791000 5.1254411e+09
+792000 4.7552681e+09
+793000 4.8331864e+09
+794000 4.8605886e+09
+795000 5.4888991e+09
+796000 5.0089575e+09
+797000 5.1060662e+09
+798000 4.9866466e+09
+799000 4.7338203e+09
+800000 5.0316054e+09
+801000 5.5324183e+09
+802000 5.6639778e+09
+803000 4.7010598e+09
+804000 5.0248343e+09
+805000 4.9026472e+09
+806000 5.5727005e+09
+807000 4.629838e+09
+808000 4.5925637e+09
+809000 4.6115576e+09
+810000 4.6552421e+09
+811000 4.591902e+09
+812000 5.1003454e+09
+813000 5.1748375e+09
+814000 4.9084672e+09
+815000 4.8659594e+09
+816000 5.5080159e+09
+817000 5.2387904e+09
+818000 4.8878436e+09
+819000 5.4842467e+09
+820000 4.8014538e+09
+821000 6.402301e+09
+822000 5.1972406e+09
+823000 5.163395e+09
+824000 5.0787513e+09
+825000 6.3635802e+09
+826000 4.7765906e+09
+827000 4.9885845e+09
+828000 5.1429683e+09
+829000 5.088e+09
+830000 6.3858469e+09
+831000 5.6659775e+09
+832000 5.3321551e+09
+833000 5.6584614e+09
+834000 6.4576906e+09
+835000 6.3561916e+09
+836000 5.9435309e+09
+837000 5.1844841e+09
+838000 6.2999562e+09
+839000 5.328737e+09
+840000 5.7551111e+09
+841000 6.0719838e+09
+842000 5.9357178e+09
+843000 5.853492e+09
+844000 6.4190812e+09
+845000 5.8210033e+09
+846000 5.8167572e+09
+847000 6.5861796e+09
+848000 5.5069517e+09
+849000 5.3187153e+09
+850000 5.3552387e+09
+851000 5.412781e+09
+852000 5.5594882e+09
+853000 6.0109842e+09
+854000 6.936301e+09
+855000 6.6441698e+09
+856000 7.7532573e+09
+857000 7.6499675e+09
+858000 6.4191344e+09
+859000 5.4158851e+09
+860000 5.6715243e+09
+861000 5.1462838e+09
+862000 6.6643604e+09
+863000 5.8893518e+09
+864000 8.158528e+09
+865000 5.6236222e+09
+866000 6.196722e+09
+867000 6.0628253e+09
+868000 6.603802e+09
+869000 6.4200922e+09
+870000 6.1097418e+09
+871000 7.6456899e+09
+872000 5.939146e+09
+873000 6.6766383e+09
+874000 7.7743605e+09
+875000 6.8889786e+09
+876000 6.6303856e+09
+877000 7.7884e+09
+878000 7.4327906e+09
+879000 8.0846961e+09
+880000 6.6367017e+09
+881000 36151400
+882000 7.039262e+09
+883000 8.9898739e+09
+884000 7.185613e+09
+885000 8.8650968e+09
+886000 6.8442001e+09
+887000 8.6895365e+09
+888000 7.5521815e+09
+889000 7.2283376e+09
+890000 7.7331949e+09
+891000 8.3388848e+09
+892000 6.0442858e+09
+893000 8.4319859e+09
+894000 9.7968789e+09
+895000 6.9398786e+09
+896000 6.3080527e+09
+897000 7.2333303e+09
+898000 8.8227052e+09
+899000 8.4964454e+09
+900000 7.7231882e+09
+901000 7.9471573e+09
+902000 8.6591697e+09
+903000 7.9949236e+09
+904000 9.3707297e+09
+905000 6.9469321e+09
+906000 9.5739512e+09
+907000 8.4318933e+09
+908000 9.0955303e+09
+909000 8.5138928e+09
+910000 9.0812375e+09
+911000 9.3705661e+09
+912000 7.6990691e+09
+913000 7.2385162e+09
+914000 8.9212452e+09
+915000 9.9002272e+09
+916000 1.0875928e+10
+917000 1.2079085e+10
+918000 7.4701359e+09
+919000 9.8419146e+09
+920000 9.3495937e+09
+921000 1.0383398e+10
+922000 1.2382333e+10
+923000 9.4696322e+09
+924000 1.0074729e+10
+925000 8.5433961e+09
+926000 9.8256856e+09
+927000 1.0266265e+10
+928000 9.3770608e+09
+929000 9.2047136e+09
+930000 1.1475493e+10
+931000 8.893672e+09
+932000 7.8700046e+09
+933000 9.0930421e+09
+934000 8.1098856e+09
+935000 1.1559293e+10
+936000 8.9395656e+09
+937000 8.2304625e+09
+938000 9.6419539e+09
+939000 1.1035851e+10
+940000 9.1026223e+09
+941000 9.6185951e+09
+942000 1.0462873e+10
+943000 6.6931946e+09
+944000 8.8162231e+09
+945000 9.4245391e+09
+946000 8.7258001e+09
+947000 8.7082429e+09
+948000 7.8523098e+09
+949000 8.0617296e+09
+950000 8.4274531e+09
+951000 1.1752763e+10
+952000 8.2508411e+09
+953000 1.013263e+10
+954000 7.1251705e+09
+955000 8.9397761e+09
+956000 9.2111287e+09
+957000 9.0037979e+09
+958000 1.0326272e+10
+959000 9.1352233e+09
+960000 9.4139066e+09
+961000 1.0000491e+10
+962000 9.9813107e+09
+963000 9.4151541e+09
+964000 8.1942324e+09
+965000 9.1681735e+09
+966000 9.2692659e+09
+967000 1.1142577e+10
+968000 8.56471e+09
+969000 9.2199067e+09
+970000 9.6242822e+09
+971000 9.579404e+09
+972000 9.4535978e+09
+973000 9.1466268e+09
+974000 1.0321041e+10
+975000 9.4703597e+09
+976000 1.0055222e+10
+977000 9.3440301e+09
+978000 8.130953e+09
+979000 9.3422678e+09
+980000 8.2996444e+09
+981000 1.0608748e+10
+982000 9.9125528e+09
+983000 9.1705261e+09
+984000 1.0321128e+10
+985000 9.9307813e+09
+986000 8.9478836e+09
+987000 7.7319855e+09
+988000 8.6176324e+09
+989000 1.0109159e+10
+990000 8.7657072e+09
+991000 1.0042285e+10
+992000 9.4921514e+09
+993000 1.037087e+10
+994000 8.3915913e+09
+995000 1.0917257e+10
+996000 1.0119832e+10
+997000 7.6551723e+09
+998000 9.88484e+09
+999000 8.8781218e+09
+&
+@target G0.S5
+@type xy
+0 -10546478
+10101.01 -8626140.7
+20202.02 -6705803.6
+30303.03 -4785466.5
+40404.04 -2865129.3
+50505.051 -944792.2
+60606.061 975544.92
+70707.071 2895882
+80808.081 4816219.2
+90909.091 6736556.3
+101010.1 8656893.4
+111111.11 10577231
+121212.12 12497568
+131313.13 14417905
+141414.14 16338242
+151515.15 18258579
+161616.16 20178916
+171717.17 22099253
+181818.18 24019590
+191919.19 25939928
+202020.2 27860265
+212121.21 29780602
+222222.22 31700939
+232323.23 33621276
+242424.24 35541613
+252525.25 37461950
+262626.26 39382287
+272727.27 41302625
+282828.28 43222962
+292929.29 45143299
+303030.3 47063636
+313131.31 48983973
+323232.32 50904310
+333333.33 52824647
+343434.34 54744984
+353535.35 56665322
+363636.36 58585659
+373737.37 60505996
+383838.38 62426333
+393939.39 64346670
+404040.4 66267007
+414141.41 68187344
+424242.42 70107681
+434343.43 72028019
+444444.44 73948356
+454545.45 75868693
+464646.46 77789030
+474747.47 79709367
+484848.48 81629704
+494949.49 83550041
+505050.51 85470378
+515151.52 87390716
+525252.53 89311053
+535353.54 91231390
+545454.55 93151727
+555555.56 95072064
+565656.57 96992401
+575757.58 98912738
+585858.59 1.0083308e+08
+595959.6 1.0275341e+08
+606060.61 1.0467375e+08
+616161.62 1.0659409e+08
+626262.63 1.0851442e+08
+636363.64 1.1043476e+08
+646464.65 1.123551e+08
+656565.66 1.1427544e+08
+666666.67 1.1619577e+08
+676767.68 1.1811611e+08
+686868.69 1.2003645e+08
+696969.7 1.2195678e+08
+707070.71 1.2387712e+08
+717171.72 1.2579746e+08
+727272.73 1.277178e+08
+737373.74 1.2963813e+08
+747474.75 1.3155847e+08
+757575.76 1.3347881e+08
+767676.77 1.3539914e+08
+777777.78 1.3731948e+08
+787878.79 1.3923982e+08
+797979.8 1.4116016e+08
+808080.81 1.4308049e+08
+818181.82 1.4500083e+08
+828282.83 1.4692117e+08
+838383.84 1.488415e+08
+848484.85 1.5076184e+08
+858585.86 1.5268218e+08
+868686.87 1.5460251e+08
+878787.88 1.5652285e+08
+888888.89 1.5844319e+08
+898989.9 1.6036353e+08
+909090.91 1.6228386e+08
+919191.92 1.642042e+08
+929292.93 1.6612454e+08
+939393.94 1.6804487e+08
+949494.95 1.6996521e+08
+959595.96 1.7188555e+08
+969696.97 1.7380589e+08
+979797.98 1.7572622e+08
+989898.99 1.7764656e+08
+1000000 1.795669e+08
+&
+@target G0.S7
+@type xy
+0 4422357.2
+10101.01 5467603.6
+20202.02 6512850
+30303.03 7558096.4
+40404.04 8603342.8
+50505.051 9648589.1
+60606.061 10693836
+70707.071 11739082
+80808.081 12784328
+90909.091 13829575
+101010.1 14874821
+111111.11 15920067
+121212.12 16965314
+131313.13 18010560
+141414.14 19055807
+151515.15 20101053
+161616.16 21146299
+171717.17 22191546
+181818.18 23236792
+191919.19 24282039
+202020.2 25327285
+212121.21 26372531
+222222.22 27417778
+232323.23 28463024
+242424.24 29508271
+252525.25 30553517
+262626.26 31598763
+272727.27 32644010
+282828.28 33689256
+292929.29 34734502
+303030.3 35779749
+313131.31 36824995
+323232.32 37870242
+333333.33 38915488
+343434.34 39960734
+353535.35 41005981
+363636.36 42051227
+373737.37 43096474
+383838.38 44141720
+393939.39 45186966
+404040.4 46232213
+414141.41 47277459
+424242.42 48322706
+434343.43 49367952
+444444.44 50413198
+454545.45 51458445
+464646.46 52503691
+474747.47 53548937
+484848.48 54594184
+494949.49 55639430
+505050.51 56684677
+515151.52 57729923
+525252.53 58775169
+535353.54 59820416
+545454.55 60865662
+555555.56 61910909
+565656.57 62956155
+575757.58 64001401
+585858.59 65046648
+595959.6 66091894
+606060.61 67137140
+616161.62 68182387
+626262.63 69227633
+636363.64 70272880
+646464.65 71318126
+656565.66 72363372
+666666.67 73408619
+676767.68 74453865
+686868.69 75499112
+696969.7 76544358
+707070.71 77589604
+717171.72 78634851
+727272.73 79680097
+737373.74 80725344
+747474.75 81770590
+757575.76 82815836
+767676.77 83861083
+777777.78 84906329
+787878.79 85951575
+797979.8 86996822
+808080.81 88042068
+818181.82 89087315
+828282.83 90132561
+838383.84 91177807
+848484.85 92223054
+858585.86 93268300
+868686.87 94313547
+878787.88 95358793
+888888.89 96404039
+898989.9 97449286
+909090.91 98494532
+919191.92 99539779
+929292.93 1.0058502e+08
+939393.94 1.0163027e+08
+949494.95 1.0267552e+08
+959595.96 1.0372076e+08
+969696.97 1.0476601e+08
+979797.98 1.0581126e+08
+989898.99 1.068565e+08
+1000000 1.0790175e+08
+&
+@target G0.S9
+@type xy
+0 -22454030
+10101.01 -20361574
+20202.02 -18269117
+30303.03 -16176661
+40404.04 -14084204
+50505.051 -11991747
+60606.061 -9899290.7
+70707.071 -7806834
+80808.081 -5714377.4
+90909.091 -3621920.7
+101010.1 -1529464.1
+111111.11 562992.54
+121212.12 2655449.2
+131313.13 4747905.8
+141414.14 6840362.5
+151515.15 8932819.1
+161616.16 11025276
+171717.17 13117732
+181818.18 15210189
+191919.19 17302646
+202020.2 19395102
+212121.21 21487559
+222222.22 23580016
+232323.23 25672472
+242424.24 27764929
+252525.25 29857385
+262626.26 31949842
+272727.27 34042299
+282828.28 36134755
+292929.29 38227212
+303030.3 40319669
+313131.31 42412125
+323232.32 44504582
+333333.33 46597039
+343434.34 48689495
+353535.35 50781952
+363636.36 52874409
+373737.37 54966865
+383838.38 57059322
+393939.39 59151778
+404040.4 61244235
+414141.41 63336692
+424242.42 65429148
+434343.43 67521605
+444444.44 69614062
+454545.45 71706518
+464646.46 73798975
+474747.47 75891432
+484848.48 77983888
+494949.49 80076345
+505050.51 82168801
+515151.52 84261258
+525252.53 86353715
+535353.54 88446171
+545454.55 90538628
+555555.56 92631085
+565656.57 94723541
+575757.58 96815998
+585858.59 98908455
+595959.6 1.0100091e+08
+606060.61 1.0309337e+08
+616161.62 1.0518582e+08
+626262.63 1.0727828e+08
+636363.64 1.0937074e+08
+646464.65 1.1146319e+08
+656565.66 1.1355565e+08
+666666.67 1.1564811e+08
+676767.68 1.1774056e+08
+686868.69 1.1983302e+08
+696969.7 1.2192548e+08
+707070.71 1.2401793e+08
+717171.72 1.2611039e+08
+727272.73 1.2820285e+08
+737373.74 1.302953e+08
+747474.75 1.3238776e+08
+757575.76 1.3448022e+08
+767676.77 1.3657267e+08
+777777.78 1.3866513e+08
+787878.79 1.4075759e+08
+797979.8 1.4285004e+08
+808080.81 1.449425e+08
+818181.82 1.4703496e+08
+828282.83 1.4912741e+08
+838383.84 1.5121987e+08
+848484.85 1.5331233e+08
+858585.86 1.5540478e+08
+868686.87 1.5749724e+08
+878787.88 1.595897e+08
+888888.89 1.6168215e+08
+898989.9 1.6377461e+08
+909090.91 1.6586707e+08
+919191.92 1.6795952e+08
+929292.93 1.7005198e+08
+939393.94 1.7214444e+08
+949494.95 1.7423689e+08
+959595.96 1.7632935e+08
+969696.97 1.7842181e+08
+979797.98 1.8051426e+08
+989898.99 1.8260672e+08
+1000000 1.8469918e+08
+&

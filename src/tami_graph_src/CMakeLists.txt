@@ -18,14 +18,24 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
 link_directories(${Boost_LIBRARY_DIRS})
 
-set(LIB_BASE_FILES
+set(LIB_GRAPH_FILES
   ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_helpers.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_labelling.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_interface.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_graph_src/tamigraph_constructs.cpp
 )
 
-ADD_LIBRARY(tamigraph SHARED ${LIB_BASE_FILES})
+ADD_LIBRARY(tamigraph SHARED ${LIB_GRAPH_FILES})
+
+#link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../install/lib)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../install/include/tami_base_src)
+
+#message(STATUS "libtorchami directory: ${CMAKE_CURRENT_SOURCE_DIR}/../../install/lib")
+
+#target_link_libraries(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/../../install/lib/libtorchami.so
+# m )
+
+
 target_link_libraries(${PROJECT_NAME} m ${TORCH_LIBRARIES})
 
 find_package(PythonLibs REQUIRED)

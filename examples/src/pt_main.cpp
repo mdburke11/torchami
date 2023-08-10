@@ -44,6 +44,9 @@ int main( int argc , char *argv[] )
     case 9:
       renorm_PT_graph_example();
       break;
+    case 10:
+      torch_playground();
+      break;
     default:
       example2();
       example1_bose();
@@ -54,6 +57,55 @@ int main( int argc , char *argv[] )
   }
 
   return 0;
+}
+
+void torch_playground(){
+  at::TensorOptions options = at::TensorOptions().dtype(at::kDouble).device(at::kCUDA);
+  int length = 20;
+  std::vector<std::vector<double>> domain {{0, 1}, {0, 10}, {0, 100}};
+  std::vector<at::Tensor> rand_cols;
+
+  for (auto r: domain){
+    at::Tensor col = at::empty({length, 1}, options);
+    std::cout << format_r1_tensor(col) << std::endl;
+    at::Tensor rand = at::uniform(col, r[0], r[1]);
+    std::cout << format_r1_tensor(rand) << std::endl;
+    rand_cols.push_back(rand);
+  }
+
+  at::Tensor final = at::hstack(rand_cols);
+  std::cout << format_r2_tensor(final) << std::endl;
+
+  at::Tensor z = final + c10::complex<double>(0,1) * final;
+  std::cout << format_r2_tensor(z) << std::endl;
+
+  final = at::ones({10, 10});
+  final[0][0] = NAN;
+  std::cout << final << std::endl;
+
+  int num_nans = ((final != final).sum()).item<int>();
+
+  std::cout << num_nans << std::endl;
+
+  at::Tensor zero = at::zeros({10, 9}, options);
+  std::cout << format_r2_tensor(zero) << std::endl;
+
+  std::vector<std::vector<int>> a = {{1, 0, 0}, {0, 1, 0}, {1, 1, -1}};
+
+  //at::Tensor alpha = at::from_blob(a.data(), {3, 3});
+  std::vector<at::Tensor> alpha_vec;
+  for (auto row : a){
+    alpha_vec.push_back(at::tensor(row, options));
+  }
+  at::Tensor alpha = at::vstack(alpha_vec);
+
+  at::Tensor full = at::kron(alpha, at::eye(2, options));
+
+  std::cout << format_r2_tensor(full) << std::endl;
+
+  std::cout << at::size(zero, 0) << std::endl;
+  std::cout << at::size(zero, 1) << std::endl;
+  
 }
 
 void graph_library_example(){
@@ -345,7 +397,7 @@ void default_example_gpu(){
 
   TamiBase::g_prod_t R0=construct_example2();
 
-  at::Device myDev = at::kCPU;//kCUDA;//CPU;
+  at::Device myDev = at::kCUDA;//CPU;
 
   TamiBase PT(myDev);
   TamiBase::ft_terms ftout;
@@ -370,7 +422,7 @@ void default_example_gpu(){
   std::ofstream file;
   file.open("scaling.dat", std::ofstream::out);
   
-  for(int batch_size=100000; batch_size< 1000000; batch_size+=100){
+  for(int batch_size=1000; batch_size< 1000000; batch_size+=1000){
   avars2=construct_4ord_ext_multipole_example(PT,batch_size);
   
   // std::cout << format_r2_tensor(avars2.energy_) << std::endl;

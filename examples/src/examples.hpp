@@ -44,6 +44,7 @@
  void python_comparison();
  void graph_library_example();
  void renorm_PT_graph_example();
+ void torch_playground();
 
 // TODO: clean these up - maybe put together
  std::string format_r1_tensor(const at::Tensor&);
