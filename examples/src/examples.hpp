@@ -13,6 +13,9 @@
 #include <chrono>
 #include <thread>
 
+ TamiBase::g_prod_t construct_ct_ex();
+
+
  TamiBase::g_prod_t construct_example2();
  TamiBase::ami_vars construct_ext_example2(TamiBase& tami);
 
@@ -44,6 +47,7 @@
  void python_comparison();
  void graph_library_example();
  void renorm_PT_graph_example();
+ void test_ct_integrand();
 
 // TODO: clean these up - maybe put together
  std::string format_r1_tensor(const at::Tensor&);

@@ -1,5 +1,40 @@
 #include "examples.hpp"
 
+TamiBase::g_prod_t construct_ct_ex(){
+  TamiBase::g_prod_t g;
+
+  // Setting up G array
+  // defining alpha's /// std::vector<int>
+
+
+  TamiBase::alpha_t alpha_1={1,1,-1};
+  TamiBase::alpha_t alpha_2={1,0,0};
+  TamiBase::alpha_t alpha_3={0,1,0};
+  TamiBase::alpha_t alpha_4={0,1,0};
+
+  //defining epsilon's
+  TamiBase::epsilon_t epsilon_1={0,0,1};
+  TamiBase::epsilon_t epsilon_2={1,0,0};
+  TamiBase::epsilon_t epsilon_3={0,1,0};
+  TamiBase::epsilon_t epsilon_4={0,1,0};
+
+  TamiBase::g_struct g1(epsilon_1,alpha_1);
+  TamiBase::g_struct g2(epsilon_2,alpha_2);
+  TamiBase::g_struct g3(epsilon_3,alpha_3);
+  TamiBase::g_struct g4(epsilon_4,alpha_4);
+
+  // TamiBase::g_prod_t R0={g1,g2,g3};
+
+  // OR
+  TamiBase::g_prod_t R0;
+  R0.push_back(g1);
+  R0.push_back(g2);
+  R0.push_back(g3);
+  R0.push_back(g4);
+
+  return R0;
+}
+
 
 TamiBase::g_prod_t construct_example2(){
 

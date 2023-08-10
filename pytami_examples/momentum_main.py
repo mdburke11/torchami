@@ -8,11 +8,11 @@ import flat_integ as flat
 import time
 
 def main():
-    #mat_freq_flat_2ord()
+    mat_freq_flat_2ord()
     #mat_freq_flat_4ord()
     #mat_freq_flat_6ord()
 
-    torchquad_comp() # Montecarlo and vegas are working but the rest are not
+    #torchquad_comp() # Montecarlo and vegas are working but the rest are not
     # although, the conditions for Boole and Simpsons were probably not met
 
 

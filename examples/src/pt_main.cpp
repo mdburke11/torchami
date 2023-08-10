@@ -44,6 +44,8 @@ int main( int argc , char *argv[] )
     case 9:
       renorm_PT_graph_example();
       break;
+    case 10:
+      test_ct_integrand();
     default:
       example2();
       example1_bose();
@@ -54,6 +56,44 @@ int main( int argc , char *argv[] )
   }
 
   return 0;
+}
+
+void test_ct_integrand(){
+    // Terms example
+
+  TamiBase::g_prod_t R0=construct_ct_ex();
+
+  at::Device myDev = at::kCUDA;
+
+  TamiBase PT(myDev);
+  TamiBase::ft_terms ftout;
+
+  TamiBase::ami_vars avars=construct_ext_example2(PT);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
+
+  std::cout << "Starting energy tensor: " << std::endl;
+  std::cout << format_r2_tensor(avars.energy_) << std::endl;
+
+  PT.construct(2, R0, ftout);
+  TamiBase::ami_parms parms(2, 0);
+
+  auto t2=std::chrono::high_resolution_clock::now();
+  at::Tensor result=PT.evaluate(parms,ftout,avars);
+
+  auto t_end=std::chrono::high_resolution_clock::now();
+
+  std::chrono::duration<double> diff2=t_end-t2;
+
+  // std::chrono::nanoseconds d=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
+
+
+
+  std::cout<<"--------------------"<<std::endl;
+  // PT.FT.number_vertices(ftout2[0].ft_);
+  // PT.FT.print_graph(ftout2[0].ft_);
+  // std::cout<<PT.FT.pretty_print(ftout2[0].ft_)<<std::endl;
+
+  std::cout<<"Result: "<< format_r1_tensor(result) << std::endl;
+
 }
 
 void graph_library_example(){
