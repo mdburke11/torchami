@@ -31,6 +31,11 @@ sudo apt-get install libcudnn8-dev=8.9.2.26-1+cuda12.1
 May need: -DCMAKE_CUDA_COMPILER:PATH=/usr/local/cuda/bin/nvcc
 
 Then just make with the compile script as above
+
+--------------
+
+Note: When compiling executables in c++, the python torch libraries may be installed in a non-standard location such as: /home/username/.local/lib/python3.10/site-packages/torch/lib/ . It this is the case then you can just add this directory to LD_LIBRARY_PATH.
+
 	
 	
 .. _`Github wiki`: https://github.com/mdburke11/torchami
