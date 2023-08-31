@@ -472,7 +472,7 @@ std::string TamiBase::FermiTree::pretty_print_level(fermi_tree_t &ft, std::vecto
         if(ft[vv[i]].prefactor_==-1){ss<<"-";}
         if(ft[vv[i]].prefactor_==1 && i!=0){ss<<"+";}
         if(ft[vv[i]].pole_.der_>2){
-        ss<<"\frac{1}{"<< int(ft[vv[i]].pole_.der_-1)<<"!}";          
+        ss<<"\frac{1}{"<< int(ft[vv[i]].pole_.der_)<<"!}";          
         }
         ss<<"f";
         for(int m=0;m<ft[vv[i]].pole_.der_; m++){
