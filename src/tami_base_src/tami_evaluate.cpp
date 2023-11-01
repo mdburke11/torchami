@@ -128,8 +128,8 @@ at::Tensor TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
     // Now do "Matrix multiplication" but with addition opperation for these vectors: eg epsdenom = [E1, E2, E3], alphadenom = [A1, A2, A3], 
     // {alphadenom^T} "*" {epsdenom} = [[A1+E1, A1+E2, A1+E3], [A2+E1, A2+E2, A2+E3], [A3+E1, A3+E2, A3+E3]] This evaluates all frequencies at all the energies in the batch simultaneously
 
-    at::Tensor blownupEps = epsdenom.transpose(0, 1).repeat({1, fbatch_size})
-    at::Tensor blownupAlpha = alphadenom.repeat({1, ebatch_size})
+    at::Tensor blownupEps = epsdenom.repeat({fbatch_size, 1})
+    at::Tensor blownupAlpha = alphadenom.transpose(0, 1).repeat({1, ebatch_size})
   
     denom_prod = torch::multiply(denom_prod, (blownupEps + blownupAlpha)); // Still the same pairwise multiply
    
