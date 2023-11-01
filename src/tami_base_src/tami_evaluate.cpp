@@ -102,36 +102,40 @@ return output;
 at::Tensor TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
                                          ami_vars external) {
   
-  int batch_size = external.energy_.size(0);
+  int ebatch_size = external.energy_.size(0);
+  int fbatch_size = external.frequency_.size(0);
   
-  at::Tensor output = at::zeros(batch_size, options); // get len(energies) answers
+  at::Tensor output = at::zeros({fbatch_size, ebatch_size}, options); // get len(energies) * len(frequencies) answers
 
-  at::Tensor denom_prod = at::ones(batch_size, options);
+  at::Tensor denom_prod = at::ones({fbatch_size, ebatch_size}, options);
   double prefactor = external.prefactor;
 
   double E_REG = parms.E_REG_;
   bool verbose = false;
 
   for (int i = 0; i < g_prod.size(); i++) {
-    TamiBase::complex_double alphadenom(0, 0); 
-    at::Tensor epsdenom = at::zeros(batch_size, options);
+    at::Tensor alphadenom = at::zeros(fbatch_size, options); 
+    at::Tensor epsdenom = at::zeros(ebatch_size, options);
 
     for (int a = 0; a < g_prod[i].alpha_.size(); a++) {
-      alphadenom += double(g_prod[i].alpha_[a]) * external.frequency_[a];
+      alphadenom += double(g_prod[i].alpha_[a]) * external.frequency_.index({torch::indexing::Slice(),a}); // I think we should have the eps and alpha on GPU as well - TODO!
     }
 
     for (int a = 0; a < g_prod[i].eps_.size(); a++) {
-      epsdenom += double(g_prod[i].eps_[a]) * external.energy_.index({torch::indexing::Slice(),a});
+      epsdenom += double(g_prod[i].eps_[a]) * external.energy_.index({torch::indexing::Slice(),a}); // I think we should have the eps and alpha on GPU as well - TODO!
     }
 
-    //TODO: What device is this scalar on ... or does it matter? -- Hopefully this works
-    //c10::Scalar alpha_denom = c10::complex<double>(alphadenom.real(), alphadenom.imag()); // cast to a tensor friendly complex value
+    // Now do "Matrix multiplication" but with addition opperation for these vectors: eg epsdenom = [E1, E2, E3], alphadenom = [A1, A2, A3], 
+    // {alphadenom^T} "*" {epsdenom} = [[A1+E1, A1+E2, A1+E3], [A2+E1, A2+E2, A2+E3], [A3+E1, A3+E2, A3+E3]] This evaluates all frequencies at all the energies in the batch simultaneously
+
+    at::Tensor blownupEps = epsdenom.transpose(0, 1).repeat({1, fbatch_size})
+    at::Tensor blownupAlpha = alphadenom.repeat({1, ebatch_size})
   
-    denom_prod = torch::multiply(denom_prod, (alphadenom + epsdenom)); // now c10::Scalar adds pairwisely to epsdenom
+    denom_prod = torch::multiply(denom_prod, (blownupEps + blownupAlpha)); // Still the same pairwise multiply
    
   }
 
-  output = 1.0 / denom_prod * prefactor; // scalar multiplication
+  output = 1.0 / denom_prod * prefactor; // scalar multiplication: 1/tensor = [1/t_ij]_ij
 
   return output;
 }
