@@ -5,18 +5,16 @@
 at::Tensor TamiBase::evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
                                             TamiBase::ami_vars &external){
 
-  int batch_size = external.energy_.size(0);                           
+  int ebatch_size = external.energy_.size(0);
+  int fbatch_size = external.frequency_.size(0);                
 
-  at::Tensor term=at::zeros(batch_size, options); // dummy intialization on device in options
-  at::Tensor output = at::zeros(batch_size, options);
+  at::Tensor term=at::zeros({fbatch_size, ebatch_size}, options); // dummy intialization on device in options
+  at::Tensor output = at::zeros({fbatch_size, ebatch_size}, options);
 
 
   for (int i = 0; i < ft_terms.size(); i++) {
-    // std::cout<<"Term "<<i<<std::endl;
-      term=evaluate_term(parms,ft_terms[i],external); // TODO: already on gpu? (print and check)
-      //term=evaluate_term(parms,ft_terms[i],external).to(device); // TODO: already on gpu? (print and check)
+      term=evaluate_term(parms,ft_terms[i],external);
       output+=term;
-  
 }
 
 return output;
@@ -28,11 +26,11 @@ at::Tensor TamiBase::evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
 
   at::Tensor gprod,fprod;
 
-  gprod = eval_gprod(parms, ft_term.g_prod_, external); // TODO: already on gpu? (print and check)
+  gprod = eval_gprod(parms, ft_term.g_prod_, external);
   TamiBase::FermiTree::vertex_t r=FT.get_root(ft_term.ft_);
-  fprod = eval_ft(parms, ft_term.ft_,r, external); // TODO: already on gpu? (print and check)
+  fprod = eval_ft(parms, ft_term.ft_,r, external); 
   
-  at::Tensor output = ft_term.sign_ * torch::multiply(gprod, fprod);
+  at::Tensor output = ft_term.sign_ * torch::multiply(gprod, fprod); 
 
 return output;
 
@@ -43,18 +41,15 @@ return output;
 
 at::Tensor TamiBase::eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fermi_tree_t &ft1,  TamiBase::FermiTree::vertex_t &v, TamiBase::ami_vars &external){
 
-// TODO: memory optimization here? do we copy or move (aoutput or moutput) into output? and is it still on the same device?
-
   std::vector<TamiBase::FermiTree::vertex_t> level;
   
   FT.get_next_level( ft1, v, level);
 
-  int batch_size = external.energy_.size(0);
-  at::Tensor output = at::zeros(batch_size, options); // SEE TODO above maybe a better way to write this?
-  at::Tensor aoutput = at::zeros(batch_size, options);
-  at::Tensor moutput = at::ones(batch_size, options);
-  
-  // std::cout<<"In Evaluate the Prefactor is "<<ft1[v].prefactor_<<" on vertex "<< ft1[v].index_<< " with operation "<< ft1[v].operation_<<std::endl;
+  int ebatch_size = external.energy_.size(0);
+  int fbatch_size = external.frequency_.size(0);
+  at::Tensor output = at::zeros({fbatch_size, ebatch_size}, options);
+  at::Tensor aoutput = at::zeros({fbatch_size, ebatch_size}, options);
+  at::Tensor moutput = at::ones({fbatch_size, ebatch_size}, options);
   
   switch(ft1[v].operation_){
     
@@ -128,10 +123,10 @@ at::Tensor TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
     // Now do "Matrix multiplication" but with addition opperation for these vectors: eg epsdenom = [E1, E2, E3], alphadenom = [A1, A2, A3], 
     // {alphadenom^T} "*" {epsdenom} = [[A1+E1, A1+E2, A1+E3], [A2+E1, A2+E2, A2+E3], [A3+E1, A3+E2, A3+E3]] This evaluates all frequencies at all the energies in the batch simultaneously
 
-    at::Tensor blownupEps = epsdenom.repeat({fbatch_size, 1})
-    at::Tensor blownupAlpha = alphadenom.transpose(0, 1).repeat({1, ebatch_size})
+    at::Tensor blownupEps = epsdenom.repeat({fbatch_size, 1});
+    at::Tensor blownupAlpha = alphadenom.transpose(0, 1).repeat({1, ebatch_size});
   
-    denom_prod = torch::multiply(denom_prod, (blownupEps + blownupAlpha)); // Still the same pairwise multiply
+    denom_prod = torch::multiply(denom_prod, (blownupEps + blownupAlpha)); // Still the same pairwise multiply but now there is n_f * n_e results that then need to be added down the columns
    
   }
 
@@ -148,7 +143,10 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
     print_pole_struct_info(pole);
   }
 
-  at::Tensor output = at::zeros(external.energy_.size(0), options);
+  int ebatch_size = external.energy_.size(0);
+  int fbatch_size = external.frequency_.size(0);
+  
+  at::Tensor output = at::zeros({fbatch_size, ebatch_size}, options); // get len(energies) * len(frequencies) answers
   int eta = 0;
 
   double beta = external.BETA_;
@@ -156,10 +154,10 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 
   // TODO: should we use at::scalars (c10::complex<double>) instead of std::complex<double> -- Hopefully this is fixed
   // Spectral evaluation only
-  TamiBase::complex_double freq_shift(0, 0);
+  at::Tensor freq_shift = at::zeros(fbatch_size, options);
   if (pole.x_alpha_.size() != 0) {
     for (int i = 0; i < pole.x_alpha_.size(); i++) {
-      freq_shift = external.frequency_[i] * (double)pole.x_alpha_[i];
+      freq_shift += external.frequency_.index({torch::indexing::Slice(),i}) * (double)pole.x_alpha_[i]; // Now a row of all the frequencies being simultaneously being evaluated TYPO ?!?!?!?!?
     }
   }
 
@@ -211,13 +209,22 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 
   // could put infor into ami_vars external as to what the state type of the
   // external variables is.
-  //at::Tensor E = get_energy_from_pole(pole, external).to(device);
-  at::Tensor E = get_energy_from_pole(pole, external); // TODO: should already be on the device in options
+  at::Tensor E = get_energy_from_pole(pole, external); // list of eval'd lin combs of energys
+
+  /*
+
+  // No longer needed because the freq_shift is a tensor of type TamiBase::complex_double
 
   // In the case of spectral poles the freq_shift might not be zero
   // TODO: Need to convert freqshift into a c10 complex or scalar to add pairwise or just always use them
   c10::Scalar freqshift = c10::complex<double>(freq_shift.real(), freq_shift.imag()); // cast to a tensor friendly complex value
-  E = E + freqshift;
+  */
+
+  // Need all combinations of energy and frequency
+  at::Tensor blownupE = E.repeat({fbatch_size, 1});
+  at::Tensor blownupF = freq_shift.transpose(0, 1).repeat({1, ebatch_size});
+
+  at::Tensor all_evals = blownupE + blownupF;
 
 
   double sigma = pow(-1.0, double(eta));
@@ -254,7 +261,7 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
   int m = pole.der_;
 
   // compute m'th derivative
-  output = fermi_bose(m, sigma, beta, E);
+  output = fermi_bose(m, sigma, beta, all_evals);
 
 /* 
   // TODO: print max here as well ? commented until proper printint formating is implemented
@@ -287,9 +294,10 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
                                          at::Tensor E) {
 
-  int batch_size = E.size(0);
-  at::Tensor output = at::zeros(batch_size, options);
-  at::Tensor term = at::zeros(batch_size, options);
+  int fbatch_size = E.size(0);
+  int ebatch_size = E.size(1);
+  at::Tensor output = at::zeros({fbatch_size, ebatch_size}, options);
+  at::Tensor term = at::zeros({fbatch_size, ebatch_size}, options);
 
   if (m == 0) {
               // Note: Disabled on 09/09/2022 for overflow testing 
