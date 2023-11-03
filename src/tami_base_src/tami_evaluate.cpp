@@ -109,8 +109,8 @@ at::Tensor TamiBase::eval_gprod(ami_parms &parms, g_prod_t g_prod,
   bool verbose = false;
 
   for (int i = 0; i < g_prod.size(); i++) {
-    at::Tensor alphadenom = at::zeros(fbatch_size, options); 
-    at::Tensor epsdenom = at::zeros(ebatch_size, options);
+    at::Tensor alphadenom = at::zeros({1, fbatch_size}, options); 
+    at::Tensor epsdenom = at::zeros({1, ebatch_size}, options);
 
     for (int a = 0; a < g_prod[i].alpha_.size(); a++) {
       alphadenom += double(g_prod[i].alpha_[a]) * external.frequency_.index({torch::indexing::Slice(),a}); // I think we should have the eps and alpha on GPU as well - TODO!
@@ -154,7 +154,7 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 
   // TODO: should we use at::scalars (c10::complex<double>) instead of std::complex<double> -- Hopefully this is fixed
   // Spectral evaluation only
-  at::Tensor freq_shift = at::zeros(fbatch_size, options);
+  at::Tensor freq_shift = at::zeros({1, fbatch_size}, options);
   if (pole.x_alpha_.size() != 0) {
     for (int i = 0; i < pole.x_alpha_.size(); i++) {
       freq_shift += external.frequency_.index({torch::indexing::Slice(),i}) * (double)pole.x_alpha_[i]; // Now a row of all the frequencies being simultaneously being evaluated TYPO ?!?!?!?!?
@@ -356,7 +356,7 @@ at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
 
 at::Tensor TamiBase::get_energy_from_pole(pole_struct pole,
                                                    ami_vars external) {
-  at::Tensor output = at::zeros(external.energy_.size(0), options);
+  at::Tensor output = at::zeros({1, external.energy_.size(0)}, options);
 
   // Evaluating energies for pole
   for (int i = 0; i < pole.eps_.size(); i++) {

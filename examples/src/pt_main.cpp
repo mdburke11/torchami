@@ -17,6 +17,55 @@ int main( int argc , char *argv[] )
     case 0:
       default_example();
       break;
+  }
+}
+
+void default_example(){
+
+  at::Device myDev = at::kCPU;
+
+  TamiBase PT(myDev);
+  TamiBase::ft_terms ftout;
+
+  TamiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
+  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example(PT, 10, 5);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
+
+  std::cout << "Starting energy tensor: " << std::endl;
+  std::cout << format_r2_tensor(avars2.energy_) << std::endl;
+
+  TamiBase::ft_terms ftout2;
+
+  PT.construct(4, R02, ftout2);
+  TamiBase::ami_parms parms2(0, 0);
+
+  auto t2=std::chrono::high_resolution_clock::now();
+  at::Tensor result2=PT.evaluate(parms2,ftout2,avars2);
+
+  auto t_end=std::chrono::high_resolution_clock::now();
+
+  std::chrono::duration<double> diff2=t_end-t2;
+
+  // std::chrono::nanoseconds d=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
+
+
+
+  std::cout<<"--------------------"<<std::endl;
+  // PT.FT.number_vertices(ftout2[0].ft_);
+  // PT.FT.print_graph(ftout2[0].ft_);
+  // std::cout<<PT.FT.pretty_print(ftout2[0].ft_)<<std::endl;
+
+  std::cout<<PT.pretty_print_ft_terms(ftout2)<<std::endl;
+  std::cout<<"Result 4th order MP "<<format_r2_tensor(result2)<<std::endl;
+  std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
+  std::cout<<"Evaluation took "<< d2.count()<<" nanoseconds"<<std::endl;	
+
+}
+
+
+
+
+
+#if 0
     case 1:
       example_1();
       break;
@@ -60,7 +109,7 @@ int main( int argc , char *argv[] )
 }
 
 void torch_playground(){
-  at::TensorOptions options = at::TensorOptions().dtype(at::kDouble).device(at::kCUDA);
+  at::TensorOptions options = at::TensorOptions().dtype(at::kDouble).device(at::kCPU);
   int length = 20;
   std::vector<std::vector<double>> domain {{0, 1}, {0, 10}, {0, 100}};
   std::vector<at::Tensor> rand_cols;
@@ -105,7 +154,18 @@ void torch_playground(){
 
   std::cout << at::size(zero, 0) << std::endl;
   std::cout << at::size(zero, 1) << std::endl;
-  
+
+
+  at::Tensor ones = at::tensor({1, 4, 5}).reshape({1, 3});
+  at::Tensor rep = ones.repeat({3, 1});
+  std::cout << "ones test" << std::endl;
+  std::cout << ones << std::endl;
+
+  std::cout << "rep test" << std::endl;
+  std::cout << rep << std::endl;
+
+  at::Tensor stand = ones.transpose(0, 1).repeat({1, 3});
+  std::cout << stand << std::endl;
 }
 
 void graph_library_example(){
@@ -397,7 +457,7 @@ void default_example_gpu(){
 
   TamiBase::g_prod_t R0=construct_example2();
 
-  at::Device myDev = at::kCUDA;//CPU;
+  at::Device myDev = at::kCPU;
 
   TamiBase PT(myDev);
   TamiBase::ft_terms ftout;
@@ -737,7 +797,7 @@ void python_comparison(){
   std::cout<<std::endl<<"-_-_-_ Example - Second Order _-_-_-"<<std::endl<<std::endl;	
 	
   // class instance
-  at::Device myDev = at::kCUDA;
+  at::Device myDev = at::kCPU;
   TamiBase ami(myDev);
 
   // Problem setup (see ami_example.cpp)
@@ -783,3 +843,4 @@ void python_comparison(){
 
 
 }
+#endif

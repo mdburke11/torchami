@@ -13,14 +13,14 @@
 #include <chrono>
 #include <thread>
 
- TamiBase::g_prod_t construct_example2();
- TamiBase::ami_vars construct_ext_example2(TamiBase& tami);
+ //TamiBase::g_prod_t construct_example2();
+ //TamiBase::ami_vars construct_ext_example2(TamiBase& tami);
 
  TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami);
- TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami, int batch_size);
+ TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami, int ebatch_size, int fbatch_size);
  
- TamiBase::g_prod_t construct_multipole_example();
- 
+TamiBase::g_prod_t construct_multipole_example();
+  /*
  TamiBase::ami_vars construct_ext_example1_bose(TamiBase& tami);
  TamiBase::g_prod_t construct_example1_bose();
  
@@ -32,8 +32,8 @@
 
  TamiBase::g_prod_t construct_example6();
  TamiBase::ami_vars construct_ext_example6(TamiBase& tami);
-
- void default_example();
+*/
+ void default_example();/*
  void default_example_gpu();
  void example_1();
  void example2();
@@ -45,7 +45,7 @@
  void graph_library_example();
  void renorm_PT_graph_example();
  void torch_playground();
-
+*/
 // TODO: clean these up - maybe put together
  std::string format_r1_tensor(const at::Tensor&);
  std::string format_r2_tensor(const at::Tensor&);

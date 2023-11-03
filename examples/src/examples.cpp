@@ -1,6 +1,6 @@
 #include "examples.hpp"
 
-
+/*
 TamiBase::g_prod_t construct_example2(){
 
 TamiBase::g_prod_t g;
@@ -185,77 +185,25 @@ R0.push_back(g17);
 return R0;
 
 }
-
-
-
-
-// So this has some issues once you hit the multipole problem. 
-// Lets fully use the terms construction functions but then strip away the ft part on each integration step. Then translate the terms into the ft terms 
-// question: Should the poles be collected in pole array or in ft?
-/* void TamiBase::integrate_step(int index, ft_terms &in_terms, ft_terms &out_terms) {
-  out_terms.clear();
-
-  for (int t_index = 0; t_index < in_terms.size(); t_index++) {
-    TamiBase::pole_array_t poles;
-    poles = amibase.find_poles(index, in_terms[t_index].g_prod_);
-
-    for (int i = 0; i < poles.size(); i++) {
-      if (poles[i].multiplicity_ == 1) {
-        ft_term new_term;
-        new_term.g_prod_ = amibase.simple_residue(in_terms[t_index].g_prod_, poles[i]);
-        // take sign from original term and multiply by new one
-        new_term.sign_ =
-            in_terms[t_index].sign_ *
-            amibase.get_simple_sign(index, in_terms[t_index].g_prod_, poles[i]);
-        // take poles from originating term
-        
-        
-        FermiTree::fermi_tree_t existing= in_terms[t_index].ft_;
-        FermiTree::fermi_tree_t newtree;
-        FT.initialize_ft(newtree,poles[i]);
-        
-        new_term.ft_=FT.mult_ft(existing, newtree);
-        
-        
-        out_terms.push_back(new_term);
-      } else {
-        TamiBase::terms new_terms;
-        terms_general_residue(in_terms[t_index], poles[i], new_terms);
-
-      for(int j=0; j< new_terms.size(); j++){
-        FermiTree::fermi_tree_t blank=in_terms[t_index].ft_;
-        FermiTree::fermi_tree_t nt;
-        FT.initialize_ft(nt, new_terms
-        
-        
-      }
-
-
-
-        // put new terms in the list
-        out_terms.insert(out_terms.end(), new_terms.begin(), new_terms.end());
-      }
-    }
-  }
-}
- */
-
-
+*/
 
 
 TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami){
 
-int batch_size = 5;
+int ebatch_size = 5;
+int fbatch_size = 3;
 
 std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.31,1.4,0.01, 0.1}; //{1,1.1,1.2,1.3,1.4,0.01, 0.1};
 
-TamiBase::energy_t energy= at::tensor(energy_vec, tami.options).repeat({batch_size, 1});
+TamiBase::energy_t energy= at::tensor(energy_vec, tami.options).repeat({ebatch_size, 1});
 
-TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
+std::vector<TamiBase::complex_double> frequency_vec = {TamiBase::complex_double(0,0),
 				TamiBase::complex_double(0,0),
 				TamiBase::complex_double(0,0),
 				TamiBase::complex_double(0,0),
 				TamiBase::complex_double(0,M_PI)};
+
+TamiBase::frequency_t frequency = at::tensor(frequency_vec, tami.options).repeat({fbatch_size, 1});
 
 double BETA=1.0;
 TamiBase::ami_vars external(energy, frequency,BETA);
@@ -264,21 +212,24 @@ return external;
 
 }
 
-TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami, int batch_size){
-
-// int batch_size = 5;
+TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami, int ebatch_size, int fbatch_size){
 
 std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.31,1.4,0.01, 0.1}; //{1,1.1,1.2,1.3,1.4,0.01, 0.1};
-
-// TamiBase::energy_t energy= at::tensor(energy_vec).repeat({batch_size, 1}).to(tami.device);
 int energy_size = energy_vec.size();
-TamiBase::energy_t energy= 8.0*at::rand({batch_size,energy_size}, tami.options)-4.0;//.repeat({batch_size, 1}, options);
 
-TamiBase::frequency_t frequency= {TamiBase::complex_double(0,0),
-				TamiBase::complex_double(0,0),
-				TamiBase::complex_double(0,0),
-				TamiBase::complex_double(0,0),
-				TamiBase::complex_double(0,M_PI)};
+TamiBase::energy_t energy= 8.0*at::rand({ebatch_size,energy_size}, tami.options)-4.0;
+
+std::vector<at::Tensor> freq_vecs = {};
+
+for (int i=0; i < fbatch_size; ++i){
+  freq_vecs.push_back(at::tensor({TamiBase::complex_double(0,0),
+                       TamiBase::complex_double(0,0),
+                       TamiBase::complex_double(0,0),
+                       TamiBase::complex_double(0,0),
+                       TamiBase::complex_double(0,M_PI*(2*i+1))}, tami.options));
+}
+
+TamiBase::frequency_t frequency = at::vstack(freq_vecs);
 
 double BETA=1.0;
 TamiBase::ami_vars external(energy, frequency,BETA);
@@ -346,7 +297,7 @@ R0.push_back(g7);
 return R0;
 }
 
-
+/*
 
 TamiBase::g_prod_t construct_example1_bose(){
 
@@ -568,7 +519,7 @@ R0.push_back(g11);
 return R0;
 
 }
-
+*/
  std::string format_r1_tensor(const at::Tensor& tens){
 
   std::ostringstream str;
