@@ -5,8 +5,8 @@ import time
 
 def main():
     example_2()
-    #example_4()
-    #example_6()
+    example_4()
+    example_6()
 
 def example_2():
 
@@ -25,7 +25,7 @@ def example_2():
     R0 = ex.construct_example2()
 
     # external variables
-    avars = ex.construct_ext_example2(ami, 10, 2)
+    avars = ex.construct_ext_example2(ami)
 
     # timing info for setup
     t1 = time.time()
@@ -70,7 +70,7 @@ def example_4():
     print("\n-----Constructing Fermi Tree format -----\n")
     
     # torch device to perform calculations on
-    device = torch.device("cuda")
+    device = torch.device("cpu")
 
     # class instance
     ami = pytami.TamiBase(device)
@@ -122,7 +122,7 @@ def example_6():
     print("\n-----Constructing Fermi Tree format -----\n")
     
     # torch device to perform calculations on
-    device = torch.device("cuda")
+    device = torch.device("cpu")
 
     # class instance
     ami = pytami.TamiBase(device)

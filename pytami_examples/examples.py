@@ -22,11 +22,14 @@ def construct_example2():
 
     return R0
 
-def construct_ext_example2(tami: pytami.TamiBase, ebatchsize: int, fbatchsize: int) -> pytami.TamiBase.ami_vars: 
+def construct_ext_example2(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
+
+    ebatchsize = 10
+    fbatchsize = 5
 
     energy = torch.tensor([-4, 0.1, -1], device=tami.getDevice()).repeat([ebatchsize, 1])
     
-    frequency_vec = pytami.TamiBase.frequency_t()
+    frequency_vec = []
     for i in range(2):
         frequency_vec.append(0+0j)
     
@@ -76,13 +79,18 @@ def construct_example4():
 
 def construct_ext_example4(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
 
-    energy = torch.tensor([1, 1.1, 1.2, 1.31, 1.4, 0.01, 0.1], device=tami.getDevice()).repeat([10, 1])
-    frequency = pytami.TamiBase.frequency_t()
+    ebatchsize = 10
+    fbatchsize = 5
+
+    energy = torch.tensor([1, 1.1, 1.2, 1.31, 1.4, 0.01, 0.1], device=tami.getDevice()).repeat([ebatchsize, 1])
+    frequency_vec = []
     for i in range(4):
-        frequency.append(0+0j)
+        frequency_vec.append(0+0j)
     
-    frequency.append(0+np.pi*1j)
+    frequency_vec.append(0+np.pi*1j)
     beta = 1.0
+
+    frequency = torch.tensor(frequency_vec, device=tami.getDevice()).repeat([fbatchsize, 1])
     external = pytami.TamiBase.ami_vars(energy, frequency, beta)
 
     return external
@@ -90,13 +98,18 @@ def construct_ext_example4(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
 
 def construct_ext_example6(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
 
-    energy = torch.tensor([1,1.1,1.2,1.3,1.4,0, 0.1, 0.2, 0.3,0.4, 0.5], device=tami.getDevice()).repeat([10, 1])
-    frequency = pytami.TamiBase.frequency_t()
+    ebatchsize = 10000
+    fbatchsize = 100
+
+    energy = torch.tensor([1,1.1,1.2,1.3,1.4,0, 0.1, 0.2, 0.3,0.4, 0.5], device=tami.getDevice()).repeat([ebatchsize, 1])
+    frequency_vec = []
     for i in range(6):
-        frequency.append(0+0j)
+        frequency_vec.append(0+0j)
     
-    frequency.append(0+np.pi*1j)
+    frequency_vec.append(0+np.pi*1j)
     beta = 1.0
+
+    frequency = torch.tensor(frequency_vec, device=tami.getDevice()).repeat([fbatchsize, 1])
     external = pytami.TamiBase.ami_vars(energy, frequency, beta)
 
     return external
