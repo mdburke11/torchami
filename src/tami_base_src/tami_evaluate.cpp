@@ -30,8 +30,8 @@ at::Tensor TamiBase::evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
   TamiBase::FermiTree::vertex_t r=FT.get_root(ft_term.ft_);
   fprod = eval_ft(parms, ft_term.ft_,r, external); // 1 by n_energy tensor - it needs to be blown up to match the dimension of g_prod
 
-  int fbatch_size = external.frequency_t.size(0);
-  at::Tensor blownupfprod = fprod.repeat({fbatch_size, 1}) // now n_freq by n_energy and can be multiplied
+  int fbatch_size = external.frequency_.size(0);
+  at::Tensor blownupfprod = fprod.repeat({fbatch_size, 1}); // now n_freq by n_energy and can be multiplied
   at::Tensor output = ft_term.sign_ * torch::multiply(gprod, blownupfprod); 
 
 return output;
@@ -278,7 +278,7 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
                                          at::Tensor E) {
 
-  int ebatch_size = E.size(0);
+  int ebatch_size = E.size(1);
   at::Tensor output = at::zeros({1, ebatch_size}, options);
   at::Tensor term = at::zeros({1, ebatch_size}, options);
 
