@@ -22,15 +22,18 @@ def construct_example2():
 
     return R0
 
-def construct_ext_example2(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars: 
+def construct_ext_example2(tami: pytami.TamiBase, ebatchsize: int, fbatchsize: int) -> pytami.TamiBase.ami_vars: 
 
-    energy = torch.tensor([-4, 0.1, -1], device=tami.getDevice()).repeat([10, 1])
-    frequency = pytami.TamiBase.frequency_t()
-    for i in range(2):
-        frequency.append(0+0j)
+    energy = torch.tensor([-4, 0.1, -1], device=tami.getDevice()).repeat([ebatchsize, 1])
     
-    frequency.append(0+np.pi*1j)
+    frequency_vec = pytami.TamiBase.frequency_t()
+    for i in range(2):
+        frequency_vec.append(0+0j)
+    
+    frequency_vec.append(0+np.pi*1j)
     beta = 1.0
+
+    frequency = torch.tensor(frequency_vec, device=tami.getDevice()).repeat([fbatchsize, 1])
     external = pytami.TamiBase.ami_vars(energy, frequency, beta)
 
     return external
