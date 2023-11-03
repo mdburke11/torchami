@@ -23,12 +23,14 @@ int main( int argc , char *argv[] )
 void default_example(){
 
   at::Device myDev = at::kCPU;
+  int freq_batchsize = 5;
+  int energy_batchsize = 10;
 
   TamiBase PT(myDev);
   TamiBase::ft_terms ftout;
 
   TamiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
-  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example(PT, 10, 5);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
+  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example(PT, energy_batchsize, freq_batchsize);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
 
   std::cout << "Starting energy tensor: " << std::endl;
   std::cout << format_r2_tensor(avars2.energy_) << std::endl;
