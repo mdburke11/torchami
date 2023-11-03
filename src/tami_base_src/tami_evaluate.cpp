@@ -26,11 +26,13 @@ at::Tensor TamiBase::evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
 
   at::Tensor gprod,fprod;
 
-  gprod = eval_gprod(parms, ft_term.g_prod_, external);
+  gprod = eval_gprod(parms, ft_term.g_prod_, external); // n_freq by n_energy tensor
   TamiBase::FermiTree::vertex_t r=FT.get_root(ft_term.ft_);
-  fprod = eval_ft(parms, ft_term.ft_,r, external); 
-  
-  at::Tensor output = ft_term.sign_ * torch::multiply(gprod, fprod); 
+  fprod = eval_ft(parms, ft_term.ft_,r, external); // 1 by n_energy tensor - it needs to be blown up to match the dimension of g_prod
+
+  int fbatch_size = external.frequency_t.size(0);
+  at::Tensor blownupfprod = fprod.repeat({fbatch_size, 1}) // now n_freq by n_energy and can be multiplied
+  at::Tensor output = ft_term.sign_ * torch::multiply(gprod, blownupfprod); 
 
 return output;
 
@@ -46,10 +48,9 @@ at::Tensor TamiBase::eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fe
   FT.get_next_level( ft1, v, level);
 
   int ebatch_size = external.energy_.size(0);
-  int fbatch_size = external.frequency_.size(0);
-  at::Tensor output = at::zeros({fbatch_size, ebatch_size}, options);
-  at::Tensor aoutput = at::zeros({fbatch_size, ebatch_size}, options);
-  at::Tensor moutput = at::ones({fbatch_size, ebatch_size}, options);
+  at::Tensor output = at::zeros({1, ebatch_size}, options);
+  at::Tensor aoutput = at::zeros({1, ebatch_size}, options);
+  at::Tensor moutput = at::ones({1, ebatch_size}, options);
   
   switch(ft1[v].operation_){
     
@@ -144,22 +145,12 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
   }
 
   int ebatch_size = external.energy_.size(0);
-  int fbatch_size = external.frequency_.size(0);
   
-  at::Tensor output = at::zeros({fbatch_size, ebatch_size}, options); // get len(energies) * len(frequencies) answers
+  at::Tensor output = at::zeros({1, ebatch_size}, options); // get 1 by len(energies) answers
   int eta = 0;
 
   double beta = external.BETA_;
   double E_REG = parms.E_REG_;
-
-  // TODO: should we use at::scalars (c10::complex<double>) instead of std::complex<double> -- Hopefully this is fixed
-  // Spectral evaluation only
-  at::Tensor freq_shift = at::zeros({1, fbatch_size}, options);
-  if (pole.x_alpha_.size() != 0) {
-    for (int i = 0; i < pole.x_alpha_.size(); i++) {
-      freq_shift += external.frequency_.index({torch::indexing::Slice(),i}) * (double)pole.x_alpha_[i]; // Now a row of all the frequencies being simultaneously being evaluated TYPO ?!?!?!?!?
-    }
-  }
 
   // Future Development: 
   // In order to generalize to have fermi and bose lines, from here to 'sigma' needs
@@ -220,13 +211,6 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
   c10::Scalar freqshift = c10::complex<double>(freq_shift.real(), freq_shift.imag()); // cast to a tensor friendly complex value
   */
 
-  // Need all combinations of energy and frequency
-  at::Tensor blownupE = E.repeat({fbatch_size, 1});
-  at::Tensor blownupF = freq_shift.transpose(0, 1).repeat({1, ebatch_size});
-
-  at::Tensor all_evals = blownupE + blownupF;
-
-
   double sigma = pow(-1.0, double(eta));
 
   TamiBase::complex_double zero(0, 0);
@@ -261,7 +245,7 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
   int m = pole.der_;
 
   // compute m'th derivative
-  output = fermi_bose(m, sigma, beta, all_evals);
+  output = fermi_bose(m, sigma, beta, E);
 
 /* 
   // TODO: print max here as well ? commented until proper printint formating is implemented
@@ -294,10 +278,9 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
                                          at::Tensor E) {
 
-  int fbatch_size = E.size(0);
-  int ebatch_size = E.size(1);
-  at::Tensor output = at::zeros({fbatch_size, ebatch_size}, options);
-  at::Tensor term = at::zeros({fbatch_size, ebatch_size}, options);
+  int ebatch_size = E.size(0);
+  at::Tensor output = at::zeros({1, ebatch_size}, options);
+  at::Tensor term = at::zeros({1, ebatch_size}, options);
 
   if (m == 0) {
               // Note: Disabled on 09/09/2022 for overflow testing 
