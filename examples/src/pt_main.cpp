@@ -22,22 +22,22 @@ int main( int argc , char *argv[] )
 
 void default_example(){
 
-  at::Device myDev = at::kCPU;
-  int freq_batchsize = 5;
-  int energy_batchsize = 10;
+  at::Device myDev = at::kCUDA;//at::kCPU;
+  int freq_batchsize = 1;
+  int energy_batchsize = 100;
 
   TamiBase PT(myDev);
   TamiBase::ft_terms ftout;
 
-  TamiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
-  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example(PT, energy_batchsize, freq_batchsize);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
+  TamiBase::g_prod_t R02=construct_example6();//construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
+  TamiBase::ami_vars avars2=construct_ext_example6(PT, energy_batchsize, freq_batchsize);//construct_4ord_ext_multipole_example(PT, energy_batchsize, freq_batchsize);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
 
   std::cout << "Starting energy tensor: " << std::endl;
   std::cout << format_r2_tensor(avars2.energy_) << std::endl;
 
   TamiBase::ft_terms ftout2;
 
-  PT.construct(4, R02, ftout2);
+  PT.construct(6, R02, ftout2);
   TamiBase::ami_parms parms2(0, 0);
 
   auto t2=std::chrono::high_resolution_clock::now();
@@ -49,6 +49,27 @@ void default_example(){
 
   // std::chrono::nanoseconds d=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
 
+  
+  std::ofstream file;
+  file.open("scaling.dat", std::ofstream::out);
+
+  for(int i=5; i<10000; i=i+100){
+    freq_batchsize=i;
+    energy_batchsize=i;
+  // avars2=construct_4ord_ext_multipole_example(PT, energy_batchsize, freq_batchsize);
+  avars2=construct_ext_example6(PT, energy_batchsize, freq_batchsize);
+
+  auto tt=std::chrono::high_resolution_clock::now();
+  at::Tensor result3=PT.evaluate(parms2,ftout2,avars2);
+
+  auto tt_end=std::chrono::high_resolution_clock::now();
+
+std::chrono::duration<double> difftt=tt_end-tt;
+std::chrono::nanoseconds dtt=std::chrono::duration_cast<std::chrono::nanoseconds>(difftt);
+
+file<<i<<" "<< dtt.count()<<std::endl;
+
+  }
 
 
   std::cout<<"--------------------"<<std::endl;
@@ -56,7 +77,7 @@ void default_example(){
   // PT.FT.print_graph(ftout2[0].ft_);
   // std::cout<<PT.FT.pretty_print(ftout2[0].ft_)<<std::endl;
 
-  std::cout<<PT.pretty_print_ft_terms(ftout2)<<std::endl;
+  // std::cout<<PT.pretty_print_ft_terms(ftout2)<<std::endl;
   std::cout<<"Result 4th order MP "<<format_r2_tensor(result2)<<std::endl;
   std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
   std::cout<<"Evaluation took "<< d2.count()<<" nanoseconds"<<std::endl;	

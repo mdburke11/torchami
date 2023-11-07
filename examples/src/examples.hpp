@@ -20,6 +20,10 @@
  TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami, int ebatch_size, int fbatch_size);
  
 TamiBase::g_prod_t construct_multipole_example();
+
+TamiBase::ami_vars construct_ext_example6(TamiBase& tami, int ebatch_size, int fbatch_size);
+TamiBase::g_prod_t construct_example6();
+
   /*
  TamiBase::ami_vars construct_ext_example1_bose(TamiBase& tami);
  TamiBase::g_prod_t construct_example1_bose();

@@ -187,7 +187,9 @@ return R0;
 }
 */
 
-
+/// @brief 
+/// @param tami 
+/// @return 
 TamiBase::ami_vars construct_4ord_ext_multipole_example(TamiBase& tami){
 
 int ebatch_size = 5;
@@ -520,6 +522,107 @@ return R0;
 
 }
 */
+
+
+TamiBase::ami_vars construct_ext_example6(TamiBase& tami, int ebatch_size, int fbatch_size){
+
+
+int batch_size = 2;
+
+std::vector<TamiBase::complex_double> energy_vec = {1,1.1,1.2,1.3,1.4,0, 0.1, 0.2, 0.3,0.4, 0.5};
+int energy_size = energy_vec.size();
+
+//TamiBase::energy_t energy= at::tensor(energy_vec, tami.options).repeat({batch_size, 1});
+TamiBase::energy_t energy= 8.0*at::rand({ebatch_size,energy_size}, tami.options)-4.0;
+std::vector<at::Tensor> freq_vecs = {};
+for (int i=0; i < fbatch_size; ++i){
+freq_vecs.push_back(at::tensor({TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,0),
+                TamiBase::complex_double(0,0),
+                TamiBase::complex_double(0,0),
+				TamiBase::complex_double(0,M_PI*(2*i+1))}, tami.options));
+}
+
+TamiBase::frequency_t frequency = at::vstack(freq_vecs);
+
+double BETA=1.0;
+TamiBase::ami_vars external(energy, frequency,BETA);
+
+return external;
+
+}
+
+TamiBase::g_prod_t construct_example6(){
+
+TamiBase::g_prod_t g;
+
+
+// Setting up G array
+// defining alpha's
+
+TamiBase::alpha_t alpha_1={1,0,0,0,0,0,0};
+TamiBase::alpha_t alpha_2={0,1,0,0,0,0,0};
+TamiBase::alpha_t alpha_3={0,0,1,0,0,0,0};
+TamiBase::alpha_t alpha_4={0,0,0,1,0,0,0};
+TamiBase::alpha_t alpha_5={0,0,0,0,1,0,0};
+TamiBase::alpha_t alpha_6={0,0,0,0,0,1,0};
+TamiBase::alpha_t alpha_7={1,-1,0,0,0,1,0};
+TamiBase::alpha_t alpha_8={-1,1,0,0,0,0,1};
+TamiBase::alpha_t alpha_9={-1,1,0,0,0,0,1};
+TamiBase::alpha_t alpha_10={-1,1,-1,1,0,0,1};
+TamiBase::alpha_t alpha_11={1,0,0,0,-1,1,0};
+
+//defining epsilon's
+TamiBase::epsilon_t epsilon_1={1,0,0,0,0,0,0,0,0,0,0};
+TamiBase::epsilon_t epsilon_2={0,1,0,0,0,0,0,0,0,0,0};
+TamiBase::epsilon_t epsilon_3={0,0,1,0,0,0,0,0,0,0,0};
+TamiBase::epsilon_t epsilon_4={0,0,0,1,0,0,0,0,0,0,0};
+TamiBase::epsilon_t epsilon_5={0,0,0,0,1,0,0,0,0,0,0};
+TamiBase::epsilon_t epsilon_6={0,0,0,0,0,1,0,0,0,0,0};
+TamiBase::epsilon_t epsilon_7={0,0,0,0,0,0,1,0,0,0,0};
+TamiBase::epsilon_t epsilon_8={0,0,0,0,0,0,0,1,0,0,0};
+TamiBase::epsilon_t epsilon_9={0,0,0,0,0,0,0,1,0,0,0};
+TamiBase::epsilon_t epsilon_10={0,0,0,0,0,0,0,0,0,1,0};
+TamiBase::epsilon_t epsilon_11={0,0,0,0,0,0,0,0,0,0,1};
+
+
+TamiBase::g_struct g1(epsilon_1,alpha_1);
+TamiBase::g_struct g2(epsilon_2,alpha_2);
+TamiBase::g_struct g3(epsilon_3,alpha_3);
+TamiBase::g_struct g4(epsilon_4,alpha_4);
+TamiBase::g_struct g5(epsilon_5,alpha_5);
+TamiBase::g_struct g6(epsilon_6,alpha_6);
+TamiBase::g_struct g7(epsilon_7,alpha_7);
+TamiBase::g_struct g8(epsilon_8,alpha_8);
+TamiBase::g_struct g9(epsilon_9,alpha_9);
+TamiBase::g_struct g10(epsilon_10,alpha_10);
+TamiBase::g_struct g11(epsilon_11,alpha_11);
+
+
+
+TamiBase::g_prod_t R0;
+
+R0.push_back(g1);
+R0.push_back(g2);
+R0.push_back(g3);
+R0.push_back(g4);
+R0.push_back(g5);
+R0.push_back(g6);
+R0.push_back(g7);
+R0.push_back(g8);
+R0.push_back(g9);
+R0.push_back(g10);
+R0.push_back(g11);
+
+
+return R0;
+
+}
+
+
+
  std::string format_r1_tensor(const at::Tensor& tens){
 
   std::ostringstream str;
