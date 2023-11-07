@@ -14,15 +14,40 @@ int main( int argc , char *argv[] )
   }
 
   switch(mode) {
-    case 0:
+     case 0:
       default_example();
+      break;
+    case 1:
+      example2();
+      break;
+    case 2:
+      example1_bose();
+      break;
+    case 3:
+      example4();
+      break;
+    case 4:
+      example9();
+      break;
+    case 5:
+      graph_library_example();
+      break;
+    case 6:
+      renorm_PT_graph_example();
+      break;
+    default:
+      example2();
+      //example1_bose(); // not working
+      example4();
+      example6();
+      example9();
       break;
   }
 }
 
 void default_example(){
 
-  at::Device myDev = at::kCUDA;//at::kCPU;
+  at::Device myDev = at::kCPU;//at::kCUDA;//at::kCPU;
   int freq_batchsize = 1;
   int energy_batchsize = 100;
 
@@ -53,7 +78,7 @@ void default_example(){
   std::ofstream file;
   file.open("scaling.dat", std::ofstream::out);
 
-  for(int i=5; i<10000; i=i+100){
+  for(int i=5; i<3000; i=i+100){
     freq_batchsize=i;
     energy_batchsize=i;
   // avars2=construct_4ord_ext_multipole_example(PT, energy_batchsize, freq_batchsize);
@@ -84,114 +109,10 @@ file<<i<<" "<< dtt.count()<<std::endl;
 
 }
 
-
-
-
-
-#if 0
-    case 1:
-      example_1();
-      break;
-    case 2:
-      example2();
-      break;
-    case 3:
-      example1_bose();
-      break;
-    case 4:
-      example4();
-      break;
-    case 5:
-      example9();
-      break;
-    case 6:
-      default_example_gpu();
-      break;
-    case 7:
-      python_comparison();
-      break;
-    case 8:
-      graph_library_example();
-      break;
-    case 9:
-      renorm_PT_graph_example();
-      break;
-    case 10:
-      torch_playground();
-      break;
-    default:
-      example2();
-      example1_bose();
-      example4();
-      example6();
-      example9();
-      break;
-  }
-
-  return 0;
-}
-
-void torch_playground(){
-  at::TensorOptions options = at::TensorOptions().dtype(at::kDouble).device(at::kCPU);
-  int length = 20;
-  std::vector<std::vector<double>> domain {{0, 1}, {0, 10}, {0, 100}};
-  std::vector<at::Tensor> rand_cols;
-
-  for (auto r: domain){
-    at::Tensor col = at::empty({length, 1}, options);
-    std::cout << format_r1_tensor(col) << std::endl;
-    at::Tensor rand = at::uniform(col, r[0], r[1]);
-    std::cout << format_r1_tensor(rand) << std::endl;
-    rand_cols.push_back(rand);
-  }
-
-  at::Tensor final = at::hstack(rand_cols);
-  std::cout << format_r2_tensor(final) << std::endl;
-
-  at::Tensor z = final + c10::complex<double>(0,1) * final;
-  std::cout << format_r2_tensor(z) << std::endl;
-
-  final = at::ones({10, 10});
-  final[0][0] = NAN;
-  std::cout << final << std::endl;
-
-  int num_nans = ((final != final).sum()).item<int>();
-
-  std::cout << num_nans << std::endl;
-
-  at::Tensor zero = at::zeros({10, 9}, options);
-  std::cout << format_r2_tensor(zero) << std::endl;
-
-  std::vector<std::vector<int>> a = {{1, 0, 0}, {0, 1, 0}, {1, 1, -1}};
-
-  //at::Tensor alpha = at::from_blob(a.data(), {3, 3});
-  std::vector<at::Tensor> alpha_vec;
-  for (auto row : a){
-    alpha_vec.push_back(at::tensor(row, options));
-  }
-  at::Tensor alpha = at::vstack(alpha_vec);
-
-  at::Tensor full = at::kron(alpha, at::eye(2, options));
-
-  std::cout << format_r2_tensor(full) << std::endl;
-
-  std::cout << at::size(zero, 0) << std::endl;
-  std::cout << at::size(zero, 1) << std::endl;
-
-
-  at::Tensor ones = at::tensor({1, 4, 5}).reshape({1, 3});
-  at::Tensor rep = ones.repeat({3, 1});
-  std::cout << "ones test" << std::endl;
-  std::cout << ones << std::endl;
-
-  std::cout << "rep test" << std::endl;
-  std::cout << rep << std::endl;
-
-  at::Tensor stand = ones.transpose(0, 1).repeat({1, 3});
-  std::cout << stand << std::endl;
-}
-
 void graph_library_example(){
+
+  int fbatch_size = 1;
+  int ebatch_size = 100;
 
   // this is an example of using the libtami_graph library to evaluate the graphs
   // in the ggm_examples folder.
@@ -240,6 +161,9 @@ void graph_library_example(){
 }
 
 void renorm_PT_graph_example(){
+
+  int fbatch_size = 1;
+  int ebatch_size = 100;
 
   // this is an example of using the libtami_graph library to evaluate the graphs
   // in the ggm_examples folder.
@@ -298,252 +222,12 @@ void renorm_PT_graph_example(){
   }
 }
 
-
-
-void default_example(){
-
-  // Terms example
-
-  TamiBase::g_prod_t R0=construct_example2();
-
-  at::Device myDev = at::kCPU;
-
-  TamiBase PT(myDev);
-  TamiBase::ft_terms ftout;
-
-  /* PT.construct(2, R0, ftout);
-
-  FermiTree::vertex_t r=PT.FT.get_root(ftout[0].ft_);
-  std::cout<<PT.FT.pretty_print_ft(ftout[0].ft_,r)<<std::endl;
-
-  PT.FT.number_vertices(ftout[0].ft_);
-  PT.FT.print_graph(ftout[0].ft_);
-
-  std::cout<<PT.pretty_print_ft_terms(ftout)<<std::endl;
-  TamiBase::ami_vars ext=construct_ext_example2();
-
-  double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
-  int N_INT=2;  // Number of Matsubara sums to perform
-  TamiBase::ami_parms parms(N_INT, E_REG);
-
-  std::complex<double> result=PT.evaluate(parms,ftout,ext);
-
-  std::cout<<"Result is "<<result<<std::endl; */
-
-  TamiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
-  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example(PT);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
-
-  // construct_4ord_ext_multipole_example();
-  // TamiBase::g_prod_t construct_multipole_example();
-
-
-  std::cout << "Starting energy tensor: " << std::endl;
-  std::cout << format_r2_tensor(avars2.energy_) << std::endl;
-
-  TamiBase::ft_terms ftout2;
-
-  PT.construct(4, R02, ftout2);
-  TamiBase::ami_parms parms2(0, 0);
-
-  auto t2=std::chrono::high_resolution_clock::now();
-  at::Tensor result2=PT.evaluate(parms2,ftout2,avars2);
-
-  auto t_end=std::chrono::high_resolution_clock::now();
-
-  std::chrono::duration<double> diff2=t_end-t2;
-
-  // std::chrono::nanoseconds d=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
-
-
-
-  std::cout<<"--------------------"<<std::endl;
-  // PT.FT.number_vertices(ftout2[0].ft_);
-  // PT.FT.print_graph(ftout2[0].ft_);
-  // std::cout<<PT.FT.pretty_print(ftout2[0].ft_)<<std::endl;
-
-  std::cout<<PT.pretty_print_ft_terms(ftout2)<<std::endl;
-  std::cout<<"Result 4th order MP "<<format_r1_tensor(result2)<<std::endl;
-  std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
-  std::cout<<"Evaluation took "<< d2.count()<<" nanoseconds"<<std::endl;	
-
-  // PtTamiBase::ft_terms ftout3;
-  // ftout3.push_back(ftout2[1]);
-  // ftout3.push_back(ftout2[6]);
-
-  // PT.FT.number_vertices(ftout3[0].ft_);
-  // PT.FT.number_vertices(ftout3[1].ft_);
-  // ftout3.push_back(ftout2[3]);
-
-  // std::complex<double> result3=PT.evaluate(parms2,ftout3,avars2);
-  // std::cout<<"First term gives "<< result3<<std::endl;
-  // std::cout<<PT.pretty_print_ft_terms(ftout3)<<std::endl;
-
-  // PT.FT.print_graph(ftout3[1].ft_);
-  // PT.FT.mult_prefactor(ftout3[0].ft_,-1);
-  // PT.FT.print_graph(ftout3[1].ft_);
-  // result3=PT.evaluate(parms2,ftout3,avars2);
-  // std::cout<<"After mult First term gives "<< result3<<std::endl;
-  // std::cout<<PT.pretty_print_ft_terms(ftout3)<<std::endl;
-
-  // std::cout<<"Factorize!----------"<<std::endl;
-
-  // PtTamiBase::ft_terms factorized;
-  // PT.factorize(ftout3,factorized);
-  // std::cout<<PT.pretty_print_ft_terms(factorized)<<std::endl;
-  // std::complex<double> result4=PT.evaluate(parms2,factorized,avars2);
-  // std::cout<<"Factorized two terms give "<< result4<<std::endl;
-
-  // PT.FT.number_vertices(ftout3[1].ft_);
-  // PT.FT.print_graph(ftout3[1].ft_);
-
-  // result4=PT.evaluate(parms2,ftout3,avars2);
-
-  // PT.FT.print_graph(ftout3[1].ft_);
-  // result4=PT.evaluate(parms2,ftout3,avars2);
-  // std::cout<<"NonFactorized two terms give "<< result4<<std::endl;
-  // PT.FT.number_vertices(ftout2[0].ft_);
-  // PT.FT.print_graph(ftout2[0].ft_);
-
-  // TamiBase::epsilon_t eps={0,1};
-  // TamiBase::alpha_t alpha={1,0};
-
-  // TamiBase::pole_struct p(eps,alpha);
-
-  // FermiTree FT;
-
-  // FermiTree::fermi_tree_t ft;
-  // FermiTree::vertex_t root_ft=FT.get_root(ft);
-  // std::cout<<ft[root_ft].index_<<" op: "<< ft[root_ft].operation_<<std::endl;
-
-  // FT.initialize_ft(ft);
-
-  // FermiTree::fermi_tree_t ft2;
-  // FT.initialize_ft(ft2);
-
-
-
-  // std::cout<< num_vertices(ft)<<std::endl;
-  // std::cout<< num_vertices(ft2)<<std::endl;
-
-  // root_ft=FT.get_root(ft);
-  // std::cout<<ft[root_ft].index_<<" op: "<< ft[root_ft].operation_<<std::endl;
-
-  // FermiTree::vertex_t root_ft2=FT.get_root(ft2);
-  // std::cout<<ft2[root_ft2].index_<<" op: "<< ft2[root_ft2].operation_<<std::endl;
-
-
-
-
-  // std::pair<vertex_t,vertex_t> map;
-  // copy_vertex(root_ft,root_ft2,ft,ft2,map);
-  // std::cout<<"ft2 now has "<< num_vertices(ft2)<<std::endl;
-  // print_ft(ft2);
-  // copy_vertex(root_ft,root_ft2,ft,ft2,map);
-  // std::cout<<"ft2 now has "<< num_vertices(ft2)<<std::endl;
-  // print_ft(ft2);
-
-  /* 
-  FermiTree::fermi_tree_t ft3=FT.add_ft(ft,ft2);
-  // fermi_tree_t ft5=ft3;
-
-
-
-  FermiTree::fermi_tree_t ft4=FT.mult_ft(ft3,ft3);
-  // number_vertices(ft4);
-  // print_graph(ft4);
-
-  FermiTree::fermi_tree_t ft5=FT.add_ft(FT.mult_ft(ft4,ft3),ft4);
-  // fermi_tree_t ft5=ft4;
-  FT.number_vertices(ft5);
-  FT.print_graph(ft5);
-
-
-  boost::graph_traits<FermiTree::fermi_tree_t>::vertex_iterator vi,vie;
-
-  for(boost::tie(vi,vie)=vertices(ft5); vi!=vie; ++vi){
-
-  if(ft5[*vi].operation_==2){ ft5[*vi].value_=2.0;}
-
-  }
-
-  FT.number_vertices(ft5);
-  FermiTree::vertex_t r=FT.get_root(ft5);
-  std::complex<double> result=FT.eval_ft(ft5,r);
-  std::cout<<"Result="<<result<<std::endl;
-
-  */
-}
-
-void default_example_gpu(){
-
-  // Terms example
-
-  TamiBase::g_prod_t R0=construct_example2();
-
-  at::Device myDev = at::kCPU;
-
-  TamiBase PT(myDev);
-  TamiBase::ft_terms ftout;
-
-  // int batch_size=5;
-
-  TamiBase::g_prod_t R02=construct_multipole_example();//construct_example_J();//construct_multipole_example();//construct_example1_bose();
-  TamiBase::ami_vars avars2=construct_4ord_ext_multipole_example(PT,5);//construct_ext_example_J();//construct_4ord_ext_multipole_example();//construct_ext_example1_bose();
-
-  // construct_4ord_ext_multipole_example();
-  // TamiBase::g_prod_t construct_multipole_example();
-
-
-  std::cout << "Starting energy tensor: " << std::endl;
-  std::cout << format_r2_tensor(avars2.energy_) << std::endl;
-
-  TamiBase::ft_terms ftout2;
-
-  PT.construct(4, R02, ftout2);
-  TamiBase::ami_parms parms2(0, 0);
-  
-  std::ofstream file;
-  file.open("scaling.dat", std::ofstream::out);
-  
-  for(int batch_size=1000; batch_size< 1000000; batch_size+=1000){
-  avars2=construct_4ord_ext_multipole_example(PT,batch_size);
-  
-  // std::cout << format_r2_tensor(avars2.energy_) << std::endl;
-
-  auto t2=std::chrono::high_resolution_clock::now();
-  at::Tensor result2=PT.evaluate(parms2,ftout2,avars2);
-  auto t_end=std::chrono::high_resolution_clock::now();
-
-  std::chrono::duration<double> diff2=t_end-t2;
-  std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
-  file<<batch_size<<" "<< d2.count()<<std::endl;	
-  // std::chrono::nanoseconds d=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
-  }
-  
-  file.close();
-
-
-  std::cout<<"--------------------"<<std::endl;
-  // PT.FT.number_vertices(ftout2[0].ft_);
-  // PT.FT.print_graph(ftout2[0].ft_);
-  // std::cout<<PT.FT.pretty_print(ftout2[0].ft_)<<std::endl;
-
-  // std::cout<<PT.pretty_print_ft_terms(ftout2)<<std::endl;
-  // std::cout<<"Result 4th order MP "<<format_r1_tensor(result2)<<std::endl;
-  // std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
-  // std::cout<<"Evaluation took "<< d2.count()<<" nanoseconds"<<std::endl;	
-
- 
-}
-
- void example_1(){
-
-  std::cout << "This is example1" << std::endl;
-
-
- }
-
 void example2(){
+
+// Number of parameters to evaluate - number of frequencies and num of energies to eval at a time
+int fbatch_size = 1;
+int ebatch_size = 100;
+
 std::cout<<std::endl<<"-_-_-_ Example - Second Order _-_-_-"<<std::endl<<std::endl;	
 	
 //START Example 
@@ -555,7 +239,7 @@ TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example2(); // Sets initial integrand 
-TamiBase::ami_vars avars=construct_ext_example2(ami); // Sets 'external' parameter values 
+TamiBase::ami_vars avars=construct_ext_example2(ami, ebatch_size, fbatch_size); // Sets 'external' parameter values 
 
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -590,13 +274,17 @@ at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate th
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
+std::cout<<"Term result was "<< format_r2_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 	
 }
 
- void example1_bose(){
+void example1_bose(){
+
+// Number of parameters to evaluate - number of frequencies and num of energies to eval at a time
+int fbatch_size = 1;
+int ebatch_size = 100;
 
 std::cout<<std::endl<<"-_-_-_ Example - First Order For Bosonic _-_-_-"<<std::endl<<std::endl;	
 	
@@ -609,7 +297,7 @@ TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example1_bose(); // Sets initial integrand 
-TamiBase::ami_vars avars=construct_ext_example1_bose(ami); // Sets 'external' parameter values 
+TamiBase::ami_vars avars=construct_ext_example1_bose(ami, ebatch_size, fbatch_size); // Sets 'external' parameter values 
 
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -645,14 +333,18 @@ at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate th
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
+std::cout<<"Term result was "<< format_r2_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 
  }
 
 
- void example4(){
+void example4(){
+
+// Number of parameters to evaluate - number of frequencies and num of energies to eval at a time
+int fbatch_size = 1;
+int ebatch_size = 100;
 
 std::cout<<std::endl<<"-_-_-_ Example - Fourth Order _-_-_-"<<std::endl<<std::endl;	
 	
@@ -665,7 +357,7 @@ TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_multipole_example(); // Sets initial integrand 
-TamiBase::ami_vars avars=construct_4ord_ext_multipole_example(ami); // Sets 'external' parameter values 
+TamiBase::ami_vars avars=construct_4ord_ext_multipole_example(ami, ebatch_size, fbatch_size); // Sets 'external' parameter values 
 
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -700,14 +392,19 @@ at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate th
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
+std::cout<<"Term result was "<< format_r2_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
  }
 
 
   void example6(){
-    std::cout<<std::endl<<"-_-_-_ Example - Sixth Order _-_-_-"<<std::endl<<std::endl;	
+
+  // Number of parameters to evaluate - number of frequencies and num of energies to eval at a time
+  int fbatch_size = 1;
+  int ebatch_size = 100;
+
+  std::cout<<std::endl<<"-_-_-_ Example - Sixth Order _-_-_-"<<std::endl<<std::endl;	
 	
   //START Example 
   // Same Problem, using ami_term storage type
@@ -718,7 +415,7 @@ std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 
   // Problem setup (see ami_example.cpp)
   TamiBase::g_prod_t R0=construct_example6(); // Sets initial integrand 
-  TamiBase::ami_vars avars=construct_ext_example6(ami); // Sets 'external' parameter values 
+  TamiBase::ami_vars avars=construct_ext_example6(ami, ebatch_size, fbatch_size); // Sets 'external' parameter values 
 
   // Integration/Evaluation parameters
   double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -753,7 +450,7 @@ std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
     std::chrono::duration<double> diff2=t4-t3;
     std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-  std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
+  std::cout<<"Term result was "<< format_r2_tensor(term_val)<<std::endl;
   std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
   std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 
@@ -761,6 +458,10 @@ std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 
 
  void example9(){
+
+// Number of parameters to evaluate - number of frequencies and num of energies to eval at a time
+int fbatch_size = 1;
+int ebatch_size = 100;
 
 std::cout<<std::endl<<"-_-_-_ Example - Ninth Order _-_-_-"<<std::endl<<std::endl;	
 	
@@ -773,7 +474,7 @@ TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
 TamiBase::g_prod_t R0=construct_example_J(); // Sets initial integrand 
-TamiBase::ami_vars avars=construct_ext_example_J(ami); // Sets 'external' parameter values 
+TamiBase::ami_vars avars=construct_ext_example_J(ami, ebatch_size, fbatch_size); // Sets 'external' parameter values 
 
 // Integration/Evaluation parameters
 double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
@@ -808,62 +509,7 @@ at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate th
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
+std::cout<<"Term result was "<< format_r2_tensor(term_val)<<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 }
-
-void python_comparison(){
-
-  std::cout << "C++ Fermi-Tree evaluation of second order self energy diagram" << std::endl;
-
-  std::cout<<std::endl<<"-_-_-_ Example - Second Order _-_-_-"<<std::endl<<std::endl;	
-	
-  // class instance
-  at::Device myDev = at::kCPU;
-  TamiBase ami(myDev);
-
-  // Problem setup (see ami_example.cpp)
-  TamiBase::g_prod_t R0=construct_example2(); // Sets initial integrand 
-  TamiBase::ami_vars avars=construct_ext_example2(ami); // Sets 'external' parameter values 
-
-    //timing info
-    auto t1=std::chrono::high_resolution_clock::now();
-
-  // Integration/Evaluation parameters
-  double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
-  int N_INT=2;  // Number of Matsubara sums to perform
-  TamiBase::ami_parms test_amiparms(N_INT, E_REG);
-
-  //simplified storage type 
-  TamiBase::ft_terms amiterms;
-
-  // Construct solution for problem defined in R0
-  ami.construct(N_INT, R0, amiterms);
-
-    //timing info 
-    auto t2=std::chrono::high_resolution_clock::now();
-
-    std::chrono::duration<double> diff1=t2-t1;
-    std::chrono::nanoseconds d1=std::chrono::duration_cast<std::chrono::microseconds>(diff1);
-
-  std::cout<<"Construction took "<<d1.count()<<" microseconds"<<std::endl;
-
-    //timing info 
-    auto t3=std::chrono::high_resolution_clock::now();
-
-  //Evaluate term-by-term solution 
-  at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate the term-by-term result for external values in 'avars'. Note that the test_amiparms is the same as the first case 
-    
-    //timing info
-    auto t4=std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff2=t4-t3;
-    std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::microseconds>(diff2);
-
-  std::cout<<"Term result was "<< format_r1_tensor(term_val)<<std::endl;
-  std::cout<<"Evaluation took "<<d2.count()<<" microseconds"<<std::endl;
-  std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
-
-
-}
-#endif
