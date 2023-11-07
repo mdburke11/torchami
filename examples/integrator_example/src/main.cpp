@@ -19,7 +19,7 @@ at::Tensor my_func(at::Tensor x){
 void matsubara_freq_test(){
 
     // init device and tamibase  and tamigraph obj
-    at::Device myDev = at::kCUDA;
+    at::Device myDev = at::kCPU;//at::kCUDA;
     TamiBase ami(myDev);
     TamiBase::graph_type graph_type = TamiBase::Sigma;
     int seed = 0;
