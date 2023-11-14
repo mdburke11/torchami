@@ -88,8 +88,9 @@ class integration_result{
 
             ans = sum / N;
             double avg_ans2 = sum2 / N;
-            double error = std::sqrt((avg_ans2 - std::pow(ans, 2)) / N);
+            error = std::sqrt((avg_ans2 - std::pow(ans, 2)) / N);
         }
+
 
 };
 

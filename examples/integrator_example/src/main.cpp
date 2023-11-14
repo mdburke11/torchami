@@ -18,6 +18,12 @@ at::Tensor my_func(at::Tensor x){
 
 void matsubara_freq_test(){
 
+    // output 2nd order diagram data to this file
+    // Use the python script to plot it
+    std::string ofname = "data.dat";
+    std::ofstream out;
+    out.open(ofname);
+
     // init device and tamibase  and tamigraph obj
     at::Device myDev = at::kCUDA;
     TamiBase ami(myDev);
@@ -78,7 +84,7 @@ void matsubara_freq_test(){
 
     */
 
-    AMI_integrand integrand(ami, R0, avars, ftout, parms, epsilon_tight_binding, 1, evars);
+    AMI_integrand integrand(ami, R0, avars, ftout, parms, epsilon_tight_binding, /*eval_realpart*/ 0, evars);
 
     at::TensorOptions integOptions = at::TensorOptions().dtype(at::kComplexDouble).device(at::kCUDA);
     int max_batch_size = 100000;
@@ -86,35 +92,16 @@ void matsubara_freq_test(){
     flat_mc_integrator::integ_domain domain = {{0, 2*M_PI}, {0, 2*M_PI}, {0, 2*M_PI},{0, 2*M_PI}};
 
     std::cout << std::setprecision(10) << std::endl;
-    for (int n=0; n<20; ++n){
+
+    for (int n=0; n<50; ++n){
         evars.imW = (2*n + 1) * M_PI / evars.beta;
         integrand.update_ext_vars(evars);
 
         evars.print_ext_vars();
         integration_result result = mc.integrate(integrand, 4, 1000000, domain);
-        std::cout << mat_freq << " " << evars.imW << " " << second_ord_sigma.prefactor * result.ans / std::pow(2* M_PI, 4) << " " << result.error/ std::pow(2* M_PI, 4) << std::endl;
+        std::cout << n << " " << evars.imW << " " << second_ord_sigma.prefactor * result.ans << " " << result.error << std::endl;
+        out << n << " " << evars.imW << " " << second_ord_sigma.prefactor * result.ans << " " << result.error << "\n";
     }
 
-    
-
-    //int batch_size = 100000000;
-    //at::TensorOptions integOptions = at::TensorOptions().dtype(at::kComplexDouble).device(at::kCUDA);
-    //flat_mc_integrator mc(integOptions, 1000000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    out.close();
 }
