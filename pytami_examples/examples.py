@@ -1,6 +1,5 @@
 import torch
 import pytami
-import numpy as np
 
 def construct_example2():
 
@@ -24,8 +23,8 @@ def construct_example2():
 
 def construct_ext_example2(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
 
-    ebatchsize = 10
-    fbatchsize = 5
+    ebatchsize = 5
+    fbatchsize = 2
 
     energy = torch.tensor([-4, 0.1, -1], device=tami.getDevice()).repeat([ebatchsize, 1])
     
@@ -33,7 +32,7 @@ def construct_ext_example2(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
     for i in range(2):
         frequency_vec.append(0+0j)
     
-    frequency_vec.append(0+np.pi*1j)
+    frequency_vec.append(0+torch.pi*1j)
     beta = 1.0
 
     frequency = torch.tensor(frequency_vec, device=tami.getDevice()).repeat([fbatchsize, 1])
@@ -87,7 +86,7 @@ def construct_ext_example4(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
     for i in range(4):
         frequency_vec.append(0+0j)
     
-    frequency_vec.append(0+np.pi*1j)
+    frequency_vec.append(0+torch.pi*1j)
     beta = 1.0
 
     frequency = torch.tensor(frequency_vec, device=tami.getDevice()).repeat([fbatchsize, 1])
@@ -106,7 +105,7 @@ def construct_ext_example6(tami: pytami.TamiBase) -> pytami.TamiBase.ami_vars:
     for i in range(6):
         frequency_vec.append(0+0j)
     
-    frequency_vec.append(0+np.pi*1j)
+    frequency_vec.append(0+torch.pi*1j)
     beta = 1.0
 
     frequency = torch.tensor(frequency_vec, device=tami.getDevice()).repeat([fbatchsize, 1])
