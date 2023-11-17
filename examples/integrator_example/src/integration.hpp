@@ -92,7 +92,7 @@ class integration_result{
 
             ans = sum / N;
             double avg_ans2 = sum2 / N;
-            double error = std::sqrt((avg_ans2 - std::pow(ans, 2)) / N);
+            error = std::sqrt((avg_ans2 - std::pow(ans, 2)) / N);
         }
 
 };
@@ -175,7 +175,7 @@ class AMI_integrand{
         void update_ext_vars(ext_vars new_evars){
             // assuming theres only one frequency
             evars = new_evars;
-            avars.frequency_[0][-1] = TamiBase::complex_double(new_evars.reW, new_evars.imW); 
+            //avars.frequency_[0][-1] = TamiBase::complex_double(new_evars.reW, new_evars.imW); 
             avars.BETA_ = new_evars.beta; 
         }
 
@@ -204,7 +204,7 @@ class AMI_integrand{
 
         at::Tensor operator()(at::Tensor x){
             this->update_integrand(x);
-            at::Tensor value = tami.evaluate(parms, ft, avars);
+            at::Tensor value = at::reshape(tami.evaluate(parms, ft, avars), {-1});
             if (evalReal){
                 return at::real(value);
             }

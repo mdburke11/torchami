@@ -49,7 +49,7 @@ void default_example(){
 
   at::Device myDev = at::kCPU;//at::kCUDA;//at::kCPU;
   int freq_batchsize = 1;
-  int energy_batchsize = 100;
+  int energy_batchsize = 10;
 
   TamiBase PT(myDev);
   TamiBase::ft_terms ftout;
@@ -226,7 +226,7 @@ void example2(){
 
 // Number of parameters to evaluate - number of frequencies and num of energies to eval at a time
 int fbatch_size = 1;
-int ebatch_size = 100;
+int ebatch_size = 10;
 
 std::cout<<std::endl<<"-_-_-_ Example - Second Order _-_-_-"<<std::endl<<std::endl;	
 	
@@ -274,7 +274,7 @@ at::Tensor term_val=ami.evaluate(test_amiparms, amiterms, avars); // Evaluate th
 	std::chrono::duration<double> diff2=t4-t3;
 	std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
 
-std::cout<<"Term result was "<< format_r2_tensor(term_val)<<std::endl;
+std::cout<<"Term result was "<< format_r2_tensor(term_val)<< "Shape: " << term_val.sizes() <<std::endl;
 std::cout<<"Evaluation took "<<d2.count()<<" nanoseconds"<<std::endl;
 std::cout<<"Length of terms object was " << amiterms.size() << std::endl;
 	

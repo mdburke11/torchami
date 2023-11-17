@@ -46,12 +46,15 @@ TamiBase::ami_vars prep_ext(int ord, ext_vars evars, at::Device dev){
 
     int default_batchsize = 10;
     at::TensorOptions options = at::TensorOptions().dtype(at::kDouble).device(dev);
+    at::TensorOptions complexoptions = at::TensorOptions().dtype(at::kComplexDouble).device(dev);
 
     TamiBase::energy_t energy = at::zeros({default_batchsize, ord + 1}, options);
     std::vector<TamiBase::complex_double> frequency_vec;
     for (int i=0; i < ord; ++i) {frequency_vec.push_back((0.0, 0.0));}
     frequency_vec.push_back((evars.reW, evars.imW));
-    TamiBase::frequency_t frequency = at::tensor(frequency_vec, options);
+    // here you would add more frequencys to the stacked vector if
+    // evaluating more than one frequency at a time
+    TamiBase::frequency_t frequency = at::vstack({at::tensor(frequency_vec, complexoptions)});
     TamiBase::ami_vars external{energy, frequency, evars.beta};
 
     return external;

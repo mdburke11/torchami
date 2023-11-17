@@ -3,7 +3,6 @@
 int main(){
     
     matsubara_freq_test();
-
     return 0;
 }
 
@@ -18,8 +17,14 @@ at::Tensor my_func(at::Tensor x){
 
 void matsubara_freq_test(){
 
+    // output 2nd order diagram data to this file
+    // Use the python script to plot it
+    std::string ofname = "data.dat";
+    std::ofstream out;
+    out.open(ofname);
+
     // init device and tamibase  and tamigraph obj
-    at::Device myDev = at::kCPU;//at::kCUDA;
+    at::Device myDev = at::kCUDA;
     TamiBase ami(myDev);
     TamiBase::graph_type graph_type = TamiBase::Sigma;
     int seed = 0;
@@ -92,29 +97,10 @@ void matsubara_freq_test(){
 
         evars.print_ext_vars();
         integration_result result = mc.integrate(integrand, 4, 1000000, domain);
-        std::cout << mat_freq << " " << evars.imW << " " << second_ord_sigma.prefactor * result.ans / std::pow(2* M_PI, 4) << " " << result.error/ std::pow(2* M_PI, 4) << std::endl;
+        std::cout << mat_freq << " " << evars.imW << " " << second_ord_sigma.prefactor * result.ans << " " << result.error << std::endl;
+	out << n << " " << evars.imW << " " << second_ord_sigma.prefactor * result.ans << " " << result.error << "\n";
     }
 
-    
-
-    //int batch_size = 100000000;
-    //at::TensorOptions integOptions = at::TensorOptions().dtype(at::kComplexDouble).device(at::kCUDA);
-    //flat_mc_integrator mc(integOptions, 1000000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    out.close();    
 
 }
