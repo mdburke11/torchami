@@ -16,10 +16,8 @@ jobs:
       matrix:
         # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
         include:
-          - name: "Ubuntu 20.04"
-            runner: ubuntu-20.04
-          - name: "Ubuntu 18.04"
-            runner: ubuntu-18.04
+          - name: "Ubuntu 22.04"
+            runner: ubuntu-22.04
           - name: "macOS latest"
             runner: macos-latest
     runs-on: ${{ matrix.runner }}
@@ -30,19 +28,46 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+     - name: Set up Python 3.8
+       uses: actions/setup-python@v2
+       with:
+         python-version: 3.8
+
+    - name: Install PyTorch
+      run: |
+        python -m pip install --upgrade pip
+        # Install CPU-based pytorch
+        pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+        # Maybe use the CUDA 10.2 version instead?
+        # pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html
+
+    - name: Cache Pybind11
+        id: pybind11-cache
+        uses: actions/cache@v2
+        with:
+          path: ./pybind11-install
+          key: ${{ runner.os }}-pybind11-cache
+
+    - name: Install OpenCV
+      uses: rayandrews/with-pybind11-action@v1
+      with:  
+        dir: ./pybind11-install
+        cached: ${{ steps.pybind11-cache.outputs.cache-hit }}
+        pybind11-version: '4.0.0'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DMAKE_PYTAMI=ON -DPYTHON_LIBRARY_DIR=`python -c "import site; print(site.getsitepackages()[0])"` -DPYTHON_EXECUTABLE=`which python` "-DCMAKE_PREFIX_PATH=`python -c "import torch; print(torch.utils.cmake_prefix_path)"`" 
+      #-Dpybind11_DIR=/home/mdburke/py_envs/torch-gpu/lib/python3.10/site-packages/pybind11/share/cmake/pybind11/ ..
 
     - name: Build
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}} --rerun-failed --output-on-failure
+    # - name: Test
+    #   working-directory: ${{github.workspace}}/build
+    #   # Execute tests defined by the CMake configuration.  
+    #   # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+    #   run: ctest -C ${{env.BUILD_TYPE}} --rerun-failed --output-on-failure
       
