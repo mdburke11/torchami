@@ -95,6 +95,7 @@ class integration_result{
             error = std::sqrt((avg_ans2 - std::pow(ans, 2)) / N);
         }
 
+
 };
 
 class flat_mc_integrator{
