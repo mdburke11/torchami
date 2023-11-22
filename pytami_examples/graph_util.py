@@ -111,6 +111,8 @@ def prep_ext(order: int, evars : ext.ext_vars, device : torch.device = torch.dev
     energy : torch.Tensor = torch.zeros([default_batch_size, order + 1], device=device)
     frequency : pytami.TamiBase.frequency_t = pytami.TamiBase.frequency_t([0.0+0.0j for i in range(order)])
     frequency.append(evars.reW + 1j * evars.imW)
+    lenf = len(frequency)
+    frequency.reshape(1, lenf) # I think this is automatically done in python but just to be sure
     external : pytami.TamiBase.ami_vars = pytami.TamiBase.ami_vars(energy, frequency, evars.beta)
 
     return external

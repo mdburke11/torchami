@@ -1,9 +1,12 @@
 # This is a sample integrand class that could be used inconjunction with an external integration
 # library to perform the remaining spatial integrations after the AMI process 
 
+# this code will integrate a diagram for a spectrum of frequencies provided rather than iterating
+# through a list. All the frequencies will be provided in the avars on initialization
+
 import torch
 import pytami
-from typing import Callable
+from typing import Callable, Union
 import external as ext
     
 class AMI_integrand:
@@ -44,13 +47,11 @@ class AMI_integrand:
         self.order = self.parms.N_INT_ # number of integrals (order) and 2 * order - 1 = len(R0) (if not Renorm PT)
 
 
-
     def update_ext_vars(self, extern_vars: ext.ext_vars) -> None:
         self.external_vars = extern_vars
-        self.avars.frequency_[-1] = extern_vars.reW + 1j * extern_vars.imW # needs to be internally updated
         self.avars.BETA_ = extern_vars.beta # needs to be internally updated for fermi function evaluations
 
-    def get_ext_vars(self) -> ext.ext_vars:
+    def get_ext_vars(self) -> list[Union[float, complex, list[float]]]:
         return self.external_vars.get_ext_vars()
 
     def update_integrand(self, k: torch.tensor) -> None:

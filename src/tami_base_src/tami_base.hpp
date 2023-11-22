@@ -104,12 +104,13 @@ class TamiBase{
         /// given Green's function line, \f$ 1/(X+E) \f$ where \f$ E=-\epsilon \f$.
         typedef at::Tensor energy_t; // TODO: is there a way to declare this so it contains strictly c10::complex<double> = complex_double
 
-        /// This is the list of internal and external frequencies values.  Typically
+        /// This is the list of internal and external frequencies values across and differnt values 
+        /// to be evalated simultaneously down, external fr.  Typically
         /// only the last elements for external frequencies are non-zero - but one can
         /// evaluate intermediate steps where multiple external frequencies are
         /// non-zero.
         ///
-        typedef std::vector<complex_double> frequency_t;
+        typedef at::Tensor frequency_t;
 
         // Fundamental objects
 
@@ -120,14 +121,14 @@ class TamiBase{
         /// described in AMI paper (https://doi.org/10.1103/PhysRevB.99.035120).  We
         /// use the convention \f$G=\frac{1}{X+E}\f$.  It is the coefficients for a
         /// linear combination of a set of possible values.
-        typedef std::vector<int> epsilon_t;
+        typedef std::vector<int> epsilon_t;  // ASK JAMES: why not but these on GPU to use matrix multiplication in eval_prod as well + avoid loops
 
         /// Vector of type `int` with elements \f$ \alpha_i\f$.  This is the symbolic
         /// representation of the frequency, as a linear combination of possible
         /// entries.  Typically contains only values of 0, -1 and +1. Other values at
         /// intermediate steps typically represent an error.  \f$X=\sum\limits_{i}
         /// i\nu_i \alpha_i\f$.
-        typedef std::vector<int> alpha_t;
+        typedef std::vector<int> alpha_t; // ASK JAMES: why not but these on GPU to use matrix multiplication in eval_prod as well + avoid loops
 
         /// Indicator for multi-species Green's function or energy dispersions
         /// (spin-up vs spin-dn, multiband, etc).  This indicator should propagate
@@ -698,7 +699,7 @@ class TamiBase{
 
         void print_alpha_info(alpha_t alpha);
 
-        /// Given a set of tensor energies, beta, and frequencies, will evaluate the
+        /// Given a set of tensor energies, beta, and tensor frequencies, will evaluate the
         /// energies of a pole_struct.
         at::Tensor get_energy_from_pole(pole_struct pole,
                                                     ami_vars external);

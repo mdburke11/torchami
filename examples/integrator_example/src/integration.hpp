@@ -14,6 +14,10 @@
 #include <chrono>
 #include <thread>
 
+// This code does not take advantage of the simultaneous frequency evaluations!
+// However this example code is still useful to see how one could implement a
+// Monte carlo integration scheme.
+
 // external functions
 
 struct ext_vars{
@@ -170,8 +174,9 @@ class AMI_integrand{
         }
     
         void update_ext_vars(ext_vars new_evars){
+            // assuming theres only one frequency
             evars = new_evars;
-            avars.frequency_[avars.frequency_.size()-1] = TamiBase::complex_double(new_evars.reW, new_evars.imW);
+            //avars.frequency_[0][-1] = TamiBase::complex_double(new_evars.reW, new_evars.imW); 
             avars.BETA_ = new_evars.beta; 
         }
 
@@ -200,7 +205,7 @@ class AMI_integrand{
 
         at::Tensor operator()(at::Tensor x){
             this->update_integrand(x);
-            at::Tensor value = tami.evaluate(parms, ft, avars);
+            at::Tensor value = at::reshape(tami.evaluate(parms, ft, avars), {-1});
             if (evalReal){
                 return at::real(value);
             }

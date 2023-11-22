@@ -3,7 +3,6 @@
 int main(){
     
     matsubara_freq_test();
-
     return 0;
 }
 
@@ -99,9 +98,5 @@ void matsubara_freq_test(){
 
         evars.print_ext_vars();
         integration_result result = mc.integrate(integrand, 4, 1000000, domain);
-        std::cout << n << " " << evars.imW << " " << second_ord_sigma.prefactor * result.ans << " " << result.error << std::endl;
-        out << n << " " << evars.imW << " " << second_ord_sigma.prefactor * result.ans << " " << result.error << "\n";
-    }
 
-    out.close();
 }
