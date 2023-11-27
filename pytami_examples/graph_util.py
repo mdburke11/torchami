@@ -107,12 +107,11 @@ def read_diagram(ptg : pytami.TamiGraph, folder : str, ord : int,
 def prep_ext(order: int, evars : ext.ext_vars, device : torch.device = torch.device("cpu")) -> ext.ext_vars:
 
     default_batch_size : int = 10 # this is fixed when being integrating
+    fbatch_size : int = 5
 
     energy : torch.Tensor = torch.zeros([default_batch_size, order + 1], device=device)
-    frequency : pytami.TamiBase.frequency_t = pytami.TamiBase.frequency_t([0.0+0.0j for i in range(order)])
-    frequency.append(evars.reW + 1j * evars.imW)
-    lenf = len(frequency)
-    frequency.reshape(1, lenf) # I think this is automatically done in python but just to be sure
+    frequency_vec : list[tuple[complex]] = [torch.tensor((0.0+0.0j,)*order + (1j * (2*i+1)*torch.pi/evars.beta,), device=device) for i in range(fbatch_size)]
+    frequency : pytami.TamiBase.frequency_t = torch.vstack(frequency_vec)
     external : pytami.TamiBase.ami_vars = pytami.TamiBase.ami_vars(energy, frequency, evars.beta)
 
     return external
