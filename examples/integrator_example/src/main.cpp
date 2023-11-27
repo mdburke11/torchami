@@ -1,7 +1,6 @@
 #include "integration.hpp"
 
 int main(){
-    
     matsubara_freq_test();
     return 0;
 }
@@ -46,11 +45,19 @@ void matsubara_freq_test(){
     TamiBase::complex_double mu{0.1, 0};
     std::vector<double> k{M_PI, 0};
     std::cout << k[0] << " " << k[1] << k.size() << std::endl;
-    double reW = 0.0;
-    double imW = (2*mat_freq + 1) * M_PI / beta;
 
-    ext_vars evars(beta, mu, k, reW, imW);
+    int N_freq = 70;
+
+    std :: vector < at :: Tensor > freq_vecs = {};
+    for ( int i =0; i < N_freq ; ++ i ) { 
+        at::Tensor row = at::full({1, ord+1}, TamiBase::complex_double (0, 0), myDev);
+        row[0][-1] = TamiBase::complex_double(0, M_PI*(2*i+1)/beta);
+        freq_vecs.push_back(row) ;
+    }
+    TamiBase::frequency_t frequencies = at::vstack(freq_vecs);
+    ext_vars evars(beta, mu, k);
     TamiBase::ami_vars avars = prep_ext(ord, evars, myDev);
+    avars.frequency_ = frequencies;
 
     // helpers
     TamiBase::ft_terms ftout;
@@ -59,44 +66,28 @@ void matsubara_freq_test(){
     TamiBase::ami_parms parms(N_INT, E_REG);
     ami.construct(N_INT, R0, ftout);
 
-    /*
-    // test ct function
-    std::vector<complete_R0_graph> ct_graphs = read_ct_diagrams(g, second_ord_sigma.graph, ord, 2);
-
-    for (auto ct_g : ct_graphs){
-        print_R0(ct_g.R0);
-    }
-    */
-
-    /*
-
-    flat_mc_integrator::integ_domain domain = {{0, 1}};
-    std::function fn = at::sin;
-
-
-    int batch_size = 100000000;
-    at::TensorOptions integOptions = at::TensorOptions().dtype(at::kComplexDouble).device(at::kCUDA);
-    flat_mc_integrator mc(integOptions, 1000000);
-    integration_result result = mc.integrate(fn, 1, batch_size, domain);
-
-    std::cout << at::real(result.ans) << " " << at::real(result.error) << std::endl;
-
-    */
-
     AMI_integrand integrand(ami, R0, avars, ftout, parms, epsilon_tight_binding, /*eval_realpart*/ 0, evars);
 
     at::TensorOptions integOptions = at::TensorOptions().dtype(at::kComplexDouble).device(at::kCUDA);
     int max_batch_size = 100000;
-    flat_mc_integrator mc(integOptions, max_batch_size);
+    flat_mc_integrator mc(integOptions, N_freq, max_batch_size);
     flat_mc_integrator::integ_domain domain = {{0, 2*M_PI}, {0, 2*M_PI}, {0, 2*M_PI},{0, 2*M_PI}};
 
     std::cout << std::setprecision(10) << std::endl;
 
-    for (int n=0; n<50; ++n){
-        evars.imW = (2*n + 1) * M_PI / evars.beta;
-        integrand.update_ext_vars(evars);
+    auto t1 = std::chrono::high_resolution_clock::now();
+    integration_result result = mc.integrate(integrand, 4, 1000000, domain);
+    auto t2 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> difft=t2-t1;
+    std::chrono::nanoseconds dt=std::chrono::duration_cast<std::chrono::nanoseconds>(difft);
 
-        evars.print_ext_vars();
-        integration_result result = mc.integrate(integrand, 4, 1000000, domain);
+    for (int n=0; n<N_freq; ++n){
+        std::cout<< n << " " << at::real(frequencies[n][-1]).item<double>() << " " << at::imag(frequencies[n][-1]).item<double>() << " " 
+                << second_ord_sigma.prefactor * at::real(result.ans[0][n]).item<double>() << " " << at::real(result.error[0][n]).item<double>() << std::endl;
+        out<< n << " " << at::real(frequencies[n][-1]).item<double>() << " " << at::imag(frequencies[n][-1]).item<double>() << " " 
+                << second_ord_sigma.prefactor * at::real(result.ans[0][n]).item<double>() << " " << at::real(result.error[0][n]).item<double>() << "\n";
+    }
+    std::cout << std::endl << "time elapsed: " << dt.count() / std::pow(10, 9) << " seconds" << std::endl;
 
+    out.close();
 }

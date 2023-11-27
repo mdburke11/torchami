@@ -19,6 +19,7 @@ at::Tensor flat_mc_integrator::prepInput(int length, integ_domain& domain){
 integration_result flat_mc_integrator::integrate(std::function<at::Tensor(at::Tensor)> fn, int dim, int N, integ_domain domain){
     
     at::TensorOptions opts = at::TensorOptions().dtype(at::kComplexDouble).device(options.device());
+    at::TensorOptions intopts = at::TensorOptions().dtype(at::kInt).device(options.device());
 
     try{
         if (domain.size() != dim){
@@ -30,12 +31,13 @@ integration_result flat_mc_integrator::integrate(std::function<at::Tensor(at::Te
         exit(EXIT_FAILURE);
     }
 
-    at::Tensor sum = at::zeros({1}, opts);
-    at::Tensor sum_2 = at::zeros({1}, opts);
 
-    int remaining = N;
+    at::Tensor sum = at::zeros({1, N_freq}, opts);
+    at::Tensor sum_2 = at::zeros({1, N_freq}, opts);
 
-    while (remaining > max_batch){
+    at::Tensor remaining = N * at::ones({1, N_freq}, intopts);
+
+    while (remaining.min().item<int>() > max_batch){
 
         // while number of evals remaining exceeds max_batch size, chip 
         // away with max_batch size
@@ -43,9 +45,9 @@ integration_result flat_mc_integrator::integrate(std::function<at::Tensor(at::Te
         // get rand vals on the domain
         at::Tensor x = this->prepInput(max_batch, domain);
         at::Tensor eval = fn(x);
-        int numNans = (eval != eval).sum().item<int>(); // TODO: should this be left a tensor?
-        sum += eval.nansum(); // TODO use torch.nansum - drops nans from batch - But then N changes!
-        sum_2 += (at::pow(eval, 2)).nansum();
+        at::Tensor numNans = (eval != eval).sum(/*dim*/ 1);
+        sum += eval.nansum(/*dim*/ 1); 
+        sum_2 += (at::pow(eval, 2)).nansum(/*dim*/ 1);
 
         remaining = remaining - max_batch + numNans;
     }
@@ -54,11 +56,10 @@ integration_result flat_mc_integrator::integrate(std::function<at::Tensor(at::Te
     // this is accounted for.
     at::Tensor x = this->prepInput(max_batch, domain);
     at::Tensor eval = fn(x);
-    int numNans = (eval != eval).sum().item<int>(); // TODO: should this be left a tensor?
-    sum += eval.nansum(); // TODO use torch.nansum - drops nans from batch - But then N changes!
-    sum_2 += (at::pow(eval, 2)).nansum();
+    at::Tensor numNans = (eval != eval).sum(/*dim*/ 1); 
+    sum += eval.nansum(/*dim*/ 1); 
+    sum_2 += (at::pow(eval, 2)).nansum(/*dim*/ 1);
 
     return integration_result(sum, sum_2, N - numNans);
 
-
-    }
+}
