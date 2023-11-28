@@ -27,10 +27,10 @@ void TamiBase::construct(int N_INT, TamiBase::g_prod_t &R0, ft_terms &terms_out)
   ft_terms next_terms;
 
   for (int index = 0; index < N_INT; index++) {
-    std::cout<<"On integration step "<<index<<std::endl;
+    // std::cout<<"On integration step "<<index<<std::endl;
     integrate_step(index, these_terms, next_terms);
     // std::cout<<"Pretty!"<<std::endl;
-    std::cout<<"Next size is "<<next_terms.size()<<std::endl;
+    // std::cout<<"Next size is "<<next_terms.size()<<std::endl;
     // std::cout<<pretty_print_ft_terms(next_terms);
     these_terms = next_terms;
   }
