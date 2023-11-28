@@ -25,20 +25,18 @@ struct ext_vars{
     double beta;
     TamiBase::complex_double mu;
     std::vector<double> k;
-    double reW, imW;
 
     ext_vars(){
-        beta=0; mu=0; k={0, 0}; reW=0; imW=0;
+        beta=0; mu=0; k={0, 0};
     }
 
-    ext_vars(double bta, TamiBase::complex_double mu_, std::vector<double> k_, double reW_, double imW_){
-        beta = bta; mu = mu_, k = k_; reW = reW_, imW = imW_;
+    ext_vars(double bta, TamiBase::complex_double mu_, std::vector<double> k_){
+        beta = bta; mu = mu_, k = k_;
     }
 
     void print_ext_vars(){
         std::cout << beta << " " << mu << " ";
         for (auto q : k){std::cout << q << " ";}
-        std::cout << reW << " " << imW << std::endl;
     }
 };
 
@@ -80,19 +78,19 @@ void print_R0(TamiBase::g_prod_t R0);
 class integration_result{
 
     public:
-        double sum;
-        double sum2;
-        int N;
+        at::Tensor sum;
+        at::Tensor sum2;
+        at::Tensor N;
         
-        double ans;
-        double error;
+        at::Tensor ans;
+        at::Tensor error;
 
-        integration_result(at::Tensor& sum_, at::Tensor& sum2_, int N_){
-            sum=sum_.item<double>(); sum2=sum2_.item<double>(); N=N_;
+        integration_result(at::Tensor& sum_, at::Tensor& sum2_, at::Tensor N_){
+            sum=sum_; sum2=sum2_; N=N_;
 
             ans = sum / N;
-            double avg_ans2 = sum2 / N;
-            error = std::sqrt((avg_ans2 - std::pow(ans, 2)) / N);
+            at::Tensor avg_ans2 = sum2 / N;
+            error = at::sqrt((avg_ans2 - at::pow(ans, 2)) / N);
         }
 
 
@@ -102,14 +100,14 @@ class flat_mc_integrator{
 
     public:
         at::TensorOptions options = at::TensorOptions().dtype(at::kDouble).device(at::kCPU);
+        int N_freq;
         int max_batch;
 
-        flat_mc_integrator(at::TensorOptions options_, int max_bs){
-            options = options_; max_batch = max_bs;
+        flat_mc_integrator(at::TensorOptions options_, int N_frequencies, int max_bs){
+            options = options_; N_freq = N_frequencies; max_batch = max_bs;
         }
 
         typedef std::vector<std::vector<double>> integ_domain;
-
 
         at::Tensor prepInput(int length, integ_domain& domain);
 
@@ -205,7 +203,7 @@ class AMI_integrand{
 
         at::Tensor operator()(at::Tensor x){
             this->update_integrand(x);
-            at::Tensor value = at::reshape(tami.evaluate(parms, ft, avars), {-1});
+            at::Tensor value = tami.evaluate(parms, ft, avars);
             if (evalReal){
                 return at::real(value);
             }

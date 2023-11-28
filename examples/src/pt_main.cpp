@@ -3,7 +3,7 @@
 
 int main( int argc , char *argv[] )
 {
-  int mode=0;
+  int mode=1;
   if (argc >= 2){
     std::istringstream ss(argv[1]);
 
@@ -14,14 +14,11 @@ int main( int argc , char *argv[] )
   }
 
   switch(mode) {
-     case 0:
-      default_example();
-      break;
     case 1:
       example2();
       break;
     case 2:
-      example1_bose();
+      //example1_bose();
       break;
     case 3:
       example4();
@@ -324,7 +321,7 @@ std::cout<<std::endl<<"-_-_-_ Example - Fourth Order _-_-_-"<<std::endl<<std::en
 // Same Problem, using ami_term storage type
 std::cout<<std::endl<<"-----Constructing TAMI term by term-----"<<std::endl;
 // class instance
-at::Device myDev = at::kCPU;
+at::Device myDev = at::kCUDA;
 TamiBase ami(myDev);
 
 // Problem setup (see ami_example.cpp)
