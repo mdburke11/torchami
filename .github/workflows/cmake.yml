@@ -36,7 +36,7 @@ jobs:
 
     - name: Download and install Boost
       uses: MarkusJx/install-boost@v2.4.4
-
+        boost_version: 1.74
 
     - name: Install PyTorch
       run: |
