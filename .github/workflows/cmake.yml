@@ -29,11 +29,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
+      run: echo "Setting up Python"
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
 
     - name: Install PyTorch
+      run: echo "Setting up Pytorch"
       run: |
         python -m pip install --upgrade pip
         # Install CPU-based pytorch
@@ -42,18 +44,20 @@ jobs:
         # pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html
 
     - name: Cache Pybind11
+      run: echo "Setting up pybind11"
       id: pybind11-cache
       uses: actions/cache@v2
       with:
         path: ./pybind11-install
         key: ${{ runner.os }}-pybind11-cache
 
-    - name: Install OpenCV
-      uses: rayandrews/with-pybind11-action@v1
-      with:  
-        dir: ./pybind11-install
-        cached: ${{ steps.pybind11-cache.outputs.cache-hit }}
-        pybind11-version: '4.0.0'
+    # - name: Install OpenCV
+    #   run: echo "Setting up pybind11    
+    #   uses: rayandrews/with-pybind11-action@v1
+    #   with:  
+    #     dir: ./pybind11-install
+    #     cached: ${{ steps.pybind11-cache.outputs.cache-hit }}
+    #     pybind11-version: '4.0.0'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
