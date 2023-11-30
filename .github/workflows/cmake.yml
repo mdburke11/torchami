@@ -34,9 +34,12 @@ jobs:
         python-version: 3.8
         run: echo "Setting up python"
 
+    - name: Download and install Boost
+      uses: MarkusJx/install-boost@v2.4.4
+
+
     - name: Install PyTorch
       run: |
-        echo "Setting up Pytorch"
         python -m pip install --upgrade pip
         # Install CPU-based pytorch
         pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
