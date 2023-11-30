@@ -67,13 +67,12 @@ jobs:
         key: ${{ runner.os }}-pybind11-cache
         run: echo "Setting up pybind11"
 
-    # - name: Install OpenCV
-    #   run: echo "Setting up pybind11    
-    #   uses: rayandrews/with-pybind11-action@v1
-    #   with:  
-    #     dir: ./pybind11-install
-    #     cached: ${{ steps.pybind11-cache.outputs.cache-hit }}
-    #     pybind11-version: '4.0.0'
+    - name: Install OpenCV
+      uses: rayandrews/with-pybind11-action@v1
+      with:  
+        dir: ./pybind11-install
+        cached: ${{ steps.pybind11-cache.outputs.cache-hit }}
+        pybind11-version: '4.0.0'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
