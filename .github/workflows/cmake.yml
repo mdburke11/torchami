@@ -67,7 +67,7 @@ jobs:
         key: ${{ runner.os }}-pybind11-cache
       
     - name: Install OpenCV
-      uses: rayandrews/with-pybind11-action@v1
+      uses: rayandrew/with-pybind11-action@v1
       with:  
         dir: ./pybind11-install
         cached: ${{ steps.pybind11-cache.outputs.cache-hit }}
