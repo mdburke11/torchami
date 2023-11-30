@@ -28,10 +28,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-     - name: Set up Python 3.8
-       uses: actions/setup-python@v2
-       with:
-         python-version: 3.8
+    - name: Set up Python 3.8
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
 
     - name: Install PyTorch
       run: |
@@ -42,11 +42,11 @@ jobs:
         # pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html
 
     - name: Cache Pybind11
-        id: pybind11-cache
-        uses: actions/cache@v2
-        with:
-          path: ./pybind11-install
-          key: ${{ runner.os }}-pybind11-cache
+      id: pybind11-cache
+      uses: actions/cache@v2
+      with:
+        path: ./pybind11-install
+        key: ${{ runner.os }}-pybind11-cache
 
     - name: Install OpenCV
       uses: rayandrews/with-pybind11-action@v1
