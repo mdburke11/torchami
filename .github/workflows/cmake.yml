@@ -61,7 +61,7 @@ jobs:
 
 
     - name: Install pybind11
-      run: sudo apt-get install pybind11
+      run: pip install pybind11
 
     # - name: Cache Pybind11
     #   id: pybind11-cache
