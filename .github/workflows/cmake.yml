@@ -65,8 +65,7 @@ jobs:
       with:
         path: ./pybind11-install
         key: ${{ runner.os }}-pybind11-cache
-        run: echo "Setting up pybind11"
-
+      
     - name: Install OpenCV
       uses: rayandrews/with-pybind11-action@v1
       with:  
