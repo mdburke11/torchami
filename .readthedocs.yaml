@@ -16,8 +16,12 @@ build:
     # rust: "1.64"
     # golang: "1.19"
 
-  commands:
-    - pip install breathe
+  # commands:
+  #   - pip install breathe
+
+python:
+  install:
+    - requirements: "doc/requirements.txt"
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
