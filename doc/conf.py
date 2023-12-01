@@ -42,7 +42,7 @@ if read_the_docs_build:
 
 # -- Project information -----------------------------------------------------
 
-project = 'P'
+project = 'torchami'
 copyright = '2023, James P.F. LeBlanc'
 author = 'James P.F. LeBlanc'
 
