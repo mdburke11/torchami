@@ -12,7 +12,7 @@ In short:
 
 	::
 
-	$ git clone https://github.com/jpfleblanc/leblanc_codes
+	$ git clone https://github.com/mdburke11/torchami.git
 	
 2. Prerequisites:
  

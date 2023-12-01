@@ -1,7 +1,7 @@
 # torchami
 **torchami - Generalized CPU/GPU Implementation of Algorithmic Matsubara Integration**\
 This is a prerelease of torchami.  \
-Basic functionality is complete (CPU&GPU support verified) with examples while workflows, tests, documentation, and installation directions are not.  \
+Basic functionality is complete (CPU&GPU support verified) with examples while workflows, tests, documentation, and installation directions are not.  
 
 **_Feedback welcome, use at your own risk._**
 

@@ -8,8 +8,10 @@ Welcome to the documentation webpage of LibAMI.  Please inform the authors of er
 
   
   
-.. doxygenclass:: AmiBase
+.. doxygenclass:: TamiBase
 	:members:
 	
+.. doxygenclass:: TamiGraph
+	:members:
 	
    

@@ -37,13 +37,13 @@ if read_the_docs_build:
 	output_dir = 'build'
 	configureDoxyfile(input_dir, output_dir)
 	subprocess.call('doxygen', shell=True)
-	breathe_projects['ami'] = output_dir + '/xml'
+	breathe_projects['P'] = output_dir + '/xml'
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'ami'
-copyright = '2020, James P.F. LeBlanc'
+project = 'P'
+copyright = '2023, James P.F. LeBlanc'
 author = 'James P.F. LeBlanc'
 
 
@@ -81,4 +81,4 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 # Breathe Configuration
-breathe_default_project = "ami"
+breathe_default_project = "P"
