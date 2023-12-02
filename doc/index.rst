@@ -3,12 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the frontpage of LibAMI's documentation!
+UNDER CONSTRUCTION
+Welcome to the frontpage of torchami's documentation!
 ===================================================
-| The LIBAMI project is a lightweight implementation of Algorithmic Matsubara Integration 
+| The torchami project is an advanced implementation of Algorithmic Matsubara Integration 
 (Phys. Rev. B 99, 035120 (2019))
 
-Documentation can be accessed for the latest build at https://libami.readthedocs.io/en/latest/ 
+Documentation can be accessed for the latest build at https://torchami.readthedocs.io/en/latest/ 
 
 
 .. toctree::

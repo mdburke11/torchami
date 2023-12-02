@@ -4,19 +4,9 @@ Installation
 
 For detailed instructions, please see `Github Wiki`_
 
-In short:
-
-1. Obtaining LIBAMI:
+Prerequisites:
  
-	Clone Git repository:
-
-	::
-
-	$ git clone https://github.com/mdburke11/torchami.git
-	
-2. Prerequisites:
- 
-	+ C++11 compatible compiler: g++ >= 4.8 OR Intel >= 12.0 OR Clang >= 3.2
+	+ C++17 compatible compiler
 
 	+ CMake >= 3.18
 
@@ -27,78 +17,61 @@ In short:
 	+ Sphinx >= 3.2.1 (You can install it with `pip`. Since it is python3 you may need to install `pip3`, instead of `pip`)
 
 	+ Breathe >= 4.20.0 (You can install it with `pip` as well.)
-	
-3. Building:
 
-	An example cmake command is in the `compile.sh` script.  Open the file in any editor, and change relevant file paths.
-	Use a standard `CMake` procedure:
+	+ pybind11 
 
-	
-		::
+	+ nvidia-cuda-toolkit 
 
-		 $ mkdir build && cd build
-		 $ cmake -DCMAKE_INSTALL_PREFIX=/path/to/install ..
-		 $ make
-		 $ make install
+	+ pytorch
+
+Useful commands:\
+sudo apt-get install pybind11 \
+sudo apt-get install nvidia-cuda-toolkit 
+
+Python 3:\
+pip install torch  \
+(note: if python isn't found try: sudo apt-get install python-is-python3 )
 
 
-4. Creating documentation:
-
-	Libami is documented using doxygen and Sphinx.  Documentation is set off by default and must be enabled:
-
-		::
-
-		 $ mkdir build && cd build
-		 $ cmake -DCMAKE_INSTALL_PREFIX=/path/to/install -DBUILD_DOC=ON ..
-		 $ make
-		 $ make install
-
-	Documentation will then be built and installed in /path/to/install/share/doc .
-
-	Note that cmake>=3.18 is required.  As well as sphinx, the sphinx_rtd_theme and breathe python modules.  These can be ontained via:
+1. Obtaining TORCHAMI:
+ 
+	Clone Git repository:
 
 	::
-		
-		$pip3 install sphinx
-		$pip3 install sphinx_rtd_theme
-		$pip3 install breathe
-		
-5. Testing:
 
-	Enabled for 'Release' builds or manually with the TEST=ON flag, are a minimal set of tests.  Simply use:
-		
+	$ git clone https://github.com/mdburke11/torchami.git
+
+2. Building:
+
+	An example cmake command is in the `compile.sh` script.  Open the file in any editor, and change relevant file paths.
+	Use a standard `CMake` procedure: 
+
 		::
-
-		 $ mkdir build && cd build
-		 $ cmake -DCMAKE_INSTALL_PREFIX=/path/to/install -DBUILD_DOC=ON -DTEST=ON ..
-		 $ make
-		 $ make test
-		 or
-		 $ ctest
-
-	Each test contains multiple internal checks.  If any tests should fail, more information can be gleaned by directly running the test executables in the /build/test directory.
-
-
-Further information and updates will be posted on the `Github Wiki`_. 
-
+		 $ mkdir build install
+		 $ cd build
+		 $ sh ../compile.sh 
+		 $ make install 
 	
+
+
 ------------------------
 Using with your projects
 ------------------------
 
-Including the header and linking to the library is required.  This can be accomplished using a standard `CMake`-based approach:
+Compilation will produce two libraries libtamigraph and libtorchami.  Calculations only require libtorchami but labelling Feynman diagrams is functionality within libtamigraph. 
+Including the headers and linking to the libraries is required.  This can be accomplished using a standard `CMake`-based approach:
 
 		::
 
 		 
-		  $ export libami_DIR=/install/dir/of/libami
+		  $ export torchami_DIR=/install/dir/of/torchami
 		  $ cd /your/project/
 		  $ cat >CMakeLists.txt
-		  cmake_minimum_required(VERSION 3.1)
+		  cmake_minimum_required(VERSION 3.18)
 		  project(MyProject C CXX)
-		  find_package(libami REQUIRED)
+		  find_package(torchami REQUIRED)
 		  add_executable(my_program main.cpp)
-		  target_link_libraries(my_program ${libami})
+		  target_link_libraries(my_program ${torchami})
 		  ...cont
 		  $ cmake .
 		  $ make
@@ -107,4 +80,4 @@ Including the header and linking to the library is required.  This can be accomp
 
 
 	
-.. _`Github wiki`: https://github.com/jpfleblanc/libami
+.. _`Github wiki`: https://github.com/mdburke11/torchami
