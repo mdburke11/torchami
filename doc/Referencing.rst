@@ -5,7 +5,7 @@
 Referencing
 =============
 
-Libami is provided under a GPLv3 licence. 
+torchami is provided under a GPLv3 licence. 
 
 Whenever scientific publications result from a program based on the AMI libraries we ask for acknowledgement of the scientific paper and published code:
 
@@ -13,7 +13,7 @@ Whenever scientific publications result from a program based on the AMI librarie
 Phys. Rev. B 99, 035120 (2019) |br|
 https://doi.org/10.1103/PhysRevB.99.035120 |br|
 
-2) Hossam Elazab, B. D. E. McNiven, and J. P. F. LeBlanc |br|
-LIBAMI: Implementation of Algorithmic Matsubaram Integration |br|
-Computer Physics Communications 280, 108469 (2022) |br|
-https://doi.org/10.1016/j.cpc.2022.108469 |br|
+2) M. D. Burke, and J. P. F. LeBlanc |br|
+TorchAmi: Generalized CPU/GPU Implementation of Algorithmic Matsubara Integration |br|
+arXiv: 2311.17189 (2023) |br|
+
