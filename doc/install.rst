@@ -47,6 +47,7 @@ pip install torch  \
 	Use a standard `CMake` procedure: 
 
 			::
+				
 			$ mkdir build install
 			$ cd build
 			$ sh ../compile.sh 

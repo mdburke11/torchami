@@ -4,4 +4,4 @@ Support
 
 The easiest way to get help with the project is to open an issue on Github_.
 
-.. _Github: http://github.com/example/crawler/issues
+.. _Github: https://github.com/mdburke11/torchami/issues
