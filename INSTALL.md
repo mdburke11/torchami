@@ -3,7 +3,7 @@ Installation
 ------------
 
 Things you'll need:\
-sudo apt-get install pybind11 \
+sudo apt-get install pybind11-dev (alternatively pip install pybind11)\
 sudo apt-get install nvidia-cuda-toolkit 
 
 Python 3:\
@@ -36,7 +36,7 @@ Then just make with the compile script as above\
 
 ------------
 
-Note: When compiling executables in c++, the python torch libraries may be installed in a non-standard location such as: /home/username/.local/lib/python3.10/site-packages/torch/lib/ . It this is the case then you can just add this directory to LD\_LIBRARY\_PATH.
+Note: When compiling executables in c++, if the python torch libraries are installed via python's pip command they may be installed in a non-standard location such as: /home/username/.local/lib/python3.10/site-packages/torch/lib/ . It this is the case then you can just add this directory to LD\_LIBRARY\_PATH.  Same holds for pybind11. 
 
 ------------
 
