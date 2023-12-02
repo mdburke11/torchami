@@ -43,11 +43,11 @@ pip install torch  \
 
 2. Building:
 
-	An example cmake command is in the `compile.sh` script.  Open the file in any editor, and change relevant file paths.
+	An example cmake command is in the `compile.sh` script.  Open the file in any editor, and change relevant file paths, in particular -DCMAKE_INSTALL_PREFIX=/path/to/install should be modified to your chosen install path.
 	Use a standard `CMake` procedure: 
 
 			::
-				
+
 			$ mkdir build install
 			$ cd build
 			$ sh ../compile.sh 

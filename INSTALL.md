@@ -10,7 +10,9 @@ Python 3:\
 pip install torch  \
 (note: if python isn't found try: sudo apt-get install python-is-python3 )
 
-Compilation:\
+Compilation: An example cmake command is in the `compile.sh` script.  Open the file in any editor, and change relevant file paths, in particular -DCMAKE_INSTALL_PREFIX=/path/to/install should be modified to your chosen install path.
+
+
 cd torchami\
 mkdir build install\
 cd build \
