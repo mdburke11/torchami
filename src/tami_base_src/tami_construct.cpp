@@ -1,15 +1,4 @@
 #include "tami_base.hpp"
-/**
- * This is the primary AMI symbolic integration function.  It takes a starting
- * integrand defined by `g_prod_t` R0 and `ami_parms` object, and returns the
- * S, P and R arrays necessary for symbolic evaluation.
- * @param[in] parms : `ami_parms` object, basic parameters for AMI.
- * @param[in] R0 : `g_prod_t` integrand to be processed.
- * @param[out] R_array: Resultant `R_t`.
- * @param[out] P_array : Resultant `P_t`.
- * @param[out] S_array : Resultant `S_t`.
- */
-
 
 void TamiBase::construct(int N_INT, TamiBase::g_prod_t &R0, ft_terms &terms_out) {
   terms_out.clear();
@@ -115,12 +104,6 @@ void TamiBase::term_integrate_step(int index, ft_term &in_term, ft_terms &out_te
   
   
   
-  
-  // std::cout<<"Factorized Terms are "<< factorized_terms.size()<<"------------------"<<std::endl;
-  // std::cout<<pretty_print_ft_terms(out_terms)<<std::endl;
-  
-  
-  // std::cout<<"Exiting term integrate step "<<std::endl;
 }
 
 void TamiBase::factorize(ft_terms &in_terms, ft_terms &out_terms){
@@ -144,28 +127,15 @@ void TamiBase::factorize(ft_terms &in_terms, ft_terms &out_terms){
       int junk=0;
       
       if( g_prod_equiv(in_terms[i].g_prod_,in_terms[j].g_prod_,junk)){
-        // std::cout<<"Terms equiv "<< i<<" and "<<j<<" with sign="<<junk<<std::endl;
         
-  
-        // in_terms[j].sign_=in_terms[j].sign_*junk;
-        // std::cout<<"Before mult in factorize"<<std::endl;
-        // FT.number_vertices(in_terms[j].ft_);
-        // FT.number_vertices(this_ft.ft_);
-        // FT.print_graph(in_terms[j].ft_);
         FT.mult_prefactor(in_terms[j].ft_, junk);
-        // FT.print_graph(in_terms[j].ft_);
-        
-        // std::cout<<FT.pretty_print(in_terms[j].ft_)<<std::endl;
-        
-        // exit(0);
-        // std::cout<<FT.pretty_print(this_ft.ft_)<<std::endl;
         
         this_ft.ft_=FT.add_ft(in_terms[j].ft_,this_ft.ft_);
-        // std::cout<<FT.pretty_print(this_ft.ft_)<<std::endl;
+        
         
         used[j]=1;
         
-        // exit(0);
+        
         
       }
     
@@ -324,7 +294,7 @@ void TamiBase::terms_to_ftterms(TamiBase::terms &in_terms, ft_terms &out_terms){
     
     FT.plist_to_ft(in_terms[0].p_list,in_terms[0].sign,out_terms[0].ft_);
     out_terms[0].sign_=in_terms[0].sign;
-    // std::cout<<"Exit1"<<std::endl;
+    
     return ;
   }
   
