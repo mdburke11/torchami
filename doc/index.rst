@@ -6,7 +6,10 @@
 UNDER CONSTRUCTION
 Welcome to the frontpage of torchami's documentation!
 
-===================================================
+==================
+Welcome!
+==================
+
 | The torchami project is an advanced implementation of Algorithmic Matsubara Integration 
 (Phys. Rev. B 99, 035120 (2019))
 
