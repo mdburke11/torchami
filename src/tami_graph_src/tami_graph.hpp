@@ -46,7 +46,7 @@
 #include <boost/random/uniform_01.hpp>
 #include <boost/random/variate_generator.hpp>
 
-
+/// @brief Class for loading, labelling and converting a Feynman diagram to input for `torchami`. See examples for usage. 
 class TamiGraph{
 
     private:
@@ -122,19 +122,7 @@ class TamiGraph{
         struct edge_info {
 
             TamiBase::g_struct g_struct_;
-            // g_struct_ includes 
-
-            // epsilon_t eps_;
-            // alpha_t alpha_;
-            // stat_type stat_;
-
-            // where these are defined as 
-            // typedef std::vector<int> epsilon_t;  /// the symbolic epsilon - not numeric - hence integers
-            // typedef std::vector<int> alpha_t;
-            // typedef enum {Bose,Fermi} stat_type ;
-
-
-
+            
             // DEBUGGING ONLY
             int edge_number_;
             //TamiBase::stat_type edge_stat=
@@ -178,10 +166,7 @@ class TamiGraph{
             spin=spin_val;
             label=unlabelled;
 
-            // species info to g_struct
-            // g_struct_.species_=(species_t)spin_val;
-            // in theory R0 now knows the list of species 
-
+            
             }
 
             edge_info(TamiBase::epsilon_t epsilon, TamiBase::alpha_t alpha, TamiBase::stat_type type, int loop_id, spin_type spin_val){
@@ -366,6 +351,7 @@ class TamiGraph{
                         void print_all_edge_info(graph_t &g);
                 void check_momentum_conservation(graph_t &g, bool &result);
                 void find_unlabelled_fermionic_edges(graph_t &g, edge_vector_t &vector);
+            /// The most robust labelling tool - recommended to use this directly and not `ggm_label` function.
             void sys_label(graph_t &g, bool &result);
                 int graph_order(graph_t &g);
                     void find_internal_edges_stat(graph_t &g, edge_vector_t &vector, TamiBase::stat_type requested);
@@ -390,6 +376,7 @@ class TamiGraph{
         void extract_bose_alphas(graph_t g, std::vector<TamiBase::alpha_t> &bose);
 
         // Renorm PT CT diagrams
+        /// Function to generate self energy counter-term diagrams for renormalized PT problems. 
         void generate_sigma_ct(graph_t &g_in, std::vector< graph_t> &ct_vec, int maxdots);
             void find_fermionic_edges(graph_t &g, edge_vector_t &vector);
             void combinations_repetition(int n, int r, std::vector< std::vector<int>> &list );
@@ -419,7 +406,7 @@ class TamiGraph{
 
 
 
-        
+        /// @brief This is a graph structure needed for compatibility with pybind11. See pyami_src directory.
         struct trojan_graph{
 
             trojan_graph(std::vector<TamiGraph::graph_t> vec, int index){

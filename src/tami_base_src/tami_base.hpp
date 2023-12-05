@@ -43,16 +43,15 @@ class TamiBase{
 
     public:
 
-        // Typedef for the type of complex numbers to be used throughout - c10 has torch's complex scalar class
-        // c10::complex<T> is the prefered complex datatype to build tensors with and therefore the better option
-        // to use throughout
-        //typedef c10::complex<double> complex_double;
+        /// Typedef for the type of complex numbers to be used throughout - c10 has torch's complex scalar class
+        /// c10::complex<T> is the prefered complex datatype to build tensors with and therefore the better option
+        /// to use throughout
         typedef c10::complex<double> complex_double;
 
         // Each instance will hold a torch device so that all internal calculartions are performed on this device
         //at::Device device = at::kCPU; // default behaviour is to run on cpu - see new c'tor
 
-        // hold the device options inside the base class
+        /// Hold the device options inside the base class - specifically the options.dtype and options.device 
         at::TensorOptions options = at::TensorOptions().dtype(at::kComplexDouble).device(at::kCPU);
 
         at::Device getDevice(){
@@ -102,13 +101,14 @@ class TamiBase{
         /// of these initial (pre integration) energies, \f$\epsilon_1, \epsilon_2\f$
         /// ..etc By convention, the energy_t contains the NEGATIVE of the energy of a
         /// given Green's function line, \f$ 1/(X+E) \f$ where \f$ E=-\epsilon \f$.
+        ///  The `energy_t` is a tensor of sets of appropriate energy lists, allowing for batch evaluation.  This is particularly useful for lattice problems where one wants to sum over sets of momenta which convert to energies. 
         typedef at::Tensor energy_t; // TODO: is there a way to declare this so it contains strictly c10::complex<double> = complex_double
 
-        /// This is the list of internal and external frequencies values across and differnt values 
-        /// to be evalated simultaneously down, external fr.  Typically
+        /// This is the list of internal and external frequencies values (each column) and batches of such values 
+        /// to be evalated simultaneously (each row).  Typically
         /// only the last elements for external frequencies are non-zero - but one can
         /// evaluate intermediate steps where multiple external frequencies are
-        /// non-zero.
+        /// non-zero. (Warning: the fermi/bose statistics are not generalized to multiple internal Matsubara frequencies.  If this functionality is needed please contact the authors.)
         ///
         typedef at::Tensor frequency_t;
 
@@ -133,7 +133,7 @@ class TamiBase{
         /// Indicator for multi-species Green's function or energy dispersions
         /// (spin-up vs spin-dn, multiband, etc).  This indicator should propagate
         /// through the Matsubara sums to the final expression, and might have utility
-        /// for evaluating energies.  Technically this is not necessary for libami,
+        /// for evaluating energies.  Technically this is not necessary,
         /// but may be useful.
         typedef int species_t;
 
@@ -168,6 +168,7 @@ class TamiBase{
         /// To be removed in a future release
         typedef enum { matsubara, real } ext_type;
 
+        /// currently not used - to be removed
         ext_type ext_freq_type = matsubara;
 
         /// The `ami_vars` struct is the basic information required for the evaluation
@@ -265,7 +266,6 @@ class TamiBase{
         /// and vector of `alpha_t`.  Also needed is what the statistics of the line
         /// are.  While this could be determined from alpha - it is better to store
         /// it.  For multistate systems the species_ index might be useful.
-
         struct g_struct {
             /// Constructor with state_type specified.
             g_struct(epsilon_t eps, alpha_t alpha, stat_type stat) {
@@ -308,7 +308,7 @@ class TamiBase{
                         // pp=1 it is a delta function. else it is inert
         };
 
-        /// Pole structure. Equivalent to `g_struct`, but kept separate. Tracks
+        /// Pole structure. Nearly equivalent to `g_struct`, but given its own struct for clarity. Tracks
         /// multiplicity, and which Green's function it is attached to. Also it tracks
         /// how many derivatives to take when evaluated at a fermi function.
         struct pole_struct {
@@ -371,33 +371,14 @@ class TamiBase{
 
         // START OF THE POLE TREE STUFF
 
+
+        /// @brief  The FermiTree class is a graph representation of sums and products of Fermi and Bose functions. It allows for a more natural 
+        /// factorization of the AMI integrand after each integration step.  It provides additional numerical stability compared to the fully expanded product of Fermi/Bose functions as used in the `libami` implementation.
+        /// It is not expected that a user should interact with the FermiTree, since it is not a pretty structure to look at and the detailed structure will depend on the labelling of a diagram. 
         class FermiTree {
             public: 
 
-            /*/* 
-            typedef std::vector<int> epsilon_t;
-            typedef std::vector<int> alpha_t;
-            struct pole_struct {
-                pole_struct(epsilon_t eps, alpha_t alpha) {
-                eps_ = eps;
-                alpha_ = alpha;
-                }
-
-                pole_struct() {}
-
-                epsilon_t eps_;
-                alpha_t alpha_;
-                // / Index that specifies which frequency it is a pole with respect to.
-                int index_;
-                // / The multiplicity of the pole, starts at 1 and increments as needed.
-                int multiplicity_ = 1;
-                int der_ = 0;              //< Counter for derivatives.
-                std::vector<int> which_g_; //< Index to identify which `g_struct` a pole originated from.
-
-                // / Experimental component of Spectral evaluation.
-                alpha_t x_alpha_;
-            };
-            */
+           
             enum operation{add,mult,end};
 
             // Vertex info  
@@ -494,18 +475,12 @@ class TamiBase{
             }; // end edge_struct bracket
 
 
-
-
             typedef boost::adjacency_list < boost::vecS, boost::listS, boost::bidirectionalS,vertex_info, edge_info, graph_info > fermi_tree_t;
             typedef boost::graph_traits < fermi_tree_t >::vertex_descriptor vertex_t;
             typedef boost::graph_traits < fermi_tree_t >::edge_descriptor edge_t;
 
             // helper functions
             void number_vertices(fermi_tree_t &g);
-
-
-
-
 
             // Initialize the tree to have one 
             void initialize_ft( fermi_tree_t &ft);
@@ -523,15 +498,10 @@ class TamiBase{
 
             void mult_prefactor(fermi_tree_t &ft, double sign);
 
-
-
             void get_roots(fermi_tree_t  &ft, std::vector<vertex_t> &vv);
-
 
             // TODO: Do I want it to destroy the level info on call?
             void get_next_level( fermi_tree_t &ft1, vertex_t &root1,  std::vector<vertex_t > &next_level);
-
-
 
             void print_vertex(vertex_t &v, fermi_tree_t &ft);
 
@@ -570,6 +540,9 @@ class TamiBase{
             private:
         };
 
+
+        /// Both the initial integrand and intermediate steps can be  written as a fermi-tree_term `ft_term`.  Non-factorizable terms will spawn additional terms.
+        /// Includes a prefactor, a `fermi_tree_t` and a `g_prod_t`.
         struct ft_term {
             ft_term() {}
 
@@ -587,17 +560,32 @@ class TamiBase{
             TamiBase::g_prod_t g_prod_;
         };
 
+        /// The result of an integrand is this vector of `ft_term` structs. This is the main output of the `construct` function and the main
+        /// object to pass to the `evaluate` function. See examples.
         typedef std::vector<ft_term> ft_terms;
         typedef std::vector<TamiBase::FermiTree::fermi_tree_t> ft_list;
         
+        /// @brief Following the notation from `libami` the construct function performs a number of Matsubara sums, and places the result into a `ft_terms` type.
+        /// @param N_INT - the number of summations to perform (beginning from the zero index frequency and going to N_INT-1)
+        /// @param R0  - The starting integrand.  R0 is a product of green's functions
+        /// @param terms_out  -  The resulting analytic integrand. 
         void construct(int N_INT, TamiBase::g_prod_t &R0, ft_terms &terms_out);
-        
+
+    // TODO: not sure that the factorize=false survived - might need to reimplement that.     
+        /// @brief Internal function to the construction. After each step attempts to combine terms into factorized form. 
+        ///  Can be slow for high order integrands, and can be disabled by setting factorize=false.
+        /// @param in_terms - terms to be factorized.
+        /// @param out_terms - factorized terms.
         void factorize(ft_terms &in_terms, ft_terms &out_terms);
         bool g_prod_equiv(TamiBase::g_prod_t &gp1, TamiBase::g_prod_t &gp2, int &sign);
         // Need evaluate functions - worry about these later 
         
-        /// Integrates a single Matsubara index.
+        /// @brief Integrates a single Matsubara index for every term provided using the `term_integrate_step` function.
+        /// @param index 
+        /// @param in_term 
+        /// @param out_terms 
         void integrate_step(int index, ft_terms &in_terms, ft_terms &out_terms);
+        /// @brief Integrates a single step for a single term
         void term_integrate_step(int index, ft_term &in_term, ft_terms &out_terms);
         void terms_general_residue(ft_term &this_term, TamiBase::pole_struct this_pole,ft_terms &out_terms);
         
@@ -612,15 +600,32 @@ class TamiBase{
         /// Screen IO for debugging.
         void print_term(ft_term &t);
         
+
         std::string pretty_print_ft_term(ft_term &ft);
         std::string pretty_print_gprod(TamiBase::g_prod_t &gp);
         std::string pretty_print_g(TamiBase::g_struct &g);
+        
+        /// Experimental attempt for visualizing the post AMI integrand. Outputs string representing LaTeX formatted equation.
         std::string pretty_print_ft_terms(ft_terms &fts);
         
-        
+        /// @brief Evaluate just the fermi-tree 
+        /// @param parms 
+        /// @param ft1 
+        /// @param v 
+        /// @param external 
+        /// @return 
         at::Tensor eval_ft(TamiBase::ami_parms &parms, TamiBase::FermiTree::fermi_tree_t &ft1,  TamiBase::FermiTree::vertex_t &v, TamiBase::ami_vars &external);
+        
+        
+        /// Evaluation of single term. 
         at::Tensor evaluate_term(TamiBase::ami_parms &parms, ft_term &ft_term,
                                                     TamiBase::ami_vars &external);
+        
+        /// @brief Standard evaluate function. See examples.
+        /// @param parms 
+        /// @param ft_terms 
+        /// @param external 
+        /// @return
         at::Tensor evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
                                                     TamiBase::ami_vars &external);
 
@@ -643,12 +648,14 @@ class TamiBase{
 
         /// Convert terms to Ri structure for optimization.  This does not create a
         /// usable `terms` object. It is purely an intermediate step for the
-        /// optimization functions.
+        /// optimization functions. Note: this is largely superceded by the factorization process.
         void convert_terms_to_ri(terms &ami_terms, Ri_t &Ri);
 
         // Functions for amiBase::integrate_step -> integrate_Mat_ind_step
 
-        /// Integrates a single Matsubara index. --  renamed from the original function name (TamiBase::integrate_step())
+        /// Integrates a single Matsubara index for the non-fermi-tree `terms` object from previous implementation.  
+        /// Using this intermediate representation is useful since it is directly from `libami` it is well tested.  (renamed from the original function name (TamiBase::integrate_step())
+        /// The output terms are then factorized into a fermi tree.  
         void integrate_Mat_ind_step(int index, terms &in_terms, terms &out_terms);
 
         /*Given an array of Green's functions, finds all poles with respect to frequency
@@ -682,12 +689,10 @@ class TamiBase{
 
         // Functions for fermi_pole
 
-        // This is the central evaluation of the fermi and bose functions.  It also
-        // includes evaluating arbitrary derivatives of the functions.  See frk
-        // function that is rather complicated .  This function is also the MOST
-        // challenging function for numerical evaluation.  It is the most likely
-        // source of issue or errors and some thought should go into testing this
-        // carefully
+        /// This is the central evaluation of the fermi and bose functions.  It also
+        /// includes evaluating arbitrary derivatives of the functions.  See frk
+        /// function that is rather complicated .  This function is also the MOST
+        /// challenging function for numerical evaluation.
         at::Tensor fermi_pole(ami_parms &parms, pole_struct pole,
                                         ami_vars external);
 
