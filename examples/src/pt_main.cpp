@@ -69,9 +69,7 @@ void default_example(){
 
   std::chrono::duration<double> diff2=t_end-t2;
 
-  // std::chrono::nanoseconds d=std::chrono::duration_cast<std::chrono::nanoseconds>(diff1);
-
-  
+   
   std::cout<<"Result 4th order MP "<<format_r2_tensor(result2)<<std::endl;
   std::chrono::nanoseconds d2=std::chrono::duration_cast<std::chrono::nanoseconds>(diff2);
   std::cout<<"Evaluation took "<< d2.count()<<" nanoseconds"<<std::endl;	
