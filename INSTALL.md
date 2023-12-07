@@ -30,9 +30,9 @@ Download keys from above then:\
 sudo apt-get install libcudnn8=8.9.2.26-1+cuda12.1            (or appropriate versions)\
 sudo apt-get install libcudnn8-dev=8.9.2.26-1+cuda12.1
 
-May need: -DCMAKE\_CUDA\_COMPILER:PATH=/usr/local/cuda/bin/nvcc\
+May need: -DCMAKE\_CUDA\_COMPILER:PATH=/usr/local/cuda/bin/nvcc
 
-Then just make with the compile script as above\
+Then just make with the compile script as above
 
 ------------
 
@@ -40,7 +40,7 @@ Note: When compiling executables in c++, if the python torch libraries are insta
 
 ------------
 
-Note: If using pytorch from the pip wheel, linking a c++ code can be a bit confusing.  pytorch is compiled with a c++ flag \_GLIBCXX\_USE\_CXX11\_ABI=0 . Any third party library that is not compiled with this flag will be ignored by the linker.  Solution for c++ is to compile pytorch for yourself, or compile all your DIRECTLY linked libraries with this flag. \
+Note: If using pytorch from the pip wheel, linking a c++ code can be a bit confusing.  pytorch is compiled with a c++ flag \_GLIBCXX\_USE\_CXX11\_ABI=0 . Any third party library that is not compiled with this flag will be ignored by the linker.  Solution for c++ is to compile pytorch for yourself, or compile all your DIRECTLY linked libraries with this flag. 
 	
 	
 .. _`Github wiki`: https://github.com/mdburke11/torchami
