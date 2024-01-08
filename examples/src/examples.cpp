@@ -275,12 +275,12 @@ TamiBase::g_prod_t g;
 // defining alpha's /// std::vector<int>
 
 
-TamiBase::alpha_t alpha_1={1,0,0};
-TamiBase::alpha_t alpha_2={1,1,0};
+TamiBase::alpha_t alpha_1={1,0};
+TamiBase::alpha_t alpha_2={1,1};
 
 //defining epsilon's
-TamiBase::epsilon_t epsilon_1={1,0,0};
-TamiBase::epsilon_t epsilon_2={0,1,0};
+TamiBase::epsilon_t epsilon_1={1,0};
+TamiBase::epsilon_t epsilon_2={0,1};
 
 TamiBase::g_struct g1(epsilon_1,alpha_1);
 TamiBase::g_struct g2(epsilon_2,alpha_2);
@@ -298,10 +298,13 @@ return R0;
 
 TamiBase::ami_vars construct_ext_example1_bose(TamiBase& tami, int ebatch_size, int fbatch_size){
 
-std::vector<TamiBase::complex_double> energy_vec = {-4,0.1};
+std::vector<TamiBase::complex_double> energy_vec = {-4,0.1}; // Residual from libami code 
 int energy_size = energy_vec.size();
 
-TamiBase::energy_t energy= 8.0*at::rand({ebatch_size,energy_size}, tami.options)-4.0;
+TamiBase::energy_t energy= 8.0*at::rand({ebatch_size,energy_size}, tami.options)-4.0;// at::zeros({1, energy_size}, tami.options);//8.0*at::rand({ebatch_size,energy_size}, tami.options)-4.0;
+
+// energy[0][0]=-4;
+// energy[0][1]=0.1;
 
 std::vector<at::Tensor> freq_vecs = {};
 for (int i=0; i < fbatch_size; ++i){

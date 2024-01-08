@@ -18,7 +18,7 @@ int main( int argc , char *argv[] )
       example2();
       break;
     case 2:
-      //example1_bose();
+      example1_bose();
       break;
     case 3:
       example4();
@@ -34,7 +34,7 @@ int main( int argc , char *argv[] )
       break;
     default:
       example2();
-      //example1_bose(); // not working
+      example1_bose(); // not working
       example4();
       example6();
       example9();
@@ -280,7 +280,7 @@ TamiBase::ft_terms amiterms;
 
 // Construct solution for problem defined in R0
 ami.construct(N_INT, R0, amiterms);
-
+//std::cout<<ami.pretty_print_ft_terms(amiterms)<<std::endl; // This would print the result - standard lindhart function
 	//timing info 
 	auto t2=std::chrono::high_resolution_clock::now();
 
