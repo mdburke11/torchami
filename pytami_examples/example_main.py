@@ -3,10 +3,12 @@ import pytami
 import examples as ex
 import time
 
+
 def main():
     example_2()
     example_4()
     example_6()
+
 
 def example_2():
 
@@ -14,7 +16,7 @@ def example_2():
 
     # start example
     print("\n-----Constructing Fermi Tree format -----\n")
-    
+
     # torch device to perform calculations on
     device = torch.device("cpu")
 
@@ -34,9 +36,10 @@ def example_2():
     ftout = pytami.TamiBase.ft_terms()
 
     # Integration/Evaluation parameters
-    E_REG = 0 # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8 
-    N_INT = int(2) # number of matsubara sums to perform 
-    test_amiparms = pytami.TamiBase.ami_parms(N_INT, E_REG) # SHOULD BE (0, 0) ?
+    E_REG = 0  # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8
+    N_INT = int(2)  # number of matsubara sums to perform
+    test_amiparms = pytami.TamiBase.ami_parms(N_INT,
+                                              E_REG)  # SHOULD BE (0, 0) ?
 
     # now construct!
     ami.construct(N_INT, R0, ftout)
@@ -46,7 +49,7 @@ def example_2():
 
     # Evaluate the integrand for ext parms in avars
     calc_result = ami.evaluate(test_amiparms, ftout, avars)
-    
+
     # time the end of eval
     t_end = time.time()
 
@@ -62,13 +65,14 @@ def example_2():
 
     # end example
 
+
 def example_4():
 
     print("\n\n-_-_-_ Example - Fourth Order _-_-_-")
 
     # start example
     print("\n-----Constructing Fermi Tree format -----\n")
-    
+
     # torch device to perform calculations on
     device = torch.device("cpu")
 
@@ -88,9 +92,10 @@ def example_4():
     ftout = pytami.TamiBase.ft_terms()
 
     # Integration/Evaluation parameters
-    E_REG = 0 # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8 
-    N_INT = 4 # number of matsubara sums to perform 
-    test_amiparms = pytami.TamiBase.ami_parms(N_INT, E_REG) # SHOULD BE (0, 0) ?
+    E_REG = 0  # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8
+    N_INT = 4  # number of matsubara sums to perform
+    test_amiparms = pytami.TamiBase.ami_parms(N_INT,
+                                              E_REG)  # SHOULD BE (0, 0) ?
 
     # now construct!
     ami.construct(N_INT, R0, ftout)
@@ -100,7 +105,7 @@ def example_4():
 
     # Evaluate the integrand for ext parms in avars
     calc_result = ami.evaluate(test_amiparms, ftout, avars)
-    
+
     # time the end of eval
     t_end = time.time()
 
@@ -114,13 +119,14 @@ def example_4():
     print(f"Construction took {diff1} microseconds")
     print(f"Evaluation took {diff2} microseconds")
 
+
 def example_6():
 
     print("\n\n-_-_-_ Example - Sixth Order _-_-_-")
 
     # start example
     print("\n-----Constructing Fermi Tree format -----\n")
-    
+
     # torch device to perform calculations on
     device = torch.device("cpu")
 
@@ -140,9 +146,10 @@ def example_6():
     ftout = pytami.TamiBase.ft_terms()
 
     # Integration/Evaluation parameters
-    E_REG = 0 # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8 
-    N_INT = 6 # number of matsubara sums to perform 
-    test_amiparms = pytami.TamiBase.ami_parms(N_INT, E_REG) # SHOULD BE (0, 0) ?
+    E_REG = 0  # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8
+    N_INT = 6  # number of matsubara sums to perform
+    test_amiparms = pytami.TamiBase.ami_parms(N_INT,
+                                              E_REG)  # SHOULD BE (0, 0) ?
 
     # now construct!
     ami.construct(N_INT, R0, ftout)
@@ -152,7 +159,7 @@ def example_6():
 
     # Evaluate the integrand for ext parms in avars
     calc_result = ami.evaluate(test_amiparms, ftout, avars)
-    
+
     # time the end of eval
     t_end = time.time()
 

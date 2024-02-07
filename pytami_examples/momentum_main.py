@@ -6,13 +6,15 @@ import external as ext
 import flat_integ as flat
 import time
 
+
 def main():
     #mat_freq_flat_2ord()
     #mat_freq_flat_4ord()
     mat_freq_flat_6ord()
 
+
 def mat_freq_flat_2ord():
-# init device
+    # init device
     device = torch.device("cuda")
     ami = pytami.TamiBase(device)
 
@@ -32,36 +34,50 @@ def mat_freq_flat_2ord():
     mu: complex = 0.1
     k: list[float] = [torch.pi, 0.0]
     N_freq: int = 1
-    frequencies: torch.tensor = torch.tensor([[0.0, 0.0, 1j * (2*i + 1) * torch.pi / beta] for i in range(0, N_freq)], device=device)
+    frequencies: torch.tensor = torch.tensor(
+        [[0.0, 0.0, 1j * (2 * i + 1) * torch.pi / beta]
+         for i in range(0, N_freq)],
+        device=device)
     avars.frequency_ = frequencies
 
     evars = ext.ext_vars(beta, mu, k)
 
     integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, ext.epsilon_2D,
-                                 False, evars)
+                                  False, evars)
 
+    flat_mc = flat.flat_mc_integrator(device, N_freq, Max_batch=int(1e5))
 
-    flat_mc = flat.flat_mc_integrator(device, N_freq ,Max_batch=int(1e5))
-    
     with open("2ord.dat", "a") as f:
 
         t1 = time.time()
-        integral_value = flat_mc.integrate(integrand, dim=4, N=10**6, 
-                                integration_domain=[[0, 2*torch.pi]] * 4)
+        integral_value = flat_mc.integrate(
+            integrand,
+            dim=4,
+            N=10**6,
+            integration_domain=[[0, 2 * torch.pi]] * 4)
         t2 = time.time()
 
         if N_freq == 1:
-            n=0
-            print(f"{n} {frequencies[n][-1]} {integral_value.ans} {integral_value.error}")
-            f.write(f"{n} {frequencies[-1]} {integral_value.ans} {integral_value.error}\n")
+            n = 0
+            print(
+                f"{n} {frequencies[n][-1]} {integral_value.ans} {integral_value.error}"
+            )
+            f.write(
+                f"{n} {frequencies[-1]} {integral_value.ans} {integral_value.error}\n"
+            )
             f.flush()
         else:
             for n in range(len(integral_value.ans)):
-                print(f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}")
-                f.write(f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n")
+                print(
+                    f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}"
+                )
+                f.write(
+                    f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n"
+                )
                 f.flush()
         f.close()
     print(f"time: {t2 - t1}")
+
 
 def mat_freq_flat_4ord():
     # init device
@@ -84,33 +100,46 @@ def mat_freq_flat_4ord():
     mu: complex = 0.0
     k: list[float] = [torch.pi, 0.0]
     N_freq: int = 1
-    frequencies: torch.tensor = torch.tensor([[0.0, 0.0, 0.0, 0.0, 1j * (2*i + 1) * torch.pi / beta] for i in range(0, N_freq)], device=device)
+    frequencies: torch.tensor = torch.tensor(
+        [[0.0, 0.0, 0.0, 0.0, 1j * (2 * i + 1) * torch.pi / beta]
+         for i in range(0, N_freq)],
+        device=device)
     avars.frequency_ = frequencies
 
     evars = ext.ext_vars(beta, mu, k)
 
     integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, ext.epsilon_2D,
-                                False, evars)
-
+                                  False, evars)
 
     flat_mc = flat.flat_mc_integrator(device, N_freq, Max_batch=int(1e5))
-    
+
     with open("4ord.dat", "a") as f:
 
         t1 = time.time()
-        integral_value = flat_mc.integrate(integrand, dim=8, N=10**8, 
-                                integration_domain=[[0, 2*torch.pi]] * 8)
+        integral_value = flat_mc.integrate(
+            integrand,
+            dim=8,
+            N=10**8,
+            integration_domain=[[0, 2 * torch.pi]] * 8)
         t2 = time.time()
 
         if N_freq == 1:
-            n=0
-            print(f"{n} {frequencies[n][-1]} {integral_value.ans} {integral_value.error}")
-            f.write(f"{n} {frequencies[-1]} {integral_value.ans} {integral_value.error}\n")
+            n = 0
+            print(
+                f"{n} {frequencies[n][-1]} {integral_value.ans} {integral_value.error}"
+            )
+            f.write(
+                f"{n} {frequencies[-1]} {integral_value.ans} {integral_value.error}\n"
+            )
             f.flush()
         else:
             for n in range(len(integral_value.ans)):
-                print(f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}")
-                f.write(f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n")
+                print(
+                    f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}"
+                )
+                f.write(
+                    f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n"
+                )
                 f.flush()
         f.close()
     print(f"time: {t2 - t1}")
@@ -136,37 +165,49 @@ def mat_freq_flat_6ord():
     mu: complex = 0.0
     k: list[float] = [torch.pi, 0.0]
     N_freq: int = 1
-    frequencies: torch.tensor = torch.tensor([[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1j * (2*i + 1) * torch.pi / beta] for i in range(0, N_freq)], device=device)
+    frequencies: torch.tensor = torch.tensor(
+        [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1j * (2 * i + 1) * torch.pi / beta]
+         for i in range(0, N_freq)],
+        device=device)
     avars.frequency_ = frequencies
 
     evars = ext.ext_vars(beta, mu, k)
 
     integrand = mom.AMI_integrand(ami, R0, avars, ftout, parms, ext.epsilon_2D,
-                                False, evars)
-
+                                  False, evars)
 
     flat_mc = flat.flat_mc_integrator(device, N_freq, Max_batch=int(1e4))
-    
+
     with open("6ord.dat", "a") as f:
 
         t1 = time.time()
-        integral_value = flat_mc.integrate(integrand, dim=12, N=10**6, 
-                                integration_domain=[[0, 2*torch.pi]] * 12)
+        integral_value = flat_mc.integrate(
+            integrand,
+            dim=12,
+            N=10**6,
+            integration_domain=[[0, 2 * torch.pi]] * 12)
         t2 = time.time()
 
         if N_freq == 1:
-            n=0
-            print(f"{n} {frequencies[n][-1]} {integral_value.ans} {integral_value.error}")
-            f.write(f"{n} {frequencies[-1]} {integral_value.ans} {integral_value.error}\n")
+            n = 0
+            print(
+                f"{n} {frequencies[n][-1]} {integral_value.ans} {integral_value.error}"
+            )
+            f.write(
+                f"{n} {frequencies[-1]} {integral_value.ans} {integral_value.error}\n"
+            )
             f.flush()
         else:
             for n in range(len(integral_value.ans)):
-                print(f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}")
-                f.write(f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n")
+                print(
+                    f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}"
+                )
+                f.write(
+                    f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n"
+                )
                 f.flush()
         f.close()
     print(f"time: {t2 - t1}")
-
 
 
 if __name__ == "__main__":
