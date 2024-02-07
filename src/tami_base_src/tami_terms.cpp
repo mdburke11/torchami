@@ -1,8 +1,8 @@
-// Catchall source file for terms helper functions in the torchami development - contains 
-// functions from libami's ami_base_terms.cpp, ami_base_optimize.cpp, ami_base_terms_optimize.cpp
+// Catchall source file for terms helper functions in the torchami development -
+// contains functions from libami's ami_base_terms.cpp, ami_base_optimize.cpp,
+// ami_base_terms_optimize.cpp
 
 #include "tami_base.hpp"
-
 
 void TamiBase::convert_terms_to_ri(terms &ami_terms, Ri_t &Ri) {
   Ri.clear();
@@ -14,7 +14,8 @@ void TamiBase::convert_terms_to_ri(terms &ami_terms, Ri_t &Ri) {
   return;
 }
 
-void TamiBase::integrate_Mat_ind_step(int index, terms &in_terms, terms &out_terms) {
+void TamiBase::integrate_Mat_ind_step(int index, terms &in_terms,
+                                      terms &out_terms) {
   out_terms.clear();
 
   for (int t_index = 0; t_index < in_terms.size(); t_index++) {
@@ -45,9 +46,8 @@ void TamiBase::integrate_Mat_ind_step(int index, terms &in_terms, terms &out_ter
   }
 }
 
-
 void TamiBase::terms_general_residue(term &this_term, pole_struct this_pole,
-                                    terms &out_terms) {
+                                     terms &out_terms) {
   out_terms.clear();
 
   double starting_sign;
@@ -93,10 +93,9 @@ void TamiBase::terms_general_residue(term &this_term, pole_struct this_pole,
   out_terms = int_terms;
 }
 
-
 void TamiBase::take_term_derivative(term &in_term, pole_struct &pole,
-                                   terms &out_terms) {
-  
+                                    terms &out_terms) {
+
   terms fd_terms;
   terms gd_terms;
 
@@ -160,18 +159,16 @@ void TamiBase::print_epsilon_info(TamiBase::epsilon_t eps) {
   for (std::vector<int>::iterator it = eps.begin(); it != eps.end(); ++it) {
     std::cout << *it << ' ';
   }
- 
 }
 
 void TamiBase::print_alpha_info(TamiBase::alpha_t alpha) {
   for (std::vector<int>::iterator it = alpha.begin(); it != alpha.end(); ++it) {
     std::cout << *it << ' ';
   }
-  
 }
 
 void TamiBase::factorize_Rn(Ri_t &Rn, g_prod_t &unique_g, R_ref_t &Rref,
-                           ref_eval_t &Eval_list) {
+                            ref_eval_t &Eval_list) {
   unique_g.clear();
   Rref.clear();
   Eval_list.clear();
@@ -220,13 +217,10 @@ void TamiBase::factorize_Rn(Ri_t &Rn, g_prod_t &unique_g, R_ref_t &Rref,
     }
   }
 
-
   reduce_rref(Rref, Eval_list);
-
 }
 
 bool TamiBase::g_struct_equiv(g_struct &g1, g_struct &g2, int &sign) {
-
 
   sign = 0; // by default zero sign means they are not equiv
 
@@ -270,7 +264,6 @@ bool TamiBase::g_struct_equiv(g_struct &g1, g_struct &g2, int &sign) {
   // in principle if the code gets here the size of signs is >0 so don't need
   // to check that
 
-
   if (std::adjacent_find(signs.begin(), signs.end(),
                          std::not_equal_to<int>()) == signs.end()) {
     sign = signs.back();
@@ -278,17 +271,15 @@ bool TamiBase::g_struct_equiv(g_struct &g1, g_struct &g2, int &sign) {
     return false;
   }
 
-
   return result;
 }
 
 // this version kicks out the extra Rref entries
 void TamiBase::reduce_rref(R_ref_t &Rref, ref_eval_t &Eval_list) {
   std::vector<int> used;
-  
 
   for (int i = 0; i < Rref.size(); i++) {
-    
+
     ref_v_t this_vec;
     if (std::find(used.begin(), used.end(), i) != used.end()) {
       continue;
@@ -296,7 +287,7 @@ void TamiBase::reduce_rref(R_ref_t &Rref, ref_eval_t &Eval_list) {
       used.push_back(i);
       int this_sign = 1;
       for (int pair = 0; pair < Rref[i].size(); pair++) {
-        
+
         this_sign = this_sign * Rref[i][pair].second;
       }
       ref_t this_ref = std::make_pair(i, this_sign);
@@ -304,19 +295,18 @@ void TamiBase::reduce_rref(R_ref_t &Rref, ref_eval_t &Eval_list) {
     }
 
     for (int j = i + 1; j < Rref.size(); j++) {
-      
+
       if (std::find(used.begin(), used.end(), j) != used.end()) {
         continue;
       } else {
         int sign1, sign2;
         bool ditto = pair_v_equiv(Rref[i], Rref[j], sign1, sign2);
-        
+
         if (ditto) {
           used.push_back(j);
           ref_t this_ref = std::make_pair(j, sign2);
-          
+
           this_vec.push_back(this_ref);
-          
         }
       }
     }
@@ -346,7 +336,8 @@ void TamiBase::reduce_rref(R_ref_t &Rref, ref_eval_t &Eval_list) {
   Rref = newref;
 }
 
-bool TamiBase::pair_v_equiv(ref_v_t &r1, ref_v_t &r2, int &r1sign, int &r2sign) {
+bool TamiBase::pair_v_equiv(ref_v_t &r1, ref_v_t &r2, int &r1sign,
+                            int &r2sign) {
   r1sign = 0;
   r2sign = 0;
 
@@ -368,4 +359,3 @@ bool TamiBase::pair_v_equiv(ref_v_t &r1, ref_v_t &r2, int &r1sign, int &r2sign) 
   r2sign = this_sign2;
   return true;
 }
-
