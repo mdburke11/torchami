@@ -68,11 +68,11 @@ if(ami_parameters.TYPE_==TamiBase::Sigma || ami_parameters.TYPE_==TamiBase::Gree
   // fermi_loops++;
 // }
 
-int sigma_ct=g[boost::graph_bundle].sigma_ct_count;
+// int sigma_ct=g[boost::graph_bundle].sigma_ct_count;
 
 // std::cout<<"Found fermi loops"<< fermi_loops<<std::endl;
 
-output=pow(-1, fermi_loops+order+sigma_ct);	
+output=pow(-1, fermi_loops+order); // +sigma_ct);	// Note: Removed sigma_ct prefactors here. they will be absorbed into the alpha definition in later versions
 	
 // std::cout<<"returning "<<output<<std::endl;
 	

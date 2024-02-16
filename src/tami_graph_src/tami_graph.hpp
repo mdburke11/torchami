@@ -220,8 +220,9 @@ class TamiGraph{
             int ext_counts;
             bool is_bose;
             int ct_count=0;
-                int sigma_ct_count=0;
+            int sigma_ct_count=0;
 
+            std::vector< TamiBase::alpha_t > ct_alphas;
                 
         };
 

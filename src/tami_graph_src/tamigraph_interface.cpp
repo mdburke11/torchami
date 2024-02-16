@@ -825,6 +825,8 @@ for(int i=1; i< length; i++){
 
 add_edge(vv[i-1],vv[i],edge_info(g_in[e].g_struct_.eps_, g_in[e].g_struct_.alpha_,  g_in[e].g_struct_.stat_,g_in[e].fermi_loop_id, g_in[e].spin), ctg);
 
+ctg[boost::graph_bundle].ct_alphas.push_back(g_in[e].g_struct_.alpha_);
+
 }	
 
 // connect chain to source and target 
