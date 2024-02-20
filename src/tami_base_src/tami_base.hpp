@@ -192,9 +192,12 @@ public:
   /// T}\f$ needed for evaluation of Fermi/Bose distributions.
   struct ami_vars {
     /// Numerical values of energies. - at::Tensor = {e1_vector, e2_vector, ...
-    /// } columns of length batch_size to be evaluated
+    /// } columns of length batch_size to be evaluated. Allows multiple energies
+    ///  to be evaluated simultaneously to then numerically evaluate spatial integrals.
     energy_t energy_;
-    /// Numerical Values of frequencies.
+    /// Numerical Values of frequencies stored in a at::Tensor. Follows convention that
+    /// external frequency is stored in last element of rows. Then frequency_t object is
+    /// a stack of objects of the form \f$(0, 0, \hdots, \nu_ext)\f$.
     frequency_t frequency_;
     /// Overall prefactor - default(1).
     double prefactor = 1.0;
