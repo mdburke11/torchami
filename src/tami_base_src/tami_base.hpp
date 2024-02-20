@@ -197,7 +197,7 @@ public:
     energy_t energy_;
     /// Numerical Values of frequencies stored in a at::Tensor. Follows convention that
     /// external frequency is stored in last element of rows. Then frequency_t object is
-    /// a stack of objects of the form \f$(0, 0, \hdots, \nu_ext)\f$.
+    /// a stack of objects of the form \f$(0, 0, \cdot\cdot\cdot, \nu_{ext})\f$.
     frequency_t frequency_;
     /// Overall prefactor - default(1).
     double prefactor = 1.0;
@@ -645,10 +645,6 @@ public:
   std::string pretty_print_ft_terms(ft_terms &fts);
 
   /// @brief Evaluate just the fermi-tree
-  /// @param parms
-  /// @param ft1
-  /// @param v
-  /// @param external
   /// @return
   at::Tensor eval_ft(TamiBase::ami_parms &parms,
                      TamiBase::FermiTree::fermi_tree_t &ft1,
