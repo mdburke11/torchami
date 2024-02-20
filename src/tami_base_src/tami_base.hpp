@@ -652,7 +652,8 @@ public:
                            TamiBase::ami_vars &external);
 
   /// @brief Standard evaluate function. See examples.
-  /// @return at::Tensor of shape \f$(0, \nu_{ext})\f$
+  /// @return at::Tensor of shape \f$N_f \times N_e\f$, so that in practice
+  /// one can sum the columns in a Monte Carlo integration
   at::Tensor evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
                       TamiBase::ami_vars &external);
 
