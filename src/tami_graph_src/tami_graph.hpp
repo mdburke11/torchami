@@ -310,6 +310,7 @@ public:
   void read_ggmp(std::string folder, gg_matrix_t &ggm, int max_ord);
   void read_ggmp(std::string folder, gg_matrix_t &ggm, int min_ord,
                  int max_ord);
+  ///The graph read function is an example that can be used to generate graphs based on source-target format files.  See examples for usage.               
   void graph_read(std::string filename, graph_t &g);
   void pair_read(std::string filename, git_pair &p);
 
