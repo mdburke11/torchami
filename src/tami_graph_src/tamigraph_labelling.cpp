@@ -840,7 +840,7 @@ void TamiGraph::sys_label(graph_t &g, bool &result) {
   } while (std::next_permutation(v.begin(), v.end()));
 }
 
-/// This finds the vertices that are actually external???
+/// This finds the vertices that are external - use with caution.
 void TamiGraph::find_external_vertices(graph_t &g, vertex_vector_t &v,
                                        edge_vector_t &edges) {
 
