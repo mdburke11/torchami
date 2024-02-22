@@ -217,6 +217,8 @@ public:
     bool is_bose;
     int ct_count = 0;
     int sigma_ct_count = 0;
+
+    std::vector< TamiBase::alpha_t > ct_alphas;
   };
 
   //   A ->--- a =====b--->--B .  A and B are external vertices. a and b are the

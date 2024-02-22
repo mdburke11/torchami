@@ -77,7 +77,7 @@ double TamiGraph::get_prefactor(graph_t &g, int order) {
 
   // std::cout<<"Found fermi loops"<< fermi_loops<<std::endl;
 
-  output = pow(-1, fermi_loops + order + sigma_ct);
+  output = pow(-1, fermi_loops + order); // + sigma_ct);// Note: Removed sigma_ct prefactors here. they will be absorbed into the alpha definition in later versions
 
   // std::cout<<"returning "<<output<<std::endl;
 

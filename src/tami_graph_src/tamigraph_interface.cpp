@@ -809,6 +809,8 @@ void TamiGraph::insert_chain(graph_t &g_in, graph_t &ctg, edge_t &e,
                        g_in[e].g_struct_.stat_, g_in[e].fermi_loop_id,
                        g_in[e].spin),
              ctg);
+
+    ctg[boost::graph_bundle].ct_alphas.push_back(g_in[e].g_struct_.alpha_);
   }
 
   // connect chain to source and target
