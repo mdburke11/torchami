@@ -613,9 +613,6 @@ public:
 
   /// @brief Integrates a single Matsubara index for every term provided using
   /// the `term_integrate_step` function.
-  /// @param index
-  /// @param in_term
-  /// @param out_terms
   void integrate_step(int index, ft_terms &in_terms, ft_terms &out_terms);
   /// @brief Integrates a single step for a single term
   void term_integrate_step(int index, ft_term &in_term, ft_terms &out_terms);
@@ -645,7 +642,6 @@ public:
   std::string pretty_print_ft_terms(ft_terms &fts);
 
   /// @brief Evaluate just the fermi-tree
-  /// @return
   at::Tensor eval_ft(TamiBase::ami_parms &parms,
                      TamiBase::FermiTree::fermi_tree_t &ft1,
                      TamiBase::FermiTree::vertex_t &v,
@@ -656,10 +652,8 @@ public:
                            TamiBase::ami_vars &external);
 
   /// @brief Standard evaluate function. See examples.
-  /// @param parms
-  /// @param ft_terms
-  /// @param external
-  /// @return
+  /// @return at::Tensor of shape \f$N_f \times N_e\f$, so that in practice
+  /// one can sum the columns in a Monte Carlo integration
   at::Tensor evaluate(TamiBase::ami_parms &parms, ft_terms &ft_terms,
                       TamiBase::ami_vars &external);
 
