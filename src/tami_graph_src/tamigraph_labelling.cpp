@@ -554,6 +554,25 @@ void TamiGraph::check_momentum_conservation(graph_t &g, bool &result) {
   result = cons;
 }
 
+void TamiGraph::check_internal_bosonic(graph_t &g, bool &result) {
+
+  bool ok=true;
+
+  edge_vector_t ev;
+  find_internal_bose_edges(g, ev);
+
+  for (int i=0; i< ev.size(); i++){
+
+    // std::cout<< g[ev[i]].g_struct_.alpha_.back() <<std::endl;
+    if( g[ev[i]].g_struct_.alpha_.back() != 0 ) {result=false; return;}
+
+  }
+  
+
+  result = true;
+}
+
+
 void TamiGraph::sys_label(graph_t &g, bool &result) {
 
   // std::cout<<"Systematic bubble labelling for graph"<<std::endl;
@@ -804,6 +823,7 @@ void TamiGraph::sys_label(graph_t &g, bool &result) {
     if (out.size() == 0) {
 
       check_momentum_conservation(gc, append);
+      check_internal_bosonic(gc,append);
       // std::cout<<"Momentum conserved? "<<append<<std::endl;
 
       // print_all_edge_info(gc);
@@ -1206,6 +1226,31 @@ void TamiGraph::find_internal_fermionic_edges(graph_t &g,
   for (boost::tie(ei, ei_end) = edges(g); ei != ei_end; ++ei) {
 
     if (g[*ei].g_struct_.stat_ == TamiBase::Fermi) {
+      // if(source(*ei,g)==target(*ei,g)){vector.push_back(*ei);}
+      if (degree(source(*ei, g), g) != 1 && degree(target(*ei, g), g) != 1) {
+        vector.push_back(*ei);
+      }
+    }
+    // std::cout << "Edge " << *ei << " of stat_type "<< g[*ei].g_struct_.stat_
+    // << std::endl;
+
+    // std::cout<<"edge "<<jg[*ei].edge_number_<<" loop Total is "<<
+    // total<<std::endl;
+  }
+}
+
+void TamiGraph::find_internal_bose_edges(graph_t &g,
+                                              edge_vector_t &vector) {
+
+  vector.clear();
+
+  // std::cout<< "Finding Fermionic edges" <<std::endl;
+  boost::graph_traits<graph_t>::edge_iterator ei, ei_end;
+  // Looking through all edges to find source and targets : this could be
+  // improved?
+  for (boost::tie(ei, ei_end) = edges(g); ei != ei_end; ++ei) {
+
+    if (g[*ei].g_struct_.stat_ == TamiBase::Bose) {
       // if(source(*ei,g)==target(*ei,g)){vector.push_back(*ei);}
       if (degree(source(*ei, g), g) != 1 && degree(target(*ei, g), g) != 1) {
         vector.push_back(*ei);

@@ -219,6 +219,7 @@ public:
     int sigma_ct_count = 0;
 
     std::vector< TamiBase::alpha_t > ct_alphas;
+    std::vector< int > ct_alpha_index;
   };
 
   //   A ->--- a =====b--->--B .  A and B are external vertices. a and b are the
@@ -321,6 +322,7 @@ public:
   void repeated_labelling(graph_t &g, bool &result);
   void fix_epsilons(graph_t &g);
   void find_internal_fermionic_edges(graph_t &g, edge_vector_t &vector);
+  void find_internal_bose_edges(graph_t &g, edge_vector_t &vector);
   bool edge_alphas_are_equal(edge_t &one, edge_t &two, graph_t &g);
   bool edge_alphas_are_negative(edge_t &one, edge_t &two, graph_t &g);
   void number_vertices(graph_t &g);
@@ -361,6 +363,7 @@ public:
                             edge_vector_t &unlabelled_edges);
   void print_all_edge_info(graph_t &g);
   void check_momentum_conservation(graph_t &g, bool &result);
+  void check_internal_bosonic(graph_t &g, bool &result);
   void find_unlabelled_fermionic_edges(graph_t &g, edge_vector_t &vector);
   /// The most robust labelling tool - recommended to use this directly and not
   /// `ggm_label` function.

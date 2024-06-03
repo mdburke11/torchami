@@ -811,6 +811,11 @@ void TamiGraph::insert_chain(graph_t &g_in, graph_t &ctg, edge_t &e,
              ctg);
 
     ctg[boost::graph_bundle].ct_alphas.push_back(g_in[e].g_struct_.alpha_);
+    int ctindex=std::distance(  std::begin(g_in[e].g_struct_.eps_), 
+                                std::find_if( std::begin(g_in[e].g_struct_.eps_), 
+                                std::end(g_in[e].g_struct_.eps_), [](auto x) { return x != 0; }));
+    std::cout<<"Found ctindex of "<< ctindex<<std::endl;
+    ctg[boost::graph_bundle].ct_alpha_index.push_back(ctindex);
   }
 
   // connect chain to source and target
@@ -821,6 +826,13 @@ void TamiGraph::insert_chain(graph_t &g_in, graph_t &ctg, edge_t &e,
                      g_in[e].g_struct_.stat_, g_in[e].fermi_loop_id,
                      g_in[e].spin),
            ctg);
+
+    ctg[boost::graph_bundle].ct_alphas.push_back(g_in[e].g_struct_.alpha_);
+    int ctindex=std::distance(  std::begin(g_in[e].g_struct_.eps_), 
+                                std::find_if( std::begin(g_in[e].g_struct_.eps_), 
+                                std::end(g_in[e].g_struct_.eps_), [](auto x) { return x != 0; }));
+    std::cout<<"Found ctindex of "<< ctindex<<std::endl;
+    ctg[boost::graph_bundle].ct_alpha_index.push_back(ctindex);
 
   add_edge(vv[vv.size() - 1], vB,
            edge_info(g_in[e].g_struct_.eps_, g_in[e].g_struct_.alpha_,

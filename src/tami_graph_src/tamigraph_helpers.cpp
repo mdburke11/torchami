@@ -571,9 +571,9 @@ void TamiGraph::ggm_label(gg_matrix_t &ggm, int min) {
                   << " num " << graph << std::endl;
         bool success = true;
 
-        if (graph_type == TamiBase::density || graph_type == TamiBase::Greens ||
-            graph_type == TamiBase::DOS || graph_type == TamiBase::ENERGY ||
-            graph_type == TamiBase::FORCE || graph_type == TamiBase::Pi_ppud) {
+        // if (graph_type == TamiBase::density || graph_type == TamiBase::Greens ||
+        //     graph_type == TamiBase::DOS || graph_type == TamiBase::ENERGY ||
+        //     graph_type == TamiBase::FORCE || graph_type == TamiBase::Pi_ppud) {
 
           // NOT SURE why we wouldn't just try the systematic case anyways.
 
@@ -583,9 +583,10 @@ void TamiGraph::ggm_label(gg_matrix_t &ggm, int min) {
             repeated_labelling(ggm[ord][group].graph_vec[graph], success);
           }
 
-        } else {
-          repeated_labelling(ggm[ord][group].graph_vec[graph], success);
-        }
+        // } else {
+        //   repeated_labelling(ggm[ord][group].graph_vec[graph], success);
+          
+        // }
 
         // sys_label(ggm[ord][group].graph_vec[graph], success);
         if (!success) {
