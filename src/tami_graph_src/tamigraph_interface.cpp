@@ -867,3 +867,9 @@ void TamiGraph::trojan_generate_sigma_ct(trojan_graph &tg_in,
   TamiGraph::graph_t g_in = tg_in.graph;
   this->generate_sigma_ct(g_in, ct_vec, maxdots);
 }
+
+void TamiGraph::trojan_extract_bose_alphas(trojan_graph &tg,
+                                           std::vector<TamiBase::alpha_t> &bose) {
+  TamiGraph::graph_t g = tg.graph;
+  this->extract_bose_alphas(g, bose);
+}

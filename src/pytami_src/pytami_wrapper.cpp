@@ -15,6 +15,9 @@ PYBIND11_MAKE_OPAQUE(
 PYBIND11_MAKE_OPAQUE(
     std::vector<TamiGraph::trojan_graph>); // for trojan_generate_sigma_ct
 
+PYBIND11_MAKE_OPAQUE(
+    std::vector<TamiBase::alpha_t>); // for trojan_extract_bose_alphas
+
 namespace py = pybind11;
 
 void init_pytami_wrapper(py::module &m) {
@@ -40,6 +43,10 @@ void init_pytami_wrapper(py::module &m) {
         return copy;
       });
   py::bind_vector<std::vector<TamiBase::ft_term>>(TamiBase, "ft_terms");
+
+  // this can be renamed but I think this is the only instance where a 
+  // vector of alpha_t are used so might as well be called bose_alphas
+  py::bind_vector<std::vector<TamiBase::alpha_t>>(TamiBase, "bose_alphas");
 
   py::class_<TamiBase::ami_vars>(TamiBase, "ami_vars")
       .def(py::init<>())
@@ -174,4 +181,8 @@ void init_pytami_wrapper(py::module &m) {
       "trojan_generate_sigma_ct", &TamiGraph::trojan_generate_sigma_ct,
       "Workaround to generate all Counter term diagrams for the graph provided "
       "and store them in the vector provided upto maxdots of insertions.");
+  TamiGraph.def(
+      "trojan_extract_bose_alphas", &TamiGraph::trojan_extract_bose_alphas,
+      "Workaround to generate the momentum dependencies (alpha_t objects) for "
+      "all bosonic lines in graph stored in the trojan_graph object provided.");
 }

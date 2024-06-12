@@ -446,6 +446,7 @@ public:
   double trojan_get_prefactor(trojan_graph &tg, int order);
   void trojan_generate_sigma_ct(trojan_graph &tg_in,
                                 std::vector<graph_t> &ct_vec, int maxdots);
+  void trojan_extract_bose_alphas(trojan_graph &tg, std::vector<TamiBase::alpha_t> &bose);
 };
 
 inline std::ostream &operator<<(std::ostream &os,

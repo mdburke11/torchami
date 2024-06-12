@@ -107,9 +107,11 @@ void graph_library_example() {
   std::cout << "All done! That was easy!" << std::endl;
 
   TamiBase::g_prod_t R0;
+  std::vector<TamiBase::alpha_t> bose_alphas;
 
   for (int i = 2; i < 7; i += 2) { // looping through the orders 2, 4, 6
     g.graph_to_R0(ggm[i][0].graph_vec[0], R0); // converting each graph into R0
+    g.extract_bose_alphas(ggm[i][0].graph_vec[0], bose_alphas); // bosonic lines
     std::cout << "\norder: " << i << std::endl;
     std::cout << "alpha: " << std::endl;
 
@@ -124,6 +126,14 @@ void graph_library_example() {
     for (auto x : R0) {
       for (int j = 0; j < x.eps_.size(); ++j) {
         std::cout << x.eps_[j] << " ";
+      }
+      std::cout << std::endl;
+    }
+
+    std::cout << "Bosonic alphas: " << std::endl;
+    for (auto x : bose_alphas) {
+      for (int j = 0; j < x.size(); ++j) {
+        std::cout << x[j] << " ";
       }
       std::cout << std::endl;
     }
