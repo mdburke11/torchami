@@ -23,7 +23,6 @@ set(LIB_BASE_FILES
   ${CMAKE_SOURCE_DIR}/src/tami_base_src/tami_construct.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_base_src/tami_evaluate.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_base_src/tami_terms.cpp
-  ${CMAKE_SOURCE_DIR}/src/tami_base_src/tami_python.cpp
 )
 
 ADD_LIBRARY(torchami SHARED ${LIB_BASE_FILES})

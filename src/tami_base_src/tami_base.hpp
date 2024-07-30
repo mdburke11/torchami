@@ -60,24 +60,10 @@ public:
 
   at::Device getDevice() { return options.device(); }
 
-  /// Returns the sign of a value - or zero if it is uniquely zero.
-  template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
-
-  // template for checking equality of vectors
-  template <typename T>
-  bool isEqual(std::vector<T> const &v1, std::vector<T> const &v2) {
-    return (v1.size() == v2.size() &&
-            std::equal(v1.begin(), v1.end(), v2.begin()));
-  }
-
   // Maximum argument allowed for fermi and bose functions - to prevent inf due
   // to double precision numbers
   // Note: Possible that this prevents catching overflow issues
   double exp_max_arg = 500.0;
-
-  /// Simple factorial function. It is rarely called except for multipole
-  /// problems, and typically for only small arguments.
-  int factorial(int n);
 
   bool drop_bosonic_diverge =
       false; // if set to true, then E_REG not needed because bosonic
@@ -736,18 +722,6 @@ public:
   /// evaluate the energies of a pole_struct.
   at::Tensor get_energy_from_pole(pole_struct pole, ami_vars external);
 
-  /*The frk function itself returns
-  \f[
-  f_{rk}(m,k)=\sum\limits_{m=0}^{k+1} binomialCoeff(k,m) m^r (-1)^{k-m}.
-  \f]
-  */
-  double frk(int r, int k);
-
-  /*
-Recursive binomial coefficient function
-*/
-  int binomialCoeff(int n, int k);
-
   void print_epsilon_info(epsilon_t eps);
 
   // Functions for Factorize_Rn
@@ -767,4 +741,31 @@ Recursive binomial coefficient function
 private:
 };
 
-at::Tensor epsilon_2D(at::Tensor);
+namespace mathUtils{
+
+  /// Returns the sign of a value - or zero if it is uniquely zero.
+  template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
+
+  // template for checking equality of vectors
+  template <typename T>
+  bool isEqual(std::vector<T> const &v1, std::vector<T> const &v2) {
+    return (v1.size() == v2.size() &&
+            std::equal(v1.begin(), v1.end(), v2.begin()));
+  }
+
+  /// Simple factorial function. It is rarely called except for multipole
+  /// problems, and typically for only small arguments.
+  int factorial(int n);
+
+  /*The frk function itself returns
+  \f[
+  f_{rk}(m,k)=\sum\limits_{m=0}^{k+1} binomialCoeff(k,m) m^r (-1)^{k-m}.
+  \f]
+  */
+  double frk(int r, int k);
+
+  /*
+  Recursive binomial coefficient function
+  */
+  int binomialCoeff(int n, int k);
+}

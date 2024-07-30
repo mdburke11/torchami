@@ -523,13 +523,13 @@ double TamiBase::get_starting_sign(TamiBase::g_prod_t G_in,
     result = result * (double)G_in[pole.which_g_[i]].alpha_[pole.index_];
   }
 
-  result = result / (double)factorial(pole.multiplicity_ - 1);
+  result = result / (double)mathUtils::factorial(pole.multiplicity_ - 1);
 
   return result;
 }
 
-int TamiBase::factorial(int n) {
-  return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
+int mathUtils::factorial(int n) {
+  return (n == 1 || n == 0) ? 1 : mathUtils::factorial(n - 1) * n;
 }
 
 /**
