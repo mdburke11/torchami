@@ -1,12 +1,12 @@
 import sys
-
-sys.path.append("../")
+sys.path.append("../helperScripts/")
 import torch
 import pytami
 import graph_util as gru
 import RPT_integrand as rpt
 import external as ext
 import flat_integ as flat
+from getDevice import getDevice
 
 
 def main() -> None:
@@ -14,10 +14,6 @@ def main() -> None:
 
 
 def second_ord_c1_a() -> None:
-
-    #
-    # graph set up
-    #
 
     graph_type: pytami.TamiBase.graph_type = pytami.TamiBase.Sigma
     seed: int = 0
@@ -55,8 +51,8 @@ def second_ord_c1_a() -> None:
     #
     # integrand setup
     #
+    device: torch.device = getDevice()
     for _ in range(10):
-        device: torch.device = torch.device("cuda")
         ami: pytami.TamiBase = pytami.TamiBase(device)
 
         # external vars
