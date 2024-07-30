@@ -1,5 +1,8 @@
+import sys
+sys.path.append('helperScripts')
 import torch
 import pytami
+from getDevice import getDevice
 import examples as ex
 import time
 
@@ -18,7 +21,7 @@ def example_2():
     print("\n-----Constructing Fermi Tree format -----\n")
 
     # torch device to perform calculations on
-    device = torch.device("cpu")
+    device = getDevice()
 
     # class instance
     ami = pytami.TamiBase(device)
@@ -74,7 +77,7 @@ def example_4():
     print("\n-----Constructing Fermi Tree format -----\n")
 
     # torch device to perform calculations on
-    device = torch.device("cpu")
+    device = getDevice()
 
     # class instance
     ami = pytami.TamiBase(device)
@@ -128,7 +131,7 @@ def example_6():
     print("\n-----Constructing Fermi Tree format -----\n")
 
     # torch device to perform calculations on
-    device = torch.device("cpu")
+    device = getDevice()
 
     # class instance
     ami = pytami.TamiBase(device)

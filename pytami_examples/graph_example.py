@@ -1,28 +1,13 @@
+import sys
+sys.path.append('helperScripts')
+from graph_util import print_R0
 import torch
 import pytami
 import copy
 
-
-def print_R0(R0: pytami.TamiBase.g_prod_t) -> None:
-
-    x: pytami.TamiBase.g_struct
-
-    print("Alpha:")
-    for x in R0:
-        a: int
-        for a in x.alpha_:
-            print(a, end=" ")
-        print()
-
-    print()
-
-    print("Epsilon:")
-    for x in R0:
-        e: int
-        for e in x.eps_:
-            print(e, end=" ")
-        print()
-
+# 3 examples: graph_eg is a plain load and print the R0 object (main)
+# renorm_PT_eg is generates the counter term diagrams (here as a test, not in main)
+# bose_alphas_eg is generates the bosonic propagator's momenta alphas (here as a test, not in main)
 
 def graph_eg() -> None:
 
@@ -190,6 +175,6 @@ def bose_alphas_eg():
 
 
 if __name__ == "__main__":
-    #graph_eg()
+    graph_eg()
     #renorm_PT_eg()
-    bose_alphas_eg()
+    #bose_alphas_eg()
