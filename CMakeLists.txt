@@ -22,6 +22,20 @@ else()
   message("pybind11 was not found.  Python library will not be compiled. Continuing without.")
 endif()
 
+
+if(CMAKE_BUILD_TYPE MATCHES Release OR TEST)
+message("Testing Enabled")
+add_subdirectory(test)
+enable_testing()
+add_test(fb test/fb)
+add_test(helper_functions test/helper_functions)
+add_test(num_test test/num_test)
+add_test(construct_tests test/construct_tests)
+
+endif(CMAKE_BUILD_TYPE MATCHES Release OR TEST)
+
+
+
 if(BUILD_DOC)
 
 
