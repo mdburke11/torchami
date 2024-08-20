@@ -48,6 +48,8 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 
 add_executable(num_test num_test.cpp)
 target_link_libraries(num_test gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
+add_executable(construct_tests construct_tests.cpp)
+target_link_libraries(construct_tests gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
 
 #target_link_libraries(fb torchami tamigraph gtest gtest_main)
 #target_link_libraries(helper_functions torchami tamigraph gtest gtest_main)

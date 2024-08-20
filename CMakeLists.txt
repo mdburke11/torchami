@@ -35,7 +35,7 @@ add_test(num_test test/num_test)
 # add_test(fb test/fb)
 # add_test(helper_functions test/helper_functions)
 # add_test(num_test test/num_test)
-# add_test(construct_tests test/construct_tests)
+add_test(construct_tests test/construct_tests)
 
 
 endif(CMAKE_BUILD_TYPE MATCHES Release OR TEST)
