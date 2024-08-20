@@ -1,5 +1,5 @@
 #include "tami_graph.hpp"
-#include <ifstream>
+#include <fstream>
 #include <string>
 #include <stringstream>
 
