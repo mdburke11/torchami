@@ -47,7 +47,7 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 #add_executable(construct_tests construct_tests.cpp)
 
 add_executable(hello_test hello_test.cpp)
-target_link_libraries(hello_test gtest gtest_main ${PYTHON_LIBRARIES})
+target_link_libraries(hello_test gtest gtest_main ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
 
 #target_link_libraries(fb torchami tamigraph gtest gtest_main)
 #target_link_libraries(helper_functions torchami tamigraph gtest gtest_main)

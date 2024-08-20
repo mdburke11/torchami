@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.18...3.22.1)
 project( torchami )
+include(CMakePrintHelpers)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
@@ -14,6 +15,8 @@ if(Boost_FOUND)
 endif()
 
 find_package(Torch REQUIRED)
+cmake_print_variables(TORCH_CXX_FLAGS)
+cmake_print_variables(TORCH_INCLUDE_DIRS)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
 link_directories(${Boost_LIBRARY_DIRS})
