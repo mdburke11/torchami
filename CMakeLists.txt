@@ -32,9 +32,8 @@ message("Testing Enabled")
 add_subdirectory(test)
 enable_testing()
 add_test(num_test test/num_test)
-# add_test(fb test/fb)
-# add_test(helper_functions test/helper_functions)
-# add_test(num_test test/num_test)
+add_test(fb test/fb)
+add_test(helper_tests test/helper_tests)
 add_test(construct_tests test/construct_tests)
 
 
