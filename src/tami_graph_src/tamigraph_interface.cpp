@@ -1,7 +1,7 @@
 #include "tami_graph.hpp"
 #include <fstream>
 #include <string>
-#include <stringstream>
+#include <sstream>
 
 using namespace boost;
 
