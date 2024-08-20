@@ -1,6 +1,6 @@
 #include "tami_graph.hpp"
 
-TamiGraph::TamiGraph() : rand_gen(0), rand_dist(0, 1.0), engine(12) {
+TamiGraph::TamiGraph() : rand_gen(0), rand_dist(0, 1.0) {
   std::cout << "TamiGraph Constructor Called" << std::endl;
 
   initialize(TamiBase::Sigma);
@@ -8,7 +8,7 @@ TamiGraph::TamiGraph() : rand_gen(0), rand_dist(0, 1.0), engine(12) {
 }
 
 TamiGraph::TamiGraph(TamiBase::graph_type type, int seed)
-    : rand_gen(seed), rand_dist(0, 1.0), engine(12) {
+    : rand_gen(seed), rand_dist(0, 1.0) {
 
   std::cout << "TamiGraph Constructor Called" << std::endl;
 
@@ -19,7 +19,7 @@ TamiGraph::TamiGraph(TamiBase::graph_type type, int seed)
 }
 
 TamiGraph::TamiGraph(TamiBase::graph_type type, int dim, int seed)
-    : rand_gen(seed), rand_dist(0, 1.0), engine(12) {
+    : rand_gen(seed), rand_dist(0, 1.0) {
 
   std::cout << "TamiGraph Constructor Called" << std::endl;
 

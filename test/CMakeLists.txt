@@ -24,28 +24,15 @@ include_directories(${TORCH_INCLUDE_DIRS})
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
-# find_package(pybind11)
-
-# find_package(Torch REQUIRED)
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
-
-# find_package(PythonLibs REQUIRED)
-# include_directories(${PYTHON_INCLUDE_DIRS})
-# link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../torchami/install/lib/)
-# include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../torchami/install/include/)
-
-
+find_package(Boost REQUIRED)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
+endif()
 
 ################################
 # Tests
 ################################
 # Add test cpp file
-#add_executable(blank blank.cpp)
-#add_executable(fb fermi_bose.cpp)
-#add_executable(helper_functions helper_functions.cpp)
-#add_executable(num_test num_test.cpp)
-#add_executable(construct_tests construct_tests.cpp)
-
 add_executable(num_test num_test.cpp)
 target_link_libraries(num_test gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
 add_executable(construct_tests construct_tests.cpp)
@@ -54,9 +41,3 @@ add_executable(helper_tests helper_functions.cpp)
 target_link_libraries(helper_tests gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
 add_executable(fb fermi_bose.cpp)
 target_link_libraries(fb gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
-
-#target_link_libraries(fb torchami tamigraph gtest gtest_main)
-#target_link_libraries(helper_functions torchami tamigraph gtest gtest_main)
-#target_link_libraries(num_test torchami tamigraph gtest gtest_main ${PYTHON_LIBRARIES} boost_system boost_filesystem)
-#target_link_libraries(construct_tests torchami tamigraph gtest gtest_main)
-

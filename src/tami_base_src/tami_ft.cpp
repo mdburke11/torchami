@@ -1,5 +1,6 @@
 #include "tami_base.hpp"
 
+
 // Empty constructor
 TamiBase::FermiTree::FermiTree() {}
 
