@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.18...3.22.1)
 project( torchami )
 include(CMakePrintHelpers)
+add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
