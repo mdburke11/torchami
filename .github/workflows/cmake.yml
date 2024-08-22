@@ -17,10 +17,10 @@ jobs:
       matrix:
         # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
         include:
-          # - name: "Ubuntu 22.04"
-          #   runner: ubuntu-22.04
-          - name: "macOS 13"
-            runner: macos-13 #latest
+          - name: "Ubuntu 22.04"
+            runner: ubuntu-22.04
+          # - name: "macOS 13"
+          #   runner: macos-13 #latest
     runs-on: ${{ matrix.runner }}
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
