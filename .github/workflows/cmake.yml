@@ -36,7 +36,7 @@ jobs:
         
 
     - name: Install boost
-      uses: MarkusJx/install-boost@v2.4.4
+      uses: MarkusJx/install-boost@v2.4.5
       id: install-boost
       with:
           # REQUIRED: Specify the required boost version
@@ -51,13 +51,13 @@ jobs:
         # toolset: gcc
         # OPTIONAL: Specify an architecture
         # arch: x86
-        boost_version: 1.78.0
+        boost_version: 1.86.0
         # OPTIONAL: Specify a platform version
-        platform_version: 14
+        # platform_version: 14
         # OPTIONAL: Specify a custom install location
-        boost_install_dir: /home/runner/boost_install
+        # boost_install_dir: /home/runner/boost_install
         # OPTIONAL: Specify a toolset
-        toolset: clang
+        # toolset: clang
 
     - name: Install PyTorch
       run: |
