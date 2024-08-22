@@ -20,7 +20,7 @@ jobs:
           - name: "Ubuntu 22.04"
             runner: ubuntu-22.04
           # - name: "macOS latest"
-          #   runner: macos-13 #latest
+          #   runner: macos-11 #latest
     runs-on: ${{ matrix.runner }}
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
@@ -51,7 +51,7 @@ jobs:
         # toolset: gcc
         # OPTIONAL: Specify an architecture
         # arch: x86
-        boost_version: 1.73.0
+        boost_version: 1.78.0
         # OPTIONAL: Specify a platform version
         # platform_version: 13
         # OPTIONAL: Specify a custom install location
