@@ -17,10 +17,10 @@ jobs:
       matrix:
         # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
         include:
-          # - name: "Ubuntu 22.04"
-          #   runner: ubuntu-22.04
-          - name: "macOS latest"
-            runner: macos-13 #latest
+          - name: "Ubuntu 22.04"
+            runner: ubuntu-22.04
+          # - name: "macOS latest"
+          #   runner: macos-13 #latest
     runs-on: ${{ matrix.runner }}
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
@@ -53,11 +53,11 @@ jobs:
         # arch: x86
         boost_version: 1.86.0
         # OPTIONAL: Specify a platform version
-        platform_version: 13
+        # platform_version: 13
         # OPTIONAL: Specify a custom install location
         # boost_install_dir: /home/runner/boost_install
         # OPTIONAL: Specify a toolset
-        toolset: clang
+        # toolset: clang
 
     - name: Install PyTorch
       run: |
