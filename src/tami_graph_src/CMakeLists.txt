@@ -11,6 +11,7 @@ endif()
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
+  include_directories(${BOOST_ROOT})
 endif()
 
 find_package(Torch REQUIRED)
