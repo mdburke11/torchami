@@ -20,7 +20,7 @@ jobs:
           # - name: "Ubuntu 22.04"
           #   runner: ubuntu-22.04
           - name: "macOS latest"
-            runner: macos-latest
+            runner: macos-14 #latest
     runs-on: ${{ matrix.runner }}
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
@@ -36,7 +36,7 @@ jobs:
         
 
     - name: Install boost
-      uses: MarkusJx/install-boost@v2.4.5
+      uses: MarkusJx/install-boost@v2.4.4
       id: install-boost
       with:
           # REQUIRED: Specify the required boost version
@@ -53,7 +53,7 @@ jobs:
         # arch: x86
         boost_version: 1.78.0
         # OPTIONAL: Specify a platform version
-        platform_version: 10.15
+        platform_version: 14
         # OPTIONAL: Specify a custom install location
         boost_install_dir: /home/runner/boost_install
         # OPTIONAL: Specify a toolset
