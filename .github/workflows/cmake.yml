@@ -35,41 +35,29 @@ jobs:
         python-version: 3.8
         
 
-    
-    # - name: Install boost
-    #   uses: MarkusJx/install-boost@v2.4.4
-    #   id: install-boost
-    #   with:
-    #       # REQUIRED: Specify the required boost version
-    #       # A list of supported versions can be found here:
-    #       # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
-    #       boost_version: 1.73.0
-    #     # OPTIONAL: Specify a platform version
-    #     # platform_version: 18.04
-    #     # OPTIONAL: Specify a custom install location
-    #     # boost_install_dir: /home/runner/some_directory
-    #     # OPTIONAL: Specify a toolset
-    #     # toolset: gcc
-    #     # OPTIONAL: Specify an architecture
-    #     # arch: x86
-
-   
     - name: Install boost
-    uses: MarkusJx/install-boost@v2.4.5
-    id: install-boost
-    with:
-        # REQUIRED: Specify the required boost version
-        # A list of supported versions can be found here:
-        # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
+      uses: MarkusJx/install-boost@v2.4.5
+      id: install-boost
+      with:
+          # REQUIRED: Specify the required boost version
+          # A list of supported versions can be found here:
+          # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
+          # boost_version: 1.74.0
+        # OPTIONAL: Specify a platform version
+        # platform_version: 18.04
+        # OPTIONAL: Specify a custom install location
+        # boost_install_dir: /home/runner/some_directory
+        # OPTIONAL: Specify a toolset
+        # toolset: gcc
+        # OPTIONAL: Specify an architecture
+        # arch: x86
         boost_version: 1.73.0
         # OPTIONAL: Specify a platform version
         platform_version: 10.15
         # OPTIONAL: Specify a custom install location
-        boost_install_dir: /home/runner/some_directory
+        boost_install_dir: /home/runner/boost_install
         # OPTIONAL: Specify a toolset
         toolset: clang
-  
-
 
     - name: Install PyTorch
       run: |
