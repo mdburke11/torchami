@@ -15,13 +15,6 @@ if(Boost_FOUND)
   include_directories(${BOOST_ROOT})
 endif()
 
-if (MACOSX)
-set(Boost_INCLUDE_DIRS "${Boost_INCLUDE_DIRS}/../../include")
-endif()
-
-cmake_print_variables(Boost_INCLUDE_DIRS)
-cmake_print_variables(BOOST_ROOT)
-
 find_package(Torch REQUIRED)
 cmake_print_variables(TORCH_CXX_FLAGS)
 cmake_print_variables(TORCH_INCLUDE_DIRS)
