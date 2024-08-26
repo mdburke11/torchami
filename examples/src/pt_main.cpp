@@ -1,7 +1,7 @@
 #include "examples.hpp"
 
 int main(int argc, char *argv[]) {
-  int mode = 1;
+  int mode;
   if (argc >= 2) {
     std::istringstream ss(argv[1]);
 
@@ -32,10 +32,10 @@ int main(int argc, char *argv[]) {
     break;
   default:
     example2();
-    example1_bose(); // not working
+    example1_bose();
     example4();
     example6();
-    example9();
+    //example9(); // take a 1-2 minutes to run
     break;
   }
 }
@@ -362,7 +362,7 @@ void example4() {
   std::cout << std::endl
             << "-----Constructing TAMI term by term-----" << std::endl;
   // class instance
-  at::Device myDev = at::kCUDA;
+  at::Device myDev = at::kCPU;
   TamiBase ami(myDev);
 
   // Problem setup (see ami_example.cpp)

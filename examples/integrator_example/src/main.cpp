@@ -1,5 +1,9 @@
 #include "integration.hpp"
 
+// This code does not take advantage of the simultaneous frequency evaluations!
+// However this example code is still useful to see how one could implement a
+// Monte carlo integration scheme.
+
 int main() {
   matsubara_freq_test();
   return 0;
@@ -22,7 +26,7 @@ void matsubara_freq_test() {
   out.open(ofname);
 
   // init device and tamibase  and tamigraph obj
-  at::Device myDev = at::kCUDA;
+  at::Device myDev = at::kCPU;//at::kCUDA
   TamiBase ami(myDev);
   TamiBase::graph_type graph_type = TamiBase::Sigma;
   int seed = 0;
@@ -72,7 +76,7 @@ void matsubara_freq_test() {
                           /*eval_realpart*/ 0, evars);
 
   at::TensorOptions integOptions =
-      at::TensorOptions().dtype(at::kComplexDouble).device(at::kCUDA);
+      at::TensorOptions().dtype(at::kComplexDouble).device(myDev);
   int max_batch_size = 100000;
   flat_mc_integrator mc(integOptions, N_freq, max_batch_size);
   flat_mc_integrator::integ_domain domain = {
