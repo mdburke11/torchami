@@ -5,15 +5,24 @@ import torch
 import pytami
 import copy
 
-# 3 examples: graph_eg is a plain load and print the R0 object (main)
-# renorm_PT_eg is generates the counter term diagrams (here as a test, not in main)
-# bose_alphas_eg is generates the bosonic propagator's momenta alphas (here as a test, not in main)
+# graph_eg (default main script) is an example of reading graphs that are stored at 
+# ../examples/ggm_examples. This is an example workflow of loading in the graph files
+# that are described in the paper (arXiv:2311.17189) and building the R0 object that 
+# stores the linear combinations of labels of propagators. This acts as a jumping off
+# point to combine this procedure with the evaluation of a momentum integrand in 
+# example_main.py.
+
+# Other graph functionalities also have example functions in this script that were 
+# used for testing.
+
+# renorm_PT_eg generates the counter term diagrams for a given graph object.
+# bose_alphas_eg is generates the bosonic propagator's momenta linear combinations.
 
 def graph_eg() -> None:
 
     graph_dir: str = "../examples/ggm_examples/"
 
-    min_ord: int = 4
+    min_ord: int = 2
     max_ord: int = 6
 
     graph_type: pytami.TamiBase.graph_type = pytami.TamiBase.Sigma

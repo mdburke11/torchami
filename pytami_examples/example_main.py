@@ -6,6 +6,13 @@ from getDevice import getDevice
 import examples as ex
 import time
 
+# This example loads the diagrams of orders 2, 4, 6 via hardcoded alpha and epsilon matrices
+# stored in helperScripts/examples.py, then evaluates the momentum integrand for specified 
+# dispersion values that are also stored in helperScripts/examples.py. 
+
+# The purpose of this script is to see the workflow of building the R0 object,
+# constucting the momentum integrand then finally evaluating.
+
 
 def main():
     example_2()
@@ -42,7 +49,7 @@ def example_2():
     E_REG = 0  # numberical regulator for small energies.  If inf/nan results try E_REG=1e-8
     N_INT = int(2)  # number of matsubara sums to perform
     test_amiparms = pytami.TamiBase.ami_parms(N_INT,
-                                              E_REG)  # SHOULD BE (0, 0) ?
+                                              E_REG)
 
     # now construct!
     ami.construct(N_INT, R0, ftout)

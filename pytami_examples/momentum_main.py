@@ -9,12 +9,19 @@ import external as ext
 import flat_integ as flat
 import time
 
-# example of evaluating a diagram on the imaginary axis.
-# default main evaluates the imaginary part of the second 
-# order self energy diagram for the first 20 matsubara 
-# frequencies using 10^5 monte carlo evaluations.
+# Example of evaluating a second order self energy diagram on the imaginary axis.
+# Default __main__ evaluates the imaginary part for the first 20 matsubara using
+# using 10^5 monte carlo evaluations with a simple flat distribution monte carlo
+# integrator. 
 
-# 4th and 6th order diagram functions also exist.
+# This code outputs a datafile 2ord.dat in the format: n, iw_n, ImSigma, ImSigma_err.
+
+# This code uses an momentum integrand python class in ./helperScripts/momenta_integrand.py
+# It makes use of the external variable object in ./helperScripts/external.py
+# The basic pytorch flat monte carlo integrator code is in ./helperScripts/flat_integ.py
+
+# 4th and 6th order diagram functions also exist, but only the second order diagram
+# is setup by default.
 
 
 def main():
