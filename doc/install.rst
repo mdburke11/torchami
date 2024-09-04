@@ -12,7 +12,7 @@ Prerequisites:
 
 	+ boost graph library
 
-	Optional:
+	Optional - Documentation:
 
 	+ Doxygen >= 1.9.0
 
@@ -20,9 +20,11 @@ Prerequisites:
 
 	+ Breathe >= 4.20.0 (You can install it with `pip` as well.)
 
+	Optional - Python bindings:
+
 	+ pybind11 
 
-	+ nvidia-cuda-toolkit 
+	+ nvidia-cuda-toolkit (May be required when developing in c++.)
 
 	
 1. Obtaining TORCHAMI:
