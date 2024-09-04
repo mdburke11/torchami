@@ -125,19 +125,19 @@ public:
 
   at::Tensor prepInput(int length, integ_domain &domain);
 
-  integration_result integrate(std::function<at::Tensor(at::Tensor)> fn,
-                               int dim, int N, integ_domain domain);
+  integration_result integrate(std::function<at::Tensor(at::Tensor&)> fn,
+                               int dim, int N, integ_domain &domain);
 };
 
 // Momentum integrand functions
 
 class AMI_integrand {
 public:
-  TamiBase tami;
-  TamiBase::g_prod_t R0;
-  TamiBase::ami_vars avars;
-  TamiBase::ft_terms ft;
-  TamiBase::ami_parms parms;
+  TamiBase& tami;
+  TamiBase::g_prod_t& R0;
+  TamiBase::ami_vars& avars;
+  TamiBase::ft_terms& ft;
+  TamiBase::ami_parms& parms;
   std::function<at::Tensor(at::Tensor)> eps;
   bool evalReal;
   ext_vars evars;
@@ -149,16 +149,12 @@ public:
       full_alpha; // kron product of alpha and identity(size=dim of prob eg: 2D)
   int order;      // number of integrals to evaluate
 
-  AMI_integrand(TamiBase tami_, TamiBase::g_prod_t R0_,
-                TamiBase::ami_vars avars_, TamiBase::ft_terms ft_,
-                TamiBase::ami_parms parms_,
+  AMI_integrand(TamiBase& tami_, TamiBase::g_prod_t& R0_,
+                TamiBase::ami_vars& avars_, TamiBase::ft_terms& ft_,
+                TamiBase::ami_parms& parms_,
                 std::function<at::Tensor(at::Tensor)> eps_, bool evalReal_,
-                ext_vars evars_) {
-    tami = tami_;
-    R0 = R0_;
-    avars = avars_;
-    ft = ft_;
-    parms = parms_;
+                ext_vars evars_) : tami(tami_), R0(R0_), avars(avars_),
+                ft(ft_), parms(parms_){
     eps = eps_;
     evalReal = evalReal_;
     evars = evars_;
@@ -195,7 +191,7 @@ public:
 
   ext_vars get_ext_vars() { return evars; }
 
-  void update_integrand(at::Tensor k) {
+  void update_integrand(at::Tensor& k) {
     // Takes a new set of internal momenta (eg: k=rand(0, 2pi)) with external
     // and gets correct lin. comb then evaluates the dispersion for each
     // propagator in the diagram and inserts the values into the avars object
@@ -217,7 +213,7 @@ public:
     avars.energy_ = evars.mu - at::hstack(e_cols);
   }
 
-  at::Tensor operator()(at::Tensor x) {
+  at::Tensor operator()(at::Tensor& x) {
     this->update_integrand(x);
     at::Tensor value = tami.evaluate(parms, ft, avars);
     if (evalReal) {
