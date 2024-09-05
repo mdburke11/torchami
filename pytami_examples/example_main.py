@@ -15,12 +15,12 @@ import time
 
 
 def main():
-    example_2()
-    example_4()
-    example_6()
+    example_2(printIntegrand=True)
+    example_4(printIntegrand=True)
+    example_6(printIntegrand=False) # this is quite the dump of latex so it is turned off by default
 
 
-def example_2():
+def example_2(printIntegrand=True):
 
     print("\n\n-_-_-_ Example - Second Order _-_-_-")
 
@@ -73,10 +73,15 @@ def example_2():
     print(f"Construction took {diff1} microseconds")
     print(f"Evaluation took {diff2} microseconds")
 
+    # print latex momentum integrand if wanted
+    if printIntegrand:
+        print("\n-----Momentum Integrand-----\n")
+        print(ftout)
+
     # end example
 
 
-def example_4():
+def example_4(printIntegrand=True):
 
     print("\n\n-_-_-_ Example - Fourth Order _-_-_-")
 
@@ -129,8 +134,13 @@ def example_4():
     print(f"Construction took {diff1} microseconds")
     print(f"Evaluation took {diff2} microseconds")
 
+    # print latex momentum integrand if wanted
+    if printIntegrand:
+        print("\n-----Momentum Integrand-----\n")
+        print(ftout)
 
-def example_6():
+
+def example_6(printIntegrand=False):
 
     print("\n\n-_-_-_ Example - Sixth Order _-_-_-")
 
@@ -182,6 +192,11 @@ def example_6():
     print(f"Result was {calc_result}")
     print(f"Construction took {diff1} microseconds")
     print(f"Evaluation took {diff2} microseconds")
+
+    # print latex momentum integrand if wanted
+    if printIntegrand:
+        print("\n-----Momentum Integrand-----\n")
+        print(ftout)
 
 
 if __name__ == '__main__':
