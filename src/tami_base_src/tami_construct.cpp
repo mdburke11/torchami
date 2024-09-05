@@ -194,6 +194,20 @@ std::string TamiBase::pretty_print_ft_terms(ft_terms &fts) {
   return ss.str();
 }
 
+
+std::ostream & operator<<(std::ostream &os, TamiBase::ft_terms &ft){
+
+TamiBase ami;
+    return os<<ami.pretty_print_ft_terms(ft);
+  }
+
+std::ostream & operator<<(std::ostream &os, TamiBase::ft_term &ft){
+
+TamiBase ami;
+    return os<<ami.pretty_print_ft_term(ft);
+  }
+
+
 std::string TamiBase::pretty_print_ft_term(ft_term &ft) {
 
   std::stringstream ss;
@@ -523,13 +537,13 @@ double TamiBase::get_starting_sign(TamiBase::g_prod_t G_in,
     result = result * (double)G_in[pole.which_g_[i]].alpha_[pole.index_];
   }
 
-  result = result / (double)factorial(pole.multiplicity_ - 1);
+  result = result / (double)mathUtils::factorial(pole.multiplicity_ - 1);
 
   return result;
 }
 
-int TamiBase::factorial(int n) {
-  return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
+int mathUtils::factorial(int n) {
+  return (n == 1 || n == 0) ? 1 : mathUtils::factorial(n - 1) * n;
 }
 
 /**

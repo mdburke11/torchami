@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.18...3.22.1)
 project( torchami )
+include(CMakePrintHelpers)
+add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
@@ -11,9 +13,12 @@ endif()
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
+  include_directories(${BOOST_ROOT})
 endif()
 
 find_package(Torch REQUIRED)
+cmake_print_variables(TORCH_CXX_FLAGS)
+cmake_print_variables(TORCH_INCLUDE_DIRS)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
 link_directories(${Boost_LIBRARY_DIRS})
@@ -23,7 +28,6 @@ set(LIB_BASE_FILES
   ${CMAKE_SOURCE_DIR}/src/tami_base_src/tami_construct.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_base_src/tami_evaluate.cpp
   ${CMAKE_SOURCE_DIR}/src/tami_base_src/tami_terms.cpp
-  ${CMAKE_SOURCE_DIR}/src/tami_base_src/tami_python.cpp
 )
 
 ADD_LIBRARY(torchami SHARED ${LIB_BASE_FILES})

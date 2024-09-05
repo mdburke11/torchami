@@ -1,56 +1,25 @@
 #pragma once
 
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
-// #include<Eigen/Dense>
-// #include<Eigen/Core>
-
-#include <algorithm>
 #include <chrono>
 #include <complex>
 #include <math.h>
 #include <random>
 #include <stdlib.h>
 #include <vector>
-// #include<experimental/filesystem>
+#include <filesystem>
 
 #include "../tami_base_src/tami_base.hpp"
 
 // Boost headers
-#include <boost/config.hpp>
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/breadth_first_search.hpp>
-#include <boost/graph/connected_components.hpp>
-#include <boost/graph/copy.hpp>
-#include <boost/graph/dijkstra_shortest_paths.hpp>
-#include <boost/graph/filtered_graph.hpp>
-#include <boost/graph/graph_traits.hpp>
-#include <boost/graph/graph_utility.hpp>
-#include <boost/graph/isomorphism.hpp>
-#include <boost/property_map/property_map.hpp>
-
-// #include <boost/program_options.hpp>
-#include "boost/graph/graphviz.hpp"
 #include <boost/graph/random.hpp>
-#include <boost/random.hpp>
-// #include <boost/graph/depth_first_search.hpp>
-#include <boost/range/irange.hpp>
-// #include <boost/pending/indirect_cmp.hpp>
-// #include <boost/graph/undirected_dfs.hpp>
-// #include <boost/cstdlib.hpp>
-#include <boost/math/special_functions/factorials.hpp>
-
-#include <boost/random/sobol.hpp>
-#include <boost/random/uniform_01.hpp>
-#include <boost/random/variate_generator.hpp>
+#include <boost/graph/connected_components.hpp>
 
 /// @brief Class for loading, labelling and converting a Feynman diagram to
 /// input for `torchami`. See examples for usage.
 class TamiGraph {
 
-private:
+
 public:
   // C'tors
   TamiGraph();
@@ -64,7 +33,7 @@ public:
   // Create a random number generator using std::random
   std::mt19937 rand_gen;
   std::uniform_real_distribution<double> rand_dist;
-  boost::random::sobol engine;
+  // boost::random::sobol engine;
   double random_real(double max);
   double random_real(double min, double max);
 
@@ -294,13 +263,7 @@ public:
 
     std::vector<double> prefactor;
     std::vector<labels_t> labels;
-    // !!!!!!!!!!!!!!! not sure if needed - hopefully not! //
-    // std::vector<NewAmiCalc::solution_set> ss_vec; // solution set vector
-
-    // !!!!!!!!!!!!!!! not sure if needed - hopefully not! //
-    // std::vector<AmiSpec::spec_solution_set> sss_vec;// spectral solution set
-    // vector
-
+   
     // git permutation set
     // git_perm_list_t perm_vec;
     int order_shift = 0;
@@ -321,13 +284,90 @@ public:
   void ggm_label(gg_matrix_t &ggm, int min);
   void repeated_labelling(graph_t &g, bool &result);
   void fix_epsilons(graph_t &g);
+
+  /// The most robust labelling tool - recommended to use this directly and not
+  /// `ggm_label` function.
+  void sys_label(graph_t &g, bool &result);
+
+
+  void reset_g(graph_t &g);
+  void ggm_remove_pairs(gg_matrix_t &ggm, int min);
+
+  // print ggm function
+  void print_ggm(gg_matrix_t &ggm);
+
+  // ggm to r0
+  void graph_to_R0(graph_t &g, TamiBase::g_prod_t &R0);
+  void reset_epsilons(TamiBase::g_prod_t &R0);
+
+  // extract bose alphas for non-hubbard
+  void extract_bose_alphas(graph_t g, std::vector<TamiBase::alpha_t> &bose);
+
+  // check order of graph - this is a somewhat arbitrary definition
+  int graph_order(graph_t &g);
+
+  // Renorm PT CT diagrams
+  /// Function to generate self energy counter-term diagrams for renormalized PT
+  /// problems.
+  void generate_sigma_ct(graph_t &g_in, std::vector<graph_t> &ct_vec,
+                         int maxdots);
+  
+  // prefactor from fermi loops and ct insertions
+  double get_prefactor(graph_t &g, int order);
+  int fermi_connected_components(graph_t &g);
+  void find_fermionic_edges(graph_t &g, edge_vector_t &vector);
+  
+  // constructor helpers
+
+  void initialize(TamiBase::graph_type type);
+  void initialize(TamiBase::graph_type type, int dim);
+
+ 
+  /// @brief This is a graph structure needed for compatibility with pybind11.
+  /// See pyami_src directory.
+  struct trojan_graph {
+
+    trojan_graph(std::vector<TamiGraph::graph_t> vec, int index) {
+      graph = vec[index];
+    }
+
+    trojan_graph(TamiGraph::graph_t g) { graph = g; }
+
+    graph_t graph;
+    int dummy_var;
+  };
+
+  void trojan_graph_to_R0(trojan_graph &tg, TamiBase::g_prod_t &R0);
+  double trojan_get_prefactor(trojan_graph &tg, int order);
+  void trojan_generate_sigma_ct(trojan_graph &tg_in,
+                                std::vector<graph_t> &ct_vec, int maxdots);
+  void trojan_extract_bose_alphas(trojan_graph &tg, std::vector<TamiBase::alpha_t> &bose);
+
+  // Marking these for removal: 08-22-2024
+  // void create_starter_graph(TamiGraph::graph_t &g);
+
+  // void construct_starter_sigma(graph_t &g);
+  // void construct_starter_phuu_bubble(graph_t &g);
+  // void construct_starter_phud_bubble(graph_t &g);
+  // void construct_starter_hartree(graph_t &g);
+  // void construct_starter_bare(graph_t &g);
+  // void construct_starter_ppuu_bubble(graph_t &g);
+  // void construct_starter_ppud_bubble(graph_t &g);
+  // void construct_starter_force(graph_t &g, graph_t &f2, graph_t &f3);
+
+
+private:
+
+
+
   void find_internal_fermionic_edges(graph_t &g, edge_vector_t &vector);
   void find_internal_bose_edges(graph_t &g, edge_vector_t &vector);
   bool edge_alphas_are_equal(edge_t &one, edge_t &two, graph_t &g);
   bool edge_alphas_are_negative(edge_t &one, edge_t &two, graph_t &g);
   void number_vertices(graph_t &g);
   void label_half_random(graph_t &g);
-  void reset_g(graph_t &g);
+
+
   void find_bose_fermi_edges(graph_t &g, edge_vector_t &bose,
                              edge_vector_t &fermi);
   void find_external_vertices(graph_t &g, vertex_vector_t &v,
@@ -365,10 +405,8 @@ public:
   void check_momentum_conservation(graph_t &g, bool &result);
   void check_internal_bosonic(graph_t &g, bool &result);
   void find_unlabelled_fermionic_edges(graph_t &g, edge_vector_t &vector);
-  /// The most robust labelling tool - recommended to use this directly and not
-  /// `ggm_label` function.
-  void sys_label(graph_t &g, bool &result);
-  int graph_order(graph_t &g);
+
+
   void find_internal_edges_stat(graph_t &g, edge_vector_t &vector,
                                 TamiBase::stat_type requested);
   void find_force_LR_vertices(graph_t &g, vertex_vector_t &in_vv,
@@ -384,24 +422,8 @@ public:
                                 edge_t &eout, TamiBase::stat_type stat);
   void put_back_legs(graph_t &g, vertex_vector_t &in_vv,
                      vertex_vector_t &out_vv);
-  void ggm_remove_pairs(gg_matrix_t &ggm, int min);
 
-  // print ggm function
-  void print_ggm(gg_matrix_t &ggm);
-
-  // ggm to r0
-  void graph_to_R0(graph_t &g, TamiBase::g_prod_t &R0);
-  void reset_epsilons(TamiBase::g_prod_t &R0);
-
-  // extract bose alphas for non-hubbard
-  void extract_bose_alphas(graph_t g, std::vector<TamiBase::alpha_t> &bose);
-
-  // Renorm PT CT diagrams
-  /// Function to generate self energy counter-term diagrams for renormalized PT
-  /// problems.
-  void generate_sigma_ct(graph_t &g_in, std::vector<graph_t> &ct_vec,
-                         int maxdots);
-  void find_fermionic_edges(graph_t &g, edge_vector_t &vector);
+  
   void combinations_repetition(int n, int r,
                                std::vector<std::vector<int>> &list);
   void combinations_repetition_util(
@@ -409,44 +431,8 @@ public:
       int r, int start, int end); // allows repeated values in combinations
   void insert_chain(graph_t &g_in, graph_t &g_out, edge_t &ei, int length);
 
-  // prefactor from fermi loops and ct insertions
-  double get_prefactor(graph_t &g, int order);
-  int fermi_connected_components(graph_t &g);
 
-  // constructor helpers
 
-  void initialize(TamiBase::graph_type type);
-  void initialize(TamiBase::graph_type type, int dim);
-  void create_starter_graph(TamiGraph::graph_t &g);
-
-  void construct_starter_sigma(graph_t &g);
-  void construct_starter_phuu_bubble(graph_t &g);
-  void construct_starter_phud_bubble(graph_t &g);
-  void construct_starter_hartree(graph_t &g);
-  void construct_starter_bare(graph_t &g);
-  void construct_starter_ppuu_bubble(graph_t &g);
-  void construct_starter_ppud_bubble(graph_t &g);
-  void construct_starter_force(graph_t &g, graph_t &f2, graph_t &f3);
-
-  /// @brief This is a graph structure needed for compatibility with pybind11.
-  /// See pyami_src directory.
-  struct trojan_graph {
-
-    trojan_graph(std::vector<TamiGraph::graph_t> vec, int index) {
-      graph = vec[index];
-    }
-
-    trojan_graph(TamiGraph::graph_t g) { graph = g; }
-
-    graph_t graph;
-    int dummy_var;
-  };
-
-  void trojan_graph_to_R0(trojan_graph &tg, TamiBase::g_prod_t &R0);
-  double trojan_get_prefactor(trojan_graph &tg, int order);
-  void trojan_generate_sigma_ct(trojan_graph &tg_in,
-                                std::vector<graph_t> &ct_vec, int maxdots);
-  void trojan_extract_bose_alphas(trojan_graph &tg, std::vector<TamiBase::alpha_t> &bose);
 };
 
 inline std::ostream &operator<<(std::ostream &os,

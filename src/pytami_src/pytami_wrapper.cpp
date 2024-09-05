@@ -42,7 +42,12 @@ void init_pytami_wrapper(py::module &m) {
         }
         return copy;
       });
-  py::bind_vector<std::vector<TamiBase::ft_term>>(TamiBase, "ft_terms");
+  py::bind_vector<std::vector<TamiBase::ft_term>>(TamiBase, "ft_terms")
+      .def("__str__", [](std::vector<TamiBase::ft_term> &terms){
+        std::ostringstream oss;
+        oss << terms;
+        return oss.str();
+      });
 
   // this can be renamed but I think this is the only instance where a 
   // vector of alpha_t are used so might as well be called bose_alphas
@@ -104,6 +109,11 @@ void init_pytami_wrapper(py::module &m) {
 
   py::class_<TamiBase::ft_term>(TamiBase, "ft_term")
       .def(py::init<>())
+      .def("__str__", [](TamiBase::ft_term &term){
+        std::ostringstream oss;
+        oss << term;
+        return oss.str();
+      })
       .def(py::init<double, TamiBase::FermiTree::fermi_tree_t,
                     TamiBase::g_prod_t>())
       .def_readwrite("sign_", &TamiBase::ft_term::sign_)

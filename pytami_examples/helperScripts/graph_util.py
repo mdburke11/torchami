@@ -3,6 +3,8 @@ import pytami
 import copy
 import external as ext
 
+# main is a testing function - purpose of script is to be imported
+
 
 def main() -> None:
     graph_type: pytami.TamiBase.graph_type = pytami.TamiBase.Sigma

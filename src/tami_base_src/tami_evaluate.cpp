@@ -254,8 +254,8 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
     }
     E += E_REG;
   } else {
-    if (sgn(E.real()) != 0) {
-      E += E_REG * sgn(E.real());
+    if (mathUtils::sgn(E.real()) != 0) {
+      E += E_REG * mathUtils::sgn(E.real());
     } else {
       E += E_REG;
     }
@@ -313,7 +313,7 @@ at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
     // double arg_amp = std::abs(arg);
 
     // if (arg > exp_max_arg) {
-    // double arg_sign = (double)sgn(arg);
+    // double arg_sign = (double)mathUtils::sgn(arg);
     // if (arg_sign > 0) {
     // output = 0;
     // } else {
@@ -331,7 +331,7 @@ at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
       // std::pow(-1.0, k + 1) /
       // std::pow(sigma * std::exp(beta * (E)) + 1.0, k + 1);
       // Reformatted with fewer exponentials
-      term = frk(m, k) * std::pow(sigma, k) * std::pow(-1.0, k + 1) *
+      term = mathUtils::frk(m, k) * std::pow(sigma, k) * std::pow(-1.0, k + 1) *
              (1.0 / (sigma * at::exp(beta * (E)) + 1.0) /
               at::pow(sigma + at::exp(-beta * (E)), k));
       output += term;
@@ -381,18 +381,18 @@ at::Tensor TamiBase::get_energy_from_pole(pole_struct pole, ami_vars external) {
 /// They produced coefficients to the fermi functions and put them in a table.
 /// We derive a general expression for those coefficients - we believe this to
 /// be general but have only checked up to 6th order.
-double TamiBase::frk(int r, int k) {
+double mathUtils::frk(int r, int k) {
   double output = 0.0;
 
   for (int m = 0; m < k + 1; m++) {
-    output += binomialCoeff(k, m) * std::pow(m, r) * (std::pow(-1, k - m));
+    output += mathUtils::binomialCoeff(k, m) * std::pow(m, r) * (std::pow(-1, k - m));
   }
 
   return output;
 }
 
 /// Returns value of Binomial Coefficient C(n, k).
-int TamiBase::binomialCoeff(int n, int k) {
+int mathUtils::binomialCoeff(int n, int k) {
   int res = 1;
 
   // Since C(n, k) = C(n, n-k)

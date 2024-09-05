@@ -1,39 +1,12 @@
 #pragma once
 
-#include <algorithm>
-#include <complex>
-#include <ctime>
-#include <filesystem>
-#include <fstream>
-#include <functional>
-#include <iomanip>
-#include <iostream>
-#include <math.h>
-#include <random>
-#include <sstream>
-#include <stdlib.h>
-#include <string>
-#include <unistd.h>
 #include <vector>
-
+#include <complex>
+#include <stdlib.h>
+#include <math.h>
 #include <chrono>
-#include <thread>
 
-#include <boost/config.hpp>
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/breadth_first_search.hpp>
-#include <boost/graph/connected_components.hpp>
-#include <boost/graph/copy.hpp>
-#include <boost/graph/dijkstra_shortest_paths.hpp>
-#include <boost/graph/filtered_graph.hpp>
-#include <boost/graph/graph_traits.hpp>
-#include <boost/graph/graph_utility.hpp>
-#include <boost/graph/isomorphism.hpp>
-#include <boost/property_map/property_map.hpp>
-
-#include "boost/graph/graphviz.hpp"
-#include <boost/graph/random.hpp>
-#include <boost/program_options.hpp>
 
 #include <torch/extension.h>
 #include <torch/python.h>
@@ -60,24 +33,10 @@ public:
 
   at::Device getDevice() { return options.device(); }
 
-  /// Returns the sign of a value - or zero if it is uniquely zero.
-  template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
-
-  // template for checking equality of vectors
-  template <typename T>
-  bool isEqual(std::vector<T> const &v1, std::vector<T> const &v2) {
-    return (v1.size() == v2.size() &&
-            std::equal(v1.begin(), v1.end(), v2.begin()));
-  }
-
   // Maximum argument allowed for fermi and bose functions - to prevent inf due
   // to double precision numbers
   // Note: Possible that this prevents catching overflow issues
   double exp_max_arg = 500.0;
-
-  /// Simple factorial function. It is rarely called except for multipole
-  /// problems, and typically for only small arguments.
-  int factorial(int n);
 
   bool drop_bosonic_diverge =
       false; // if set to true, then E_REG not needed because bosonic
@@ -486,6 +445,7 @@ public:
 
     }; // end edge_struct bracket
 
+    /// @brief Boost Adjacency list used to manage fermi tree structure
     typedef boost::adjacency_list<boost::vecS, boost::listS,
                                   boost::bidirectionalS, vertex_info, edge_info,
                                   graph_info>
@@ -493,8 +453,7 @@ public:
     typedef boost::graph_traits<fermi_tree_t>::vertex_descriptor vertex_t;
     typedef boost::graph_traits<fermi_tree_t>::edge_descriptor edge_t;
 
-    // helper functions
-    void number_vertices(fermi_tree_t &g);
+    
 
     // Initialize the tree to have one
     void initialize_ft(fermi_tree_t &ft);
@@ -526,10 +485,24 @@ public:
 
     void print_graph(fermi_tree_t &ft);
 
-    std::string pretty_print_ft(fermi_tree_t &ft1, vertex_t &v);
+    std::string pretty_print(fermi_tree_t &ft);
+    
+    // could either place
+    fermi_tree_t add_ft(fermi_tree_t ft1, fermi_tree_t ft2);
+
+    fermi_tree_t mult_ft(fermi_tree_t ft1, fermi_tree_t ft2);
+
+    FermiTree();
+
+  private:
+
+    // helper functions
+    void number_vertices(fermi_tree_t &g);
+
+    // internal print functions
     std::string pretty_print_pole(TamiBase::pole_struct &pole);
     std::string pretty_print(fermi_tree_t &ft, vertex_t &v);
-    std::string pretty_print(fermi_tree_t &ft);
+    std::string pretty_print_ft(fermi_tree_t &ft1, vertex_t &v);
     std::string pretty_print(fermi_tree_t &ft, std::vector<vertex_t> &vv,
                              int op);
     std::string pretty_print_level(fermi_tree_t &ft, std::vector<vertex_t> &vv,
@@ -552,14 +525,8 @@ public:
     void copy_tree(fermi_tree_t &ft1, fermi_tree_t &ft2, vertex_t &root1,
                    vertex_t &root2);
 
-    // could either place
-    fermi_tree_t add_ft(fermi_tree_t ft1, fermi_tree_t ft2);
 
-    fermi_tree_t mult_ft(fermi_tree_t ft1, fermi_tree_t ft2);
 
-    FermiTree();
-
-  private:
   };
 
   /// Both the initial integrand and intermediate steps can be  written as a
@@ -607,18 +574,6 @@ public:
   /// @param in_terms - terms to be factorized.
   /// @param out_terms - factorized terms.
   void factorize(ft_terms &in_terms, ft_terms &out_terms);
-  bool g_prod_equiv(TamiBase::g_prod_t &gp1, TamiBase::g_prod_t &gp2,
-                    int &sign);
-  // Need evaluate functions - worry about these later
-
-  /// @brief Integrates a single Matsubara index for every term provided using
-  /// the `term_integrate_step` function.
-  void integrate_step(int index, ft_terms &in_terms, ft_terms &out_terms);
-  /// @brief Integrates a single step for a single term
-  void term_integrate_step(int index, ft_term &in_term, ft_terms &out_terms);
-  void terms_general_residue(ft_term &this_term,
-                             TamiBase::pole_struct this_pole,
-                             ft_terms &out_terms);
 
   void terms_to_ftterms(TamiBase::terms &in_terms, ft_terms &out_terms);
 
@@ -633,12 +588,9 @@ public:
   /// Screen IO for debugging.
   void print_term(ft_term &t);
 
-  std::string pretty_print_ft_term(ft_term &ft);
-  std::string pretty_print_gprod(TamiBase::g_prod_t &gp);
-  std::string pretty_print_g(TamiBase::g_struct &g);
-
   /// Experimental attempt for visualizing the post AMI integrand. Outputs
   /// string representing LaTeX formatted equation.
+  std::string pretty_print_ft_term(ft_term &ft);
   std::string pretty_print_ft_terms(ft_terms &fts);
 
   /// @brief Evaluate just the fermi-tree
@@ -668,8 +620,82 @@ public:
     options = at::TensorOptions().dtype(at::kComplexDouble).device(dev);
   }
 
-  // FUNCTIONS THAT HAVE BEEN PULLED FROM LIBAMI
+  // FUNCTIONS THAT HAVE BEEN MODIFIED FROM LIBAMI
 
+  /*Given an array of Green's functions, finds all poles with respect to
+  frequency index, and checks for multiplicities. Stores multiplicities of the
+  poles as well as `which_g_`, an identifier that specifies which Green's
+  function it was attached to.
+  */
+  pole_array_t find_poles(int index, g_prod_t &R);
+
+  // Derivative for term construction
+  void take_term_derivative(term &in_term, pole_struct &pole, terms &out_terms);
+
+  // Functions for fermi_pole
+
+  /// This is the central evaluation of the fermi and bose functions.  It also
+  /// includes evaluating arbitrary derivatives of the functions.  See frk
+  /// function that is rather complicated .  This function is also the MOST
+  /// challenging function for numerical evaluation.
+  at::Tensor fermi_pole(ami_parms &parms, pole_struct pole, ami_vars external);
+
+  /// Recursive construction of fermi_bose derivatives.
+  // non-private because it is used in tests
+  at::Tensor fermi_bose(int m, double sigma, double beta, at::Tensor E);
+
+  /// Given a set of tensor energies, beta, and tensor frequencies, will
+  /// evaluate the energies of a pole_struct.
+  at::Tensor get_energy_from_pole(pole_struct pole, ami_vars external);
+
+  // Residue function
+  g_struct update_G_pole(g_struct g_in, pole_struct pole);
+
+  /// @brief Primarily debugging function
+  /// @param `pole_struct`
+  void print_pole_struct_info(pole_struct g);
+
+  /// @brief Primarily debugging function
+  /// @param `alpha_t`
+  void print_alpha_info(alpha_t alpha);
+
+  /// @brief Primarily debugging function
+  /// @param `epsilon_t`
+  void print_epsilon_info(epsilon_t eps);
+
+  // Functions for Factorize_Rn
+
+  /// Optimize function for old SPR notation.  Possibly Depricated. 
+  void factorize_Rn(Ri_t &Rn, g_prod_t &unique_g, R_ref_t &Rref,
+                    ref_eval_t &Eval_list);
+
+  bool g_struct_equiv(g_struct &g1, g_struct &g2, int &sign);
+
+  void reduce_rref(R_ref_t &Rref, ref_eval_t &Eval_list);
+
+  bool pair_v_equiv(ref_v_t &r1, ref_v_t &r2, int &r1sign, int &r2sign);
+
+  bool pole_equiv(pole_struct pole1, pole_struct pole2);
+
+private:
+
+  bool g_prod_equiv(TamiBase::g_prod_t &gp1, TamiBase::g_prod_t &gp2,
+                    int &sign);
+
+  /// @brief Integrates a single Matsubara index for every term provided using
+  /// the `term_integrate_step` function.
+  void integrate_step(int index, ft_terms &in_terms, ft_terms &out_terms);
+  /// @brief Integrates a single step for a single term
+  void term_integrate_step(int index, ft_term &in_term, ft_terms &out_terms);
+  void terms_general_residue(ft_term &this_term,
+                             TamiBase::pole_struct this_pole,
+                             ft_terms &out_terms);
+
+  std::string pretty_print_gprod(TamiBase::g_prod_t &gp);
+  std::string pretty_print_g(TamiBase::g_struct &g);
+
+  // LIBAMI converted functions that don't need user access
+  
   /// Evaluates a product of Green's functions for all energies provided
   at::Tensor eval_gprod(ami_parms &parms, g_prod_t g_prod, ami_vars external);
 
@@ -688,12 +714,6 @@ public:
   /// terms are then factorized into a fermi tree.
   void integrate_Mat_ind_step(int index, terms &in_terms, terms &out_terms);
 
-  /*Given an array of Green's functions, finds all poles with respect to
-  frequency index, and checks for multiplicities. Stores multiplicities of the
-  poles as well as `which_g_`, an identifier that specifies which Green's
-  function it was attached to.
-  */
-  pole_array_t find_poles(int index, g_prod_t &R);
 
   // Residue Functions
   g_prod_t simple_residue(g_prod_t G_in, pole_struct pole);
@@ -705,36 +725,32 @@ public:
   void terms_general_residue(term &this_term, pole_struct this_pole,
                              terms &out_terms);
 
-  // Residue function
-  g_struct update_G_pole(g_struct g_in, pole_struct pole);
+
 
   double get_starting_sign(g_prod_t G_in, pole_struct pole);
-
-  // Derivative for term construction
-  void take_term_derivative(term &in_term, pole_struct &pole, terms &out_terms);
 
   // This function removes the inert parts of the gprod in the context of taking
   // derivatives
   g_prod_t reduce_gprod(g_prod_t G_in, pole_struct pole);
 
-  // Functions for fermi_pole
 
-  /// This is the central evaluation of the fermi and bose functions.  It also
-  /// includes evaluating arbitrary derivatives of the functions.  See frk
-  /// function that is rather complicated .  This function is also the MOST
-  /// challenging function for numerical evaluation.
-  at::Tensor fermi_pole(ami_parms &parms, pole_struct pole, ami_vars external);
+};
 
-  void print_pole_struct_info(pole_struct g);
+namespace mathUtils{
 
-  /// Recursive construction of fermi_bose derivatives.
-  at::Tensor fermi_bose(int m, double sigma, double beta, at::Tensor E);
+  /// Returns the sign of a value - or zero if it is uniquely zero.
+  template <typename T> int sgn(T val) { return (T(0) < val) - (val < T(0)); }
 
-  void print_alpha_info(alpha_t alpha);
+  // template for checking equality of vectors
+  template <typename T>
+  bool isEqual(std::vector<T> const &v1, std::vector<T> const &v2) {
+    return (v1.size() == v2.size() &&
+            std::equal(v1.begin(), v1.end(), v2.begin()));
+  }
 
-  /// Given a set of tensor energies, beta, and tensor frequencies, will
-  /// evaluate the energies of a pole_struct.
-  at::Tensor get_energy_from_pole(pole_struct pole, ami_vars external);
+  /// Simple factorial function. It is rarely called except for multipole
+  /// problems, and typically for only small arguments.
+  int factorial(int n);
 
   /*The frk function itself returns
   \f[
@@ -744,27 +760,17 @@ public:
   double frk(int r, int k);
 
   /*
-Recursive binomial coefficient function
-*/
+  Recursive binomial coefficient function
+  */
   int binomialCoeff(int n, int k);
+}
 
-  void print_epsilon_info(epsilon_t eps);
 
-  // Functions for Factorize_Rn
+std::ostream & operator<<(std::ostream &os, TamiBase::ft_term &ft);
+std::ostream & operator<<(std::ostream &os, TamiBase::ft_terms &ft);
 
-  /// Optimize function for SPR notation.
-  void factorize_Rn(Ri_t &Rn, g_prod_t &unique_g, R_ref_t &Rref,
-                    ref_eval_t &Eval_list);
+//  std::ostream & operator<<(std::ostream &os, TamiBase::ft_term &ft){
 
-  bool g_struct_equiv(g_struct &g1, g_struct &g2, int &sign);
-
-  void reduce_rref(R_ref_t &Rref, ref_eval_t &Eval_list);
-
-  bool pair_v_equiv(ref_v_t &r1, ref_v_t &r2, int &r1sign, int &r2sign);
-
-  bool pole_equiv(pole_struct pole1, pole_struct pole2);
-
-private:
-};
-
-at::Tensor epsilon_2D(at::Tensor);
+//   TamiBase ami;
+//       return os<<ami.pretty_print_ft_term(ft);
+//     }

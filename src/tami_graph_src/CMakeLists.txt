@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.18...3.22.1)
 project( tamigraph )
+add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
@@ -12,6 +13,7 @@ find_package(Boost REQUIRED)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 endif()
+
 
 find_package(Torch REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")

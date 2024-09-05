@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.18...3.22.1)
 project( P )
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/common/cmake)
 
+#this is a workaround for this flag being hard compiled into pytorch
+add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
+
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/tami_base_src/ src/tami_base_src/)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/tami_graph_src/ src/tami_graph_src/)
@@ -21,6 +24,22 @@ if(pybind11_FOUND)
 else()
   message("pybind11 was not found.  Python library will not be compiled. Continuing without.")
 endif()
+
+
+if(CMAKE_BUILD_TYPE MATCHES Release OR TEST )
+
+message("Testing Enabled")
+add_subdirectory(test)
+enable_testing()
+add_test(num_test test/num_test)
+add_test(fb test/fb)
+add_test(helper_tests test/helper_tests)
+add_test(construct_tests test/construct_tests)
+
+
+endif(CMAKE_BUILD_TYPE MATCHES Release OR TEST)
+
+
 
 if(BUILD_DOC)
 

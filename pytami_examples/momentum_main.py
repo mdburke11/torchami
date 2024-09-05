@@ -1,21 +1,35 @@
+import sys
+sys.path.append('helperScripts')
 import torch
 import pytami
+from getDevice import getDevice
 import examples as ex
 import momenta_integrand as mom
 import external as ext
 import flat_integ as flat
 import time
 
+# Example of evaluating a second order self energy diagram on the imaginary axis.
+# Default __main__ evaluates the imaginary part for the first 20 matsubara using
+# using 10^5 monte carlo evaluations with a simple flat distribution monte carlo
+# integrator. 
+
+# This code outputs a datafile 2ord.dat in the format: n, iw_n, ImSigma, ImSigma_err.
+
+# This code uses an momentum integrand python class in ./helperScripts/momenta_integrand.py
+# It makes use of the external variable object in ./helperScripts/external.py
+# The basic pytorch flat monte carlo integrator code is in ./helperScripts/flat_integ.py
+
+# 4th and 6th order diagram functions also exist, but only the second order diagram
+# is setup by default.
+
 
 def main():
-    #mat_freq_flat_2ord()
-    #mat_freq_flat_4ord()
-    mat_freq_flat_6ord()
-
+    mat_freq_flat_2ord()
 
 def mat_freq_flat_2ord():
     # init device
-    device = torch.device("cuda")
+    device = getDevice()
     ami = pytami.TamiBase(device)
 
     # init diagram info
@@ -33,7 +47,7 @@ def mat_freq_flat_2ord():
     beta: float = 8.33
     mu: complex = 0.1
     k: list[float] = [torch.pi, 0.0]
-    N_freq: int = 1
+    N_freq: int = 20
     frequencies: torch.tensor = torch.tensor(
         [[0.0, 0.0, 1j * (2 * i + 1) * torch.pi / beta]
          for i in range(0, N_freq)],
@@ -47,16 +61,15 @@ def mat_freq_flat_2ord():
 
     flat_mc = flat.flat_mc_integrator(device, N_freq, Max_batch=int(1e5))
 
-    with open("2ord.dat", "a") as f:
+    t1 = time.time()
+    integral_value = flat_mc.integrate(
+        integrand,
+        dim=4,
+        N=10**6,
+        integration_domain=[[0, 2 * torch.pi]] * 4)
+    t2 = time.time()
 
-        t1 = time.time()
-        integral_value = flat_mc.integrate(
-            integrand,
-            dim=4,
-            N=10**6,
-            integration_domain=[[0, 2 * torch.pi]] * 4)
-        t2 = time.time()
-
+    with open("2ord.dat", "w") as f:
         if N_freq == 1:
             n = 0
             print(
@@ -75,13 +88,12 @@ def mat_freq_flat_2ord():
                     f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n"
                 )
                 f.flush()
-        f.close()
     print(f"time: {t2 - t1}")
 
 
 def mat_freq_flat_4ord():
     # init device
-    device = torch.device("cuda")
+    device = getDevice()
     ami = pytami.TamiBase(device)
 
     # init diagram info
@@ -113,16 +125,15 @@ def mat_freq_flat_4ord():
 
     flat_mc = flat.flat_mc_integrator(device, N_freq, Max_batch=int(1e5))
 
-    with open("4ord.dat", "a") as f:
+    t1 = time.time()
+    integral_value = flat_mc.integrate(
+        integrand,
+        dim=8,
+        N=10**8,
+        integration_domain=[[0, 2 * torch.pi]] * 8)
+    t2 = time.time()
 
-        t1 = time.time()
-        integral_value = flat_mc.integrate(
-            integrand,
-            dim=8,
-            N=10**8,
-            integration_domain=[[0, 2 * torch.pi]] * 8)
-        t2 = time.time()
-
+    with open("4ord.dat", "w") as f:
         if N_freq == 1:
             n = 0
             print(
@@ -141,13 +152,12 @@ def mat_freq_flat_4ord():
                     f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n"
                 )
                 f.flush()
-        f.close()
     print(f"time: {t2 - t1}")
 
 
 def mat_freq_flat_6ord():
     # init device
-    device = torch.device("cuda")
+    device = getDevice()
     ami = pytami.TamiBase(device)
 
     # init diagram info
@@ -178,16 +188,15 @@ def mat_freq_flat_6ord():
 
     flat_mc = flat.flat_mc_integrator(device, N_freq, Max_batch=int(1e4))
 
-    with open("6ord.dat", "a") as f:
+    t1 = time.time()
+    integral_value = flat_mc.integrate(
+        integrand,
+        dim=12,
+        N=10**6,
+        integration_domain=[[0, 2 * torch.pi]] * 12)
+    t2 = time.time()
 
-        t1 = time.time()
-        integral_value = flat_mc.integrate(
-            integrand,
-            dim=12,
-            N=10**6,
-            integration_domain=[[0, 2 * torch.pi]] * 12)
-        t2 = time.time()
-
+    with open("6ord.dat", "w") as f:
         if N_freq == 1:
             n = 0
             print(
@@ -206,7 +215,6 @@ def mat_freq_flat_6ord():
                     f"{n} {frequencies[n][-1]} {integral_value.ans[n]} {integral_value.error[n]}\n"
                 )
                 f.flush()
-        f.close()
     print(f"time: {t2 - t1}")
 
 

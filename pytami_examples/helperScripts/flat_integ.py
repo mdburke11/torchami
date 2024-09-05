@@ -106,9 +106,9 @@ class flat_mc_integrator:
                 eval: torch.tensor = fn(x)
                 numNans = int(
                     (eval !=
-                     eval).sum())  # TODO: should this be left a tensor?
+                     eval).sum())
                 sum += eval.nansum(
-                )  # TODO use torch.nansum - drops nans from batch - But then N changes!
+                ) 
                 sum2 += (eval**2).nansum()
 
                 remaining = remaining - self.Max_batch + numNans
@@ -120,6 +120,6 @@ class flat_mc_integrator:
             numNans: int = int((eval != eval).sum())
             sum += eval.nansum()
             sum2 += (eval**2).nansum(
-            )  # TODO use torch.nansum - drops nans from batch - But then N changes!
+            ) 
 
             return integration_result(sum, sum2, N - numNans)

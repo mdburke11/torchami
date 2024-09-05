@@ -245,7 +245,7 @@ bool TamiBase::g_struct_equiv(g_struct &g1, g_struct &g2, int &sign) {
       break;
     } else {
       if (g1.eps_[i] != 0) {
-        signs.push_back(sgn(g1.eps_[i] / g2.eps_[i]));
+        signs.push_back(mathUtils::sgn(g1.eps_[i] / g2.eps_[i]));
       }
     }
   }
@@ -256,7 +256,7 @@ bool TamiBase::g_struct_equiv(g_struct &g1, g_struct &g2, int &sign) {
       break;
     } else {
       if (g1.alpha_[i] != 0) {
-        signs.push_back(sgn(g1.alpha_[i] / g2.alpha_[i]));
+        signs.push_back(mathUtils::sgn(g1.alpha_[i] / g2.alpha_[i]));
       }
     }
   }
