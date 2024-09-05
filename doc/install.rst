@@ -136,13 +136,9 @@ Solution for c++ is to compile all your DIRECTLY linked libraries with this flag
 Installation for macOS
 ===============================
 
-While pytorch does support apple silicon GPUs with their MPS backend (https://pytorch.org/docs/stable/notes/mps.html), currently complex data types are not supported on these devices. Meaning that macOS devices that do not have cuda support may only use cpu functionality of this library, therefore we do not recommend using torchami on these devices.
-Nevertheless, one can still use macOS devices to obtain the latex expressions for matsubara sums by using the cpu compatibility of pytorch on these devices.
-The pytorch dependency can be met on macOS via the appropriate macOS build of pytorch, then the user will be limited to using ``device=torch.device("cpu")`` when using this library. All examples default to this case.
-
-| pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-
-We do not recommend using `torchami` on non-gpu systems. For CPU only cases the libami code is preferred: https://github.com/jpfleblanc/libami .
+While pytorch does support apple silicon GPUs with their MPS backend (https://pytorch.org/docs/stable/notes/mps.html), currently complex data types are not supported on these devices. This means that macOS devices may only use cpu functionality of this library.
+The pytorch dependency can be met on macOS via the appropriate macOS build of pytorch, then the user will be limited to using ``device=torch.device("cpu")``. All examples default to this case.
+Again, we do not recommend using `torchami` on non-gpu systems. For CPU only cases the libami code is typically faster: https://github.com/jpfleblanc/libami .
 
 Prerequisites are the same as Linux/Debian (see above)
 
