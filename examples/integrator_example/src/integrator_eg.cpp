@@ -4,8 +4,6 @@
 // twice but it should be an easy fix to make it for complex.
 
 at::Tensor flat_mc_integrator::prepInput(int length, integ_domain &domain) {
-  // x = torch.hstack([torch.empty([length, 1], device=self.device).uniform_(*r)
-  // for r in domain])
 
   std::vector<at::Tensor> input_cols;
   at::TensorOptions opts =
@@ -19,8 +17,8 @@ at::Tensor flat_mc_integrator::prepInput(int length, integ_domain &domain) {
 }
 
 integration_result
-flat_mc_integrator::integrate(std::function<at::Tensor(at::Tensor)> fn, int dim,
-                              int N, integ_domain domain) {
+flat_mc_integrator::integrate(std::function<at::Tensor(at::Tensor&)> fn, int dim,
+                              int N, integ_domain &domain) {
 
   at::TensorOptions opts =
       at::TensorOptions().dtype(at::kComplexDouble).device(options.device());
