@@ -243,6 +243,10 @@ void example2() {
   // Construct solution for problem defined in R0
   ami.construct(N_INT, R0, amiterms);
 
+  // Example printing of formatted term to screen.
+  std::cout<<"----Constructed Result----" <<std::endl;
+  std::cout<<amiterms<<std::endl;
+  
   // timing info
   auto t2 = std::chrono::high_resolution_clock::now();
 
@@ -314,8 +318,11 @@ void example1_bose() {
 
   // Construct solution for problem defined in R0
   ami.construct(N_INT, R0, amiterms);
-  // std::cout<<ami.pretty_print_ft_terms(amiterms)<<std::endl; // This would
-  // print the result - standard lindhart function timing info
+
+  // Example printing of formatted term to screen. 
+  std::cout<<"----Constructed Result----" <<std::endl;
+  std::cout<<amiterms<<std::endl;
+
   auto t2 = std::chrono::high_resolution_clock::now();
 
   std::chrono::duration<double> diff1 = t2 - t1;
@@ -384,7 +391,12 @@ void example4() {
   TamiBase::ft_terms amiterms;
 
   // Construct solution for problem defined in R0
+  std::cout<<"----Constructed Result----" <<std::endl;
   ami.construct(N_INT, R0, amiterms);
+
+
+  // Example printing of formatted term to screen. 
+  std::cout<<amiterms<<std::endl;
 
   // timing info
   auto t2 = std::chrono::high_resolution_clock::now();
