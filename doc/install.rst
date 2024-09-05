@@ -133,14 +133,59 @@ Solution for c++ is to compile all your DIRECTLY linked libraries with this flag
 
 
 ===============================
-Installation for MACOS
+Installation for macOS
 ===============================
 
-Since MACOS does not support cuda, we do not recommend using torchami.  
-Nevertheless, the pytorch dependency can be met on MACOS via the cpu-only build of pytorch.
+While pytorch does support apple silicon GPUs with their MPS backend (https://pytorch.org/docs/stable/notes/mps.html), currently complex data types are not supported on these devices. Meaning that macOS devices that do not have cuda support may only use cpu functionality of this library, therefore we do not recommend using torchami on these devices.
+Nevertheless, one can still use macOS devices to obtain the latex expressions for matsubara sums by using the cpu compatibility of pytorch on these devices.
+The pytorch dependency can be met on macOS via the appropriate macOS build of pytorch, then the user will be limited to using ``device=torch.device("cpu")`` when using this library. All examples default to this case.
 
 | pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 We do not recommend using `torchami` on non-gpu systems. For CPU only cases the libami code is preferred: https://github.com/jpfleblanc/libami .
+
+Prerequisites are the same as Linux/Debian (see above)
+
+1. Obtaining TORCHAMI:
+ 
+	Clone Git repository:
+
+	::
+
+	$ git clone https://github.com/mdburke11/torchami.git
+
+2. Obtaining Dependencies
+
+	Required
+
+	pytorch:
+
+	::
+
+	$ pip install torch torchvision torchaudio
+
+	boost graph:
+
+	::
+
+	$ brew install boost (or from source)
+
+	Optional - but recommended
+
+	::
+
+	$ brew install pybind11
+
+3. Building:
+
+	An example cmake command is in the `compile.sh` script.  Open the file in any editor, and change relevant file paths, in particular -DCMAKE_INSTALL_PREFIX=/path/to/install should be modified to your chosen install path.
+	Use a standard `CMake` procedure: 
+
+			::
+
+			$ mkdir build install
+			$ cd build
+			$ sh ../compile.sh 
+			$ make install 
 	
 .. _`Github wiki`: https://github.com/mdburke11/torchami

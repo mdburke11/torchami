@@ -1,2 +1,0 @@
-cmake -Wno-dev -DCMAKE_INSTALL_PREFIX=/home/mdburke/working/torchami/install -DBUILD_DOC=ON  -DMAKE_PYTAMI=ON -DPYTHON_LIBRARY_DIR=`python -c "import site; print(site.getsitepackages()[0])"` -DPYTHON_EXECUTABLE=`which python` -DCMAKE_PREFIX_PATH=`python -c "import torch; print(torch.utils.cmake_prefix_path)"` -Dpybind11_DIR=/home/mdburke/py_envs/torch-gpu/lib/python3.10/site-packages/pybind11/share/cmake/pybind11/ ..
-
