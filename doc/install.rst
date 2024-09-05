@@ -22,6 +22,8 @@ Prerequisites:
 
 	Optional - Python bindings:
 
+	+ python3
+
 	+ pybind11 
 
 	+ nvidia-cuda-toolkit (May be required when developing in c++.)

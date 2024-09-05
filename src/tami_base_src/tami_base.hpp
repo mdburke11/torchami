@@ -764,3 +764,13 @@ namespace mathUtils{
   */
   int binomialCoeff(int n, int k);
 }
+
+
+std::ostream & operator<<(std::ostream &os, TamiBase::ft_term &ft);
+std::ostream & operator<<(std::ostream &os, TamiBase::ft_terms &ft);
+
+//  std::ostream & operator<<(std::ostream &os, TamiBase::ft_term &ft){
+
+//   TamiBase ami;
+//       return os<<ami.pretty_print_ft_term(ft);
+//     }

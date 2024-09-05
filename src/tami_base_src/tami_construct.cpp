@@ -194,6 +194,20 @@ std::string TamiBase::pretty_print_ft_terms(ft_terms &fts) {
   return ss.str();
 }
 
+
+std::ostream & operator<<(std::ostream &os, TamiBase::ft_terms &ft){
+
+TamiBase ami;
+    return os<<ami.pretty_print_ft_terms(ft);
+  }
+
+std::ostream & operator<<(std::ostream &os, TamiBase::ft_term &ft){
+
+TamiBase ami;
+    return os<<ami.pretty_print_ft_term(ft);
+  }
+
+
 std::string TamiBase::pretty_print_ft_term(ft_term &ft) {
 
   std::stringstream ss;
