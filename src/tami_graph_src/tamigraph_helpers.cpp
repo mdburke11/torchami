@@ -592,6 +592,9 @@ void TamiGraph::ggm_label(gg_matrix_t &ggm, int min) {
         if (!success) {
           throw std::runtime_error("Failed to label a graph");
         }
+
+        // print_all_edge_info(ggm[ord][group].graph_vec[graph]);
+
       }
     }
   }

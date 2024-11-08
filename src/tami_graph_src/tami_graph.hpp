@@ -295,6 +295,7 @@ public:
 
   // print ggm function
   void print_ggm(gg_matrix_t &ggm);
+  std::string print_graph(graph_t &g);
 
   // ggm to r0
   void graph_to_R0(graph_t &g, TamiBase::g_prod_t &R0);
@@ -342,6 +343,7 @@ public:
   void trojan_generate_sigma_ct(trojan_graph &tg_in,
                                 std::vector<graph_t> &ct_vec, int maxdots);
   void trojan_extract_bose_alphas(trojan_graph &tg, std::vector<TamiBase::alpha_t> &bose);
+  void trojan_print_all_edge_info(trojan_graph &tg); 
 
   // Marking these for removal: 08-22-2024
   // void create_starter_graph(TamiGraph::graph_t &g);
@@ -440,3 +442,5 @@ inline std::ostream &operator<<(std::ostream &os,
   os << "test pole_struct" << std::endl;
   return os;
 }
+
+std::ostream & operator<<(std::ostream &os, TamiGraph::graph_t &g);

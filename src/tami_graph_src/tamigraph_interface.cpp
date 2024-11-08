@@ -648,6 +648,50 @@ void TamiGraph::number_vertices(graph_t &g) {
   }
 }
 
+
+std::string TamiGraph::print_graph(graph_t &g) {
+
+  
+  std::stringstream ss;
+
+  boost::graph_traits<graph_t>::edge_iterator ei, ei_end;
+  // Looking through all edges to find source and targets : this could be
+  // improved?
+  for (boost::tie(ei, ei_end) = edges(g); ei != ei_end; ++ei) {
+
+    ss << "Edge (" << g[source(*ei, g)].index_ << ","
+              << g[target(*ei, g)].index_ << ") with bm "
+              << g[*ei].band_element.first << "," << g[*ei].band_element.second
+              << " of stat_type " << g[*ei].g_struct_.stat_ << " with loop id "
+              << g[*ei].fermi_loop_id << " with spin " << g[*ei].spin
+              << " with label " << g[*ei].label << " label=[ "; // << std::endl;
+
+    for (int i = 0; i < g[*ei].g_struct_.alpha_.size(); i++) {
+
+      ss << g[*ei].g_struct_.alpha_[i] << " ";
+    }
+    ss << "] and eps=[";
+
+    for (int i = 0; i < g[*ei].g_struct_.eps_.size(); i++) {
+
+      ss << g[*ei].g_struct_.eps_[i] << " ";
+    }
+
+    ss << "]" << std::endl;
+
+    // std::cout<<"edge "<<jg[*ei].edge_number_<<" loop Total is "<<
+    // total<<std::endl;
+  }
+
+  return ss.str();
+}
+
+std::ostream & operator<<(std::ostream &os, TamiGraph::graph_t &g){
+
+TamiGraph ami;
+    return os<<ami.print_graph(g);
+  }
+
 void TamiGraph::print_all_edge_info(graph_t &g) {
 
   boost::graph_traits<graph_t>::edge_iterator ei, ei_end;
@@ -875,4 +919,9 @@ void TamiGraph::trojan_extract_bose_alphas(trojan_graph &tg,
                                            std::vector<TamiBase::alpha_t> &bose) {
   TamiGraph::graph_t g = tg.graph;
   this->extract_bose_alphas(g, bose);
+}
+
+void TamiGraph::trojan_print_all_edge_info(trojan_graph &tg) {
+  TamiGraph::graph_t g = tg.graph;
+  this->print_all_edge_info(g);
 }

@@ -166,6 +166,8 @@ void init_pytami_wrapper(py::module &m) {
       "max_ord order.");
   TamiGraph.def("print_ggm", &TamiGraph::print_ggm,
                 "Prints what is contained in the ggm object provided.");
+  TamiGraph.def("print_graph", &TamiGraph::print_graph,
+                "Prints what is contained in the graph object provided.");
   TamiGraph.def("ggm_label", &TamiGraph::ggm_label,
                 "labels all the graphs contained in the ggm object from order "
                 "min and up.");
@@ -193,6 +195,10 @@ void init_pytami_wrapper(py::module &m) {
       "and store them in the vector provided upto maxdots of insertions.");
   TamiGraph.def(
       "trojan_extract_bose_alphas", &TamiGraph::trojan_extract_bose_alphas,
+      "Workaround to generate the momentum dependencies (alpha_t objects) for "
+      "all bosonic lines in graph stored in the trojan_graph object provided.");
+  TamiGraph.def(
+      "trojan_print_all_edge_info", &TamiGraph::trojan_print_all_edge_info,
       "Workaround to generate the momentum dependencies (alpha_t objects) for "
       "all bosonic lines in graph stored in the trojan_graph object provided.");
 }
