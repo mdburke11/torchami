@@ -176,6 +176,8 @@ void init_pytami_wrapper(py::module &m) {
 
   TamiGraph.def("graph_to_R0", &TamiGraph::graph_to_R0,
                 "Converts provided graph_t into a TamiBase::g_prod_t object.");
+  TamiGraph.def("reset_epsilons", &TamiGraph::reset_epsilons,
+                "Resets the epsilon labels of the TamiBase::g_prod_t object.");
   TamiGraph.def(
       "generate_sigma_ct", &TamiGraph::generate_sigma_ct,
       "generates all Counter term diagrams for the graph provided and store "
