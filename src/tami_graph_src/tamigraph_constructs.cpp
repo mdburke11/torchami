@@ -1,7 +1,7 @@
 #include "tami_graph.hpp"
 
 TamiGraph::TamiGraph() : rand_gen(0), rand_dist(0, 1.0) {
-  std::cout << "TamiGraph Constructor Called" << std::endl;
+  // std::cout << "TamiGraph Constructor Called" << std::endl;
 
   initialize(TamiBase::Sigma);
   // auto roll_dice=std::bind ( rand_dist, rand_gen);
@@ -21,7 +21,7 @@ TamiGraph::TamiGraph(TamiBase::graph_type type, int seed)
 TamiGraph::TamiGraph(TamiBase::graph_type type, int dim, int seed)
     : rand_gen(seed), rand_dist(0, 1.0) {
 
-  std::cout << "TamiGraph Constructor Called" << std::endl;
+  // std::cout << "TamiGraph Constructor Called" << std::endl;
 
   initialize(type, dim);
   // auto roll_dice=std::bind ( rand_dist, rand_gen);

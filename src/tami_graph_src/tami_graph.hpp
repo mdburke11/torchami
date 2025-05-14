@@ -357,6 +357,9 @@ public:
   // void construct_starter_ppud_bubble(graph_t &g);
   // void construct_starter_force(graph_t &g, graph_t &f2, graph_t &f3);
 
+  // moving to public 
+  void find_external_vertices(graph_t &g, vertex_vector_t &v,
+    edge_vector_t &edges);
 
 private:
 
@@ -372,8 +375,7 @@ private:
 
   void find_bose_fermi_edges(graph_t &g, edge_vector_t &bose,
                              edge_vector_t &fermi);
-  void find_external_vertices(graph_t &g, vertex_vector_t &v,
-                              edge_vector_t &edges);
+  
   void label_extern_legs(edge_vector_t &extern_vect_list, graph_t &g);
   void label_and_find_tadpoles_ami(graph_t &g, vertex_vector_t &tp_vec,
                                    vertex_vector_t &tp_conn_vec,
