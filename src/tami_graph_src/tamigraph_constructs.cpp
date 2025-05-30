@@ -10,7 +10,7 @@ TamiGraph::TamiGraph() : rand_gen(0), rand_dist(0, 1.0) {
 TamiGraph::TamiGraph(TamiBase::graph_type type, int seed)
     : rand_gen(seed), rand_dist(0, 1.0) {
 
-  std::cout << "TamiGraph Constructor Called" << std::endl;
+//  std::cout << "TamiGraph Constructor Called" << std::endl;
 
   initialize(type);
   // auto roll_dice=std::bind ( rand_dist, rand_gen);
