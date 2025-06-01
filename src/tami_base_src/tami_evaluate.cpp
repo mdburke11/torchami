@@ -300,70 +300,219 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 /// negative of the Bose distribution functions given by \f$\frac{1}{\sigma
 /// \exp^{\beta E}+1} \f$ at \f$ \beta\f$, for energy \f$ E\f$. \f$
 /// \sigma=1.0\f$ for Fermi and -1.0 for Bose.
-at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
-                                at::Tensor E) {
 
-  int ebatch_size = E.size(1);
-  at::Tensor output = at::zeros({1, ebatch_size}, options);
-  at::Tensor term = at::zeros({1, ebatch_size}, options);
+/// This is the original fermi_bose function that is not necessarily numerically stable
+// at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
+//                                 at::Tensor E) {
 
-  if (m == 0) {
-    // Note: Disabled on 09/09/2022 for overflow testing
-    // double arg = std::real(beta * E);
-    // double arg_amp = std::abs(arg);
+//   int ebatch_size = E.size(1);
+//   at::Tensor output = at::zeros({1, ebatch_size}, options);
+//   at::Tensor term = at::zeros({1, ebatch_size}, options);
 
-    // if (arg > exp_max_arg) {
-    // double arg_sign = (double)mathUtils::sgn(arg);
-    // if (arg_sign > 0) {
-    // output = 0;
-    // } else {
-    // output = 1;
+//   if (m == 0) {
+    
+//     output = 1.0 / (sigma * at::exp(beta * (E)) + 1.0);
+    
+//   } else { // compute m'th derivative
+
+    // for (int k = 0; k < m + 1; k++) {
+      
+    //   // Reformatted with fewer exponentials
+    //   term = mathUtils::frk(m, k) * std::pow(sigma, k) * std::pow(-1.0, k + 1) *
+    //          (1.0 / (sigma * at::exp(beta * (E)) + 1.0) /
+    //           at::pow(sigma + at::exp(-beta * (E)), k));
+    //   output += term;
+
+      
     // }
-    // } else {
-    output = 1.0 / (sigma * at::exp(beta * (E)) + 1.0);
-    // }
-    // return output;
-  } else { // compute m'th derivative
 
-    for (int k = 0; k < m + 1; k++) {
-      // depricated: Original format
-      // term = frk(m, k) * std::exp(k * beta * (E)) * std::pow(sigma, k) *
-      // std::pow(-1.0, k + 1) /
-      // std::pow(sigma * std::exp(beta * (E)) + 1.0, k + 1);
-      // Reformatted with fewer exponentials
-      term = mathUtils::frk(m, k) * std::pow(sigma, k) * std::pow(-1.0, k + 1) *
-             (1.0 / (sigma * at::exp(beta * (E)) + 1.0) /
-              at::pow(sigma + at::exp(-beta * (E)), k));
-      output += term;
+    // output = output * std::pow(beta, m) * (-1.0);
 
-      // TODO: fix the printing function then print the vector correctly
-      /*
-      if (verbose) {
-        std::cout << "On k'th derivative " << k << std::endl;
-        // TODO: Right now, this will print the whole tensor of numbers - not
-      sure if imaginary part will print (usually shows an error) std::cout <<
-      "Fermi-bose Term evaluated to " << term << " at energy "
-                  << E << " with sigma " << sigma << " betaE is " << beta * E
-                  << " in exponent " << at::exp(beta * (E)) << std::endl;
-      }
-      */
+   
+//   }
+
+//   return output;
+// }
+
+/// This is a version that should be numerically stable based on stable primitives. 
+// at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta, at::Tensor E) {
+//     TORCH_CHECK(E.is_complex(), "Input tensor E must be complex-valued");
+
+//     at::Tensor x = beta * E;
+//     at::Tensor x_real = at::real(x);  // Use only real part for distribution function
+
+//     at::Tensor out;
+
+//     if (m == 0) {
+//         // Fermi: f = 1 / (1 + exp(beta * E)) = sigmoid(-x)
+//         // Bose: f = -1 / (exp(beta * E) - 1)
+//         if (sigma == 1.0) {
+//             out = 1.0 / (1.0 + at::exp(x_real));  // Fermi-Dirac
+//         } else {
+//             out = -1.0 / (at::exp(x_real) - 1.0); // Negative Bose-Einstein
+//         }
+//     } else if (m == 1) {
+//         if (sigma == 1.0) {
+//             // f' = -β / (4 cosh²(βx/2))
+//             at::Tensor half_x = 0.5 * x_real;
+//             out = -beta / (4.0 * at::pow(at::cosh(half_x), 2));
+//         } else {
+//             // f' = β / (4 sinh²(βx/2))
+//             at::Tensor half_x = 0.5 * x_real;
+//             out = beta / (4.0 * at::pow(at::sinh(half_x), 2));
+//         }
+//     } else if (m == 2) {
+//         if (sigma == 1.0) {
+//             // f'' = β² sinh(βx/2) / (4 cosh³(βx/2))
+//             at::Tensor half_x = 0.5 * x_real;
+//             out = beta * beta * at::sinh(half_x) / (4.0 * at::pow(at::cosh(half_x), 3));
+//         } else {
+//             // f'' = -β² cosh(βx/2) / (4 sinh³(βx/2))
+//             at::Tensor half_x = 0.5 * x_real;
+//             out = -beta * beta * at::cosh(half_x) / (4.0 * at::pow(at::sinh(half_x), 3));
+//         }
+//     } else {
+//         TORCH_CHECK(false, "Only m = 0, 1, or 2 is supported in fermi_bose()");
+//     }
+
+//     return out.to(E.options());
+// }
+
+/// @brief  This is a more advanced auto differentiation version of the fermi_bose function. It should be tested more thoroughly for performance guarantees.
+/// @param m 
+/// @param sigma 
+/// @param beta 
+/// @param E 
+/// @return 
+at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta, at::Tensor E) {
+    TORCH_CHECK(m >= 0, "Derivative order must be non-negative");
+
+    // Ensure E has correct type and grad enabled
+    at::Tensor E_real = at::real(E);
+    E_real = E_real.detach().clone().set_requires_grad(true);
+    at::Tensor x = beta * E_real;
+
+    at::Tensor f0;
+    if (sigma == 1.0) {
+        f0 = 1.0 / (1.0 + at::exp(x));  // Fermi
+    } else {
+        f0 = -1.0 / (at::exp(x) - 1.0); // negative Bose
     }
 
-    output = output * std::pow(beta, m) * (-1.0);
-
-    // TODO: figure out what to do about this ... it kind of defeats the purpose
-    // of the tensor. I guess we just use max(tensor) ... come back to this
-    /*
-    if ((std::abs(std::real(output)) > precision_cutoff)||
-    (std::abs(std::imag(output)) > precision_cutoff)) {
-
-      overflow_detected = true;
+    at::Tensor result = f0;
+    for (int i = 0; i < m; ++i) {
+        std::vector<at::Tensor> grads = torch::autograd::grad(
+            /* outputs = */ {result},
+            /* inputs  = */ {E_real},
+            /* grad_outputs = */ {torch::ones_like(E_real)},
+            /* retain_graph = */ true,
+            /* create_graph = */ true
+        );
+        result = grads[0];
     }
-    */
-  }
 
-  return output;
+    return result.detach().to(E.options());
 }
+
+
+
+// at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta, at::Tensor E) {
+//   at::Tensor x = beta * E;
+//   at::Tensor sx = -sigma * x;
+
+//   // Sigmoid(-σx) is the stable Fermi function
+//   at::Tensor f = torch::sigmoid(sx);
+
+//   if (m == 0) {
+//     // fermi: f = sigmoid(-x), bose: f = -sigmoid(x)
+//     return f;
+//   }
+
+//   if (m == 1) {
+//     // Derivative: -β f (1 - f) for Fermi; β f (1 + f) for Bose
+//     at::Tensor deriv;
+//     if (sigma > 0) {
+//       deriv = -beta * f * (1.0 - f);  // Fermi case
+//     } else {
+//       deriv = beta * f * (1.0 + f);   // Bose case
+//     }
+//     return deriv;
+//   }
+
+//   throw std::runtime_error("Only m=0 or m=1 supported in stable fermi_bose.");
+// }
+
+
+
+// at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta,
+//                                 at::Tensor E) {
+//   constexpr double EXP_CUTOFF = 500.0;
+
+//   at::Tensor x = beta * E;
+//   at::Tensor x_real = at::real(x);  // use this for all comparisons
+
+//   int ebatch_size = E.size(1);
+//   at::Tensor output;
+
+//   if (m == 0) {
+//     if (sigma == 1.0) {
+//       // Fermi case: numerically stable
+//       output = torch::sigmoid(-x);
+//     } else {
+//       // Bose case: piecewise handling to prevent overflow
+//       at::Tensor mask_large_pos = (x_real > EXP_CUTOFF);
+//       at::Tensor mask_large_neg = (x_real < -EXP_CUTOFF);
+//       at::Tensor mask_safe = ~(mask_large_pos | mask_large_neg);
+
+//       output = at::zeros_like(E);
+//       output.masked_fill_(mask_large_pos, 0.0);    // lim x→∞: f_B → 0
+//       output.masked_fill_(mask_large_neg, -1.0);   // lim x→-∞: f_B → -1
+
+//       if (mask_safe.any().item<bool>()) {
+//         at::Tensor x_safe = x.masked_select(mask_safe);
+//         at::Tensor val_safe = -1.0 / (1.0 + sigma * at::exp(x_safe));
+//         output.masked_scatter_(mask_safe, val_safe);
+//       }
+//     }
+
+//   } else {
+//     // Higher-order derivatives of Fermi/Bose
+//     output = at::zeros({1, ebatch_size}, E.options());
+
+//     for (int k = 0; k < m + 1; k++) {
+//       double prefactor = mathUtils::frk(m, k) * std::pow(sigma, k) * std::pow(-1.0, k + 1);
+
+//       at::Tensor mask_large_pos = (x_real > EXP_CUTOFF);
+//       at::Tensor mask_large_neg = (x_real < -EXP_CUTOFF);
+//       at::Tensor mask_safe = ~(mask_large_pos | mask_large_neg);
+
+//       at::Tensor term = at::zeros({1, ebatch_size}, E.options());
+
+//       if (mask_safe.any().item<bool>()) {
+//         at::Tensor x_safe = x.masked_select(mask_safe);
+//         at::Tensor exp_x = at::exp(x_safe);
+//         at::Tensor exp_neg_x = at::exp(-x_safe);
+
+//         at::Tensor numerator = 1.0 / (sigma * exp_x + 1.0);
+//         at::Tensor denom = at::pow(sigma + exp_neg_x, k);
+//         at::Tensor val = prefactor * numerator / denom;
+
+//         term.masked_scatter_(mask_safe, val);
+//       }
+
+//       // Optional: ensure defined behavior in extreme regions
+//       term.masked_fill_(mask_large_pos | mask_large_neg, 0.0);
+
+//       output += term;
+//     }
+
+//     output *= std::pow(beta, m) * (-1.0);
+//   }
+
+//   return output;
+// }
+
+
 
 at::Tensor TamiBase::get_energy_from_pole(pole_struct pole, ami_vars external) {
   at::Tensor output = at::zeros({1, external.energy_.size(0)}, options);
