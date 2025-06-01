@@ -643,6 +643,9 @@ public:
   /// Recursive construction of fermi_bose derivatives.
   // non-private because it is used in tests
   at::Tensor fermi_bose(int m, double sigma, double beta, at::Tensor E);
+  // Extensions for overflow safe primitives
+  at::Tensor fermi_bose_mlte2(int m, double sigma, double beta, at::Tensor E);
+  at::Tensor fermi_bose_agrad(int m, double sigma, double beta, at::Tensor E); 
 
   /// Given a set of tensor energies, beta, and tensor frequencies, will
   /// evaluate the energies of a pole_struct.

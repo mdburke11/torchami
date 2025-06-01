@@ -334,57 +334,68 @@ at::Tensor TamiBase::fermi_pole(ami_parms &parms, pole_struct pole,
 //   return output;
 // }
 
+at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta, at::Tensor E){
+
+if(m<3){
+return fermi_bose_mlte2(m,sigma,beta,E);
+}
+else{
+
+  return fermi_bose_agrad(m,sigma,beta,E);
+}
+}
+
 /// This is a version that should be numerically stable based on stable primitives. 
-// at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta, at::Tensor E) {
-//     TORCH_CHECK(E.is_complex(), "Input tensor E must be complex-valued");
+at::Tensor TamiBase::fermi_bose_mlte2(int m, double sigma, double beta, at::Tensor E) {
+    TORCH_CHECK(E.is_complex(), "Input tensor E must be complex-valued");
 
-//     at::Tensor x = beta * E;
-//     at::Tensor x_real = at::real(x);  // Use only real part for distribution function
+    at::Tensor x = beta * E;
+    at::Tensor x_real = at::real(x);  // Use only real part for distribution function
 
-//     at::Tensor out;
+    at::Tensor out;
 
-//     if (m == 0) {
-//         // Fermi: f = 1 / (1 + exp(beta * E)) = sigmoid(-x)
-//         // Bose: f = -1 / (exp(beta * E) - 1)
-//         if (sigma == 1.0) {
-//             out = 1.0 / (1.0 + at::exp(x_real));  // Fermi-Dirac
-//         } else {
-//             out = -1.0 / (at::exp(x_real) - 1.0); // Negative Bose-Einstein
-//         }
-//     } else if (m == 1) {
-//         if (sigma == 1.0) {
-//             // f' = -β / (4 cosh²(βx/2))
-//             at::Tensor half_x = 0.5 * x_real;
-//             out = -beta / (4.0 * at::pow(at::cosh(half_x), 2));
-//         } else {
-//             // f' = β / (4 sinh²(βx/2))
-//             at::Tensor half_x = 0.5 * x_real;
-//             out = beta / (4.0 * at::pow(at::sinh(half_x), 2));
-//         }
-//     } else if (m == 2) {
-//         if (sigma == 1.0) {
-//             // f'' = β² sinh(βx/2) / (4 cosh³(βx/2))
-//             at::Tensor half_x = 0.5 * x_real;
-//             out = beta * beta * at::sinh(half_x) / (4.0 * at::pow(at::cosh(half_x), 3));
-//         } else {
-//             // f'' = -β² cosh(βx/2) / (4 sinh³(βx/2))
-//             at::Tensor half_x = 0.5 * x_real;
-//             out = -beta * beta * at::cosh(half_x) / (4.0 * at::pow(at::sinh(half_x), 3));
-//         }
-//     } else {
-//         TORCH_CHECK(false, "Only m = 0, 1, or 2 is supported in fermi_bose()");
-//     }
+    if (m == 0) {
+        // Fermi: f = 1 / (1 + exp(beta * E)) = sigmoid(-x)
+        // Bose: f = -1 / (exp(beta * E) - 1)
+        if (sigma == 1.0) {
+            out = 1.0 / (1.0 + at::exp(x_real));  // Fermi-Dirac
+        } else {
+            out = -1.0 / (at::exp(x_real) - 1.0); // Negative Bose-Einstein
+        }
+    } else if (m == 1) {
+        if (sigma == 1.0) {
+            // f' = -β / (4 cosh²(βx/2))
+            at::Tensor half_x = 0.5 * x_real;
+            out = -beta / (4.0 * at::pow(at::cosh(half_x), 2));
+        } else {
+            // f' = β / (4 sinh²(βx/2))
+            at::Tensor half_x = 0.5 * x_real;
+            out = beta / (4.0 * at::pow(at::sinh(half_x), 2));
+        }
+    } else if (m == 2) {
+        if (sigma == 1.0) {
+            // f'' = β² sinh(βx/2) / (4 cosh³(βx/2))
+            at::Tensor half_x = 0.5 * x_real;
+            out = beta * beta * at::sinh(half_x) / (4.0 * at::pow(at::cosh(half_x), 3));
+        } else {
+            // f'' = -β² cosh(βx/2) / (4 sinh³(βx/2))
+            at::Tensor half_x = 0.5 * x_real;
+            out = -beta * beta * at::cosh(half_x) / (4.0 * at::pow(at::sinh(half_x), 3));
+        }
+    } else {
+        TORCH_CHECK(false, "Only m = 0, 1, or 2 is supported in fermi_bose()");
+    }
 
-//     return out.to(E.options());
-// }
+    return out.to(E.options());
+}
 
-/// @brief  This is a more advanced auto differentiation version of the fermi_bose function. It should be tested more thoroughly for performance guarantees.
-/// @param m 
-/// @param sigma 
-/// @param beta 
-/// @param E 
-/// @return 
-at::Tensor TamiBase::fermi_bose(int m, double sigma, double beta, at::Tensor E) {
+// /// @brief  This is a more advanced auto differentiation version of the fermi_bose function. It should be tested more thoroughly for performance guarantees.
+// /// @param m 
+// /// @param sigma 
+// /// @param beta 
+// /// @param E 
+// /// @return 
+at::Tensor TamiBase::fermi_bose_agrad(int m, double sigma, double beta, at::Tensor E) {
     TORCH_CHECK(m >= 0, "Derivative order must be non-negative");
 
     // Ensure E has correct type and grad enabled
