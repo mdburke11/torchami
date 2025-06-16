@@ -8,7 +8,7 @@
 #include <vector>
 #include <filesystem>
 
-#include "../tami_base_src/tami_base.hpp"
+#include "tami_base.hpp"
 
 // Boost headers
 #include <boost/graph/adjacency_list.hpp>
