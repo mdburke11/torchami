@@ -30,6 +30,7 @@ set(LIB_GRAPH_FILES
 ADD_LIBRARY(tamigraph SHARED ${LIB_GRAPH_FILES})
 include_directories(${CMAKE_SOURCE_DIR}/src/tami_graph_src)
 include_directories(${CMAKE_SOURCE_DIR}/src/tami_base_src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../tami_base_src)
 
 #link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../install/lib)
 #include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../install/include/tami_base_src)
