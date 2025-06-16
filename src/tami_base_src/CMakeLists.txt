@@ -46,3 +46,7 @@ INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/."
         DESTINATION include
         FILES_MATCHING PATTERN "*.hpp"
 )
+
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/tami_base_src"
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.hpp")
