@@ -24,6 +24,9 @@ include_directories(${TORCH_INCLUDE_DIRS})
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
+include_directories(${CMAKE_SOURCE_DIR}/src/tami_graph_src)
+include_directories(${CMAKE_SOURCE_DIR}/src/tami_base_src)
+
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
