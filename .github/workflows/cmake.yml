@@ -44,6 +44,13 @@ jobs:
           pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
           pip install pybind11
 
+      - name: Export pybind11_DIR
+        run: echo "pybind11_DIR=$(python - <<'PY'
+          import pybind11, pathlib
+          print(pybind11.get_cmake_dir())
+          PY
+          )" >> $GITHUB_ENV
+
       - name: Configure CMake
         run: |
           cmake -S . -B build \
