@@ -1,36 +1,25 @@
-cmake_minimum_required(VERSION 3.18...3.22.1)
-project( pytami )
-
-set(CMAKE_CXX_RELEASE "-O3") # not sure if needed. It was in the example
-set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ version selection")
-
-include_directories("${CMAKE_SOURCE_DIR}/src")
-#include_directories("${CMAKE_SOURCE_DIR}/pytami_src")
-
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIRS})
-
-find_package(Torch REQUIRED)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
-
-find_library(TORCH_PYTHON_LIBRARY torch_python PATHS "${TORCH_INSTALL_PREFIX}/lib")
-message(STATUS "TORCH_PYTHON_LIBRARY: ${TORCH_PYTHON_LIBRARY}")
-
-file (GLOB SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/*/*.cpp")
-file (GLOB HEADER_FILES "${CMAKE_SOURCE_DIR}/src/*/*.hpp")
-file (GLOB PYTHON_FILES "${CMAKE_SOURCE_DIR}/src/pytami_src/*.cpp" "${CMAKE_SOURCE_DIR}/src/pytami_src/*.hpp")
-
-pybind11_add_module(pytami
-    ${SOURCE_FILES}
-    ${HEADER_FILES}
-    ${PYTHON_FILES}
+# Python extension: pytami
+# Keep it thin: just the wrapper; link to libs for the implementation.
+pybind11_add_module(pytami MODULE
+  ${CMAKE_CURRENT_SOURCE_DIR}/pytami_wrapper.cpp
 )
 
-#target_link_libraries(pytami PUBLIC)
-target_link_libraries(pytami PUBLIC "${TORCH_LIBRARIES}" ${TORCH_PYTHON_LIBRARY})
+target_link_libraries(pytami
+  PRIVATE
+    tami_graph        # brings in tami_base transitively
+    Torch::Torch
+)
+
+# Optional: hide symbols by default (pybind11 sets visibility=hidden already on many platforms)
+# target_compile_options(pytami PRIVATE -fvisibility=hidden)
+
+# Install to the active site-packages
+# Prefer site-arch if defined, else sitelib.
+set(_PY_SITE "${Python3_SITEARCH}")
+if(NOT _PY_SITE)
+  set(_PY_SITE "${Python3_SITELIB}")
+endif()
 
 install(TARGETS pytami
-    COMPONENT python
-    LIBRARY DESTINATION "${PYTHON_LIBRARY_DIR}"
+  LIBRARY DESTINATION "${_PY_SITE}"
 )

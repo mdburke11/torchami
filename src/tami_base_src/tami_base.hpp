@@ -8,8 +8,8 @@
 
 #include <boost/graph/adjacency_list.hpp>
 
-#include <torch/extension.h>
-#include <torch/python.h>
+// #include <torch/extension.h>
+// #include <torch/python.h>
 #include <torch/torch.h>
 
 class TamiBase {

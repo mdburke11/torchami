@@ -1,46 +1,48 @@
-cmake_minimum_required(VERSION 3.18.0)
+cmake_minimum_required(VERSION 3.20)
 
-
-project(googletest-git NONE)
-
+# Fetch GoogleTest (header-only usage for most parts, but we’ll link the libs)
 include(FetchContent)
+
+# Allow overriding the tag from the CLI if needed: -DGTEST_TAG=v1.13.0
+set(GTEST_TAG v1.14.0 CACHE STRING "googletest tag to fetch")
+
 FetchContent_Declare(
   googletest
   GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        release-1.10.0
+  GIT_TAG        ${GTEST_TAG}
+  GIT_SHALLOW    TRUE
 )
+FetchContent_MakeAvailable(googletest)
 
+# Avoid overriding parent project’s settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
 set(BUILD_GTEST ON CACHE BOOL "" FORCE)
-
 FetchContent_MakeAvailable(googletest)
 
+# Torch is already found at top-level; require here for clarity
 find_package(Torch REQUIRED)
-cmake_print_variables(TORCH_CXX_FLAGS)
-cmake_print_variables(TORCH_INCLUDE_DIRS)
-include_directories(${TORCH_INCLUDE_DIRS})
 
-find_package(PythonLibs REQUIRED)
-include_directories(${PYTHON_INCLUDE_DIRS})
+# The libraries tami_graph and tami_base already export their include dirs,
+# so we don’t need include_directories() in tests.
 
-include_directories(${CMAKE_SOURCE_DIR}/src/tami_graph_src)
-include_directories(${CMAKE_SOURCE_DIR}/src/tami_base_src)
+enable_testing()
+include(GoogleTest)
 
-find_package(Boost REQUIRED)
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
-endif()
+# Helper function to declare a test target and register it with ctest
+function(add_tami_test name)
+  add_executable(${name} ${ARGN})
+  target_link_libraries(${name}
+    PRIVATE
+      GTest::gtest_main
+      tami_graph       # brings in tami_base transitively
+      Torch::Torch
+  )
+  gtest_discover_tests(${name})
+endfunction()
 
-################################
-# Tests
-################################
-# Add test cpp file
-add_executable(num_test num_test.cpp)
-target_link_libraries(num_test gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
-add_executable(construct_tests construct_tests.cpp)
-target_link_libraries(construct_tests gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
-add_executable(helper_tests helper_functions.cpp)
-target_link_libraries(helper_tests gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
-add_executable(fb fermi_bose.cpp)
-target_link_libraries(fb gtest gtest_main torchami tamigraph ${PYTHON_LIBRARIES} ${TORCH_LIBRARIES})
+# ---- Tests ----
+add_tami_test(num_test         ${CMAKE_CURRENT_SOURCE_DIR}/num_test.cpp)
+add_tami_test(construct_tests  ${CMAKE_CURRENT_SOURCE_DIR}/construct_tests.cpp)
+add_tami_test(helper_tests     ${CMAKE_CURRENT_SOURCE_DIR}/helper_functions.cpp)
+add_tami_test(fb               ${CMAKE_CURRENT_SOURCE_DIR}/fermi_bose.cpp)

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "../src/tami_base_src/tami_base.hpp"
-#include "../src/tami_graph_src/tami_graph.hpp"
+#include "tami_base.hpp"
+#include "tami_graph.hpp"
 #include <iomanip>
 #include <random>
 #define _USE_MATH_DEFINES
@@ -9,8 +9,8 @@
 #include <chrono>
 #include <random>
 
-#include <torch/extension.h>
-#include <torch/python.h>
+// #include <torch/extension.h>
+// #include <torch/python.h>
 #include <torch/torch.h>
 
 at::Device get_device();

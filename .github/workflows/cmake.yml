@@ -7,7 +7,6 @@ on:
     branches: [ main ]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
 
 jobs:
@@ -15,92 +14,44 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
         include:
           - name: "Ubuntu 24.04"
             runner: ubuntu-24.04
-          # - name: "macOS 13"
-          #   runner: macos-13 #latest
     runs-on: ${{ matrix.runner }}
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    #runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-        
+      - uses: actions/checkout@v4
 
-    - name: Install boost
-      uses: MarkusJx/install-boost@v2.4.4
-      id: install-boost
-      with:
-          # REQUIRED: Specify the required boost version
-          # A list of supported versions can be found here:
-          # https://github.com/MarkusJx/prebuilt-boost/blob/main/versions-manifest.json
-          # boost_version: 1.74.0
-        # OPTIONAL: Specify a platform version
-        # platform_version: 18.04
-        # OPTIONAL: Specify a custom install location
-        # boost_install_dir: /home/runner/some_directory
-        # OPTIONAL: Specify a toolset
-        # toolset: gcc
-        # OPTIONAL: Specify an architecture
-        # arch: x86
-        boost_version: 1.86.0
-        # OPTIONAL: Specify a platform version
-        # platform_version: 13
-        # OPTIONAL: Specify a custom install location
-        # boost_install_dir: /home/runner/boost_install
-        # OPTIONAL: Specify a toolset
-        # toolset: clang
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: Install PyTorch
-      run: |
-        python -m pip install --upgrade pip
-        # Install CPU-based pytorch
-        pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-        # pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
-        # Maybe use the CUDA 10.2 version instead?
-        # pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html
+      - name: Install Boost (headers & libs)
+        id: install-boost
+        uses: MarkusJx/install-boost@v2.4.4
+        with:
+          boost_version: 1.86.0
 
+      - name: Expose Boost to CMake
+        run: |
+          echo "BOOST_ROOT=${{ steps.install-boost.outputs.BOOST_ROOT }}" >> $GITHUB_ENV
+          echo "Boost_ROOT=${{ steps.install-boost.outputs.BOOST_ROOT }}" >> $GITHUB_ENV
 
-    - name: Install pybind11
-      run: pip install pybind11
+      - name: Install Python deps (PyTorch CPU + pybind11)
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+          pip install pybind11
 
-    # - name: Cache Pybind11
-    #   id: pybind11-cache
-    #   uses: actions/cache@v2
-    #   with:
-    #     path: ./pybind11-install
-    #     key: ${{ runner.os }}-pybind11-cache
-      
-    # - name: Install OpenCV
-    #   uses: rayandrew/with-pybind11-action@v1
-    #   with:  
-    #     dir: ./pybind11-install
-    #     cached: ${{ steps.pybind11-cache.outputs.cache-hit }}
-    #     pybind11-version: '4.0.0'
+      - name: Configure CMake
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
+            -DMAKE_PYTAMI=ON
 
-    
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBoost_INCLUDE_DIR=${{steps.install-boost.outputs.BOOST_ROOT}}/include -DBoost_LIBRARY_DIRS=${{steps.install-boost.outputs.BOOST_ROOT}}/lib -Dpybind11_DIR=/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/pybind11/share/cmake/pybind11/ -DMAKE_PYTAMI=ON -DPYTHON_LIBRARY_DIR=`python -c "import site; print(site.getsitepackages()[0])"` -DPYTHON_EXECUTABLE=`which python` "-DCMAKE_PREFIX_PATH=`python -c "import torch; print(torch.utils.cmake_prefix_path)"`" 
-      # run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBoost_INCLUDE_DIR=/home/runner/work/torchami/torchami/boost/boost/include -Dpybind11_DIR=/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/pybind11/share/cmake/pybind11/ -DMAKE_PYTAMI=ON -DPYTHON_LIBRARY_DIR=`python -c "import site; print(site.getsitepackages()[0])"` -DPYTHON_EXECUTABLE=`which python` "-DCMAKE_PREFIX_PATH=`python -c "import torch; print(torch.utils.cmake_prefix_path)"`" 
-      #-Dpybind11_DIR=/home/mdburke/py_envs/torch-gpu/lib/python3.10/site-packages/pybind11/share/cmake/pybind11/ ..
+      - name: Build
+        run: cmake --build build --config ${{ env.BUILD_TYPE }} --parallel
 
-    - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --verbose
-
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}} --rerun-failed --output-on-failure
-      
+      - name: Test
+        run: ctest --test-dir build -C ${{ env.BUILD_TYPE }} --output-on-failure
