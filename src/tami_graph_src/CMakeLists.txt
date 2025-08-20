@@ -16,11 +16,12 @@ target_include_directories(tami_graph
 # Graph depends on base; propagate includes transitively
 target_link_libraries(tami_graph
   PUBLIC
-    tami_base
+    tami_base      # brings Boost include dirs via tami_base
+    Boost::boost   # (keep PUBLIC if graph headers use Boost directly)
   PRIVATE
     Torch::Torch
-    Boost::boost
 )
+
 
 install(TARGETS tami_graph
   EXPORT torchamiTargets

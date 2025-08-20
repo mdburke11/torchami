@@ -17,9 +17,10 @@ target_include_directories(tami_base
 
 # Link deps
 target_link_libraries(tami_base
+  PUBLIC          # <-- make Boost PUBLIC so its include dirs propagate
+    Boost::boost
   PRIVATE
     Torch::Torch
-    Boost::boost
 )
 
 
