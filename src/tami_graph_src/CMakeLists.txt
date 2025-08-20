@@ -8,6 +8,9 @@ target_sources(tami_graph PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/tamigraph_constructs.cpp
 )
 
+# legacy filename expected 
+set_target_properties(tami_graph PROPERTIES OUTPUT_NAME tamigraph)
+
 target_include_directories(tami_graph
   PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}

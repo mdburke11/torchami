@@ -9,6 +9,9 @@ target_sources(tami_base PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/tami_terms.cpp
 )
 
+# make the on-disk file name match legacy expectation:
+set_target_properties(tami_base PROPERTIES OUTPUT_NAME torchami)
+
 # Public headers live here
 target_include_directories(tami_base
   PUBLIC
