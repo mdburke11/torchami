@@ -14,6 +14,24 @@ option(BUILD_DOC "Build documentation" OFF)
 # Python / pybind11 setup
 # ---------------------------------------------------------------------------
 
+
+# before find_package(pybind11)
+find_package(pybind11 CONFIG QUIET)
+if(NOT pybind11_FOUND)
+  execute_process(
+    COMMAND "${Python3_EXECUTABLE}" -c "import pybind11; print(pybind11.get_cmake_dir())"
+    OUTPUT_VARIABLE _pybind11_dir
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+  )
+  if(_pybind11_dir AND EXISTS "${_pybind11_dir}/pybind11Config.cmake")
+    list(APPEND CMAKE_PREFIX_PATH "${_pybind11_dir}")
+    find_package(pybind11 CONFIG REQUIRED)
+  else()
+    message(FATAL_ERROR "pybind11 not found; install it or set pybind11_DIR.")
+  endif()
+endif()
+
 # Ask pybind11 to use CMake's FindPython if possible
 set(PYBIND11_FINDPYTHON ON)
 

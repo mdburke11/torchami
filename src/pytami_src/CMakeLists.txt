@@ -20,6 +20,11 @@ if(NOT _PY_SITE)
   set(_PY_SITE "${Python3_SITELIB}")
 endif()
 
+# install(TARGETS pytami
+#   LIBRARY DESTINATION "${_PY_SITE}"
+# )
+
+# Install into the prefix (e.g., .../install/lib), not system site-packages
 install(TARGETS pytami
-  LIBRARY DESTINATION "${_PY_SITE}"
+  LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 )
