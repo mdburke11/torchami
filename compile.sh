@@ -6,7 +6,7 @@ INSTALL_PREFIX="$PWD/install"
 echo "[1/3] Configure"
 cmake -S . -B "$BUILD_DIR" \
   -DCMAKE_BUILD_TYPE=Release \
-  -DMAKE_PYTAMI=ON
+  -DMAKE_PYTAMI=OFF
 
 echo "[2/3] Build"
 cmake --build "$BUILD_DIR" --parallel
